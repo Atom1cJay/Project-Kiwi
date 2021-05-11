@@ -153,69 +153,66 @@ public class @InputActions : IInputActionCollection, IDisposable
             ""id"": ""84e184e6-cd54-44a9-82c7-1fda8c9431be"",
             ""actions"": [
                 {
-                    ""name"": ""Pivot"",
+                    ""name"": ""HorizontalRotate"",
                     ""type"": ""Value"",
-                    ""id"": ""e3545372-bed6-4539-8c92-9c5c2c510298"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
+                    ""id"": ""13b41ae0-6b71-4dd1-a864-1d2715703cca"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": ""Invert"",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""VerticalRotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""0d182bfa-c72b-4099-8ae4-6c0204baefd0"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": ""Invert"",
                     ""interactions"": """"
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""34bb01db-79dd-4334-87f6-1555e5c31bdb"",
-                    ""path"": ""<Gamepad>/rightStick"",
+                    ""id"": ""836ee529-45b6-4503-9e13-4457e0cc6766"",
+                    ""path"": ""<Gamepad>/rightStick/y"",
                     ""interactions"": """",
-                    ""processors"": ""InvertVector2"",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""Pivot"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VerticalRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1da2cd6f-75f5-498f-b4b2-45e17aaaa3a6"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""id"": ""f198f60d-9f42-4721-bc25-2748832627a6"",
+                    ""path"": ""<Mouse>/delta/y"",
                     ""interactions"": """",
-                    ""processors"": ""InvertVector2,ScaleVector2(x=0.001,y=0.001)"",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Pivot"",
+                    ""processors"": ""Scale(factor=0.2)"",
+                    ""groups"": """",
+                    ""action"": ""VerticalRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""5ff9e607-7fb3-45ee-b207-224c6decfe50"",
-                    ""path"": ""2DVector"",
+                    ""name"": """",
+                    ""id"": ""abbd9502-6411-4d82-b2d2-b6ae2c0d6bb4"",
+                    ""path"": ""<Gamepad>/rightStick/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Pivot"",
-                    ""isComposite"": true,
+                    ""action"": ""HorizontalRotate"",
+                    ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""aedb6f78-9d8c-494e-bd03-ac4525fde0d7"",
-                    ""path"": ""<HID::Core (Plus) Wired Controller>/rz"",
+                    ""name"": """",
+                    ""id"": ""bfd55753-26aa-4edb-bf9f-4f5ac632cab1"",
+                    ""path"": ""<Mouse>/delta/x"",
                     ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""Pivot"",
+                    ""processors"": ""Scale(factor=0.2)"",
+                    ""groups"": """",
+                    ""action"": ""HorizontalRotate"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""f180b823-95cc-44ec-8ba7-82ce956ad9ba"",
-                    ""path"": ""<HID::Core (Plus) Wired Controller>/z"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""Pivot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -251,7 +248,8 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
-        m_Camera_Pivot = m_Camera.FindAction("Pivot", throwIfNotFound: true);
+        m_Camera_HorizontalRotate = m_Camera.FindAction("HorizontalRotate", throwIfNotFound: true);
+        m_Camera_VerticalRotate = m_Camera.FindAction("VerticalRotate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -342,12 +340,14 @@ public class @InputActions : IInputActionCollection, IDisposable
     // Camera
     private readonly InputActionMap m_Camera;
     private ICameraActions m_CameraActionsCallbackInterface;
-    private readonly InputAction m_Camera_Pivot;
+    private readonly InputAction m_Camera_HorizontalRotate;
+    private readonly InputAction m_Camera_VerticalRotate;
     public struct CameraActions
     {
         private @InputActions m_Wrapper;
         public CameraActions(@InputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Pivot => m_Wrapper.m_Camera_Pivot;
+        public InputAction @HorizontalRotate => m_Wrapper.m_Camera_HorizontalRotate;
+        public InputAction @VerticalRotate => m_Wrapper.m_Camera_VerticalRotate;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -357,16 +357,22 @@ public class @InputActions : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_CameraActionsCallbackInterface != null)
             {
-                @Pivot.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnPivot;
-                @Pivot.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnPivot;
-                @Pivot.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnPivot;
+                @HorizontalRotate.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnHorizontalRotate;
+                @HorizontalRotate.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnHorizontalRotate;
+                @HorizontalRotate.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnHorizontalRotate;
+                @VerticalRotate.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnVerticalRotate;
+                @VerticalRotate.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnVerticalRotate;
+                @VerticalRotate.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnVerticalRotate;
             }
             m_Wrapper.m_CameraActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Pivot.started += instance.OnPivot;
-                @Pivot.performed += instance.OnPivot;
-                @Pivot.canceled += instance.OnPivot;
+                @HorizontalRotate.started += instance.OnHorizontalRotate;
+                @HorizontalRotate.performed += instance.OnHorizontalRotate;
+                @HorizontalRotate.canceled += instance.OnHorizontalRotate;
+                @VerticalRotate.started += instance.OnVerticalRotate;
+                @VerticalRotate.performed += instance.OnVerticalRotate;
+                @VerticalRotate.canceled += instance.OnVerticalRotate;
             }
         }
     }
@@ -396,6 +402,7 @@ public class @InputActions : IInputActionCollection, IDisposable
     }
     public interface ICameraActions
     {
-        void OnPivot(InputAction.CallbackContext context);
+        void OnHorizontalRotate(InputAction.CallbackContext context);
+        void OnVerticalRotate(InputAction.CallbackContext context);
     }
 }

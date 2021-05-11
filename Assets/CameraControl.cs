@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// FIXME controller to mouse is a problem
 /// <summary>
 /// Handles all camera movement and camera-related inputs
 /// </summary>
@@ -38,12 +39,14 @@ public class CameraControl : UsesInputActions
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
+        float horizInput = inputActions.Camera.HorizontalRotate.ReadValue<float>();
+        float vertInput = inputActions.Camera.VerticalRotate.ReadValue<float>();
+
         if (playerInput.currentControlScheme == "GamePad")
         {
             // Smooth input
-            Vector2 rawInput = inputActions.Camera.Pivot.ReadValue<Vector2>();
-            horizPivotSpeed = InputUtils.SmoothedInput(horizPivotSpeed, rawInput.x, pivotSensitivity, pivotGravity);
-            vertPivotSpeed = InputUtils.SmoothedInput(vertPivotSpeed, rawInput.y, pivotSensitivity, pivotGravity);
+            horizPivotSpeed = InputUtils.SmoothedInput(horizPivotSpeed, horizInput, pivotSensitivity, pivotGravity);
+            vertPivotSpeed = InputUtils.SmoothedInput(vertPivotSpeed, vertInput, pivotSensitivity, pivotGravity);
             horizAngle += horizPivotSpeed * maxPivotSpeedHoriz * Time.deltaTime;
             vertAngle += vertPivotSpeed * maxPivotSpeedVert * Time.deltaTime;
             vertAngle = Mathf.Clamp(vertAngle, vertAngleMin, vertAngleMax);
@@ -51,9 +54,8 @@ public class CameraControl : UsesInputActions
         else
         {
             // Don't smooth input
-            Vector2 rawInput = Mouse.current.delta.ReadUnprocessedValue();
-            horizPivotSpeed = rawInput.x;
-            vertPivotSpeed = rawInput.y;
+            horizPivotSpeed = horizInput;
+            vertPivotSpeed = vertInput;
             horizAngle += horizPivotSpeed * maxPivotSpeedHoriz * Time.deltaTime;
             vertAngle += vertPivotSpeed * maxPivotSpeedVert * Time.deltaTime;
             vertAngle = Mathf.Clamp(vertAngle, vertAngleMin, vertAngleMax);

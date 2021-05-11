@@ -2341,7 +2341,7 @@ CharacterController:
   m_Height: 1
   m_Radius: 0.25
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.05
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -2375,7 +2375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectsGround: {fileID: 1374974193}
-  gravity: 30
+  gravity: 20
   initJumpVel: 7
   initGravity: 0
   maxGravity: 20
@@ -2383,6 +2383,7 @@ MonoBehaviour:
   velocityMultiplierAtCancel: 0.5
   gravityIncRate: 100
   gravityIncRateAtCancel: 150
+  nonJumpGravity: 5
 --- !u!114 &544227819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7450,11 +7451,15 @@ MonoBehaviour:
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e3545372-bed6-4539-8c92-9c5c2c510298
-    m_ActionName: Camera/Pivot[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+    m_ActionId: 13b41ae0-6b71-4dd1-a864-1d2715703cca
+    m_ActionName: Camera/HorizontalRotate[/DualShock4GamepadHID/rightStick/x,/Mouse/delta/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0d182bfa-c72b-4099-8ae4-6c0204baefd0
+    m_ActionName: Camera/VerticalRotate[/DualShock4GamepadHID/rightStick/y,/Mouse/delta/y]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Camera
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &999316081

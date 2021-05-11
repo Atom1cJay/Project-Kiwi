@@ -16,6 +16,7 @@ public class CurveTest : UsesInputActions
     [SerializeField] private float velocityMultiplierAtCancel = 0.5f;
     [SerializeField] private float gravityIncRate;
     [SerializeField] private float gravityIncRateAtCancel;
+    [SerializeField] private float nonJumpGravity;
     private CharacterController charCont;
     private bool touchingSurface;
     private float vertVel;
@@ -81,10 +82,12 @@ public class CurveTest : UsesInputActions
         gravity = 0;
     }
 
-    // FOR TESTING ONLY
     private void FixedUpdate()
     {
-        //print(detectsGround.Colliding());
+        if (detectsGround.Colliding())
+        {
+            gravity = nonJumpGravity;
+        }
     }
 
     private void Update()
