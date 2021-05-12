@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 public class CurveTest : UsesInputActions
 {
     [SerializeField] CollisionDetector detectsGround;
-    [SerializeField] private float gravity; // Should be negative. Serialized: the default value
     [SerializeField] private float initJumpVel;
     [SerializeField] private float initGravity;
     [SerializeField] private float maxGravity;
@@ -17,16 +16,22 @@ public class CurveTest : UsesInputActions
     [SerializeField] private float gravityIncRate;
     [SerializeField] private float gravityIncRateAtCancel;
     [SerializeField] private float nonJumpGravity;
+    private float gravity;
     private CharacterController charCont;
-    private bool touchingSurface;
     private float vertVel;
+    private bool jumping;
     private bool jumpCancelled;
+    private bool canBeLanded;
 
+    /// <summary>
+    /// Initialization
+    /// </summary>
     protected override void Awake2()
     {
         charCont = GetComponent<CharacterController>();
         inputActions.Player.Jump.performed += _ => PerformJump();
         inputActions.Player.Jump.canceled += _ => CancelJump();
+        gravity = nonJumpGravity;
     }
 
     /// <summary>
@@ -42,7 +47,8 @@ public class CurveTest : UsesInputActions
     }
 
     /// <summary>
-    /// Marks a jump as cancelled if we are in the proper part of the jump.
+    /// Marks a jump as cancelled (meaning the arc should begin to decrease)
+    /// if we are in the proper part of the jump.
     /// </summary>
     private void CancelJump()
     {
@@ -61,11 +67,14 @@ public class CurveTest : UsesInputActions
     /// </summary>
     private IEnumerator Jump()
     {
+        jumping = true;
+        canBeLanded = false;
+        Invoke("MakeLandable", 0.1f); // TODO better way to handle this?
         jumpCancelled = false;
         gravity = initGravity;
         vertVel = initJumpVel;
 
-        while(!touchingSurface)
+        while(!canBeLanded || !detectsGround.Colliding())
         {
             if (jumpCancelled)
                 gravity += gravityIncRateAtCancel * Time.deltaTime;
@@ -79,28 +88,58 @@ public class CurveTest : UsesInputActions
             yield return new WaitForFixedUpdate();
         }
 
-        gravity = 0;
-    }
-
-    private void FixedUpdate()
-    {
-        if (detectsGround.Colliding())
-        {
-            gravity = nonJumpGravity;
-        }
-    }
-
-    private void Update()
-    {
-        EnforceGravity();
+        GroundVelocity();
+        jumping = false;
     }
 
     /// <summary>
-    /// Adjusts velocity depending on the gravity, and moves based on the resulting velocity
+    /// Sets the gravity and velocity appropriately for a player
+    /// that has just grounded.
+    /// </summary>
+    private void GroundVelocity()
+    {
+        gravity = nonJumpGravity;
+        vertVel = 0;
+    }
+
+    /// <summary>
+    /// Makes it possible for the jump sequence to end (consider the player
+    /// "landed" when it hits the ground")
+    /// </summary>
+    private void MakeLandable()
+    {
+        canBeLanded = true;
+    }
+
+    /// <summary>
+    /// Handle final movement for each frame
+    /// </summary>
+    private void Update()
+    {
+        if (detectsGround.Colliding() && !jumping)
+        {
+            GroundVelocity();
+        }
+        EnforceGravity();
+        MoveByVertVel();
+    }
+
+    /// <summary>
+    /// If the player is jumping, adjusts velocity depending on the gravity, and moves based on the resulting velocity
     /// </summary>
     private void EnforceGravity()
     {
-        vertVel -= gravity * Time.deltaTime;
+        if (!detectsGround.Colliding())
+        {
+            vertVel -= gravity * Time.deltaTime;
+        }
+    }
+
+    /// <summary>
+    /// Moves by the current vertical velocity
+    /// </summary>
+    private void MoveByVertVel()
+    {
         charCont.Move(new Vector3(0, vertVel * Time.deltaTime, 0));
     }
 }
