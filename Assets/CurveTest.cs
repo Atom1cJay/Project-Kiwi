@@ -142,4 +142,11 @@ public class CurveTest : UsesInputActions
     {
         charCont.Move(new Vector3(0, vertVel * Time.deltaTime, 0));
     }
+
+    // TODO This is how we'll solve slope-related issues, stay tuned
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // print the impact point's normal
+        Debug.Log("Normal vector we collided at: " + hit.normal);
+    }
 }
