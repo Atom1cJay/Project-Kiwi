@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class MovementMaster : UsesInputActions
 {
-    // Description in Editor
+    // Constants (cannot be serialized, must be edited here)
     private static readonly float jumpEndableTimer = 0.1f;
 
     // Other variables for internal use only

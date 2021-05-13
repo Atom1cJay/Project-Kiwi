@@ -21,9 +21,13 @@ public class CameraControl : UsesInputActions
     [SerializeField] private float vertAngleMax = 1.57f;
     [SerializeField] PlayerInput playerInput;
 
-    private void LateUpdate()
+    private void Update()
     {
         ChangeAngles();
+    }
+
+    private void LateUpdate()
+    {
         DetermineTransform();
     }
 

@@ -17,22 +17,51 @@ public class HorizontalMovement : MovementMaster
     private float currentSpeed = 0;
     private bool isStopped = true;
 
+    /// <summary>
+    /// Handles all the regular actions related to the player's horizontal movement.
+    /// </summary>
     private void FixedUpdate()
     {
-        // Get raw input in Cartesian coords
-        Vector2 rawInput = inputActions.Player.Move.ReadValue<Vector2>();
-        // In case there's any weirdness in the input device
-        if (rawInput.magnitude > 1) rawInput = rawInput.normalized;
+        Vector2 rawInput = GetRawHorizontalInput();
 
-        // Change Rotation Appropriately
         DetermineRotation(rawInput);
 
-        // Get Speed
         currentSpeed = InputUtils.SmoothedInput(currentSpeed, rawInput.magnitude * maxSpeed, sensitivity, gravity);
         isStopped = currentSpeed == 0;
 
-        // Move
-        CharCont.Move(directionOfMovement() * currentSpeed * Time.deltaTime);
+        MovePlayer();
+    }
+
+    /// <summary>
+    /// Moves the player in the appropriate direction / speed.
+    /// </summary>
+    private void MovePlayer()
+    {
+        if (IsJumping)
+        {
+            CharCont.Move(transform.forward * currentSpeed * Time.deltaTime);
+        }
+        else
+        {
+            Vector3 dir = directionOfMovement();
+            CharCont.Move(dir * currentSpeed * Time.deltaTime);
+        }
+    }
+
+    /// <summary>
+    /// Gives the normalized horizontal movement input.
+    /// </summary>
+    /// <returns></returns>
+    private Vector2 GetRawHorizontalInput()
+    {
+        Vector2 rawInput = inputActions.Player.Move.ReadValue<Vector2>();
+
+        if (rawInput.magnitude > 1)
+        {
+            rawInput = rawInput.normalized;
+        }
+
+        return rawInput;
     }
 
     /// <summary>
@@ -42,24 +71,21 @@ public class HorizontalMovement : MovementMaster
     /// <returns></returns>
     private Vector3 directionOfMovement()
     {
-        if (!IsJumping)
+        float horizAngleFaced = Mathf.Atan2(transform.forward.z, transform.forward.x);
+
+        float xDelta = Mathf.Cos(horizAngleFaced);
+        float zDelta = Mathf.Sin(horizAngleFaced);
+        float yDelta = (xDelta * PlayerSlopeHandler.XDeriv) + (zDelta * PlayerSlopeHandler.ZDeriv);
+        if (yDelta > 0) yDelta = 0;
+
+        Vector3 dir = new Vector3(xDelta, yDelta, zDelta);
+
+        if (IsOnGround)
         {
-            float horizAngleFaced = Mathf.Atan2(transform.forward.z, transform.forward.x);
-            float xDelta = Mathf.Cos(horizAngleFaced);
-            float zDelta = Mathf.Sin(horizAngleFaced);
-            Vector3 dir =
-                new Vector3(
-                    xDelta,
-                    (xDelta * PlayerSlopeHandler.X_DERIV) + (zDelta * PlayerSlopeHandler.Z_DERIV),
-                    zDelta);
-            dir = dir.normalized;
-            if (IsOnGround) dir -= new Vector3(0, Mathf.Abs(dir.y * extraDownMultiplierOnGround), 0);
-            return dir;
+            dir -= new Vector3(0, Mathf.Abs(dir.y * extraDownMultiplierOnGround), 0);
         }
-        else
-        {
-            return transform.forward;
-        }
+
+        return dir;
     }
 
     /// <summary>
