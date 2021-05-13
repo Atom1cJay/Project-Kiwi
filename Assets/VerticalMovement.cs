@@ -5,9 +5,8 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 [System.Serializable]
-public class CurveTest : UsesInputActions
+public class VerticalMovement : MovementMaster
 {
-    [SerializeField] CollisionDetector detectsGround;
     [SerializeField] private float initJumpVel;
     [SerializeField] private float initGravity;
     [SerializeField] private float maxGravity;
@@ -17,46 +16,32 @@ public class CurveTest : UsesInputActions
     [SerializeField] private float gravityIncRateAtCancel;
     [SerializeField] private float nonJumpGravity;
     private float gravity;
-    private CharacterController charCont;
     private float vertVel;
-    private bool jumping;
-    private bool jumpCancelled;
-    private bool canBeLanded;
 
-    /// <summary>
-    /// Initialization
-    /// </summary>
-    protected override void Awake2()
+    private void Start()
     {
-        charCont = GetComponent<CharacterController>();
-        inputActions.Player.Jump.performed += _ => PerformJump();
-        inputActions.Player.Jump.canceled += _ => CancelJump();
         gravity = nonJumpGravity;
     }
 
     /// <summary>
     /// Initiates a jump if the player is touching the ground.
     /// </summary>
-    private void PerformJump()
+    protected override sealed void OnJump()
     {
-        if (detectsGround.Colliding())
-        {
-            StopAllCoroutines();
-            StartCoroutine("Jump");
-        }
+        StopCoroutine("Jump");
+        StartCoroutine("Jump");
     }
 
     /// <summary>
     /// Marks a jump as cancelled (meaning the arc should begin to decrease)
     /// if we are in the proper part of the jump.
     /// </summary>
-    private void CancelJump()
+    protected sealed override void OnJumpCanceled()
     {
         // TODO point of no return
         if (vertVel > 0)
         {
             vertVel *= velocityMultiplierAtCancel;
-            jumpCancelled = true;
         }
     }
 
@@ -67,48 +52,23 @@ public class CurveTest : UsesInputActions
     /// </summary>
     private IEnumerator Jump()
     {
-        jumping = true;
-        canBeLanded = false;
-        Invoke("MakeLandable", 0.1f); // TODO better way to handle this?
-        jumpCancelled = false;
         gravity = initGravity;
         vertVel = initJumpVel;
 
-        while(!canBeLanded || !detectsGround.Colliding())
+        while(IsJumping)
         {
-            if (jumpCancelled)
+            if (JumpInputCanceled)
                 gravity += gravityIncRateAtCancel * Time.deltaTime;
             else
                 gravity += gravityIncRate * Time.deltaTime;
 
-            if (gravity > maxGravity && !jumpCancelled)
+            if (gravity > maxGravity && !JumpInputCanceled)
                 gravity = maxGravity;
-            else if (gravity > maxGravityAtCancel && jumpCancelled)
+            else if (gravity > maxGravityAtCancel && JumpInputCanceled)
                 gravity = maxGravityAtCancel;
+
             yield return new WaitForFixedUpdate();
         }
-
-        GroundVelocity();
-        jumping = false;
-    }
-
-    /// <summary>
-    /// Sets the gravity and velocity appropriately for a player
-    /// that has just grounded.
-    /// </summary>
-    private void GroundVelocity()
-    {
-        gravity = nonJumpGravity;
-        vertVel = 0;
-    }
-
-    /// <summary>
-    /// Makes it possible for the jump sequence to end (consider the player
-    /// "landed" when it hits the ground")
-    /// </summary>
-    private void MakeLandable()
-    {
-        canBeLanded = true;
     }
 
     /// <summary>
@@ -116,12 +76,26 @@ public class CurveTest : UsesInputActions
     /// </summary>
     private void Update()
     {
-        if (detectsGround.Colliding() && !jumping)
-        {
-            GroundVelocity();
-        }
         EnforceGravity();
         MoveByVertVel();
+    }
+
+    /// <summary>
+    /// Do stuff for the first frame the ground is touched
+    /// </summary>
+    protected override void OnFirstFrameGrounded()
+    {
+        // Ensure player makes direct contact ground upon hitting it
+        CharCont.Move(new Vector3(0, -1, 0));
+    }
+
+    /// <summary>
+    /// Stuff to do while on the ground
+    /// </summary>
+    protected override void FixedUpdateWhileOnGround()
+    {
+        gravity = nonJumpGravity;
+        vertVel = 0;
     }
 
     /// <summary>
@@ -129,24 +103,17 @@ public class CurveTest : UsesInputActions
     /// </summary>
     private void EnforceGravity()
     {
-        if (!detectsGround.Colliding())
+        if (!IsOnGround)
         {
             vertVel -= gravity * Time.deltaTime;
         }
     }
 
     /// <summary>
-    /// Moves by the current vertical velocity
+    /// Moves the player by the current vertical velocity
     /// </summary>
     private void MoveByVertVel()
     {
-        charCont.Move(new Vector3(0, vertVel * Time.deltaTime, 0));
-    }
-
-    // TODO This is how we'll solve slope-related issues, stay tuned
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        // print the impact point's normal
-        Debug.Log("Normal vector we collided at: " + hit.normal);
+        CharCont.Move(new Vector3(0, vertVel * Time.deltaTime, 0));
     }
 }

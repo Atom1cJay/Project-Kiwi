@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public abstract class UsesInputActions : MonoBehaviour
 {
-    protected InputActions inputActions;
+    protected InputActions inputActions { get; private set; }
 
     /// <summary>
     /// Don't override this! Use Awake2() if you want more stuff to happen on Awake() time

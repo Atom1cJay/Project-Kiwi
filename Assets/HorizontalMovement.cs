@@ -6,21 +6,16 @@ using UnityEngine;
 /// Handles all horizontal movement, and any input related to horizontal movement
 /// </summary>
 [RequireComponent(typeof(CharacterController))]
-public class HorizontalMovement : UsesInputActions
+public class HorizontalMovement : MovementMaster
 {
     [SerializeField] private GameObject cameraFacingMe;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float sensitivity;
     [SerializeField] private float gravity;
     [SerializeField] private float rotationSpeed = 800;
-    private CharacterController charCont;
+    [SerializeField] private float extraDownMultiplierOnGround;
     private float currentSpeed = 0;
     private bool isStopped = true;
-
-    protected override void Awake2()
-    {
-        charCont = GetComponent<CharacterController>();
-    }
 
     private void FixedUpdate()
     {
@@ -36,8 +31,35 @@ public class HorizontalMovement : UsesInputActions
         currentSpeed = InputUtils.SmoothedInput(currentSpeed, rawInput.magnitude * maxSpeed, sensitivity, gravity);
         isStopped = currentSpeed == 0;
 
-        // Enact Movement
-        charCont.Move(transform.forward * currentSpeed * Time.fixedDeltaTime);
+        // Move
+        CharCont.Move(directionOfMovement() * currentSpeed * Time.deltaTime);
+    }
+
+    /// <summary>
+    /// Gives the normalized direction of movement based on the player's rotation
+    /// and the slope they're standing on.
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 directionOfMovement()
+    {
+        if (!IsJumping)
+        {
+            float horizAngleFaced = Mathf.Atan2(transform.forward.z, transform.forward.x);
+            float xDelta = Mathf.Cos(horizAngleFaced);
+            float zDelta = Mathf.Sin(horizAngleFaced);
+            Vector3 dir =
+                new Vector3(
+                    xDelta,
+                    (xDelta * PlayerSlopeHandler.X_DERIV) + (zDelta * PlayerSlopeHandler.Z_DERIV),
+                    zDelta);
+            dir = dir.normalized;
+            if (IsOnGround) dir -= new Vector3(0, Mathf.Abs(dir.y * extraDownMultiplierOnGround), 0);
+            return dir;
+        }
+        else
+        {
+            return transform.forward;
+        }
     }
 
     /// <summary>
