@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Handles all camera movement and camera-related inputs
 /// </summary>
-public class CameraControl : UsesInputActions
+public class CameraControl : UsesMouseInput
 {
     [SerializeField] private Transform target; // Object to look at / surround
     [SerializeField] private float radiusToTarget; // Distance from target
@@ -21,13 +21,9 @@ public class CameraControl : UsesInputActions
     [SerializeField] private float vertAngleMax = 1.57f;
     [SerializeField] PlayerInput playerInput;
 
-    private void Update()
-    {
-        ChangeAngles();
-    }
-
     private void LateUpdate()
     {
+        ChangeAngles();
         DetermineTransform();
     }
 
@@ -43,12 +39,11 @@ public class CameraControl : UsesInputActions
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        float horizInput = inputActions.Camera.HorizontalRotate.ReadValue<float>();
-        float vertInput = inputActions.Camera.VerticalRotate.ReadValue<float>();
-
         if (playerInput.currentControlScheme == "GamePad")
         {
             // Smooth input
+            float horizInput = inputActions.Camera.HorizontalRotate.ReadValue<float>();
+            float vertInput = inputActions.Camera.VerticalRotate.ReadValue<float>();
             horizPivotSpeed = InputUtils.SmoothedInput(horizPivotSpeed, horizInput, pivotSensitivity, pivotGravity);
             vertPivotSpeed = InputUtils.SmoothedInput(vertPivotSpeed, vertInput, pivotSensitivity, pivotGravity);
             horizAngle += horizPivotSpeed * maxPivotSpeedHoriz * Time.deltaTime;
@@ -58,8 +53,8 @@ public class CameraControl : UsesInputActions
         else
         {
             // Don't smooth input
-            horizPivotSpeed = horizInput;
-            vertPivotSpeed = vertInput;
+            horizPivotSpeed = GetOldMouseInput().x; // THIS IS THE ONLY USE OF THE OLD INPUT SYSTEM IN THE GAME. IT'S BECAUSE THE 
+            vertPivotSpeed = GetOldMouseInput().y; // NEW INPUT SYSTEM WON'T SMOOTH MOUSE MOVEMENT PROPERLY.
             horizAngle += horizPivotSpeed * maxPivotSpeedHoriz * Time.deltaTime;
             vertAngle += vertPivotSpeed * maxPivotSpeedVert * Time.deltaTime;
             vertAngle = Mathf.Clamp(vertAngle, vertAngleMin, vertAngleMax);

@@ -176,7 +176,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/rightStick/y"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""VerticalRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -187,7 +187,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Mouse>/delta/y"",
                     ""interactions"": """",
                     ""processors"": ""Scale(factor=0.2)"",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""VerticalRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -198,7 +198,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/rightStick/x"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""HorizontalRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -209,7 +209,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Mouse>/delta/x"",
                     ""interactions"": """",
                     ""processors"": ""Scale(factor=0.2)"",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""HorizontalRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

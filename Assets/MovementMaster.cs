@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class MovementMaster : UsesInputActions
 {
+    // Serialized Fields
+    [SerializeField] private CollisionDetector groundDetector;
+
     // Constants (cannot be serialized, must be edited here)
     private static readonly float jumpEndableTimer = 0.1f;
 
@@ -15,14 +18,15 @@ public class MovementMaster : UsesInputActions
     protected static bool IsJumping { get; private set; }
     protected static bool JumpInputCanceled { get; private set; }
     protected static bool IsOnGround {get; private set; }
+    protected static Vector2 HorizontalInput { get; private set; }
 
     // Helpful Assets for Subclasses
     protected static CharacterController CharCont { get; private set; }
-    protected static PlayerGroundCollisionDetector GroundDetector { get; private set; }
+    protected static CollisionDetector GroundDetector { get; private set; }
 
-    // INITIALIZATION
+    // INITIALIZATION /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected sealed override void Awake2()
+    protected override void Awake2()
     {
         InitializeAssets();
         InitializeInputEvents();
@@ -30,7 +34,7 @@ public class MovementMaster : UsesInputActions
 
     private void InitializeAssets()
     {
-        GroundDetector = PlayerGroundCollisionDetector.Instance;
+        GroundDetector = groundDetector;
         CharCont = GetComponent<CharacterController>();
     }
 
@@ -40,7 +44,7 @@ public class MovementMaster : UsesInputActions
         inputActions.Player.Jump.canceled += _ => OnJumpInputCanceled();
     }
 
-    // STATE CONTROL
+    // STATE CONTROL /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void OnJumpInputPerformed()
     {
@@ -66,6 +70,17 @@ public class MovementMaster : UsesInputActions
     }
 
     private void FixedUpdate()
+    {
+        UpdateVerticalStates();
+        UpdateHorizontalStates();
+    }
+
+    /// <summary>
+    /// Decides what states the player is in terms of vertical movement,
+    /// depending on whether the player is colliding with the ground, and current
+    /// states related to jumping.
+    /// </summary>
+    private void UpdateVerticalStates()
     {
         bool touchingGround = GroundDetector.Colliding();
 
@@ -97,7 +112,31 @@ public class MovementMaster : UsesInputActions
         }
     }
 
-    // OVERRIDABLE METHODS
+    /// <summary>
+    /// Decides what states the player is in terms of horizontal movement.
+    /// </summary>
+    private void UpdateHorizontalStates()
+    {
+        HorizontalInput = GetHorizontalInput();
+    }
+
+    /// <summary>
+    /// Gives the normalized horizontal movement input.
+    /// </summary>
+    /// <returns></returns>
+    private Vector2 GetHorizontalInput()
+    {
+        Vector2 rawInput = inputActions.Player.Move.ReadValue<Vector2>();
+
+        if (rawInput.magnitude > 1)
+        {
+            rawInput = rawInput.normalized;
+        }
+
+        return rawInput;
+    }
+
+    // OVERRIDABLE METHODS /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /// <summary>
     /// KEEP THIS EMPTY IN THIS CLASS!
