@@ -16,6 +16,8 @@ public abstract class UsesInputActions : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         inputActions = new InputActions();
         Awake2();
     }

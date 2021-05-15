@@ -14,6 +14,7 @@ public class HorizontalMovement : MovementMaster
     [SerializeField] private float gravity;
     [SerializeField] private float rotationSpeed = 800;
     [SerializeField] private float stickToGroundMultiplier = 0.2f;
+    [SerializeField] private float instantRotationSpeed = 0.2f;
     private float currentSpeed = 0;
 
     /// <summary>
@@ -71,7 +72,7 @@ public class HorizontalMovement : MovementMaster
         float inputDirection = Mathf.Atan2(rawInput.x, rawInput.y) + camDirection;
         Quaternion targetRotation = Quaternion.Euler(0, inputDirection * Mathf.Rad2Deg, 0);
 
-        if (currentSpeed == 0)
+        if (currentSpeed <= instantRotationSpeed)
         {
             transform.rotation = targetRotation;
         }

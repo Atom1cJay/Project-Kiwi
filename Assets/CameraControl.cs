@@ -9,36 +9,48 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class CameraControl : UsesMouseInput
 {
+    [Header("Basic Settings")]
     [SerializeField] private Transform target; // Object to look at / surround
     [SerializeField] private float radiusToTarget; // Distance from target
+    [SerializeField] private float horizAngle = 0; // 0 = directly behind, 1.57 = to right. Initial value serialized.
+    [SerializeField] private float vertAngle = 0; // 0 = exactly aligned, 1.57 = on top. Initial value serialized.
+    [SerializeField] private float vertAngleMin = 0f;
+    [SerializeField] private float vertAngleMax = 1.57f;
+    [Header("Camera Control Settings")]
+    [SerializeField] PlayerInput playerInput;
     [SerializeField] private float pivotSensitivity;
     [SerializeField] private float pivotGravity;
     [SerializeField] private float maxPivotSpeedHoriz;
     [SerializeField] private float maxPivotSpeedVert;
-    [SerializeField] private float horizAngle = 0; // 0 = directly behind, 1.57 = to right
-    [SerializeField] private float vertAngle = 0; // 0 = exactly aligned, 1.57 = on top
-    [SerializeField] private float vertAngleMin = 0f;
-    [SerializeField] private float vertAngleMax = 1.57f;
-    [SerializeField] PlayerInput playerInput;
+    [Header("Auto Rotation Settings")] // TODO move to different script
+    [SerializeField] private float minAutoInput;
+    [SerializeField] private float autoSensitivity;
+    [SerializeField] private float autoGravity;
+    [SerializeField] private float maxAutoSpeed;
+    private float horizPivotSpeed = 0;
+    private float vertPivotSpeed = 0;
+    private float horizAutoRotSpeed = 0;
 
     private void LateUpdate()
     {
-        ChangeAngles();
+        ChangeAnglesAuto();
+        ChangeAnglesManual();
         DetermineTransform();
     }
 
-    // To be used in the below method only
-    private float horizPivotSpeed = 0;
-    private float vertPivotSpeed = 0;
+    private void ChangeAnglesAuto()
+    {
+        float autoInput = inputActions.Player.Move.ReadValue<Vector2>().x;
+        if (Mathf.Abs(autoInput) < minAutoInput) { autoInput = 0; }
+        horizAutoRotSpeed = InputUtils.SmoothedInput(horizAutoRotSpeed, autoInput, autoSensitivity, autoGravity);
+        horizAngle -= horizAutoRotSpeed * maxAutoSpeed * Time.deltaTime;
+    }
 
     /// <summary>
-    /// Changes horizontal and vertical camera angles depending on any input
+    /// Changes horizontal and vertical camera angles depending on camera-based input
     /// </summary>
-    private void ChangeAngles()
+    private void ChangeAnglesManual()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         if (playerInput.currentControlScheme == "GamePad")
         {
             // Smooth input
