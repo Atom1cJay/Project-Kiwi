@@ -1,28 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
 public class MovementMaster : UsesInputActions
 {
     // Serialized Fields
     [SerializeField] private CollisionDetector groundDetector;
-
-    // Constants (cannot be serialized, must be edited here)
-    private static readonly float jumpEndableTimer = 0.1f;
+    [SerializeField] private float jumpEndableTimer = 0.1f;
 
     // Other variables for internal use only
-    private static bool jumpEndable; // Should the jump end if player is touching ground?
+    [HideInInspector] private bool jumpEndable; // Should the jump end if player is touching ground?
 
     // State Variables for Subclasses
-    protected static bool IsJumping { get; private set; }
-    protected static bool JumpInputCanceled { get; private set; }
-    protected static bool IsOnGround {get; private set; }
-    protected static Vector2 HorizontalInput { get; private set; }
+    [HideInInspector] private bool isJumping;
+    [HideInInspector] private bool jumpInputCanceled;
+    [HideInInspector] private bool isOnGround;
 
     // Helpful Assets for Subclasses
-    protected static CharacterController CharCont { get; private set; }
-    protected static CollisionDetector GroundDetector { get; private set; }
+    [HideInInspector] private CharacterController charCont;
+
+    // UnityEvents
+    [HideInInspector] public UnityEvent mm_OnJump;
+    [HideInInspector] public UnityEvent mm_OnJumpCanceled;
+    [HideInInspector] public UnityEvent mm_OnFirstFrameGrounded;
+    [HideInInspector] public UnityEvent mm_FixedUpdateWhileInAir;
+    [HideInInspector] public UnityEvent mm_FixedUpdateWhileGrounded;
 
     // INITIALIZATION /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -34,8 +38,7 @@ public class MovementMaster : UsesInputActions
 
     private void InitializeAssets()
     {
-        GroundDetector = groundDetector;
-        CharCont = GetComponent<CharacterController>();
+        charCont = GetComponent<CharacterController>();
     }
 
     private void InitializeInputEvents()
@@ -48,31 +51,30 @@ public class MovementMaster : UsesInputActions
 
     private void OnJumpInputPerformed()
     {
-        if (IsOnGround)
+        if (isOnGround)
         {
-            JumpInputCanceled = false;
-            IsJumping = true;
+            jumpInputCanceled = false;
+            isJumping = true;
             jumpEndable = false;
-            Invoke("makeJumpEndable", jumpEndableTimer);
-            OnJump();
+            Invoke("MakeJumpEndable", jumpEndableTimer);
+            mm_OnJump.Invoke();
         }
     }
 
-    private void makeJumpEndable()
+    private void MakeJumpEndable()
     {
         jumpEndable = true;
     }
 
     private void OnJumpInputCanceled()
     {
-        JumpInputCanceled = true;
-        OnJumpCanceled();
+        jumpInputCanceled = true;
+        mm_OnJumpCanceled.Invoke();
     }
 
     private void FixedUpdate()
     {
         UpdateVerticalStates();
-        UpdateHorizontalStates();
     }
 
     /// <summary>
@@ -82,49 +84,63 @@ public class MovementMaster : UsesInputActions
     /// </summary>
     private void UpdateVerticalStates()
     {
-        bool touchingGround = GroundDetector.Colliding();
+        bool touchingGround = groundDetector.Colliding();
 
         if (touchingGround && jumpEndable)
         {
-            IsJumping = false;
+            isJumping = false;
         }
 
-        if (touchingGround && (!IsJumping || jumpEndable))
+        if (touchingGround && (!isJumping || jumpEndable))
         {
-            if (!IsOnGround)
+            if (!isOnGround)
             {
-                IsOnGround = true;
-                OnFirstFrameGrounded();
+                isOnGround = true;
+                mm_OnFirstFrameGrounded.Invoke();
             }
         }
         else
         {
-            IsOnGround = false;
+            isOnGround = false;
         }
 
-        if (IsOnGround)
+        if (isOnGround)
         {
-            FixedUpdateWhileOnGround();
+            mm_FixedUpdateWhileGrounded.Invoke();
         }
         else
         {
-            FixedUpdateWhileInAir();
+            mm_FixedUpdateWhileInAir.Invoke();
         }
     }
 
-    /// <summary>
-    /// Decides what states the player is in terms of horizontal movement.
-    /// </summary>
-    private void UpdateHorizontalStates()
+    // GETTERS ////////////////////////////////////////////////////////////////////////////
+
+    public bool IsJumping()
     {
-        HorizontalInput = GetHorizontalInput();
+        return isJumping;
+    }
+
+    public bool JumpInputCancelled()
+    {
+        return jumpInputCanceled;
+    }
+
+    public bool IsOnGround()
+    {
+        return isOnGround;
+    }
+
+    public CharacterController GetCharacterController()
+    {
+        return charCont;
     }
 
     /// <summary>
     /// Gives the normalized horizontal movement input.
     /// </summary>
     /// <returns></returns>
-    private Vector2 GetHorizontalInput()
+    public Vector2 GetHorizontalInput()
     {
         Vector2 rawInput = inputActions.Player.Move.ReadValue<Vector2>();
 
@@ -135,38 +151,4 @@ public class MovementMaster : UsesInputActions
 
         return rawInput;
     }
-
-    // OVERRIDABLE METHODS /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /// <summary>
-    /// KEEP THIS EMPTY IN THIS CLASS!
-    /// Override this in any subclasses if you want to do something the frame the input for jumping is performed
-    /// </summary>
-    protected virtual void OnJump() { }
-
-    /// <summary>
-    /// KEEP THIS EMPTY IN THIS CLASS!
-    /// Override this in any subclasses if you want to do something the frame the input for jumping is canceled
-    /// </summary>
-    protected virtual void OnJumpCanceled() { }
-
-    /// <summary>
-    /// KEEP THIS EMPTY IN THIS CLASS!
-    /// Override this in any subclasses if you want to do something the frame the player gets grounded
-    /// </summary>
-    protected virtual void OnFirstFrameGrounded() { }
-
-    /// <summary>
-    /// KEEP THIS EMPTY IN THIS CLASS!
-    /// Override this in any subclasses if you want to do something while the player is in the air.
-    /// Uses the FixedUpdate timestep
-    /// </summary>
-    protected virtual void FixedUpdateWhileInAir() { }
-
-    /// <summary>
-    /// KEEP THIS EMPTY IN THIS CLASS!
-    /// Override this in any subclasses if you want to do something while the player is on the ground.
-    /// Uses the FixedUpdate timestep
-    /// </summary>
-    protected virtual void FixedUpdateWhileOnGround() { }
 }

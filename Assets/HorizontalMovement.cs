@@ -6,16 +6,23 @@ using UnityEngine;
 /// Handles all movement unrelated to gravity and/or jumping.
 /// </summary>
 [RequireComponent(typeof(CharacterController))]
-public class HorizontalMovement : MovementMaster
+[RequireComponent(typeof(MovementMaster))]
+public class HorizontalMovement : MonoBehaviour
 {
     [SerializeField] private GameObject relevantCamera;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float sensitivity;
     [SerializeField] private float gravity;
-    [SerializeField] private float rotationSpeed = 800;
+    [SerializeField] private float airSensitivity;
+    [SerializeField] private float airGravity;
     [SerializeField] private float stickToGroundMultiplier = 0.2f;
-    [SerializeField] private float instantRotationSpeed = 0.2f;
     private float currentSpeed = 0;
+    private MovementMaster mm;
+
+    private void Awake()
+    {
+        mm = GetComponent<MovementMaster>();
+    }
 
     /// <summary>
     /// Handles all the regular actions related to the player's horizontal movement.
@@ -23,8 +30,15 @@ public class HorizontalMovement : MovementMaster
     /// </summary>
     private void FixedUpdate()
     {
-        DetermineRotation(HorizontalInput);
-        currentSpeed = InputUtils.SmoothedInput(currentSpeed, HorizontalInput.magnitude * maxSpeed, sensitivity, gravity);
+        if (mm.IsOnGround())
+        {
+            currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * maxSpeed, sensitivity, gravity);
+        }
+        else
+        {
+            currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * maxSpeed, airSensitivity, airGravity);
+        }
+
         MovePlayer();
     }
 
@@ -34,17 +48,16 @@ public class HorizontalMovement : MovementMaster
     private void MovePlayer()
     {
         Vector3 dir = DirectionOfMovement();
-        CharCont.Move(dir * currentSpeed * Time.deltaTime);
+        mm.GetCharacterController().Move(dir * currentSpeed * Time.deltaTime);
     }
 
     /// <summary>
     /// Gives the direction of player movement based on the player's rotation
     /// and the slope they're standing on.
     /// </summary>
-    /// <returns></returns>
     private Vector3 DirectionOfMovement()
     {
-        if (IsJumping) return transform.forward;
+        if (mm.IsJumping()) return transform.forward;
 
         float horizAngleFaced = Mathf.Atan2(transform.forward.z, transform.forward.x);
 
@@ -54,32 +67,27 @@ public class HorizontalMovement : MovementMaster
 
         // Fixing the quirks of y movement
         if (yDelta > 0) yDelta = 0; // CharacterController will take care of ascension
-        if (IsOnGround) yDelta -= Mathf.Abs(yDelta * stickToGroundMultiplier); // To keep player stuck to ground
+        if (mm.IsOnGround()) yDelta -= Mathf.Abs(yDelta * stickToGroundMultiplier); // To keep player stuck to ground
 
         Vector3 dir = new Vector3(xDelta, yDelta, zDelta);
+        if (dir.magnitude > 1) { dir = dir.normalized; }
         return dir;
     }
 
     /// <summary>
-    /// Given the horizontal input, appropriately rotates the player considering the state they're in
+    /// Returns the camera used in calculating horizontal movement directions.
     /// </summary>
-    /// <param name="rawInput">The input whose direction will be rotated towards</param>
-    private void DetermineRotation(Vector2 rawInput)
+    public GameObject GetRelevantCamera()
     {
-        if (rawInput.magnitude == 0) return;
-
-        float camDirection = relevantCamera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
-        float inputDirection = Mathf.Atan2(rawInput.x, rawInput.y) + camDirection;
-        Quaternion targetRotation = Quaternion.Euler(0, inputDirection * Mathf.Rad2Deg, 0);
-
-        if (currentSpeed <= instantRotationSpeed)
-        {
-            transform.rotation = targetRotation;
-        }
-        else
-        {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        }
+        return relevantCamera;
     }
-    // TODO should be put in a different class?
+
+    /// <summary>
+    /// Returns the speed at which the player is currently moving in any
+    /// horizontal-related movement.
+    /// </summary>
+    public float GetSpeed()
+    {
+        return currentSpeed;
+    }
 }

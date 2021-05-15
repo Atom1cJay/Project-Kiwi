@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(CameraUtils))]
-public class CameraControl : UsesMouseInput
+public class CameraControl : UsesInputActions
 {
     [SerializeField] private float pivotSensitivity;
     [SerializeField] private float pivotGravity;
