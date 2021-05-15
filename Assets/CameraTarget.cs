@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Controls the object which the camera is made to focus on
 /// </summary>
-public class CameraFocus : MonoBehaviour
+public class CameraTarget : MonoBehaviour
 {
     // Basic Needs
     [SerializeField] private Transform player;
@@ -15,8 +15,6 @@ public class CameraFocus : MonoBehaviour
     [SerializeField] float sensitivity;
     [SerializeField] float minViewportY;
     [SerializeField] float maxViewportY;
-    [SerializeField] float minViewportZ;
-    [SerializeField] float maxViewportZ;
 
     private void Start()
     {

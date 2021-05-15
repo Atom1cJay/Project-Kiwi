@@ -8,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class HorizontalMovement : MovementMaster
 {
-    [SerializeField] private GameObject cameraFacingMe;
+    [SerializeField] private GameObject relevantCamera;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float sensitivity;
     [SerializeField] private float gravity;
@@ -68,7 +68,7 @@ public class HorizontalMovement : MovementMaster
     {
         if (rawInput.magnitude == 0) return;
 
-        float camDirection = cameraFacingMe.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
+        float camDirection = relevantCamera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
         float inputDirection = Mathf.Atan2(rawInput.x, rawInput.y) + camDirection;
         Quaternion targetRotation = Quaternion.Euler(0, inputDirection * Mathf.Rad2Deg, 0);
 
