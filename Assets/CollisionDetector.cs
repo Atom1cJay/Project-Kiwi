@@ -5,6 +5,7 @@ using UnityEngine;
 public class CollisionDetector : MonoBehaviour
 {
     private bool isColliding;
+    private GameObject collidingWith = null;
     [SerializeField] private List<GameObject> gameObjectsToIgnore;
 
     private void OnTriggerStay(Collider other)
@@ -12,6 +13,7 @@ public class CollisionDetector : MonoBehaviour
         if (!gameObjectsToIgnore.Contains(other.gameObject))
         {
             isColliding = true;
+            collidingWith = other.gameObject;
         }
     }
 
@@ -26,6 +28,7 @@ public class CollisionDetector : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         isColliding = false;
+        collidingWith = null;
     }
 
     /// <summary>
@@ -35,5 +38,15 @@ public class CollisionDetector : MonoBehaviour
     public bool Colliding()
     {
         return isColliding;
+    }
+
+    /// <summary>
+    /// Returns the object this collider is currently colliding with. Returns
+    /// null if there is no such object.
+    /// </summary>
+    /// <returns></returns>
+    public GameObject CollidingWith()
+    {
+        return collidingWith;
     }
 }

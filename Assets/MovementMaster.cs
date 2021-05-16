@@ -9,17 +9,20 @@ public class MovementMaster : UsesInputActions
     // Serialized Fields
     [SerializeField] private CollisionDetector groundDetector;
     [SerializeField] private float jumpEndableTimer = 0.1f;
+    [SerializeField] private float reverseCoyoteTime;
+    [SerializeField] private float coyoteTime;
 
     // Other variables for internal use only
-    [HideInInspector] private bool jumpEndable; // Should the jump end if player is touching ground?
+    private bool jumpEndable; // Should the jump end if player is touching ground?
+    private bool inCoyoteTime;
 
     // State Variables for Subclasses
-    [HideInInspector] private bool isJumping;
-    [HideInInspector] private bool jumpInputCanceled;
-    [HideInInspector] private bool isOnGround;
+    private bool isJumping;
+    private bool jumpInputCanceled;
+    private bool isOnGround;
 
     // Helpful Assets for Subclasses
-    [HideInInspector] private CharacterController charCont;
+    private CharacterController charCont;
 
     // UnityEvents
     [HideInInspector] public UnityEvent mm_OnJump;
@@ -51,13 +54,47 @@ public class MovementMaster : UsesInputActions
 
     private void OnJumpInputPerformed()
     {
-        if (isOnGround)
+        if (isOnGround || inCoyoteTime)
         {
-            jumpInputCanceled = false;
-            isJumping = true;
-            jumpEndable = false;
-            Invoke("MakeJumpEndable", jumpEndableTimer);
-            mm_OnJump.Invoke();
+            Jump();
+        }
+
+        if (!isOnGround && !inCoyoteTime)
+        {
+            StartCoroutine("ReverseCoyoteTime");
+        }
+    }
+
+    private void Jump()
+    {
+        jumpInputCanceled = false;
+        isJumping = true;
+        jumpEndable = false;
+        Invoke("MakeJumpEndable", jumpEndableTimer);
+        mm_OnJump.Invoke();
+    }
+
+    IEnumerator ReverseCoyoteTime()
+    {
+        float timePassed = 0f;
+
+        while (timePassed < reverseCoyoteTime)
+        {
+            bool pressingJump = inputActions.Player.Jump.ReadValue<float>() > 0;
+
+            if (isOnGround && pressingJump)
+            {
+                Jump();
+                timePassed = reverseCoyoteTime;
+            }
+
+            if (!pressingJump)
+            {
+                timePassed = reverseCoyoteTime;
+            }
+
+            timePassed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
     }
 
@@ -77,11 +114,6 @@ public class MovementMaster : UsesInputActions
         UpdateVerticalStates();
     }
 
-    /// <summary>
-    /// Decides what states the player is in terms of vertical movement,
-    /// depending on whether the player is colliding with the ground, and current
-    /// states related to jumping.
-    /// </summary>
     private void UpdateVerticalStates()
     {
         bool touchingGround = groundDetector.Colliding();
@@ -91,19 +123,35 @@ public class MovementMaster : UsesInputActions
             isJumping = false;
         }
 
+        // Decide if is on ground
         if (touchingGround && (!isJumping || jumpEndable))
         {
+            // On ground
+
             if (!isOnGround)
             {
+                // First frame on ground
                 isOnGround = true;
                 mm_OnFirstFrameGrounded.Invoke();
             }
         }
         else
         {
-            isOnGround = false;
+            // Off ground
+
+            if (isOnGround)
+            {
+                // First frame off ground
+                isOnGround = false;
+
+                if (!isJumping)
+                {
+                    StartCoroutine("CoyoteTime");
+                }
+            }
         }
 
+        // Invoke things based on whether is on ground
         if (isOnGround)
         {
             mm_FixedUpdateWhileGrounded.Invoke();
@@ -112,6 +160,20 @@ public class MovementMaster : UsesInputActions
         {
             mm_FixedUpdateWhileInAir.Invoke();
         }
+    }
+
+    IEnumerator CoyoteTime()
+    {
+        float timePassed = 0f;
+        inCoyoteTime = true;
+
+        while (timePassed < coyoteTime && !isJumping)
+        {
+            timePassed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        inCoyoteTime = false;
     }
 
     // GETTERS ////////////////////////////////////////////////////////////////////////////
@@ -150,5 +212,14 @@ public class MovementMaster : UsesInputActions
         }
 
         return rawInput;
+    }
+
+    /// <summary>
+    /// Gives the ground detector being used in player movement calculations.
+    /// </summary>
+    /// <returns>The ground detector being used by the player.</returns>
+    public CollisionDetector GetGroundDetector()
+    {
+        return groundDetector;
     }
 }

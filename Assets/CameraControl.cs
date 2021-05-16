@@ -35,6 +35,7 @@ public class CameraControl : UsesInputActions
     /// </summary>
     private void ChangeAngles()
     {
+        // TODO smoothen input properly (actually understanding where the input comes from)
         if (playerInput.currentControlScheme == "GamePad")
         {
             // Smooth input
