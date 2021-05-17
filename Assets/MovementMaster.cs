@@ -11,12 +11,21 @@ public class MovementMaster : UsesInputActions
     // Serialized Fields
     [SerializeField] private GameObject relevantCamera;
     [SerializeField] private CollisionDetector groundDetector;
+    [Header("Jumping Settings")]
     [SerializeField] private float jumpEndableTimer = 0.1f;
+    [Header("Coyote Time Settings")]
     [SerializeField] private float reverseCoyoteTime;
     [SerializeField] private float coyoteTime;
+    [Header("Hard Turn Settings")]
     [SerializeField] private float dissonanceForHardTurn;
     [SerializeField] private float hardTurnMinSpeed;
     [SerializeField] private float hardTurnTime;
+    [Header("Triple Jump Settings")]
+    [SerializeField] private float tjMinInputMagnitude;
+    [SerializeField] private float tjMaxTimeBtwnJumps;
+    [SerializeField] private float tjMinJumpTime;
+    [SerializeField] private float tjMaxJumpTime;
+    [SerializeField] private float tjMaxDissonance;
 
     // Other variables for internal use only
     private bool isJumping;
@@ -25,6 +34,9 @@ public class MovementMaster : UsesInputActions
     private bool jumpInputCanceled;
     private bool isOnGround;
     private bool isInHardTurn;
+    private float tjCurJumpTime; // The elapsed time for the current jump. 0 if there is no jump happening.
+    private float tjTimeBtwnJumps;
+    private int tjJumpCount; // The amount of jumps built up for a triple jump so far.
 
     // Helpful Assets for Subclasses
     private CharacterController charCont;
@@ -76,6 +88,9 @@ public class MovementMaster : UsesInputActions
 
     private void Jump()
     {
+        tjJumpCount = (tjTimeBtwnJumps > tjMaxTimeBtwnJumps) ? 1 : tjJumpCount + 1;
+        tjCurJumpTime = 0;
+        tjTimeBtwnJumps = 0;
         jumpInputCanceled = false;
         isJumping = true;
         jumpEndable = false;
@@ -122,6 +137,8 @@ public class MovementMaster : UsesInputActions
     {
         UpdateVerticalStates();
         UpdateHorizontalStates();
+        UpdateTripleJumpStatus();
+        print(inputActions.Player.Boost.ReadValue<float>());
     }
 
     private void UpdateVerticalStates()
@@ -141,6 +158,10 @@ public class MovementMaster : UsesInputActions
             if (!isOnGround)
             {
                 // First frame on ground
+                if (tjJumpCount == 3 || tjCurJumpTime > tjMaxJumpTime || tjCurJumpTime < tjMinJumpTime)
+                    tjJumpCount = 0;
+                tjCurJumpTime = 0;
+                tjTimeBtwnJumps = 0;
                 isOnGround = true;
                 mm_OnFirstFrameGrounded.Invoke();
             }
@@ -206,6 +227,24 @@ public class MovementMaster : UsesInputActions
     {
         isInHardTurn = false;
         mm_OnHardTurnEnd.Invoke();
+    }
+
+    private void UpdateTripleJumpStatus()
+    {
+        if (isJumping)
+        {
+            tjCurJumpTime += Time.fixedDeltaTime;
+        }
+        else
+        {
+            tjTimeBtwnJumps += Time.fixedDeltaTime;
+        }
+
+        // Cancel
+        if (tjJumpCount != 3 && (GetHorizDissonance() > tjMaxDissonance || GetHorizontalInput().magnitude < tjMinInputMagnitude))
+        {
+            tjJumpCount = 0;
+        }
     }
 
     /// <summary>
@@ -289,5 +328,10 @@ public class MovementMaster : UsesInputActions
     public GameObject GetRelevantCamera()
     {
         return relevantCamera;
+    }
+
+    public bool inTripleJump()
+    {
+        return tjJumpCount == 3;
     }
 }

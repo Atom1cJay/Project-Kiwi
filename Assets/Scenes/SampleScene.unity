@@ -3510,6 +3510,13 @@ MonoBehaviour:
   velocityMultiplierAtCancel: 0.5
   gravityIncRate: 100
   gravityIncRateAtCancel: 150
+  tjInitJumpVel: 9
+  tjInitGravity: 0
+  tjMaxGravity: 17
+  tjMaxGravityAtCancel: 17
+  tjVelocityMultiplierAtCancel: 1
+  tjGravityIncRate: 100
+  tjGravityIncRateAtCancel: 100
   nonJumpGravity: 20
 --- !u!114 &544227819
 MonoBehaviour:
@@ -3523,13 +3530,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de3b17f9960e44fb89a5eed1abd6113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5.5
+  maxSpeed: 5
   sensitivity: 7
-  gravity: 20
-  airSensitivity: 7
-  airGravity: 15
+  gravity: 15
+  airSensitivity: 4
+  airGravity: 8
+  tjAirSensitivity: 4
+  tjAirGravity: 5
   stickToGroundMultiplier: 0.2
-  hardTurnSpeedMultiplier: 0.2
+  hardTurnSpeedMultiplier: 0.1
 --- !u!114 &544227820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3562,6 +3571,11 @@ MonoBehaviour:
   dissonanceForHardTurn: 2
   hardTurnMinSpeed: 4
   hardTurnTime: 0.2
+  tjMinInputMagnitude: 0.9
+  tjMaxTimeBtwnJumps: 0.2
+  tjMinJumpTime: 0.5
+  tjMaxJumpTime: 1.5
+  tjMaxDissonance: 0.3
   mm_OnJump:
     m_PersistentCalls:
       m_Calls: []

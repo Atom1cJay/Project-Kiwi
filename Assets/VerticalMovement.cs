@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 [System.Serializable]
 public class VerticalMovement : MonoBehaviour
 {
+    [Header("Regular Jump")]
     [SerializeField] private float initJumpVel;
     [SerializeField] private float initGravity;
     [SerializeField] private float maxGravity;
@@ -14,6 +15,15 @@ public class VerticalMovement : MonoBehaviour
     [SerializeField] private float velocityMultiplierAtCancel = 0.5f;
     [SerializeField] private float gravityIncRate;
     [SerializeField] private float gravityIncRateAtCancel;
+    [Header("Triple Jump")]
+    [SerializeField] private float tjInitJumpVel;
+    [SerializeField] private float tjInitGravity;
+    [SerializeField] private float tjMaxGravity;
+    [SerializeField] private float tjMaxGravityAtCancel;
+    [SerializeField] private float tjVelocityMultiplierAtCancel = 0.5f;
+    [SerializeField] private float tjGravityIncRate;
+    [SerializeField] private float tjGravityIncRateAtCancel;
+    [Header("Non-Jumping")]
     [SerializeField] private float nonJumpGravity;
     private float gravity;
     private float vertVel;
@@ -38,8 +48,18 @@ public class VerticalMovement : MonoBehaviour
     /// </summary>
     private void OnJump()
     {
-        StopCoroutine("Jump");
-        StartCoroutine("Jump");
+        if (mm.inTripleJump())
+        {
+            StopCoroutine("Jump");
+            StopCoroutine("TripleJump");
+            StartCoroutine("TripleJump");
+        }
+        else
+        {
+            StopCoroutine("Jump");
+            StopCoroutine("TripleJump");
+            StartCoroutine("Jump");
+        }
     }
 
     /// <summary>
@@ -51,7 +71,14 @@ public class VerticalMovement : MonoBehaviour
         // TODO point of no return
         if (vertVel > 0)
         {
-            vertVel *= velocityMultiplierAtCancel;
+            if (mm.inTripleJump())
+            {
+                vertVel *= tjVelocityMultiplierAtCancel;
+            }
+            else
+            {
+                vertVel *= velocityMultiplierAtCancel;
+            }
         }
     }
 
@@ -76,6 +103,32 @@ public class VerticalMovement : MonoBehaviour
                 gravity = maxGravity;
             else if (gravity > maxGravityAtCancel && mm.JumpInputCancelled())
                 gravity = maxGravityAtCancel;
+
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    /// <summary>
+    /// Manipulates the gravity (and, initially, the vertical velocity) in order
+    /// to simulate a triple jump. If the jump is cancelled, modifies the arc
+    /// the player is on.
+    /// </summary>
+    private IEnumerator TripleJump()
+    {
+        gravity = tjInitGravity;
+        vertVel = tjInitJumpVel;
+
+        while (mm.IsJumping())
+        {
+            if (mm.JumpInputCancelled())
+                gravity += tjGravityIncRateAtCancel * Time.deltaTime;
+            else
+                gravity += tjGravityIncRate * Time.deltaTime;
+
+            if (gravity > tjMaxGravity && !mm.JumpInputCancelled())
+                gravity = tjMaxGravity;
+            else if (gravity > tjMaxGravityAtCancel && mm.JumpInputCancelled())
+                gravity = tjMaxGravityAtCancel;
 
             yield return new WaitForFixedUpdate();
         }

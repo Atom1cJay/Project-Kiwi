@@ -14,6 +14,8 @@ public class HorizontalMovement : MonoBehaviour
     [SerializeField] private float gravity;
     [SerializeField] private float airSensitivity;
     [SerializeField] private float airGravity;
+    [SerializeField] private float tjAirSensitivity;
+    [SerializeField] private float tjAirGravity;
     [SerializeField] private float stickToGroundMultiplier = 0.2f;
     [SerializeField] private float hardTurnSpeedMultiplier;
     private float currentSpeed = 0;
@@ -43,7 +45,12 @@ public class HorizontalMovement : MonoBehaviour
 
     private void DecideCurrentSpeed()
     {
-        if (!mm.IsInHardTurn() && mm.IsOnGround())
+        if (mm.inTripleJump())
+        {
+            print("Yeah");
+            currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * maxSpeed, tjAirSensitivity, tjAirGravity);
+        }
+        else if (!mm.IsInHardTurn() && mm.IsOnGround())
         {
             currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * maxSpeed, sensitivity, gravity);
         }
