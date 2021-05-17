@@ -9,19 +9,20 @@ using UnityEngine;
 [RequireComponent(typeof(MovementMaster))]
 public class HorizontalMovement : MonoBehaviour
 {
-    [SerializeField] private GameObject relevantCamera;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float sensitivity;
     [SerializeField] private float gravity;
     [SerializeField] private float airSensitivity;
     [SerializeField] private float airGravity;
     [SerializeField] private float stickToGroundMultiplier = 0.2f;
+    [SerializeField] private float hardTurnSpeedMultiplier;
     private float currentSpeed = 0;
     private MovementMaster mm;
 
     private void Awake()
     {
         mm = GetComponent<MovementMaster>();
+        mm.mm_OnHardTurnStart.AddListener(OnHardTurnStart);
     }
 
     /// <summary>
@@ -30,16 +31,26 @@ public class HorizontalMovement : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        if (mm.IsOnGround())
+        DecideCurrentSpeed();
+        MovePlayer();
+
+    }
+
+    private void OnHardTurnStart()
+    {
+        currentSpeed *= this.hardTurnSpeedMultiplier;
+    }
+
+    private void DecideCurrentSpeed()
+    {
+        if (!mm.IsInHardTurn() && mm.IsOnGround())
         {
             currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * maxSpeed, sensitivity, gravity);
         }
-        else
+        else if (!mm.IsInHardTurn())
         {
             currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * maxSpeed, airSensitivity, airGravity);
         }
-
-        MovePlayer();
     }
 
     /// <summary>
@@ -75,14 +86,6 @@ public class HorizontalMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns the camera used in calculating horizontal movement directions.
-    /// </summary>
-    public GameObject GetRelevantCamera()
-    {
-        return relevantCamera;
-    }
-
-    /// <summary>
     /// Returns the speed at which the player is currently moving in any
     /// horizontal-related movement.
     /// </summary>
@@ -90,4 +93,5 @@ public class HorizontalMovement : MonoBehaviour
     {
         return currentSpeed;
     }
+
 }

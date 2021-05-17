@@ -3523,13 +3523,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de3b17f9960e44fb89a5eed1abd6113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  relevantCamera: {fileID: 963194225}
   maxSpeed: 5.5
   sensitivity: 7
   gravity: 20
   airSensitivity: 7
   airGravity: 15
   stickToGroundMultiplier: 0.2
+  hardTurnSpeedMultiplier: 0.2
 --- !u!114 &544227820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3554,10 +3554,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4830649ad6efd46f7928ac830af37fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relevantCamera: {fileID: 963194225}
   groundDetector: {fileID: 1374974193}
   jumpEndableTimer: 0.1
   reverseCoyoteTime: 0.15
   coyoteTime: 0.08
+  dissonanceForHardTurn: 2
+  hardTurnMinSpeed: 4
+  hardTurnTime: 0.2
   mm_OnJump:
     m_PersistentCalls:
       m_Calls: []
@@ -3571,6 +3575,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   mm_FixedUpdateWhileGrounded:
+    m_PersistentCalls:
+      m_Calls: []
+  mm_OnHardTurnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  mm_OnHardTurnEnd:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &544227822
@@ -8819,6 +8829,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0d182bfa-c72b-4099-8ae4-6c0204baefd0
     m_ActionName: Camera/VerticalRotate[/DualShock4GamepadHID/rightStick/y,/Mouse/delta/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9827d522-3c05-4a73-99c3-a820bb166ce4
+    m_ActionName: Player/Boost[/DualShock4GamepadHID/rightTrigger,/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: GamePad
   m_DefaultActionMap: Camera

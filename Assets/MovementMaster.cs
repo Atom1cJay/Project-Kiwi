@@ -2,27 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(HorizontalMovement))]
 [RequireComponent(typeof(CharacterController))]
 public class MovementMaster : UsesInputActions
 {
     // Serialized Fields
+    [SerializeField] private GameObject relevantCamera;
     [SerializeField] private CollisionDetector groundDetector;
     [SerializeField] private float jumpEndableTimer = 0.1f;
     [SerializeField] private float reverseCoyoteTime;
     [SerializeField] private float coyoteTime;
+    [SerializeField] private float dissonanceForHardTurn;
+    [SerializeField] private float hardTurnMinSpeed;
+    [SerializeField] private float hardTurnTime;
 
     // Other variables for internal use only
+    private bool isJumping;
     private bool jumpEndable; // Should the jump end if player is touching ground?
     private bool inCoyoteTime;
-
-    // State Variables for Subclasses
-    private bool isJumping;
     private bool jumpInputCanceled;
     private bool isOnGround;
+    private bool isInHardTurn;
 
     // Helpful Assets for Subclasses
     private CharacterController charCont;
+    private HorizontalMovement horizMove;
 
     // UnityEvents
     [HideInInspector] public UnityEvent mm_OnJump;
@@ -30,6 +36,8 @@ public class MovementMaster : UsesInputActions
     [HideInInspector] public UnityEvent mm_OnFirstFrameGrounded;
     [HideInInspector] public UnityEvent mm_FixedUpdateWhileInAir;
     [HideInInspector] public UnityEvent mm_FixedUpdateWhileGrounded;
+    [HideInInspector] public UnityEvent mm_OnHardTurnStart;
+    [HideInInspector] public UnityEvent mm_OnHardTurnEnd;
 
     // INITIALIZATION /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -42,6 +50,7 @@ public class MovementMaster : UsesInputActions
     private void InitializeAssets()
     {
         charCont = GetComponent<CharacterController>();
+        horizMove = GetComponent<HorizontalMovement>();
     }
 
     private void InitializeInputEvents()
@@ -112,6 +121,7 @@ public class MovementMaster : UsesInputActions
     private void FixedUpdate()
     {
         UpdateVerticalStates();
+        UpdateHorizontalStates();
     }
 
     private void UpdateVerticalStates()
@@ -176,6 +186,43 @@ public class MovementMaster : UsesInputActions
         inCoyoteTime = false;
     }
 
+    private void UpdateHorizontalStates()
+    {
+        if (GetHorizDissonance() > dissonanceForHardTurn && horizMove.GetSpeed() > hardTurnMinSpeed && !isInHardTurn && isOnGround)
+        {
+            // First frame of hard turn
+            StartHardTurn();
+        }
+    }
+
+    private void StartHardTurn()
+    {
+        isInHardTurn = true;
+        mm_OnHardTurnStart.Invoke();
+        Invoke("EndHardTurn", hardTurnTime);
+    }
+
+    private void EndHardTurn()
+    {
+        isInHardTurn = false;
+        mm_OnHardTurnEnd.Invoke();
+    }
+
+    /// <summary>
+    /// Gives the distance (min = 0, max = PI) between the direction the player is facing and the
+    /// direction of horizontal input
+    /// </summary>
+    /// <returns></returns>
+    private float GetHorizDissonance()
+    {
+        Vector2 rawInput = GetHorizontalInput();
+        float camDirection = relevantCamera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
+        float directionFacing = transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
+        float inputDirection = Mathf.Atan2(rawInput.x, rawInput.y) + camDirection;
+        float inputVsFacing = Mathf.PI - Mathf.Abs(Mathf.Abs((inputDirection - directionFacing) % (2 * Mathf.PI)) - Mathf.PI);
+        return inputVsFacing;
+    }
+
     // GETTERS ////////////////////////////////////////////////////////////////////////////
 
     public bool IsJumping()
@@ -196,6 +243,11 @@ public class MovementMaster : UsesInputActions
     public CharacterController GetCharacterController()
     {
         return charCont;
+    }
+
+    public float GetHorizSpeed()
+    {
+        return horizMove.GetSpeed();
     }
 
     /// <summary>
@@ -221,5 +273,21 @@ public class MovementMaster : UsesInputActions
     public CollisionDetector GetGroundDetector()
     {
         return groundDetector;
+    }
+
+    /// <summary>
+    /// Is the player in the middle of a hard turn?
+    /// </summary>
+    public bool IsInHardTurn()
+    {
+        return isInHardTurn;
+    }
+
+    /// <summary>
+    /// Gives the camera being used in player movement calculations.
+    /// </summary>
+    public GameObject GetRelevantCamera()
+    {
+        return relevantCamera;
     }
 }
