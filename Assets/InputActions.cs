@@ -224,6 +224,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""adfbe921-de32-4297-a20f-79812f6c59aa"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/rz"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""VerticalRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""abbd9502-6411-4d82-b2d2-b6ae2c0d6bb4"",
                     ""path"": ""<Gamepad>/rightStick/x"",
                     ""interactions"": """",
@@ -240,6 +251,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": ""Scale(factor=0.3)"",
                     ""groups"": ""Keyboard"",
+                    ""action"": ""HorizontalRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93d3570e-eb6d-48c0-90b8-62ee3def3a89"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""HorizontalRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

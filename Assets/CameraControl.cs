@@ -36,7 +36,7 @@ public class CameraControl : UsesInputActions
     private void ChangeAngles()
     {
         // TODO smoothen input properly (actually understanding where the input comes from)
-        if (playerInput.currentControlScheme == "GamePad")
+        if (playerInput.currentControlScheme == "GamePad" || true)
         {
             // Smooth input
             float horizInput = inputActions.Camera.HorizontalRotate.ReadValue<float>();
