@@ -58,11 +58,6 @@ public class RotationMovement : MonoBehaviour
         {
             return 0;
         }
-
-        if (mm.InAirBoostChargeAftermath())
-        {
-            return boostAftermathRotationSpeed;
-        }
         
         return mm.IsOnGround() ? groundRotationSpeed : airRotationSpeed;
     }
