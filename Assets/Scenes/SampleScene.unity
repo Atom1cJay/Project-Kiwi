@@ -3518,6 +3518,9 @@ MonoBehaviour:
   tjGravityIncRate: 100
   tjGravityIncRateAtCancel: 100
   nonJumpGravity: 20
+  airBoostChargeVel: 0
+  airBoostGravity: 7
+  airBoostEndGravity: 12
 --- !u!114 &544227819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3534,11 +3537,13 @@ MonoBehaviour:
   sensitivity: 7
   gravity: 15
   airSensitivity: 4
-  airGravity: 8
+  airGravity: 4
   tjAirSensitivity: 4
   tjAirGravity: 5
   stickToGroundMultiplier: 0.2
-  hardTurnSpeedMultiplier: 0.1
+  hardTurnSpeedMultiplier: 0.2
+  airBoostSpeed: 9
+  airBoostChargeGravity: 12
 --- !u!114 &544227820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3568,7 +3573,7 @@ MonoBehaviour:
   jumpEndableTimer: 0.1
   reverseCoyoteTime: 0.15
   coyoteTime: 0.08
-  dissonanceForHardTurn: 2
+  dissonanceForHardTurn: 1.8
   hardTurnMinSpeed: 4
   hardTurnTime: 0.2
   tjMinInputMagnitude: 0.9
@@ -3576,6 +3581,9 @@ MonoBehaviour:
   tjMinJumpTime: 0.5
   tjMaxJumpTime: 1.5
   tjMaxDissonance: 0.3
+  airBoostMaxChargeTime: 0.6
+  airBoostMaxTime: 0.3
+  dissonanceForAirReverse: 1.8
   mm_OnJump:
     m_PersistentCalls:
       m_Calls: []
@@ -3597,6 +3605,15 @@ MonoBehaviour:
   mm_OnHardTurnEnd:
     m_PersistentCalls:
       m_Calls: []
+  mm_OnAirBoostChargeStart:
+    m_PersistentCalls:
+      m_Calls: []
+  mm_OnAirBoostStart:
+    m_PersistentCalls:
+      m_Calls: []
+  mm_OnAirBoostEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &544227822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3611,7 +3628,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instantRotationSpeed: 0.2
   groundRotationSpeed: 800
-  airRotationSpeed: 400
+  airRotationSpeed: 250
 --- !u!1 &565979448
 GameObject:
   m_ObjectHideFlags: 0

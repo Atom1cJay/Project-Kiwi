@@ -25,6 +25,9 @@ public class VerticalMovement : MonoBehaviour
     [SerializeField] private float tjGravityIncRateAtCancel;
     [Header("Non-Jumping")]
     [SerializeField] private float nonJumpGravity;
+    [SerializeField] private float airBoostChargeVel;
+    [SerializeField] private float airBoostGravity;
+    [SerializeField] private float airBoostEndGravity;
     private float gravity;
     private float vertVel;
     private MovementMaster mm;
@@ -36,6 +39,9 @@ public class VerticalMovement : MonoBehaviour
         mm.mm_OnJumpCanceled.AddListener(OnJumpCanceled);
         mm.mm_OnFirstFrameGrounded.AddListener(OnFirstFrameGrounded);
         mm.mm_FixedUpdateWhileGrounded.AddListener(FixedUpdateWhileOnGround);
+        mm.mm_OnAirBoostStart.AddListener(OnAirBoostStart);
+        mm.mm_OnAirBoostEnd.AddListener(OnAirBoostEnd);
+        mm.mm_OnAirBoostChargeStart.AddListener(OnAirBoostChargeStart);
     }
 
     private void Start()
@@ -48,7 +54,7 @@ public class VerticalMovement : MonoBehaviour
     /// </summary>
     private void OnJump()
     {
-        if (mm.inTripleJump())
+        if (mm.InTripleJump())
         {
             StopCoroutine("Jump");
             StopCoroutine("TripleJump");
@@ -71,7 +77,7 @@ public class VerticalMovement : MonoBehaviour
         // TODO point of no return
         if (vertVel > 0)
         {
-            if (mm.inTripleJump())
+            if (mm.InTripleJump())
             {
                 vertVel *= tjVelocityMultiplierAtCancel;
             }
@@ -139,7 +145,11 @@ public class VerticalMovement : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        EnforceGravity();
+        if (!mm.InAirBoost() && !mm.InAirBoostCharge())
+        {
+            EnforceGravity();
+        }
+
         MoveByVertVel();
     }
 
@@ -178,5 +188,30 @@ public class VerticalMovement : MonoBehaviour
     private void MoveByVertVel()
     {
         mm.GetCharacterController().Move(new Vector3(0, vertVel * Time.deltaTime, 0));
+    }
+
+    private void OnAirBoostChargeStart()
+    {
+        vertVel = Mathf.Sign(vertVel) * airBoostChargeVel;
+    }
+
+    private void OnAirBoostStart()
+    {
+        vertVel = 0;
+        StartCoroutine("HandleVelDuringAirBoost");
+    }
+
+    IEnumerator HandleVelDuringAirBoost()
+    {
+        while (mm.InAirBoost())
+        {
+            vertVel -= airBoostGravity * Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    private void OnAirBoostEnd()
+    {
+        gravity = airBoostGravity;
     }
 }

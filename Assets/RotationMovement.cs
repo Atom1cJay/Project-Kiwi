@@ -7,24 +7,19 @@ using UnityEngine;
 public class RotationMovement : MonoBehaviour
 {
     [SerializeField] private float instantRotationSpeed = 0.2f;
-    //[SerializeField] private float hardTurnRotSeverity = 1f;
-    //[SerializeField] private float hardTurnSpeed = 1f;
     [SerializeField] private float groundRotationSpeed = 600;
     [SerializeField] private float airRotationSpeed = 200;
+    [SerializeField] private float boostAftermathRotationSpeed = 50;
     private MovementMaster mm;
-    //private HorizontalMovement horizMovement;
-    private float directionFacing; // In radians
 
     private void Awake()
     {
         mm = GetComponent<MovementMaster>();
-        //horizMovement = GetComponent<HorizontalMovement>();
         mm.mm_OnHardTurnEnd.AddListener(OnHardTurnEnd);
     }
 
     private void FixedUpdate()
     {
-        directionFacing = transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
         DetermineRotation();
     }
 
@@ -41,12 +36,40 @@ public class RotationMovement : MonoBehaviour
 
         if (!mm.IsInHardTurn())
         {
-            float rotationSpeed = mm.IsOnGround() ? groundRotationSpeed : airRotationSpeed;
+            float rotationSpeed = DetermineRotationSpeed();
             if (rawInput.magnitude == 0) return;
             Quaternion targetRotation = Quaternion.Euler(0, inputDirection * Mathf.Rad2Deg, 0);
             bool underInstantRotSpeed = mm.GetHorizSpeed() <= instantRotationSpeed;
-            transform.rotation = underInstantRotSpeed ? targetRotation : Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+            transform.rotation =
+                underInstantRotSpeed && !inAirBoostOrCharge()
+                ? targetRotation
+                :
+                Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
         }
+    }
+
+    /// <summary>
+    /// Decides what the rotation should be based on the player's movement state
+    /// </summary>
+    /// <returns></returns>
+    float DetermineRotationSpeed()
+    {
+        if (inAirBoostOrCharge())
+        {
+            return 0;
+        }
+
+        if (mm.InAirBoostChargeAftermath())
+        {
+            return boostAftermathRotationSpeed;
+        }
+        
+        return mm.IsOnGround() ? groundRotationSpeed : airRotationSpeed;
+    }
+
+    bool inAirBoostOrCharge()
+    {
+        return mm.InAirBoost() || mm.InAirBoostCharge();
     }
 
     /// <summary>

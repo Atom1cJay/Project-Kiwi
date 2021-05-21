@@ -26,6 +26,11 @@ public class MovementMaster : UsesInputActions
     [SerializeField] private float tjMinJumpTime;
     [SerializeField] private float tjMaxJumpTime;
     [SerializeField] private float tjMaxDissonance;
+    [Header("Boosting Settings")]
+    [SerializeField] private float airBoostMaxChargeTime;
+    [SerializeField] private float airBoostMaxTime;
+    [Header("Misc. Settings")]
+    [SerializeField] private float dissonanceForAirReverse;
 
     // Other variables for internal use only
     private bool isJumping;
@@ -37,6 +42,12 @@ public class MovementMaster : UsesInputActions
     private float tjCurJumpTime; // The elapsed time for the current jump. 0 if there is no jump happening.
     private float tjTimeBtwnJumps;
     private int tjJumpCount; // The amount of jumps built up for a triple jump so far.
+    private float curAirBoostChargeTime;
+    private float curAirBoostTime;
+    private bool isAirBoosting;
+    private bool isAirBoostCharging;
+    private bool hasAirBoostedThisJump;
+    private bool inAirBoostChargeAftermath;
 
     // Helpful Assets for Subclasses
     private CharacterController charCont;
@@ -50,6 +61,9 @@ public class MovementMaster : UsesInputActions
     [HideInInspector] public UnityEvent mm_FixedUpdateWhileGrounded;
     [HideInInspector] public UnityEvent mm_OnHardTurnStart;
     [HideInInspector] public UnityEvent mm_OnHardTurnEnd;
+    [HideInInspector] public UnityEvent mm_OnAirBoostChargeStart;
+    [HideInInspector] public UnityEvent mm_OnAirBoostStart;
+    [HideInInspector] public UnityEvent mm_OnAirBoostEnd;
 
     // INITIALIZATION /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -138,7 +152,7 @@ public class MovementMaster : UsesInputActions
         UpdateVerticalStates();
         UpdateHorizontalStates();
         UpdateTripleJumpStatus();
-        print(inputActions.Player.Boost.ReadValue<float>());
+        UpdateBoostStatus();
     }
 
     private void UpdateVerticalStates()
@@ -158,6 +172,7 @@ public class MovementMaster : UsesInputActions
             if (!isOnGround)
             {
                 // First frame on ground
+                hasAirBoostedThisJump = false;
                 if (tjJumpCount == 3 || tjCurJumpTime > tjMaxJumpTime || tjCurJumpTime < tjMinJumpTime)
                     tjJumpCount = 0;
                 tjCurJumpTime = 0;
@@ -247,6 +262,74 @@ public class MovementMaster : UsesInputActions
         }
     }
 
+    private void UpdateBoostStatus()
+    {
+        if (!isOnGround)
+        {
+            if (inputActions.Player.Boost.ReadValue<float>() > 0 && !isAirBoosting && !hasAirBoostedThisJump)
+            {
+                if (!isAirBoostCharging)
+                {
+                    // First frame, air boost charge
+                    tjJumpCount = 0;
+                    isAirBoostCharging = true;
+                    mm_OnAirBoostChargeStart.Invoke();
+                }
+
+                // Charging air boost
+                curAirBoostChargeTime += Time.deltaTime;
+
+                if (curAirBoostChargeTime > airBoostMaxChargeTime)
+                {
+                    curAirBoostChargeTime = airBoostMaxChargeTime;
+                }
+            }
+
+            if (curAirBoostChargeTime > 0f && inputActions.Player.Boost.ReadValue<float>() == 0)
+            {
+                // First frame of air boost
+                hasAirBoostedThisJump = true;
+                // Start mid-boost if low charge
+                isAirBoostCharging = false;
+                curAirBoostTime = airBoostMaxTime - (airBoostMaxTime * (curAirBoostChargeTime / airBoostMaxChargeTime));
+                curAirBoostChargeTime = 0;
+                isAirBoosting = true;
+                mm_OnAirBoostStart.Invoke();
+            }
+
+            if (isAirBoosting)
+            {
+                // Doing air boost
+                curAirBoostTime += Time.deltaTime;
+
+                if (curAirBoostTime > airBoostMaxTime || isOnGround)
+                {
+                    // Last frame of air boost
+                    inAirBoostChargeAftermath = true;
+                    curAirBoostTime = 0;
+                    isAirBoosting = false;
+                    mm_OnAirBoostEnd.Invoke();
+                }
+            }
+
+            if (inputActions.Player.Boost.ReadValue<float>() == 0 || isAirBoosting)
+            {
+                curAirBoostChargeTime = 0;
+            }
+        }
+
+        if (isOnGround)
+        {
+            inAirBoostChargeAftermath = false;
+            curAirBoostChargeTime = 0;
+            curAirBoostTime = 0;
+            isAirBoosting = false;
+        }
+
+        // TODO for air boosting
+        // - Rotation restricted during it
+    }
+
     /// <summary>
     /// Gives the distance (min = 0, max = PI) between the direction the player is facing and the
     /// direction of horizontal input
@@ -330,8 +413,23 @@ public class MovementMaster : UsesInputActions
         return relevantCamera;
     }
 
-    public bool inTripleJump()
+    public bool InTripleJump()
     {
         return tjJumpCount == 3;
+    }
+
+    public bool InAirBoost()
+    {
+        return isAirBoosting;
+    }
+
+    public bool InAirBoostCharge()
+    {
+        return isAirBoostCharging;
+    }
+
+    public bool InAirBoostChargeAftermath()
+    {
+        return inAirBoostChargeAftermath;
     }
 }
