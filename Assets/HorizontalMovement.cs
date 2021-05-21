@@ -49,7 +49,7 @@ public class HorizontalMovement : MonoBehaviour
     {
         if (mm.InAirBoostCharge())
         {
-            currentSpeed = InputUtils.SmoothedInput(currentSpeed, 0, 0, currentSpeed / mm.getMaxChargeTime());
+            currentSpeed = InputUtils.SmoothedInput(currentSpeed, 0, 0, currentSpeed / mm.GetMaxChargeTime());
         }
         else if (mm.InAirBoost())
         {

@@ -47,6 +47,7 @@ public class MovementMaster : UsesInputActions
     private bool isAirBoosting;
     private bool isAirBoostCharging;
     private bool hasAirBoostedThisJump;
+    private bool inAirBoostAftermath;
 
     // Helpful Assets for Subclasses
     private CharacterController charCont;
@@ -319,6 +320,15 @@ public class MovementMaster : UsesInputActions
         curAirBoostTime = 0;
         isAirBoosting = false;
         mm_OnAirBoostEnd.Invoke();
+
+        while (!isOnGround)
+        {
+            // Aftermath
+            inAirBoostAftermath = true;
+            yield return new WaitForEndOfFrame();
+        }
+
+        inAirBoostAftermath = false;
     }
 
     private void UpdateBoostStatus()
@@ -435,8 +445,13 @@ public class MovementMaster : UsesInputActions
         return isAirBoostCharging;
     }
 
-    public float getMaxChargeTime()
+    public float GetMaxChargeTime()
     {
         return airBoostMaxChargeTime;
+    }
+
+    public bool IsInAirBoostAftermath()
+    {
+        return inAirBoostAftermath;
     }
 }
