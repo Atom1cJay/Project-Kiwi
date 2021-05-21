@@ -27,6 +27,7 @@ public class VerticalMovement : MonoBehaviour
     [SerializeField] private float nonJumpGravity;
     [SerializeField] private float airBoostChargeVel;
     [SerializeField] private float airBoostGravity;
+    [SerializeField] private float airBoostChargeGravity;
     [SerializeField] private float airBoostEndGravity;
     private float gravity;
     private float vertVel;
@@ -192,7 +193,8 @@ public class VerticalMovement : MonoBehaviour
 
     private void OnAirBoostChargeStart()
     {
-        vertVel = Mathf.Sign(vertVel) * airBoostChargeVel;
+        vertVel = 0;
+        StartCoroutine("HandleVelDuringAirBoostCharge");
     }
 
     private void OnAirBoostStart()
@@ -206,6 +208,15 @@ public class VerticalMovement : MonoBehaviour
         while (mm.InAirBoost())
         {
             vertVel -= airBoostGravity * Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    IEnumerator HandleVelDuringAirBoostCharge()
+    {
+        while (mm.InAirBoostCharge())
+        {
+            vertVel -= airBoostChargeGravity * Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
     }

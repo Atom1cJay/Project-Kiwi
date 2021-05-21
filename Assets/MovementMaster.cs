@@ -432,4 +432,9 @@ public class MovementMaster : UsesInputActions
     {
         return inAirBoostChargeAftermath;
     }
+
+    public float getMaxChargeTime()
+    {
+        return airBoostMaxChargeTime;
+    }
 }
