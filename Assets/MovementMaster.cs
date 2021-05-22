@@ -29,6 +29,7 @@ public class MovementMaster : UsesInputActions
     [Header("Boosting Settings")]
     [SerializeField] private float airBoostMaxChargeTime;
     [SerializeField] private float airBoostMaxTime;
+    [SerializeField] private float vertAirBoostMaxChargeTime;
     [Header("Misc. Settings")]
     [SerializeField] private float dissonanceForAirReverse;
 
@@ -48,6 +49,7 @@ public class MovementMaster : UsesInputActions
     private bool isAirBoostCharging;
     private bool hasAirBoostedThisJump;
     private bool inAirBoostAftermath;
+    private bool isVertAirBoostCharging;
 
     // Helpful Assets for Subclasses
     private CharacterController charCont;
@@ -64,6 +66,8 @@ public class MovementMaster : UsesInputActions
     [HideInInspector] public UnityEvent mm_OnAirBoostChargeStart;
     [HideInInspector] public UnityEvent mm_OnAirBoostStart;
     [HideInInspector] public UnityEvent mm_OnAirBoostEnd;
+    [HideInInspector] public UnityEvent mm_OnVertAirBoostChargeStart;
+    [HideInInspector] public UnityFloatEvent mm_OnVertAirBoostStart;
 
     // INITIALIZATION /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -84,6 +88,7 @@ public class MovementMaster : UsesInputActions
         inputActions.Player.Jump.performed += _ => OnJumpInputPerformed();
         inputActions.Player.Jump.canceled += _ => OnJumpInputCanceled();
         inputActions.Player.Boost.performed += _ => OnBoostChargePerformed();
+        inputActions.Player.VertBoost.performed += _ => OnVertBoostChargePerformed();
     }
 
     // STATE CONTROL /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,7 +137,7 @@ public class MovementMaster : UsesInputActions
                 timePassed = reverseCoyoteTime;
             }
 
-            timePassed += Time.deltaTime;
+            timePassed += Time.fixedDeltaTime;
             yield return new WaitForEndOfFrame();
         }
     }
@@ -153,7 +158,7 @@ public class MovementMaster : UsesInputActions
         UpdateVerticalStates();
         UpdateHorizontalStates();
         UpdateTripleJumpStatus();
-        UpdateBoostStatus();
+        UpdateParentingStatus();
     }
 
     private void UpdateVerticalStates()
@@ -216,8 +221,8 @@ public class MovementMaster : UsesInputActions
 
         while (timePassed < coyoteTime && !isJumping)
         {
-            timePassed += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
+            timePassed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
         }
 
         inCoyoteTime = false;
@@ -263,30 +268,47 @@ public class MovementMaster : UsesInputActions
         }
     }
 
+    private void UpdateParentingStatus()
+    {
+        if (isOnGround)
+        {
+            transform.SetParent(groundDetector.CollidingWith().transform.parent, true);
+        }
+        else
+        {
+            transform.SetParent(null);
+        }
+    }
+
     private void OnBoostChargePerformed()
     {
-        if (!isOnGround && !isAirBoosting && !isAirBoostCharging && !hasAirBoostedThisJump)
-        {
-            // First frame, air boost charge
-            tjJumpCount = 0;
-            isAirBoostCharging = true;
-            mm_OnAirBoostChargeStart.Invoke();
-            hasAirBoostedThisJump = true;
-            StartCoroutine("ChargeAirBoost");
-        }
+        if (isOnGround || isAirBoosting || isAirBoostCharging || isVertAirBoostCharging || hasAirBoostedThisJump)
+            return;
+
+        // First frame, air boost charge
+        isJumping = false;
+        tjJumpCount = 0;
+        isAirBoostCharging = true;
+        mm_OnAirBoostChargeStart.Invoke();
+        hasAirBoostedThisJump = true;
+        StartCoroutine("ChargeAirBoost");
     }
 
     IEnumerator ChargeAirBoost()
     {
         while (isAirBoostCharging && !isOnGround)
         {
-            curAirBoostChargeTime += Time.deltaTime;
+            curAirBoostChargeTime += Time.fixedDeltaTime;
             yield return new WaitForEndOfFrame();
 
-            if (inputActions.Player.Boost.ReadValue<float>() == 0 || curAirBoostChargeTime > airBoostMaxChargeTime)
+            if (curAirBoostChargeTime > airBoostMaxChargeTime)
+            {
+                curAirBoostChargeTime = airBoostMaxChargeTime;
+            }
+
+            if (inputActions.Player.Boost.ReadValue<float>() == 0 || curAirBoostChargeTime >= airBoostMaxChargeTime)
             {
                 StartCoroutine("ExecuteAirBoost");
-                curAirBoostChargeTime = 0;
                 isAirBoostCharging = false;
             }
         }
@@ -301,13 +323,14 @@ public class MovementMaster : UsesInputActions
         // First frame of air boost
         curAirBoostTime = airBoostMaxTime - (airBoostMaxTime * (curAirBoostChargeTime / airBoostMaxChargeTime));
         // ^ Start mid-boost if low charge
+        curAirBoostChargeTime = 0;
         isAirBoosting = true;
         mm_OnAirBoostStart.Invoke();
 
         while (isAirBoosting && !isOnGround)
         {
             // Doing air boost
-            curAirBoostTime += Time.deltaTime;
+            curAirBoostTime += Time.fixedDeltaTime;
             yield return new WaitForEndOfFrame();
 
             if (curAirBoostTime > airBoostMaxTime)
@@ -331,20 +354,50 @@ public class MovementMaster : UsesInputActions
         inAirBoostAftermath = false;
     }
 
-    private void UpdateBoostStatus()
+    private void OnVertBoostChargePerformed()
     {
-        /*
-        if (!isOnGround)
+        if (isOnGround || isAirBoosting || isAirBoostCharging || isVertAirBoostCharging || hasAirBoostedThisJump)
+            return;
+
+        // First frame, vert air boost charge
+        isJumping = false;
+        tjJumpCount = 0;
+        isVertAirBoostCharging = true;
+        hasAirBoostedThisJump = true;
+        mm_OnVertAirBoostChargeStart.Invoke();
+        StartCoroutine("ChargeVertAirBoost");
+    }
+
+    IEnumerator ChargeVertAirBoost()
+    {
+        while (isVertAirBoostCharging && !isOnGround)
         {
-            if (inputActions.Player.Boost.ReadValue<float>() == 0 || isAirBoosting)
+            curAirBoostChargeTime += Time.fixedDeltaTime;
+            yield return new WaitForEndOfFrame();
+
+            if (curAirBoostChargeTime > vertAirBoostMaxChargeTime)
             {
-                curAirBoostChargeTime = 0;
+                curAirBoostChargeTime = vertAirBoostMaxChargeTime;
+            }
+
+            if (inputActions.Player.VertBoost.ReadValue<float>() == 0 || curAirBoostChargeTime >= vertAirBoostMaxChargeTime)
+            {
+                ExecuteVertAirBoost();
+                isVertAirBoostCharging = false;
             }
         }
-        */
 
-        // TODO for air boosting
-        // - Rotation restricted during it
+        // Cancel charge
+        curAirBoostChargeTime = 0;
+        isVertAirBoostCharging = false;
+    }
+
+    void ExecuteVertAirBoost()
+    {
+        // Only frame of vert air boost
+        mm_OnVertAirBoostStart.Invoke(curAirBoostChargeTime / vertAirBoostMaxChargeTime);
+        curAirBoostChargeTime = 0;
+        curAirBoostTime = 0;
     }
 
     /// <summary>
@@ -445,13 +498,13 @@ public class MovementMaster : UsesInputActions
         return isAirBoostCharging;
     }
 
-    public float GetMaxChargeTime()
-    {
-        return airBoostMaxChargeTime;
-    }
-
     public bool IsInAirBoostAftermath()
     {
         return inAirBoostAftermath;
+    }
+
+    public bool InVertAirBoostCharge()
+    {
+        return isVertAirBoostCharging;
     }
 }

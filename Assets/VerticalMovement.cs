@@ -25,13 +25,17 @@ public class VerticalMovement : MonoBehaviour
     [SerializeField] private float tjGravityIncRateAtCancel;
     [Header("Non-Jumping")]
     [SerializeField] private float nonJumpGravity;
-    [SerializeField] private float airBoostChargeVel;
     [SerializeField] private float airBoostGravity;
     [SerializeField] private float airBoostChargeGravity;
     [SerializeField] private float airBoostEndGravity;
+    [SerializeField] private float minVertAirBoostVel;
+    [SerializeField] private float maxVertAirBoostVel;
+    [SerializeField] private float vertAirBoostGravity;
     private float gravity;
     private float vertVel;
     private MovementMaster mm;
+
+    Vector3 amountToMove;
 
     private void Awake()
     {
@@ -43,6 +47,8 @@ public class VerticalMovement : MonoBehaviour
         mm.mm_OnAirBoostStart.AddListener(OnAirBoostStart);
         mm.mm_OnAirBoostEnd.AddListener(OnAirBoostEnd);
         mm.mm_OnAirBoostChargeStart.AddListener(OnAirBoostChargeStart);
+        //mm.mm_OnVertAirBoostChargeStart.AddListener(OnVertAirBoostChargeStart);
+        mm.mm_OnVertAirBoostStart.AddListener(OnVertAirBoost);
     }
 
     private void Start()
@@ -102,9 +108,9 @@ public class VerticalMovement : MonoBehaviour
         while(mm.IsJumping())
         {
             if (mm.JumpInputCancelled())
-                gravity += gravityIncRateAtCancel * Time.deltaTime;
+                gravity += gravityIncRateAtCancel * Time.fixedDeltaTime;
             else
-                gravity += gravityIncRate * Time.deltaTime;
+                gravity += gravityIncRate * Time.fixedDeltaTime;
 
             if (gravity > maxGravity && !mm.JumpInputCancelled())
                 gravity = maxGravity;
@@ -128,9 +134,9 @@ public class VerticalMovement : MonoBehaviour
         while (mm.IsJumping())
         {
             if (mm.JumpInputCancelled())
-                gravity += tjGravityIncRateAtCancel * Time.deltaTime;
+                gravity += tjGravityIncRateAtCancel * Time.fixedDeltaTime;
             else
-                gravity += tjGravityIncRate * Time.deltaTime;
+                gravity += tjGravityIncRate * Time.fixedDeltaTime;
 
             if (gravity > tjMaxGravity && !mm.JumpInputCancelled())
                 gravity = tjMaxGravity;
@@ -144,8 +150,10 @@ public class VerticalMovement : MonoBehaviour
     /// <summary>
     /// Handle final movement for each frame
     /// </summary>
-    private void Update()
+    private void FixedUpdate()
     {
+        amountToMove = Vector3.zero;
+
         if (!mm.InAirBoost() && !mm.InAirBoostCharge())
         {
             EnforceGravity();
@@ -154,13 +162,18 @@ public class VerticalMovement : MonoBehaviour
         MoveByVertVel();
     }
 
+    private void Update()
+    {
+        mm.GetCharacterController().Move(amountToMove);
+    }
+
     /// <summary>
     /// Do stuff for the first frame the ground is touched
     /// </summary>
     private void OnFirstFrameGrounded()
     {
         // Ensure player makes direct contact ground upon hitting it
-        mm.GetCharacterController().Move(new Vector3(0, -1, 0));
+        amountToMove += (new Vector3(0, -1, 0));
     }
 
     /// <summary>
@@ -179,7 +192,7 @@ public class VerticalMovement : MonoBehaviour
     {
         if (!mm.IsOnGround())
         {
-            vertVel -= gravity * Time.deltaTime;
+            vertVel -= gravity * Time.fixedDeltaTime;
         }
     }
 
@@ -188,7 +201,7 @@ public class VerticalMovement : MonoBehaviour
     /// </summary>
     private void MoveByVertVel()
     {
-        mm.GetCharacterController().Move(new Vector3(0, vertVel * Time.deltaTime, 0));
+        amountToMove += (new Vector3(0, vertVel * Time.fixedDeltaTime, 0));
     }
 
     private void OnAirBoostChargeStart()
@@ -207,8 +220,8 @@ public class VerticalMovement : MonoBehaviour
     {
         while (mm.InAirBoost())
         {
-            vertVel -= airBoostGravity * Time.deltaTime;
-            yield return new WaitForEndOfFrame();
+            vertVel -= airBoostGravity * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
         }
     }
 
@@ -216,13 +229,38 @@ public class VerticalMovement : MonoBehaviour
     {
         while (mm.InAirBoostCharge())
         {
-            vertVel -= airBoostChargeGravity * Time.deltaTime;
-            yield return new WaitForEndOfFrame();
+            vertVel -= airBoostChargeGravity * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
         }
     }
 
     private void OnAirBoostEnd()
     {
-        gravity = airBoostGravity;
+        gravity = nonJumpGravity;
+    }
+
+    /*
+    private void OnVertAirBoostChargeStart()
+    {
+        vertVel = 0;
+        StartCoroutine("HandleVelDuringVertAirBoostCharge");
+    }
+
+    IEnumerator HandleVelDuringVertAirBoostCharge()
+    {
+        while (mm.InVertAirBoostCharge())
+        {
+            vertVel -= airBoostChargeGravity * Time.fixedDeltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+    */
+
+    private void OnVertAirBoost(float proportionCharged)
+    {
+        float expectedVertVel = proportionCharged * maxVertAirBoostVel;
+        vertVel = Mathf.Clamp(expectedVertVel, minVertAirBoostVel, maxVertAirBoostVel);
+        gravity = vertAirBoostGravity;
+        print(proportionCharged);
     }
 }

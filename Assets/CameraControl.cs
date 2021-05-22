@@ -25,7 +25,7 @@ public class CameraControl : UsesInputActions
         camUtils = GetComponent<CameraUtils>();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         ChangeAngles();
     }

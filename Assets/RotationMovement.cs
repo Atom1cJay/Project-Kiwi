@@ -20,6 +20,7 @@ public class RotationMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         DetermineRotation();
     }
 
@@ -69,7 +70,7 @@ public class RotationMovement : MonoBehaviour
 
     bool inAirBoostOrCharge()
     {
-        return mm.InAirBoost() || mm.InAirBoostCharge();
+        return mm.InAirBoost() || mm.InAirBoostCharge() || mm.InVertAirBoostCharge();
     }
 
     /// <summary>

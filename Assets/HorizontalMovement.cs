@@ -20,13 +20,21 @@ public class HorizontalMovement : MonoBehaviour
     [SerializeField] private float hardTurnSpeedMultiplier;
     [SerializeField] private float airBoostSpeed;
     [SerializeField] private float airBoostChargeGravity;
+    [SerializeField] private float vertAirBoostChargeGravity;
     private float currentSpeed = 0;
     private MovementMaster mm;
+
+    Vector3 amountToMove; // Update value in FixedUpdate, execute movement in Update
 
     private void Awake()
     {
         mm = GetComponent<MovementMaster>();
         mm.mm_OnHardTurnStart.AddListener(OnHardTurnStart);
+    }
+
+    private void Update()
+    {
+        mm.GetCharacterController().Move(amountToMove);
     }
 
     /// <summary>
@@ -35,9 +43,9 @@ public class HorizontalMovement : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
+        amountToMove = Vector3.zero;
         DecideCurrentSpeed();
         MovePlayer();
-
     }
 
     private void OnHardTurnStart()
@@ -49,7 +57,7 @@ public class HorizontalMovement : MonoBehaviour
     {
         if (mm.InAirBoostCharge())
         {
-            currentSpeed = InputUtils.SmoothedInput(currentSpeed, 0, 0, currentSpeed / mm.GetMaxChargeTime());
+            currentSpeed = InputUtils.SmoothedInput(currentSpeed, 0, 0, airBoostChargeGravity);
         }
         else if (mm.InAirBoost())
         {
@@ -76,7 +84,7 @@ public class HorizontalMovement : MonoBehaviour
     private void MovePlayer()
     {
         Vector3 dir = DirectionOfMovement();
-        mm.GetCharacterController().Move(dir * currentSpeed * Time.deltaTime);
+        amountToMove += (dir * currentSpeed * Time.fixedDeltaTime);
     }
 
     /// <summary>

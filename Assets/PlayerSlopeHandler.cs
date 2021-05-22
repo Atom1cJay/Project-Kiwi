@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Provides important knowledge based on the slope the player is currently standing on.
 /// </summary>
+[RequireComponent(typeof(MovementMaster))]
 public class PlayerSlopeHandler : MonoBehaviour
 {
     /// <summary>
@@ -12,6 +13,7 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// </summary>
     private static readonly float maxSlopeAngle = 45;
     // todo this does nothing yet
+    private MovementMaster mm;
 
     /// <summary>
     /// The angle of the slope the player is currently colliding with.
@@ -29,6 +31,26 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// For every positive z unit you move, you go up by this amount.
     /// </summary>
     public static bool BeyondMaxAngle { get; private set; }
+
+    private void Awake()
+    {
+        mm = GetComponent<MovementMaster>();
+        mm.mm_OnAirBoostChargeStart.AddListener(NeutralizeAngle);
+        mm.mm_OnVertAirBoostStart.AddListener(NeutralizeAngleFiller);
+    }
+
+    private void NeutralizeAngle()
+    {
+        XDeriv = 0;
+        ZDeriv = 0;
+        AngleOfSlope = 0;
+        BeyondMaxAngle = false;
+    }
+
+    private void NeutralizeAngleFiller(float f)
+    {
+        NeutralizeAngle();
+    }
 
     // Obtains the normal of the platform the player is currently on
     // (Is called whenever the player moves in a way which ends with it touching something)
