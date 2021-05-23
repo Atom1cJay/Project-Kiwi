@@ -21,6 +21,7 @@ public class HorizontalMovement : MonoBehaviour
     [SerializeField] private float airBoostSpeed;
     [SerializeField] private float airBoostChargeGravity;
     [SerializeField] private float vertAirBoostChargeGravity;
+    [SerializeField] private float diveSpeed;
     private float currentSpeed = 0;
     private MovementMaster mm;
 
@@ -55,7 +56,11 @@ public class HorizontalMovement : MonoBehaviour
 
     private void DecideCurrentSpeed()
     {
-        if (mm.InAirBoostCharge())
+        if (mm.IsAirDiving())
+        {
+            currentSpeed = diveSpeed;
+        }
+        else if (mm.InAirBoostCharge())
         {
             currentSpeed = InputUtils.SmoothedInput(currentSpeed, 0, 0, airBoostChargeGravity);
         }

@@ -3187,7 +3187,7 @@ GameObject:
   - component: {fileID: 542249840}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Moving Platform (Has Wrapper)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3201,7 +3201,7 @@ Transform:
   m_GameObject: {fileID: 542249838}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 10}
+  m_LocalScale: {x: 2, y: 2, z: 10}
   m_Children: []
   m_Father: {fileID: 1228705609}
   m_RootOrder: 0
@@ -3360,6 +3360,7 @@ MonoBehaviour:
   minVertAirBoostVel: 5
   maxVertAirBoostVel: 7
   vertAirBoostGravity: 15
+  airDivingVel: -5
 --- !u!114 &544227819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3384,6 +3385,7 @@ MonoBehaviour:
   airBoostSpeed: 8
   airBoostChargeGravity: 6
   vertAirBoostChargeGravity: 12
+  diveSpeed: 8
 --- !u!114 &544227820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3424,6 +3426,7 @@ MonoBehaviour:
   airBoostMaxChargeTime: 0.8
   airBoostMaxTime: 0.3
   vertAirBoostMaxChargeTime: 0.3
+  diveLengthOnGround: 0.5
   dissonanceForAirReverse: 1.8
   mm_OnJump:
     m_PersistentCalls:
@@ -3459,6 +3462,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   mm_OnVertAirBoostStart:
+    m_PersistentCalls:
+      m_Calls: []
+  mm_OnAirDiveStart:
+    m_PersistentCalls:
+      m_Calls: []
+  mm_OnDiveRecoveryStart:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &544227822
@@ -8924,6 +8933,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9827d522-3c05-4a73-99c3-a820bb166ce4
     m_ActionName: Player/Boost[/DualShock4GamepadHID/rightTrigger,/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 16f7d561-e9a3-46a8-a38b-b8100dd8eef6
+    m_ActionName: Player/VertBoost[/Keyboard/space,/DualShock4GamepadHID/leftTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: GamePad
   m_DefaultActionMap: Camera
@@ -9886,7 +9899,7 @@ GameObject:
   - component: {fileID: 1359687939}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Moving Platform (Has Wrapper)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9900,7 +9913,7 @@ Transform:
   m_GameObject: {fileID: 1359687937}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 10}
+  m_LocalScale: {x: 2, y: 2, z: 10}
   m_Children: []
   m_Father: {fileID: 735805056}
   m_RootOrder: 0
@@ -10078,7 +10091,7 @@ GameObject:
   - component: {fileID: 1362613901}
   m_Layer: 0
   m_Name: Cube 2
-  m_TagString: Untagged
+  m_TagString: Moving Platform (Has Wrapper)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10092,7 +10105,7 @@ Transform:
   m_GameObject: {fileID: 1362613899}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 3, z: 3}
+  m_LocalScale: {x: 10, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 735805056}
   m_RootOrder: 1
@@ -10792,7 +10805,7 @@ GameObject:
   - component: {fileID: 1527554450}
   m_Layer: 0
   m_Name: Cube 2
-  m_TagString: Untagged
+  m_TagString: Moving Platform (Has Wrapper)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10806,7 +10819,7 @@ Transform:
   m_GameObject: {fileID: 1527554448}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 3, z: 3}
+  m_LocalScale: {x: 10, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 1228705609}
   m_RootOrder: 1
@@ -11686,7 +11699,7 @@ GameObject:
   - component: {fileID: 1931415266}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Moving Platform (Has Wrapper)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11763,7 +11776,7 @@ Transform:
   m_GameObject: {fileID: 1931415265}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 10}
+  m_LocalScale: {x: 2, y: 2, z: 10}
   m_Children: []
   m_Father: {fileID: 2121543092}
   m_RootOrder: 0
@@ -12070,7 +12083,7 @@ GameObject:
   - component: {fileID: 2010341156}
   m_Layer: 0
   m_Name: Cube 2
-  m_TagString: Untagged
+  m_TagString: Moving Platform (Has Wrapper)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12084,7 +12097,7 @@ Transform:
   m_GameObject: {fileID: 2010341154}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 3, z: 3}
+  m_LocalScale: {x: 10, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 2121543092}
   m_RootOrder: 1

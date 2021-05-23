@@ -36,6 +36,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Dive",
+                    "type": "Button",
+                    "id": "1ab046c3-dd5f-4518-8a99-a8c18c74d186",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -201,6 +209,28 @@
                     "processors": "",
                     "groups": "GamePad",
                     "action": "VertBoost",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "16627e8e-72c9-4b9d-837c-3c93d769e8df",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Dive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d00335ae-e0f7-45a2-8a8c-de5f36bdf7bf",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Dive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

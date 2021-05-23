@@ -55,6 +55,11 @@ public class RotationMovement : MonoBehaviour
     /// <returns></returns>
     float DetermineRotationSpeed()
     {
+        if (mm.IsAirDiving())
+        {
+            return 0;
+        }
+
         if (mm.IsInAirBoostAftermath())
         {
             return boostAftermathRotationSpeed;

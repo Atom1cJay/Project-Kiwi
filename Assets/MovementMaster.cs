@@ -30,6 +30,8 @@ public class MovementMaster : UsesInputActions
     [SerializeField] private float airBoostMaxChargeTime;
     [SerializeField] private float airBoostMaxTime;
     [SerializeField] private float vertAirBoostMaxChargeTime;
+    [Header("Dive Settings")]
+    [SerializeField] private float diveLengthOnGround;
     [Header("Misc. Settings")]
     [SerializeField] private float dissonanceForAirReverse;
 
@@ -50,6 +52,8 @@ public class MovementMaster : UsesInputActions
     private bool hasAirBoostedThisJump;
     private bool inAirBoostAftermath;
     private bool isVertAirBoostCharging;
+    private bool isAirDiving;
+    private bool isDiveRecovering;
 
     // Helpful Assets for Subclasses
     private CharacterController charCont;
@@ -68,6 +72,8 @@ public class MovementMaster : UsesInputActions
     [HideInInspector] public UnityEvent mm_OnAirBoostEnd;
     [HideInInspector] public UnityEvent mm_OnVertAirBoostChargeStart;
     [HideInInspector] public UnityFloatEvent mm_OnVertAirBoostStart;
+    [HideInInspector] public UnityEvent mm_OnAirDiveStart;
+    [HideInInspector] public UnityEvent mm_OnDiveRecoveryStart;
 
     // INITIALIZATION /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -89,6 +95,7 @@ public class MovementMaster : UsesInputActions
         inputActions.Player.Jump.canceled += _ => OnJumpInputCanceled();
         inputActions.Player.Boost.performed += _ => OnBoostChargePerformed();
         inputActions.Player.VertBoost.performed += _ => OnVertBoostChargePerformed();
+        inputActions.Player.Dive.performed += _ => OnDivePerformed();
     }
 
     // STATE CONTROL /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,7 +144,7 @@ public class MovementMaster : UsesInputActions
                 timePassed = reverseCoyoteTime;
             }
 
-            timePassed += Time.fixedDeltaTime;
+            timePassed += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
     }
@@ -221,8 +228,8 @@ public class MovementMaster : UsesInputActions
 
         while (timePassed < coyoteTime && !isJumping)
         {
-            timePassed += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
+            timePassed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
 
         inCoyoteTime = false;
@@ -270,13 +277,18 @@ public class MovementMaster : UsesInputActions
 
     private void UpdateParentingStatus()
     {
-        if (isOnGround)
+        if (isOnGround && !isJumping)
         {
-            transform.SetParent(groundDetector.CollidingWith().transform.parent, true);
+            GameObject ground = groundDetector.CollidingWith();
+
+            if (ground.CompareTag("Moving Platform (Has Wrapper)"))
+            {
+                transform.SetParent(groundDetector.CollidingWith().transform.parent, true);
+            }
         }
         else
         {
-            transform.SetParent(null);
+            transform.SetParent(null, true);
         }
     }
 
@@ -400,6 +412,25 @@ public class MovementMaster : UsesInputActions
         curAirBoostTime = 0;
     }
 
+    void OnDivePerformed()
+    {
+        tjJumpCount = 0;
+        isJumping = false;
+        StartCoroutine("DoDiveSequence");
+    }
+
+    IEnumerator DoDiveSequence()
+    {
+        mm_OnAirDiveStart.Invoke();
+        isAirDiving = true;
+        yield return new WaitUntil(() => isOnGround);
+        isAirDiving = false;
+        mm_OnDiveRecoveryStart.Invoke();
+        isDiveRecovering = true;
+        yield return new WaitForSeconds(diveLengthOnGround);
+        isDiveRecovering = false;
+    }
+
     /// <summary>
     /// Gives the distance (min = 0, max = PI) between the direction the player is facing and the
     /// direction of horizontal input
@@ -506,5 +537,10 @@ public class MovementMaster : UsesInputActions
     public bool InVertAirBoostCharge()
     {
         return isVertAirBoostCharging;
+    }
+
+    public bool IsAirDiving()
+    {
+        return isAirDiving;
     }
 }

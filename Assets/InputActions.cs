@@ -49,6 +49,14 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Dive"",
+                    ""type"": ""Button"",
+                    ""id"": ""1ab046c3-dd5f-4518-8a99-a8c18c74d186"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -216,6 +224,28 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""VertBoost"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""16627e8e-72c9-4b9d-837c-3c93d769e8df"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Dive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d00335ae-e0f7-45a2-8a8c-de5f36bdf7bf"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -341,6 +371,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Boost = m_Player.FindAction("Boost", throwIfNotFound: true);
         m_Player_VertBoost = m_Player.FindAction("VertBoost", throwIfNotFound: true);
+        m_Player_Dive = m_Player.FindAction("Dive", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_HorizontalRotate = m_Camera.FindAction("HorizontalRotate", throwIfNotFound: true);
@@ -398,6 +429,7 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Boost;
     private readonly InputAction m_Player_VertBoost;
+    private readonly InputAction m_Player_Dive;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -406,6 +438,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Boost => m_Wrapper.m_Player_Boost;
         public InputAction @VertBoost => m_Wrapper.m_Player_VertBoost;
+        public InputAction @Dive => m_Wrapper.m_Player_Dive;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -427,6 +460,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @VertBoost.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVertBoost;
                 @VertBoost.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVertBoost;
                 @VertBoost.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVertBoost;
+                @Dive.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDive;
+                @Dive.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDive;
+                @Dive.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDive;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -443,6 +479,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @VertBoost.started += instance.OnVertBoost;
                 @VertBoost.performed += instance.OnVertBoost;
                 @VertBoost.canceled += instance.OnVertBoost;
+                @Dive.started += instance.OnDive;
+                @Dive.performed += instance.OnDive;
+                @Dive.canceled += instance.OnDive;
             }
         }
     }
@@ -512,6 +551,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnBoost(InputAction.CallbackContext context);
         void OnVertBoost(InputAction.CallbackContext context);
+        void OnDive(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {
