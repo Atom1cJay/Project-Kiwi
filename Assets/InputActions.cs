@@ -227,6 +227,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""6609c790-175a-464f-b2b7-decc2ac6f3cd"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/button7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""VertBoost"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""16627e8e-72c9-4b9d-837c-3c93d769e8df"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
@@ -243,6 +254,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
+                    ""action"": ""Dive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""279b09dc-bbdc-4940-93b6-5242e0cf1212"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/button2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""Dive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
