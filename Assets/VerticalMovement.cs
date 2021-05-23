@@ -165,7 +165,7 @@ public class VerticalMovement : MonoBehaviour
 
     private void Update()
     {
-        mm.GetCharacterController().Move(amountToMove * mm.GetMoveMultiplier() * Time.fixedDeltaTime);
+        mm.GetCharacterController().Move(amountToMove * mm.GetMoveMultiplier() * Time.deltaTime);
     }
 
     /// <summary>
