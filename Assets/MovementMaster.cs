@@ -34,6 +34,7 @@ public class MovementMaster : UsesInputActions
     [SerializeField] private float diveLengthOnGround;
     [Header("Misc. Settings")]
     [SerializeField] private float dissonanceForAirReverse;
+    [SerializeField] private float speedMultiplier;
 
     // Other variables for internal use only
     private bool isJumping;
@@ -171,6 +172,7 @@ public class MovementMaster : UsesInputActions
     private void UpdateVerticalStates()
     {
         bool touchingGround = groundDetector.Colliding();
+        print(charCont.velocity.y);
 
         if (touchingGround && jumpEndable)
         {
@@ -181,7 +183,7 @@ public class MovementMaster : UsesInputActions
         if (touchingGround && (!isJumping || jumpEndable))
         {
             // On ground
-
+            
             if (!isOnGround)
             {
                 // First frame on ground
@@ -542,5 +544,10 @@ public class MovementMaster : UsesInputActions
     public bool IsAirDiving()
     {
         return isAirDiving;
+    }
+
+    public float GetMoveMultiplier()
+    {
+        return speedMultiplier;
     }
 }

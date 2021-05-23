@@ -35,7 +35,7 @@ public class HorizontalMovement : MonoBehaviour
 
     private void Update()
     {
-        mm.GetCharacterController().Move(amountToMove);
+        mm.GetCharacterController().Move(amountToMove * mm.GetMoveMultiplier() * Time.fixedDeltaTime);
     }
 
     /// <summary>
