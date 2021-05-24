@@ -34,7 +34,6 @@ public class MovementMaster : UsesInputActions
     [SerializeField] private float diveLengthOnGround;
     [Header("Misc. Settings")]
     [SerializeField] private float dissonanceForAirReverse;
-    [SerializeField] private float speedMultiplier;
 
     // Other variables for internal use only
     private bool isJumping;
@@ -53,6 +52,7 @@ public class MovementMaster : UsesInputActions
     private bool hasAirBoostedThisJump;
     private bool inAirBoostAftermath;
     private bool isVertAirBoostCharging;
+    private bool isGroundBoosting;
     private bool isAirDiving;
     private bool isDiveRecovering;
 
@@ -92,11 +92,11 @@ public class MovementMaster : UsesInputActions
 
     private void InitializeInputEvents()
     {
-        inputActions.Player.Jump.performed += _ => OnJumpInputPerformed();
+        inputActions.Player.Jump.started += _ => OnJumpInputPerformed();
         inputActions.Player.Jump.canceled += _ => OnJumpInputCanceled();
-        inputActions.Player.Boost.performed += _ => OnBoostChargePerformed();
-        inputActions.Player.VertBoost.performed += _ => OnVertBoostChargePerformed();
-        inputActions.Player.Dive.performed += _ => OnDivePerformed();
+        inputActions.Player.Boost.started += _ => OnBoostPerformed();
+        inputActions.Player.VertBoost.started += _ => OnVertBoostChargePerformed();
+        inputActions.Player.Dive.started += _ => OnDivePerformed();
     }
 
     // STATE CONTROL /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,7 +172,6 @@ public class MovementMaster : UsesInputActions
     private void UpdateVerticalStates()
     {
         bool touchingGround = groundDetector.Colliding();
-        print(charCont.velocity.y);
 
         if (touchingGround && jumpEndable)
         {
@@ -294,25 +293,41 @@ public class MovementMaster : UsesInputActions
         }
     }
 
-    private void OnBoostChargePerformed()
+    private void OnBoostPerformed()
     {
-        if (isOnGround || isAirBoosting || isAirBoostCharging || isVertAirBoostCharging || hasAirBoostedThisJump)
-            return;
+        if (isOnGround)
+        {
+            // First frame, ground boost
+            isGroundBoosting = true;
+            StartCoroutine("DoGroundBoost");
+        }
+        else
+        {
+            if (isAirBoosting || isAirBoostCharging || isVertAirBoostCharging || hasAirBoostedThisJump)
+                return;
 
-        // First frame, air boost charge
-        isJumping = false;
-        tjJumpCount = 0;
-        isAirBoostCharging = true;
-        mm_OnAirBoostChargeStart.Invoke();
-        hasAirBoostedThisJump = true;
-        StartCoroutine("ChargeAirBoost");
+            // First frame, air boost charge
+            isGroundBoosting = false;
+            isJumping = false;
+            tjJumpCount = 0;
+            isAirBoostCharging = true;
+            mm_OnAirBoostChargeStart.Invoke();
+            hasAirBoostedThisJump = true;
+            StartCoroutine("ChargeAirBoost");
+        }
+    }
+
+    IEnumerator DoGroundBoost()
+    {
+        yield return new WaitUntil(() => inputActions.Player.Boost.ReadValue<float>() == 0);
+        isGroundBoosting = false;
     }
 
     IEnumerator ChargeAirBoost()
     {
         while (isAirBoostCharging && !isOnGround)
         {
-            curAirBoostChargeTime += Time.fixedDeltaTime;
+            curAirBoostChargeTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
 
             if (curAirBoostChargeTime > airBoostMaxChargeTime)
@@ -344,7 +359,7 @@ public class MovementMaster : UsesInputActions
         while (isAirBoosting && !isOnGround)
         {
             // Doing air boost
-            curAirBoostTime += Time.fixedDeltaTime;
+            curAirBoostTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
 
             if (curAirBoostTime > airBoostMaxTime)
@@ -374,6 +389,7 @@ public class MovementMaster : UsesInputActions
             return;
 
         // First frame, vert air boost charge
+        isGroundBoosting = false;
         isJumping = false;
         tjJumpCount = 0;
         isVertAirBoostCharging = true;
@@ -386,7 +402,7 @@ public class MovementMaster : UsesInputActions
     {
         while (isVertAirBoostCharging && !isOnGround)
         {
-            curAirBoostChargeTime += Time.fixedDeltaTime;
+            curAirBoostChargeTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
 
             if (curAirBoostChargeTime > vertAirBoostMaxChargeTime)
@@ -546,8 +562,8 @@ public class MovementMaster : UsesInputActions
         return isAirDiving;
     }
 
-    public float GetMoveMultiplier()
+    public bool IsGroundBoosting()
     {
-        return speedMultiplier;
+        return isGroundBoosting;
     }
 }

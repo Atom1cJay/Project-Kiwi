@@ -12,7 +12,6 @@ public class TestMovingPlatform : MonoBehaviour
     void FixedUpdate()
     {
         float waveValue = (Mathf.Sin(speed * Time.time) / 2);
-        print(waveValue);
 
         transform.Translate(new Vector3(
             waveValue * distanceToMove.x,
