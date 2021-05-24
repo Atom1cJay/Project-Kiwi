@@ -23,7 +23,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""24ae5c2f-ec11-45bf-bf29-792936f4fe0f"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""InvertVector2(invertX=false,invertY=false)"",
+                    ""processors"": ""StickDeadzone(max=1)"",
                     ""interactions"": """"
                 },
                 {
@@ -280,7 +280,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""13b41ae0-6b71-4dd1-a864-1d2715703cca"",
                     ""expectedControlType"": ""Axis"",
-                    ""processors"": ""Invert"",
+                    ""processors"": ""Invert,AxisDeadzone(max=1)"",
                     ""interactions"": """"
                 },
                 {
@@ -288,7 +288,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""0d182bfa-c72b-4099-8ae4-6c0204baefd0"",
                     ""expectedControlType"": ""Axis"",
-                    ""processors"": ""Invert"",
+                    ""processors"": ""Invert,AxisDeadzone(max=1)"",
                     ""interactions"": """"
                 }
             ],

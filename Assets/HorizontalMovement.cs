@@ -9,11 +9,13 @@ using UnityEngine;
 [RequireComponent(typeof(MovementMaster))]
 public class HorizontalMovement : MonoBehaviour
 {
-    [SerializeField] private float maxSpeed;
+    [SerializeField] private float defaultMaxSpeed;
     [SerializeField] private float sensitivity;
     [SerializeField] private float gravity;
+    [SerializeField] private float overTopSpeedGravity;
     [SerializeField] private float airSensitivity;
     [SerializeField] private float airGravity;
+    [SerializeField] private float overTopSpeedAirGravity;
     [SerializeField] private float tjAirSensitivity;
     [SerializeField] private float tjAirGravity;
     [SerializeField] private float stickToGroundMultiplier = 0.2f;
@@ -21,6 +23,9 @@ public class HorizontalMovement : MonoBehaviour
     [SerializeField] private float airBoostSpeed;
     [SerializeField] private float airBoostChargeGravity;
     [SerializeField] private float vertAirBoostChargeGravity;
+    [SerializeField] private float groundBoostSpeed;
+    [SerializeField] private float groundBoostSensitivity;
+    [SerializeField] private float groundBoostGravity;
     [SerializeField] private float diveSpeed;
     private float currentSpeed = 0;
     private MovementMaster mm;
@@ -35,7 +40,7 @@ public class HorizontalMovement : MonoBehaviour
 
     private void Update()
     {
-        mm.GetCharacterController().Move(amountToMove * mm.GetMoveMultiplier() * Time.deltaTime);
+        mm.GetCharacterController().Move(amountToMove * Time.deltaTime);
     }
 
     /// <summary>
@@ -56,9 +61,17 @@ public class HorizontalMovement : MonoBehaviour
 
     private void DecideCurrentSpeed()
     {
-        if (mm.IsAirDiving())
+        if (mm.IsGroundBoosting())
+        {
+            currentSpeed = InputUtils.SmoothedInput(currentSpeed, groundBoostSpeed, groundBoostSensitivity, groundBoostGravity);
+        }
+        else if (mm.IsAirDiving())
         {
             currentSpeed = diveSpeed;
+        }
+        else if (mm.InVertAirBoostCharge())
+        {
+            currentSpeed = InputUtils.SmoothedInput(currentSpeed, 0, 0, airBoostChargeGravity);
         }
         else if (mm.InAirBoostCharge())
         {
@@ -71,15 +84,29 @@ public class HorizontalMovement : MonoBehaviour
         else if (mm.InTripleJump())
         {
             print("Yeah");
-            currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * maxSpeed, tjAirSensitivity, tjAirGravity);
+            currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * defaultMaxSpeed, tjAirSensitivity, tjAirGravity);
         }
         else if (!mm.IsInHardTurn() && mm.IsOnGround())
         {
-            currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * maxSpeed, sensitivity, gravity);
+            if (currentSpeed > defaultMaxSpeed)
+            {
+                currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * defaultMaxSpeed, sensitivity, overTopSpeedGravity);
+            }
+            else
+            {
+                currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * defaultMaxSpeed, sensitivity, gravity);
+            }
         }
-        else if (!mm.IsInHardTurn())
+        else if (!mm.IsInHardTurn() && !mm.IsOnGround())
         {
-            currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * maxSpeed, airSensitivity, airGravity);
+            if (currentSpeed > defaultMaxSpeed)
+            {
+                currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * defaultMaxSpeed, sensitivity, overTopSpeedAirGravity);
+            }
+            else
+            {
+                currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * defaultMaxSpeed, airSensitivity, airGravity);
+            }
         }
     }
 
@@ -89,7 +116,7 @@ public class HorizontalMovement : MonoBehaviour
     private void MovePlayer()
     {
         Vector3 dir = DirectionOfMovement();
-        amountToMove += (dir * currentSpeed * Time.fixedDeltaTime);
+        amountToMove += (dir * currentSpeed);
     }
 
     /// <summary>

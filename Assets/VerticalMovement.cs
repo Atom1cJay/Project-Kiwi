@@ -48,6 +48,7 @@ public class VerticalMovement : MonoBehaviour
         mm.mm_OnAirBoostStart.AddListener(OnAirBoostStart);
         mm.mm_OnAirBoostEnd.AddListener(OnAirBoostEnd);
         mm.mm_OnAirBoostChargeStart.AddListener(OnAirBoostChargeStart);
+        mm.mm_OnVertAirBoostChargeStart.AddListener(OnVertAirBoostCharge);
         mm.mm_OnVertAirBoostStart.AddListener(OnVertAirBoost);
         mm.mm_OnAirDiveStart.AddListener(OnAirDiveStart);
     }
@@ -155,7 +156,7 @@ public class VerticalMovement : MonoBehaviour
     {
         amountToMove = Vector3.zero;
 
-        if (!mm.InAirBoost() && !mm.InAirBoostCharge() && !mm.IsAirDiving())
+        if (!mm.InAirBoost() && !mm.InAirBoostCharge() && !mm.InVertAirBoostCharge() && !mm.IsAirDiving())
         {
             EnforceGravity();
         }
@@ -165,7 +166,7 @@ public class VerticalMovement : MonoBehaviour
 
     private void Update()
     {
-        mm.GetCharacterController().Move(amountToMove * mm.GetMoveMultiplier() * Time.deltaTime);
+        mm.GetCharacterController().Move(amountToMove * Time.deltaTime);
     }
 
     /// <summary>
@@ -202,12 +203,11 @@ public class VerticalMovement : MonoBehaviour
     /// </summary>
     private void MoveByVertVel()
     {
-        amountToMove += (new Vector3(0, vertVel * Time.fixedDeltaTime, 0));
+        amountToMove += (new Vector3(0, vertVel, 0));
     }
 
     private void OnAirBoostChargeStart()
     {
-        vertVel = 0;
         StartCoroutine("HandleVelDuringAirBoostCharge");
     }
 
@@ -228,9 +228,22 @@ public class VerticalMovement : MonoBehaviour
 
     IEnumerator HandleVelDuringAirBoostCharge()
     {
+        if (vertVel < 0)
+        {
+            vertVel = 0;
+        }
+
         while (mm.InAirBoostCharge())
         {
-            vertVel -= airBoostChargeGravity * Time.fixedDeltaTime;
+            if (vertVel > 0)
+            {
+                vertVel -= nonJumpGravity * Time.fixedDeltaTime;
+            }
+            else
+            {
+                vertVel -= airBoostChargeGravity * Time.fixedDeltaTime;
+            }
+
             yield return new WaitForFixedUpdate();
         }
     }
@@ -245,11 +258,36 @@ public class VerticalMovement : MonoBehaviour
         vertVel = airDivingVel;
     }
 
+    private void OnVertAirBoostCharge()
+    {
+        StartCoroutine("HandleVelDuringVertAirBoostCharge");
+    }
+
+    IEnumerator HandleVelDuringVertAirBoostCharge()
+    {
+        if (vertVel < 0)
+        {
+            vertVel = 0;
+        }
+
+        while (mm.InVertAirBoostCharge())
+        {
+            if (vertVel > 0)
+            {
+                vertVel -= nonJumpGravity * Time.fixedDeltaTime;
+            }
+            else
+            {
+                vertVel -= airBoostChargeGravity * Time.fixedDeltaTime;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
     private void OnVertAirBoost(float proportionCharged)
     {
-        float expectedVertVel = proportionCharged * maxVertAirBoostVel;
-        vertVel = Mathf.Clamp(expectedVertVel, minVertAirBoostVel, maxVertAirBoostVel);
+        vertVel = minVertAirBoostVel + (proportionCharged * (maxVertAirBoostVel - minVertAirBoostVel));
         gravity = vertAirBoostGravity;
-        print(proportionCharged);
     }
 }
