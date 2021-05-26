@@ -409,6 +409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3848790217798881971}
+  - component: {fileID: 1106057585}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -438,6 +439,25 @@ Transform:
   m_Father: {fileID: 5116987452351034286}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!95 &1106057585
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4477271697566124041}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f128b21ad1a5945fbbdecb7d53ebbc2d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4845843578718874318
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +574,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5116987452351034272}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.93, z: -5.72}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children:
@@ -677,7 +697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de3b17f9960e44fb89a5eed1abd6113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMaxSpeed: 5
+  defaultMaxSpeed: 5.5
   sensitivity: 7
   gravity: 15
   overTopSpeedGravity: 10
@@ -688,13 +708,13 @@ MonoBehaviour:
   tjAirGravity: 5
   stickToGroundMultiplier: 0.2
   hardTurnSpeedMultiplier: 0.2
-  airBoostSpeed: 8
+  airBoostSpeed: 9
   airBoostChargeGravity: 6
   vertAirBoostChargeGravity: 12
-  groundBoostSpeed: 7
-  groundBoostSensitivity: 3
+  groundBoostSpeed: 7.5
+  groundBoostSensitivity: 6
   groundBoostGravity: 4
-  diveSpeed: 8
+  diveSpeed: 7
 --- !u!114 &5116987452351034285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -713,7 +733,7 @@ MonoBehaviour:
   maxGravityAtCancel: 28
   velocityMultiplierAtCancel: 0.5
   gravityIncRate: 100
-  gravityIncRateAtCancel: 150
+  gravityIncRateAtCancel: 200
   tjInitJumpVel: 9
   tjInitGravity: 0
   tjMaxGravity: 17
@@ -728,7 +748,8 @@ MonoBehaviour:
   minVertAirBoostVel: 7
   maxVertAirBoostVel: 9
   vertAirBoostGravity: 20
-  airDivingVel: -5
+  diveInitVelDecrease: 1
+  diveVelDecreaseRate: 15
 --- !u!114 &5116987452351034281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,6 +766,8 @@ MonoBehaviour:
   groundRotationSpeed: 800
   airRotationSpeed: 150
   boostAftermathRotationSpeed: 50
+  diveRotationSpeed: 50
+  groundBoostRotationSpeed: 400
 --- !u!1 &5116987453668295340
 GameObject:
   m_ObjectHideFlags: 0

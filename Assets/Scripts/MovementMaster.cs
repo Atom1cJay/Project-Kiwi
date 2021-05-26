@@ -95,11 +95,11 @@ public class MovementMaster : UsesInputActions
 
     private void InitializeInputEvents()
     {
-        inputActions.Player.Jump.started += _ => OnJumpInputPerformed();
+        inputActions.Player.Jump.performed += _ => OnJumpInputPerformed();
         inputActions.Player.Jump.canceled += _ => OnJumpInputCanceled();
         inputActions.Player.Boost.started += _ => OnBoostPerformed();
         inputActions.Player.VertBoost.started += _ => OnVertBoostChargePerformed();
-        inputActions.Player.Dive.started += _ => OnDivePerformed();
+        inputActions.Player.Dive.performed += _ => OnDivePerformed();
     }
 
     // STATE CONTROL /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,7 +119,6 @@ public class MovementMaster : UsesInputActions
 
     private void Jump()
     {
-        print("jumped here");
         tjJumpCount = (tjTimeBtwnJumps > tjMaxTimeBtwnJumps) ? 1 : tjJumpCount + 1;
         tjCurJumpTime = 0;
         tjTimeBtwnJumps = 0;
@@ -443,15 +442,18 @@ public class MovementMaster : UsesInputActions
 
     void OnDivePerformed()
     {
-        tjJumpCount = 0;
-        isJumping = false;
-        StartCoroutine("DoDiveSequence");
+        if (!isOnGround)
+        {
+            tjJumpCount = 0;
+            isJumping = false;
+            StartCoroutine("DoDiveSequence");
+        }
     }
 
     IEnumerator DoDiveSequence()
     {
-        mm_OnAirDiveStart.Invoke();
         isAirDiving = true;
+        mm_OnAirDiveStart.Invoke();
         yield return new WaitUntil(() => isOnGround);
         isAirDiving = false;
         mm_OnDiveRecoveryStart.Invoke();

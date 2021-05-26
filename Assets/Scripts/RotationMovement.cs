@@ -10,6 +10,8 @@ public class RotationMovement : MonoBehaviour
     [SerializeField] private float groundRotationSpeed = 600;
     [SerializeField] private float airRotationSpeed = 200;
     [SerializeField] private float boostAftermathRotationSpeed = 50;
+    [SerializeField] private float diveRotationSpeed = 50;
+    [SerializeField] private float groundBoostRotationSpeed;
     private MovementMaster mm;
 
     private void Awake()
@@ -55,9 +57,14 @@ public class RotationMovement : MonoBehaviour
     /// <returns></returns>
     float DetermineRotationSpeed()
     {
+        if (mm.IsGroundBoosting() && mm.IsOnGround())
+        {
+            return groundBoostRotationSpeed;
+        }
+
         if (mm.IsAirDiving())
         {
-            return 0;
+            return diveRotationSpeed;
         }
 
         if (mm.IsInAirBoostAftermath())
