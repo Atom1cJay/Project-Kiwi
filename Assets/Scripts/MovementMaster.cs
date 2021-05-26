@@ -305,6 +305,9 @@ public class MovementMaster : UsesInputActions
 
     private void OnBoostPerformed()
     {
+        if (isAirDiving)
+            return;
+
         if (isOnGround)
         {
             // First frame, ground boost
@@ -395,7 +398,7 @@ public class MovementMaster : UsesInputActions
 
     private void OnVertBoostChargePerformed()
     {
-        if (isOnGround || isAirBoosting || isAirBoostCharging || isVertAirBoostCharging || hasAirBoostedThisJump)
+        if (isOnGround || isAirBoosting || isAirBoostCharging || isVertAirBoostCharging || hasAirBoostedThisJump || isAirDiving)
             return;
 
         // First frame, vert air boost charge
@@ -442,7 +445,7 @@ public class MovementMaster : UsesInputActions
 
     void OnDivePerformed()
     {
-        if (!isOnGround)
+        if (!isOnGround && !isAirBoostCharging && !isVertAirBoostCharging)
         {
             tjJumpCount = 0;
             isJumping = false;
