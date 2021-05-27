@@ -622,10 +622,10 @@ MonoBehaviour:
   hardTurnMinSpeed: 4
   hardTurnTime: 0.2
   tjMinInputMagnitude: 0.9
-  tjMaxTimeBtwnJumps: 0.2
-  tjMinJumpTime: 0.5
+  tjMaxTimeBtwnJumps: 0.1
+  tjMinJumpTime: 0.3
   tjMaxJumpTime: 1.5
-  tjMaxDissonance: 0.3
+  tjMaxDissonance: 0.5
   airBoostMaxChargeTime: 0.8
   airBoostMaxTime: 0.7
   vertAirBoostMaxChargeTime: 0.6
@@ -711,7 +711,7 @@ MonoBehaviour:
   airBoostSpeed: 9
   airBoostChargeGravity: 6
   vertAirBoostChargeGravity: 12
-  groundBoostSpeed: 7.5
+  groundBoostSpeed: 8
   groundBoostSensitivity: 6
   groundBoostGravity: 4
   diveSpeed: 7
@@ -748,8 +748,8 @@ MonoBehaviour:
   minVertAirBoostVel: 7
   maxVertAirBoostVel: 12
   vertAirBoostGravity: 20
-  diveInitVelDecrease: 1
-  diveVelDecreaseRate: 15
+  diveInitVelDecrease: 1.5
+  diveVelDecreaseRate: 18
 --- !u!114 &5116987452351034281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -764,7 +764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instantRotationSpeed: 0.2
   groundRotationSpeed: 800
-  airRotationSpeed: 150
+  airRotationSpeed: 200
   boostAftermathRotationSpeed: 50
   diveRotationSpeed: 50
   groundBoostRotationSpeed: 400
