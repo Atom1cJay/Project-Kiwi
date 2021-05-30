@@ -21,7 +21,7 @@ public class CameraTarget : MonoBehaviour
         transform.position = player.position;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         float playerYPoint = mainCam.WorldToViewportPoint(player.position).y;
 

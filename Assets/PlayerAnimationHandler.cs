@@ -18,8 +18,6 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     void FixedUpdate()
     {
-
-        Debug.Log(mm.GetHorizSpeed());
         //Jumping and Falling Animation Controllers
         if (mm.IsJumping())
         {

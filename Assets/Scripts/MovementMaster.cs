@@ -13,7 +13,7 @@ public class MovementMaster : UsesInputActions
     [SerializeField] private GameObject relevantCamera;
     [SerializeField] private CollisionDetector groundDetector;
     [Header("Jumping Settings")]
-    [SerializeField] private float jumpEndableTimer = 0.1f;
+    [SerializeField] private float groundableTimer = 0.1f;
     [Header("Coyote Time Settings")]
     [SerializeField] private float reverseCoyoteTime;
     [SerializeField] private float coyoteTime;
@@ -31,14 +31,13 @@ public class MovementMaster : UsesInputActions
     [SerializeField] private float airBoostMaxChargeTime;
     [SerializeField] private float airBoostMaxTime;
     [SerializeField] private float vertAirBoostMaxChargeTime;
-    [Header("Dive Settings")]
-    [SerializeField] private float diveLengthOnGround;
     [Header("Misc. Settings")]
     [SerializeField] private float dissonanceForAirReverse;
+    [SerializeField] private float airReverseMinActivationSpeed;
 
     // Other variables for internal use only
     private bool isJumping;
-    private bool jumpEndable; // Should the jump end if player is touching ground?
+    private bool groundable; // Should a jump/vert boost end if player is touching ground?
     private bool inCoyoteTime;
     private bool jumpInputCanceled;
     private bool isOnGround;
@@ -50,12 +49,12 @@ public class MovementMaster : UsesInputActions
     private float curAirBoostTime;
     private bool isAirBoosting;
     private bool isAirBoostCharging;
-    private bool hasAirBoostedThisJump;
+    private bool hasAirBoostedThisJump; // Applies to all boosts
     private bool inAirBoostAftermath;
     private bool isVertAirBoostCharging;
     private bool isGroundBoosting;
     private bool isAirDiving;
-    private bool isDiveRecovering;
+    private bool isAirReversing;
 
     // Helpful Assets for Subclasses
     private CharacterController charCont;
@@ -124,8 +123,8 @@ public class MovementMaster : UsesInputActions
         tjTimeBtwnJumps = 0;
         jumpInputCanceled = false;
         isJumping = true;
-        jumpEndable = false;
-        Invoke("MakeJumpEndable", jumpEndableTimer);
+        groundable = false;
+        Invoke("MakeGroundable", groundableTimer);
         mm_OnJump.Invoke();
     }
 
@@ -153,9 +152,9 @@ public class MovementMaster : UsesInputActions
         }
     }
 
-    private void MakeJumpEndable()
+    private void MakeGroundable()
     {
-        jumpEndable = true;
+        groundable = true;
     }
 
     private void OnJumpInputCanceled()
@@ -176,21 +175,15 @@ public class MovementMaster : UsesInputActions
     {
         bool touchingGround = groundDetector.Colliding();
 
-        /*
-        if (touchingGround && jumpEndable)
-        {
-            isJumping = false;
-        }
-        */
-
         // Decide if is on ground
-        if (touchingGround && (!isJumping || jumpEndable))
+        if (touchingGround && (!isJumping || groundable))
         {
             // On ground
             
             if (!isOnGround && vertMove.GetFrameVerticalMovement() <= 0.01f)
             {
                 // First frame on ground
+                isAirReversing = false;
                 hasAirBoostedThisJump = false;
                 if (tjJumpCount == 3 || tjCurJumpTime > tjMaxJumpTime || tjCurJumpTime < tjMinJumpTime)
                     tjJumpCount = 0;
@@ -216,7 +209,7 @@ public class MovementMaster : UsesInputActions
             }
         }
 
-        if (isOnGround && jumpEndable)
+        if (isOnGround && groundable)
         {
             isJumping = false;
         }
@@ -252,6 +245,11 @@ public class MovementMaster : UsesInputActions
         {
             // First frame of hard turn
             StartHardTurn();
+        }
+
+        if (!isOnGround && GetHorizDissonance() > dissonanceForAirReverse && horizMove.GetSpeed() > airReverseMinActivationSpeed)
+        {
+            isAirReversing = true; // True until hitting ground
         }
     }
 
@@ -294,6 +292,7 @@ public class MovementMaster : UsesInputActions
 
             if (ground.CompareTag("Moving Platform (Has Wrapper)"))
             {
+                print(ground);
                 transform.SetParent(groundDetector.CollidingWith().transform.parent, true);
             }
         }
@@ -459,10 +458,6 @@ public class MovementMaster : UsesInputActions
         mm_OnAirDiveStart.Invoke();
         yield return new WaitUntil(() => isOnGround);
         isAirDiving = false;
-        mm_OnDiveRecoveryStart.Invoke();
-        isDiveRecovering = true;
-        yield return new WaitForSeconds(diveLengthOnGround);
-        isDiveRecovering = false;
     }
 
     /// <summary>
@@ -581,5 +576,10 @@ public class MovementMaster : UsesInputActions
     public bool IsGroundBoosting()
     {
         return isGroundBoosting;
+    }
+
+    public bool IsAirReversing()
+    {
+        return isAirReversing;
     }
 }

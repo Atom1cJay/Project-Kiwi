@@ -12,9 +12,6 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// The largest angle the player is allowed to walk on normally
     /// </summary>
     private static readonly float maxSlopeAngle = 45;
-    // todo this does nothing yet
-    private MovementMaster mm;
-
     /// <summary>
     /// The angle of the slope the player is currently colliding with.
     /// </summary>
@@ -28,9 +25,11 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// </summary>
     public static float ZDeriv { get; private set; }
     /// <summary>
-    /// For every positive z unit you move, you go up by this amount.
+    /// Is the player on a slope steeper than it can handle?
     /// </summary>
     public static bool BeyondMaxAngle { get; private set; }
+
+    private MovementMaster mm;
 
     private void Awake()
     {

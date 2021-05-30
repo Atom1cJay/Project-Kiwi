@@ -57,6 +57,11 @@ public class RotationMovement : MonoBehaviour
     /// <returns></returns>
     float DetermineRotationSpeed()
     {
+        if (mm.IsAirReversing())
+        {
+            return 0;
+        }
+
         if (mm.IsGroundBoosting() && mm.IsOnGround())
         {
             return groundBoostRotationSpeed;

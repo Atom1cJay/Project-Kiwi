@@ -31,7 +31,7 @@ public class CameraUtils : MonoBehaviour
         vertAngle = Mathf.Clamp(vertAngle, vertAngleMin, vertAngleMax);
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         MoveCamera();
     }

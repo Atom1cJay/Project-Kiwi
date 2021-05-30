@@ -31,8 +31,8 @@ public class VerticalMovement : MonoBehaviour
     [SerializeField] private float minVertAirBoostVel;
     [SerializeField] private float maxVertAirBoostVel;
     [SerializeField] private float vertAirBoostGravity;
-    [SerializeField] private float diveInitVelDecrease;
-    [SerializeField] private float diveVelDecreaseRate;
+    [SerializeField] private float diveInitVel;
+    [SerializeField] private float diveGravity;
     private float gravity;
     private float vertVel;
     private float frameVerticalMovement;
@@ -263,11 +263,11 @@ public class VerticalMovement : MonoBehaviour
 
     IEnumerator HandleDiveVel()
     {
-        vertVel -= diveInitVelDecrease;
+        vertVel = diveInitVel;
 
         while (mm.IsAirDiving())
         {
-            vertVel -= diveVelDecreaseRate * Time.fixedDeltaTime;
+            vertVel -= diveGravity * Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
     }

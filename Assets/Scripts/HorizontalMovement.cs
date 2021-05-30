@@ -27,6 +27,8 @@ public class HorizontalMovement : MonoBehaviour
     [SerializeField] private float groundBoostSensitivity;
     [SerializeField] private float groundBoostGravity;
     [SerializeField] private float diveSpeed;
+    [SerializeField] private float airReverseSensitivity;
+    [SerializeField] private float airReverseGravity;
     private float currentSpeed = 0;
     private MovementMaster mm;
 
@@ -67,13 +69,25 @@ public class HorizontalMovement : MonoBehaviour
         }
         else if (mm.IsAirDiving())
         {
-            currentSpeed = diveSpeed;
+            currentSpeed = new Dive(diveSpeed).GetHorizSpeedThisFrame();
         }
         else if (mm.InVertAirBoostCharge())
         {
             currentSpeed = InputUtils.SmoothedInput(currentSpeed, 0, 0, airBoostChargeGravity);
         }
-        else if (mm.InAirBoostCharge())
+        else if (mm.InAirBoostCharge() && mm.IsOnGround())
+        {
+            currentSpeed =
+                new Run(
+                    currentSpeed,
+                    defaultMaxSpeed,
+                    mm.GetHorizontalInput(),
+                    sensitivity,
+                    gravity,
+                    overTopSpeedGravity).GetHorizSpeedThisFrame();
+
+        }
+        else if (mm.InAirBoostCharge() && mm.IsOnGround())
         {
             currentSpeed = InputUtils.SmoothedInput(currentSpeed, 0, 0, airBoostChargeGravity);
         }
@@ -83,23 +97,35 @@ public class HorizontalMovement : MonoBehaviour
         }
         else if (mm.InTripleJump())
         {
-            print("Yeah");
-            currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * defaultMaxSpeed, tjAirSensitivity, tjAirGravity);
-        }
-        else if (!mm.IsInHardTurn() && mm.IsOnGround())
-        {
-            if (currentSpeed > defaultMaxSpeed)
+            if (mm.IsAirReversing())
             {
-                currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * defaultMaxSpeed, sensitivity, overTopSpeedGravity);
+                currentSpeed = InputUtils.SmoothedInput(currentSpeed, -mm.GetHorizontalInput().magnitude * defaultMaxSpeed, airReverseSensitivity, airReverseGravity);
+                if (currentSpeed < 0) currentSpeed = 0;
             }
             else
             {
-                currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * defaultMaxSpeed, sensitivity, gravity);
+                currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * defaultMaxSpeed, tjAirSensitivity, tjAirGravity);
             }
+        }
+        else if (!mm.IsInHardTurn() && mm.IsOnGround())
+        {
+            currentSpeed =
+                new Run(
+                    currentSpeed,
+                    defaultMaxSpeed,
+                    mm.GetHorizontalInput(),
+                    sensitivity,
+                    gravity,
+                    overTopSpeedGravity).GetHorizSpeedThisFrame();
         }
         else if (!mm.IsInHardTurn() && !mm.IsOnGround())
         {
-            if (currentSpeed > defaultMaxSpeed)
+            if (mm.IsAirReversing())
+            {
+                currentSpeed = InputUtils.SmoothedInput(currentSpeed, -mm.GetHorizontalInput().magnitude * defaultMaxSpeed, airReverseSensitivity, airReverseGravity);
+                if (currentSpeed < 0) currentSpeed = 0;
+            }
+            else if (currentSpeed > defaultMaxSpeed)
             {
                 currentSpeed = InputUtils.SmoothedInput(currentSpeed, mm.GetHorizontalInput().magnitude * defaultMaxSpeed, sensitivity, overTopSpeedAirGravity);
             }
