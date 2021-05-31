@@ -37,7 +37,14 @@ public class GrassSpawner : MonoBehaviour
 			if (hit.collider != null)
 			{
 				GameObject prefab = Random.value > 1f - flowerPercentage * 0.01f ? flowerPrefab : grassPrefab;
-				grassList.Add(Instantiate(prefab, hit.point, Quaternion.identity).transform);
+				if (prefab == flowerPrefab)
+				{
+					grassList.Add(Instantiate(prefab, hit.point, Quaternion.Euler(0f, Random.value * 360f, 0f)).transform);
+				}
+				else
+				{
+					Instantiate(prefab, hit.point, Quaternion.Euler(0f, Random.value * 360f, 0f));
+				}
 			}
 		}
 		allGrass = grassList.ToArray();
@@ -62,5 +69,5 @@ public class GrassSpawner : MonoBehaviour
 			}
 		}
 	}
-
+	
 }
