@@ -715,9 +715,9 @@ MonoBehaviour:
   groundBoostSpeed: 8
   groundBoostSensitivity: 6
   groundBoostGravity: 4
-  diveSpeed: 7
-  airReverseSensitivity: 0
-  airReverseGravity: 0
+  diveSpeed: 5
+  airReverseSensitivity: 7
+  airReverseGravity: 7
 --- !u!114 &5116987452351034285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -751,8 +751,8 @@ MonoBehaviour:
   minVertAirBoostVel: 6
   maxVertAirBoostVel: 12
   vertAirBoostGravity: 20
-  diveInitVel: 0
-  diveGravity: 0
+  diveInitVel: 5
+  diveGravity: 23
 --- !u!114 &5116987452351034281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,7 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a359c4fd7f67a42858be79f484b013e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instantRotationSpeed: 0.2
+  instantRotationSpeed: 0.3
   groundRotationSpeed: 800
   airRotationSpeed: 200
   boostAftermathRotationSpeed: 50
@@ -1419,13 +1419,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 497550d542ebf8d4e8a350d7f8d9c1a3, type: 3}
---- !u!1 &6118560184256511172 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 497550d542ebf8d4e8a350d7f8d9c1a3, type: 3}
-  m_PrefabInstance: {fileID: 6352353387999658389}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6891262508578203262 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 497550d542ebf8d4e8a350d7f8d9c1a3, type: 3}
+  m_PrefabInstance: {fileID: 6352353387999658389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6118560184256511172 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 497550d542ebf8d4e8a350d7f8d9c1a3, type: 3}
   m_PrefabInstance: {fileID: 6352353387999658389}
   m_PrefabAsset: {fileID: 0}

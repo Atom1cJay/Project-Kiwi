@@ -63,13 +63,13 @@ public class HorizontalMovement : MonoBehaviour
 
     private void DecideCurrentSpeed()
     {
-        if (mm.IsGroundBoosting())
-        {
-            currentSpeed = InputUtils.SmoothedInput(currentSpeed, groundBoostSpeed, groundBoostSensitivity, groundBoostGravity);
-        }
-        else if (mm.IsAirDiving())
+        if (mm.IsAirDiving())
         {
             currentSpeed = new Dive(diveSpeed).GetHorizSpeedThisFrame();
+        }
+        else if (mm.IsGroundBoosting())
+        {
+            currentSpeed = InputUtils.SmoothedInput(currentSpeed, groundBoostSpeed, groundBoostSensitivity, groundBoostGravity);
         }
         else if (mm.InVertAirBoostCharge())
         {
@@ -87,7 +87,7 @@ public class HorizontalMovement : MonoBehaviour
                     overTopSpeedGravity).GetHorizSpeedThisFrame();
 
         }
-        else if (mm.InAirBoostCharge() && mm.IsOnGround())
+        else if (mm.InAirBoostCharge() && !mm.IsOnGround())
         {
             currentSpeed = InputUtils.SmoothedInput(currentSpeed, 0, 0, airBoostChargeGravity);
         }
