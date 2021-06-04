@@ -292,8 +292,11 @@ public class MovementMaster : UsesInputActions
 
             if (ground.CompareTag("Moving Platform (Has Wrapper)"))
             {
-                print(ground);
                 transform.SetParent(groundDetector.CollidingWith().transform.parent, true);
+            }
+            else
+            {
+                transform.SetParent(null, true);
             }
         }
         else

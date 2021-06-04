@@ -9,6 +9,7 @@ public class ExperimentalObstacleHandler : MonoBehaviour
     float distance;
     int platLayer;
     [SerializeField] float skinLength;
+    [SerializeField] GameObject physicsCollider;
     Vector3 toMove;
 
     void Start()
@@ -23,7 +24,8 @@ public class ExperimentalObstacleHandler : MonoBehaviour
         platLayer = LayerMask.NameToLayer("MovingPlatform");
     }
 
-    public void Update()
+    /*
+    public void FixedUpdate()
     {
         toMove = Vector3.zero;
         RaycastHit hit;
@@ -40,7 +42,8 @@ public class ExperimentalObstacleHandler : MonoBehaviour
             if (Physics.CapsuleCast(p1, p2, 0, new Vector3(Mathf.Cos(i), 0, Mathf.Sin(i)), out hit, distance, 1 << platLayer))
             {
                 //If the object is touched by a platform, move the object away from it
-                toMove += (hit.normal * (distance - hit.distance));
+                toMove += hit.normal * (distance - hit.distance);
+                print("adjusting pos");
             }
         }
 
@@ -52,5 +55,16 @@ public class ExperimentalObstacleHandler : MonoBehaviour
         }
 
         controller.Move(toMove);
+    }
+    */
+
+    private void FixedUpdate()
+    {
+       if (physicsCollider.transform.localPosition != Vector3.zero)
+       {
+            //controller.Move(physicsCollider.transform.localPosition);
+            transform.Translate(physicsCollider.transform.localPosition);
+            physicsCollider.transform.localPosition = Vector3.zero;
+       }
     }
 }

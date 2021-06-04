@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
-    private bool isColliding;
     private GameObject collidingWith = null;
     [SerializeField] private List<GameObject> gameObjectsToIgnore;
+    //private bool collidingThisFrame;
 
-    private void OnTriggerStay(Collider other)
+    /*
+    private void OnTriggerExit(Collider other)
     {
         if (!gameObjectsToIgnore.Contains(other.gameObject))
         {
-            isColliding = true;
-            collidingWith = other.gameObject;
+            print("collision exiting");
+            collidingThisFrame = false;
+            collidingWith = null;
         }
     }
 
@@ -21,14 +23,16 @@ public class CollisionDetector : MonoBehaviour
     {
         if (!gameObjectsToIgnore.Contains(other.gameObject))
         {
-            isColliding = true;
+            print("collision staying");
+            collidingThisFrame = true;
+            collidingWith = other.gameObject;
         }
     }
+    */
 
-    private void OnTriggerExit(Collider other)
+    private void FixedUpdate()
     {
-        isColliding = false;
-        collidingWith = null;
+        
     }
 
     /// <summary>
@@ -37,7 +41,36 @@ public class CollisionDetector : MonoBehaviour
     /// <returns>Whether or not the <code>CollisionDetector</code> is activated</returns>
     public bool Colliding()
     {
-        return isColliding;
+        RaycastHit hit;
+
+        foreach (Collider c in Physics.OverlapSphere(transform.position, (transform.localScale.magnitude / 2) / 1.3f)) // TODO FIX BAD GENERALIZE
+        {
+            if (!gameObjectsToIgnore.Contains(c.gameObject))
+            {
+                collidingWith = c.gameObject;
+                return true;
+            }
+        }
+
+        collidingWith = null;
+        return false;
+
+        /*
+        for (int i = 0; i < 360; i += 36)
+        {
+            //Check if anything with the platform layer touches this object
+            if (Physics.SphereCast(transform.position, transform.lossyScale.magnitude / 2, new Vector3(Mathf.Cos(i), 0, Mathf.Sin(i)), out hit))
+            {
+                if (!gameObjectsToIgnore.Contains(hit.collider.gameObject))
+                {
+                    collidingWith = hit.collider.gameObject;
+                    return true;
+                }
+            }
+        }
+        collidingWith = null;
+        return false;
+        */
     }
 
     /// <summary>
