@@ -6,34 +6,6 @@ public class CollisionDetector : MonoBehaviour
 {
     private GameObject collidingWith = null;
     [SerializeField] private List<GameObject> gameObjectsToIgnore;
-    //private bool collidingThisFrame;
-
-    /*
-    private void OnTriggerExit(Collider other)
-    {
-        if (!gameObjectsToIgnore.Contains(other.gameObject))
-        {
-            print("collision exiting");
-            collidingThisFrame = false;
-            collidingWith = null;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!gameObjectsToIgnore.Contains(other.gameObject))
-        {
-            print("collision staying");
-            collidingThisFrame = true;
-            collidingWith = other.gameObject;
-        }
-    }
-    */
-
-    private void FixedUpdate()
-    {
-        
-    }
 
     /// <summary>
     /// Is the Collision Detector colliding with something it can detect?
@@ -54,23 +26,6 @@ public class CollisionDetector : MonoBehaviour
 
         collidingWith = null;
         return false;
-
-        /*
-        for (int i = 0; i < 360; i += 36)
-        {
-            //Check if anything with the platform layer touches this object
-            if (Physics.SphereCast(transform.position, transform.lossyScale.magnitude / 2, new Vector3(Mathf.Cos(i), 0, Mathf.Sin(i)), out hit))
-            {
-                if (!gameObjectsToIgnore.Contains(hit.collider.gameObject))
-                {
-                    collidingWith = hit.collider.gameObject;
-                    return true;
-                }
-            }
-        }
-        collidingWith = null;
-        return false;
-        */
     }
 
     /// <summary>
