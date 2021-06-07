@@ -1,13 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IMove
+public interface IMove
 {
     /// <summary>
     /// Gives the horizontal speed the player should be at this frame for
-    /// this move.
+    /// this move. Assumed that this method is called every frame while
+    /// the move is active.
     /// </summary>
     /// <returns></returns>
     float GetHorizSpeedThisFrame();
+
+    /// <summary>
+    /// Gives the vertical speed the player should be at this frame for
+    /// this move. Assumed that this method is called every frame while
+    /// the move is active.
+    /// </summary>
+    /// <returns></returns>
+    float GetVertSpeedThisFrame();
+
+    /// <summary>
+    /// What move should start being performed next frame?
+    /// </summary>
+    /// <returns></returns>
+    IMove GetNextMove();
 }

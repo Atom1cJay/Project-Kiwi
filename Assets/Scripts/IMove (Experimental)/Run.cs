@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class Run : AMove
 {
-    public Run(HorizontalMovement hm) : base(hm) { }
+    public Run(HorizontalMovement hm, VerticalMovement vm, MovementMaster mm) : base(hm, vm, mm) { }
 
     public override float GetHorizSpeedThisFrame()
     {
@@ -28,5 +28,15 @@ public class Run : AMove
                     hm.sensitivity,
                     hm.gravity);
         }
+    }
+
+    public override float GetVertSpeedThisFrame()
+    {
+        return 0;
+    }
+
+    public override IMove GetNextMove()
+    {
+        throw new NotImplementedException();
     }
 }

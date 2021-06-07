@@ -31,12 +31,14 @@ public class HorizontalMovement : MonoBehaviour
     [SerializeField] public float airReverseGravity;
     public float currentSpeed;
     private MovementMaster mm;
+    private VerticalMovement vm;
 
     Vector3 amountToMove; // Update value in FixedUpdate, execute movement in Update
 
     private void Awake()
     {
         mm = GetComponent<MovementMaster>();
+        vm = GetComponent<VerticalMovement>();
     }
 
     private void Update()
@@ -65,39 +67,39 @@ public class HorizontalMovement : MonoBehaviour
 
         if (mm.IsAirDiving())
         {
-            moveBeingPerformed = new Dive(this);
+            moveBeingPerformed = new Dive(this, vm, mm);
         }
         else if (mm.IsGroundBoosting())
         {
-            moveBeingPerformed = new HorizGroundBoost(this);
+            moveBeingPerformed = new HorizGroundBoost(this, vm, mm);
         }
         else if (mm.InVertAirBoostCharge())
         {
-            moveBeingPerformed = new VertAirBoostCharge(this);
+            moveBeingPerformed = new VertAirBoostCharge(this, vm, mm, 0); // 0 temp
         }
         else if (mm.InAirBoostCharge() && !mm.IsOnGround())
         {
-            moveBeingPerformed = new HorizAirBoostCharge(this);
+            moveBeingPerformed = new HorizAirBoostCharge(this, vm, mm, 0); // 0 temp
         }
         else if (mm.InAirBoost())
         {
-            moveBeingPerformed = new HorizAirBoost(this);
+            moveBeingPerformed = new HorizAirBoost(this, vm, mm);
         }
         else if (mm.InTripleJump())
         {
-            moveBeingPerformed = new TripleJump(this);
+            moveBeingPerformed = new TripleJump(this, vm, mm);
         }
         else if (mm.IsInHardTurn())
         {
-            moveBeingPerformed = new HardTurn(this);
+            moveBeingPerformed = new HardTurn(this, vm, mm);
         }
         else if (!mm.IsInHardTurn() && mm.IsOnGround())
         {
-            moveBeingPerformed = new Run(this);
+            moveBeingPerformed = new Run(this, vm, mm);
         }
         else if (!mm.IsInHardTurn() && !mm.IsOnGround())
         {
-            moveBeingPerformed = new Jump(this);
+            moveBeingPerformed = new Jump(this, vm, mm);
         }
         else
         {

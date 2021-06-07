@@ -8,31 +8,31 @@ using UnityEngine.InputSystem;
 public class VerticalMovement : MonoBehaviour
 {
     [Header("Regular Jump")]
-    [SerializeField] private float initJumpVel;
-    [SerializeField] private float initGravity;
-    [SerializeField] private float maxGravity;
-    [SerializeField] private float maxGravityAtCancel;
-    [SerializeField] private float velocityMultiplierAtCancel = 0.5f;
-    [SerializeField] private float gravityIncRate;
-    [SerializeField] private float gravityIncRateAtCancel;
+    [SerializeField] public float initJumpVel;
+    [SerializeField] public float initGravity;
+    [SerializeField] public float maxGravity;
+    [SerializeField] public float maxGravityAtCancel;
+    [SerializeField] public float velocityMultiplierAtCancel = 0.5f;
+    [SerializeField] public float gravityIncRate;
+    [SerializeField] public float gravityIncRateAtCancel;
     [Header("Triple Jump")]
-    [SerializeField] private float tjInitJumpVel;
-    [SerializeField] private float tjInitGravity;
-    [SerializeField] private float tjMaxGravity;
-    [SerializeField] private float tjMaxGravityAtCancel;
-    [SerializeField] private float tjVelocityMultiplierAtCancel = 0.5f;
-    [SerializeField] private float tjGravityIncRate;
-    [SerializeField] private float tjGravityIncRateAtCancel;
+    [SerializeField] public float tjInitJumpVel;
+    [SerializeField] public float tjInitGravity;
+    [SerializeField] public float tjMaxGravity;
+    [SerializeField] public float tjMaxGravityAtCancel;
+    [SerializeField] public float tjVelocityMultiplierAtCancel = 0.5f;
+    [SerializeField] public float tjGravityIncRate;
+    [SerializeField] public float tjGravityIncRateAtCancel;
     [Header("Non-Jumping")]
-    [SerializeField] private float nonJumpGravity;
-    [SerializeField] private float airBoostGravity;
-    [SerializeField] private float airBoostChargeGravity;
-    [SerializeField] private float airBoostEndGravity;
-    [SerializeField] private float minVertAirBoostVel;
-    [SerializeField] private float maxVertAirBoostVel;
-    [SerializeField] private float vertAirBoostGravity;
-    [SerializeField] private float diveInitVel;
-    [SerializeField] private float diveGravity;
+    [SerializeField] public float nonJumpGravity;
+    [SerializeField] public float airBoostGravity;
+    [SerializeField] public float airBoostChargeGravity;
+    [SerializeField] public float airBoostEndGravity;
+    [SerializeField] public float minVertAirBoostVel;
+    [SerializeField] public float maxVertAirBoostVel;
+    [SerializeField] public float vertAirBoostGravity;
+    [SerializeField] public float diveInitVel;
+    [SerializeField] public float diveGravity;
     private float gravity;
     private float vertVel;
     private float frameVerticalMovement;

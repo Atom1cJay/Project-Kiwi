@@ -10,30 +10,30 @@ using UnityEngine.InputSystem;
 public class MovementMaster : UsesInputActions
 {
     // Serialized Fields
-    [SerializeField] private GameObject relevantCamera;
-    [SerializeField] private CollisionDetector groundDetector;
+    [SerializeField] public GameObject relevantCamera;
+    [SerializeField] public CollisionDetector groundDetector;
     [Header("Jumping Settings")]
-    [SerializeField] private float groundableTimer = 0.1f;
+    [SerializeField] public float groundableTimer = 0.1f;
     [Header("Coyote Time Settings")]
-    [SerializeField] private float reverseCoyoteTime;
-    [SerializeField] private float coyoteTime;
+    [SerializeField] public float reverseCoyoteTime;
+    [SerializeField] public float coyoteTime;
     [Header("Hard Turn Settings")]
-    [SerializeField] private float dissonanceForHardTurn;
-    [SerializeField] private float hardTurnMinSpeed;
-    [SerializeField] private float hardTurnTime;
+    [SerializeField] public float dissonanceForHardTurn;
+    [SerializeField] public float hardTurnMinSpeed;
+    [SerializeField] public float hardTurnTime;
     [Header("Triple Jump Settings")]
-    [SerializeField] private float tjMinInputMagnitude;
-    [SerializeField] private float tjMaxTimeBtwnJumps;
-    [SerializeField] private float tjMinJumpTime;
-    [SerializeField] private float tjMaxJumpTime;
-    [SerializeField] private float tjMaxDissonance;
+    [SerializeField] public float tjMinInputMagnitude;
+    [SerializeField] public float tjMaxTimeBtwnJumps;
+    [SerializeField] public float tjMinJumpTime;
+    [SerializeField] public float tjMaxJumpTime;
+    [SerializeField] public float tjMaxDissonance;
     [Header("Boosting Settings")]
-    [SerializeField] private float airBoostMaxChargeTime;
-    [SerializeField] private float airBoostMaxTime;
-    [SerializeField] private float vertAirBoostMaxChargeTime;
+    [SerializeField] public float airBoostMaxChargeTime;
+    [SerializeField] public float airBoostMaxTime;
+    [SerializeField] public float vertAirBoostMaxChargeTime;
     [Header("Misc. Settings")]
-    [SerializeField] private float dissonanceForAirReverse;
-    [SerializeField] private float airReverseMinActivationSpeed;
+    [SerializeField] public float dissonanceForAirReverse;
+    [SerializeField] public float airReverseMinActivationSpeed;
 
     // Other variables for internal use only
     private bool isJumping;
