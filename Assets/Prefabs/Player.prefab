@@ -783,7 +783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de3b17f9960e44fb89a5eed1abd6113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMaxSpeed: 5.5
+  defaultMaxSpeed: 5
   sensitivity: 7
   gravity: 15
   overTopSpeedGravity: 10
@@ -793,7 +793,7 @@ MonoBehaviour:
   tjAirSensitivity: 4
   tjAirGravity: 5
   stickToGroundMultiplier: 0.2
-  hardTurnSpeedMultiplier: 0.2
+  hardTurnGravity: 30
   airBoostSpeed: 9
   airBoostChargeGravity: 6
   vertAirBoostChargeGravity: 12
@@ -803,6 +803,7 @@ MonoBehaviour:
   diveSpeed: 5
   airReverseSensitivity: 7
   airReverseGravity: 7
+  currentSpeed: 0
 --- !u!114 &5116987452351034285
 MonoBehaviour:
   m_ObjectHideFlags: 0
