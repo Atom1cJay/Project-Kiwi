@@ -13,9 +13,11 @@ public class RotationMovement : MonoBehaviour
     [SerializeField] private float diveRotationSpeed = 50;
     [SerializeField] private float groundBoostRotationSpeed;
     private MovementMaster mm;
+    private MovementInfo mi;
 
     private void Awake()
     {
+        mi = GetComponent<MovementInfo>();
         mm = GetComponent<MovementMaster>();
         mm.mm_OnHardTurnEnd.AddListener(OnHardTurnEnd);
     }
@@ -42,7 +44,7 @@ public class RotationMovement : MonoBehaviour
             float rotationSpeed = DetermineRotationSpeed();
             if (rawInput.magnitude == 0) return;
             Quaternion targetRotation = Quaternion.Euler(0, inputDirection * Mathf.Rad2Deg, 0);
-            bool underInstantRotSpeed = mm.GetHorizSpeed() <= instantRotationSpeed;
+            bool underInstantRotSpeed = mi.currentSpeed <= instantRotationSpeed;
             transform.rotation =
                 underInstantRotSpeed && !inAirBoostOrCharge()
                 ? targetRotation

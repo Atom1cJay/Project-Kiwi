@@ -7,7 +7,7 @@ public interface IMove
 {
     /// <summary>
     /// Gives the horizontal speed the player should be at this frame for
-    /// this move. Assumed that this method is called every frame while
+    /// this move. Assumed that this method is called every (update) frame while
     /// the move is active.
     /// </summary>
     /// <returns></returns>
@@ -15,7 +15,7 @@ public interface IMove
 
     /// <summary>
     /// Gives the vertical speed the player should be at this frame for
-    /// this move. Assumed that this method is called every frame while
+    /// this move. Assumed that this method is called every (update) frame while
     /// the move is active.
     /// </summary>
     /// <returns></returns>

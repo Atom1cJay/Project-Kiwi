@@ -6,27 +6,52 @@ using UnityEngine;
 public class HorizAirBoostCharge : AMove
 {
     float vertVel;
+    float timeCharging;
+    float maxTimeToCharge;
+    InputActions ia;
+    MovementSettings ms;
+    MovementInputInfo mii;
+    MovementInfo mi;
 
-    public HorizAirBoostCharge(HorizontalMovement hm, VerticalMovement vm, MovementMaster mm, float prevVertVel) : base(hm, vm, mm)
+    public HorizAirBoostCharge(MovementMaster mm, MovementSettings ms, MovementInputInfo mii, MovementInfo mi, float prevVertVel) : base(mm)
     {
         vertVel = (prevVertVel < 0) ? 0 : prevVertVel;
+
+        timeCharging = 0;
+        maxTimeToCharge = mm.airBoostMaxChargeTime;
+
+        // To detect end of boost
+        ia = mm.ia();
+
+        this.ms = ms;
+        this.mii = mii;
+        this.mi = mi;
     }
 
     public override float GetHorizSpeedThisFrame()
     {
         return InputUtils.SmoothedInput(
-            hm.currentSpeed, 0, 0, hm.airBoostChargeGravity);
+            mi.currentSpeed, 0, 0, ms.horizBoostChargeGravityX);
     }
 
     public override float GetVertSpeedThisFrame()
     {
-        float gravityType = (vertVel > 0) ? vm.nonJumpGravity : vm.airBoostChargeGravity;
-        vertVel -= gravityType * Time.fixedDeltaTime;
+        float gravityType = (vertVel > 0) ? ms.defaultGravity : ms.horizBoostChargeGravity;
+        vertVel -= gravityType * Time.deltaTime;
         return vertVel;
     }
 
     public override IMove GetNextMove()
     {
-        throw new NotImplementedException();
+        timeCharging += Time.deltaTime;
+
+        if (timeCharging > maxTimeToCharge || ia.Player.Boost.ReadValue<float>() == 0)
+        {
+            return new HorizAirBoost(mm, ms, mii, mi, (timeCharging / maxTimeToCharge) * mm.airBoostMaxTime);
+        }
+        else
+        {
+            return this;
+        }
     }
 }

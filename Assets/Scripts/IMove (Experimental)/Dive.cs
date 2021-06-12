@@ -9,20 +9,26 @@ using UnityEngine;
 public class Dive : AMove
 {
     float vertVel;
+    MovementSettings ms;
+    MovementInputInfo mii;
+    MovementInfo mi;
 
-    public Dive(HorizontalMovement hm, VerticalMovement vm, MovementMaster mm) : base(hm, vm, mm)
+    public Dive(MovementMaster mm, MovementSettings ms, MovementInputInfo mii, MovementInfo mi) : base(mm)
     {
-        vertVel = vm.diveInitVel;
+        vertVel = ms.diveInitVel;
+        this.ms = ms;
+        this.mii = mii;
+        this.mi = mi;
     }
 
     public override float GetHorizSpeedThisFrame()
     {
-        return hm.diveSpeed;
+        return ms.diveSpeedX;
     }
 
     public override float GetVertSpeedThisFrame()
     {
-        vertVel -= vm.diveGravity * Time.fixedDeltaTime;
+        vertVel -= ms.diveGravity * Time.deltaTime;
         return vertVel;
     }
 
@@ -30,7 +36,7 @@ public class Dive : AMove
     {
         if (mm.IsOnGround())
         {
-            return new Run(hm, vm, mm);
+            return new Run(mm, ms, mii, mi);
         }
         else
         {

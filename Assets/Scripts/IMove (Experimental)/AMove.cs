@@ -3,18 +3,14 @@ using System.Collections;
 
 public abstract class AMove : IMove
 {
-    protected HorizontalMovement hm;
-    protected VerticalMovement vm;
     protected MovementMaster mm;
 
-    protected AMove(HorizontalMovement hm, VerticalMovement vm, MovementMaster mm)
+    protected AMove(MovementMaster mm)
     {
-        if (hm == null || vm == null)
+        if (mm == null)
         {
-            Debug.LogError("Null Horiz/VertMovement passed into dive");
+            Debug.LogError("Null args passed into move");
         }
-        this.hm = hm;
-        this.vm = vm;
         this.mm = mm;
     }
 

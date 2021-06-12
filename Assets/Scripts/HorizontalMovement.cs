@@ -33,17 +33,20 @@ public class HorizontalMovement : MonoBehaviour
     private MovementMaster mm;
     private VerticalMovement vm;
 
+    MovementSettings ms;
+
     Vector3 amountToMove; // Update value in FixedUpdate, execute movement in Update
 
     private void Awake()
     {
         mm = GetComponent<MovementMaster>();
         vm = GetComponent<VerticalMovement>();
+        ms = GetComponent<MovementSettings>();
     }
 
     private void Update()
     {
-        mm.GetCharacterController().Move(amountToMove * Time.deltaTime);
+        //mm.GetCharacterController().Move(amountToMove * Time.deltaTime);
     }
 
     /// <summary>
@@ -63,50 +66,53 @@ public class HorizontalMovement : MonoBehaviour
     /// </summary>
     private void DecideCurrentSpeed()
     {
+        MovementInputInfo mii = GetComponent<MovementInputInfo>();
         IMove moveBeingPerformed = null;
 
+        /*
         if (mm.IsAirDiving())
         {
-            moveBeingPerformed = new Dive(this, vm, mm);
+            moveBeingPerformed = new Dive(this, mm, ms, mii);
         }
         else if (mm.IsGroundBoosting())
         {
-            moveBeingPerformed = new HorizGroundBoost(this, vm, mm);
+            moveBeingPerformed = new HorizGroundBoost(this, mm, ms, mii);
         }
         else if (mm.InVertAirBoostCharge())
         {
-            moveBeingPerformed = new VertAirBoostCharge(this, vm, mm, 0); // 0 temp
+            moveBeingPerformed = new VertAirBoostCharge(this, mm, ms, mii, 0); // 0 temp
         }
         else if (mm.InAirBoostCharge() && !mm.IsOnGround())
         {
-            moveBeingPerformed = new HorizAirBoostCharge(this, vm, mm, 0); // 0 temp
+            moveBeingPerformed = new HorizAirBoostCharge(this, mm, ms, mii, 0); // 0 temp
         }
         else if (mm.InAirBoost())
         {
-            moveBeingPerformed = new HorizAirBoost(this, vm, mm);
+            moveBeingPerformed = new HorizAirBoost(this, mm, ms, mii, 0.5f); // TODO CHANGE FROM 0 FOR TEST
         }
         else if (mm.InTripleJump())
         {
-            moveBeingPerformed = new TripleJump(this, vm, mm);
+            moveBeingPerformed = new TripleJump(this, mm, ms, mii);
         }
         else if (mm.IsInHardTurn())
         {
-            moveBeingPerformed = new HardTurn(this, vm, mm);
+            moveBeingPerformed = new HardTurn(this, mm, ms, mii);
         }
         else if (!mm.IsInHardTurn() && mm.IsOnGround())
         {
-            moveBeingPerformed = new Run(this, vm, mm);
+            moveBeingPerformed = new Run(this, mm, ms, mii);
         }
         else if (!mm.IsInHardTurn() && !mm.IsOnGround())
         {
-            moveBeingPerformed = new Jump(this, vm, mm);
+            moveBeingPerformed = new Jump(this, mm, ms, mii);
         }
         else
         {
             Debug.LogError("Impossible horizontal move: none of the other moves' conditions passed.");
         }
+        */
 
-        currentSpeed = moveBeingPerformed.GetHorizSpeedThisFrame();
+        //currentSpeed = moveBeingPerformed.GetHorizSpeedThisFrame();
     }
 
     /// <summary>

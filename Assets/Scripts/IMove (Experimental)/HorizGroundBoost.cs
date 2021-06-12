@@ -5,15 +5,24 @@ using UnityEngine;
 
 public class HorizGroundBoost : AMove
 {
-    public HorizGroundBoost(HorizontalMovement hm, VerticalMovement vm, MovementMaster mm) : base(hm, vm, mm) { }
+    MovementSettings ms;
+    MovementInputInfo mii;
+    MovementInfo mi;
+
+    public HorizGroundBoost(MovementMaster mm, MovementSettings ms, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    {
+        this.ms = ms;
+        this.mii = mii;
+        this.mi = mi;
+    }
 
     public override float GetHorizSpeedThisFrame()
     {
         return InputUtils.SmoothedInput(
-            hm.currentSpeed,
-            hm.groundBoostSpeed,
-            hm.groundBoostSensitivity,
-            hm.groundBoostGravity);
+            mi.currentSpeed,
+            ms.groundBoostMaxSpeedX,
+            ms.groundBoostSensitivityX,
+            ms.groundBoostGravityX);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -23,6 +32,7 @@ public class HorizGroundBoost : AMove
 
     public override IMove GetNextMove()
     {
-        throw new NotImplementedException();
+        // todo change
+        return new Run(mm, ms, mii, mi);
     }
 }

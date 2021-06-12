@@ -6,27 +6,36 @@ using UnityEngine;
 /// </summary>
 public class Run : AMove
 {
-    public Run(HorizontalMovement hm, VerticalMovement vm, MovementMaster mm) : base(hm, vm, mm) { }
+    MovementSettings ms;
+    MovementInputInfo mii;
+    MovementInfo mi;
+
+    public Run(MovementMaster mm, MovementSettings ms, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    {
+        this.ms = ms;
+        this.mii = mii;
+        this.mi = mi;
+    }
 
     public override float GetHorizSpeedThisFrame()
     {
-        if (hm.currentSpeed > hm.defaultMaxSpeed)
+        if (mi.currentSpeed > ms.defaultMaxSpeedX)
         {
             return
                 InputUtils.SmoothedInput(
-                    hm.currentSpeed,
-                    hm.getHorizontalInput().magnitude * hm.defaultMaxSpeed,
-                    hm.sensitivity,
-                    hm.gravity);
+                    mi.currentSpeed,
+                    mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
+                    ms.runSensitivityX,
+                    ms.runGravityX);
         }
         else
         {
             return
                 InputUtils.SmoothedInput(
-                    hm.currentSpeed,
-                    hm.getHorizontalInput().magnitude * hm.defaultMaxSpeed,
-                    hm.sensitivity,
-                    hm.gravity);
+                    mi.currentSpeed,
+                    mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
+                    ms.runSensitivityX,
+                    ms.runGravityX);
         }
     }
 
@@ -37,6 +46,24 @@ public class Run : AMove
 
     public override IMove GetNextMove()
     {
-        throw new NotImplementedException();
+        if (mm.IsJumping() && mm.tripleJumpValid())
+        {
+            return new TripleJump(mm, ms, mii, mi);
+        }
+        if (mm.IsJumping())
+        {
+            return new Jump(mm, ms, mii, mi);
+        }
+        if (!mm.IsOnGround())
+        {
+            return new Fall(mm, ms, mii, mi);
+        }
+        if (mm.IsInHardTurn())
+        {
+            return new HardTurn(mm, ms, mii, mi);
+        }
+        // todo make ground boost possible
+
+        return this;
     }
 }
