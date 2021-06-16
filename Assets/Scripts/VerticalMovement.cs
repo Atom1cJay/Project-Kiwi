@@ -169,7 +169,7 @@ public class VerticalMovement : MonoBehaviour
     private void Update()
     {
         frameVerticalMovement = amountToMove.y;
-        //mm.GetCharacterController().Move(amountToMove * Time.deltaTime);
+        mm.GetCharacterController().Move(amountToMove * Time.deltaTime);
     }
 
     /// <summary>
