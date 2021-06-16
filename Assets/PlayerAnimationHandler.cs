@@ -14,8 +14,6 @@ public class PlayerAnimationHandler : MonoBehaviour
         animator.SetBool("WALKING", false);
         animator.SetBool("RUNNING", false);
         animator.SetBool("FALLING", false);
-        animator.SetBool("HORIZONTAL_CHARGE", false);
-        animator.SetBool("HORIZONTAL_BOOST", false);
     }
 
     void FixedUpdate()
@@ -53,30 +51,6 @@ public class PlayerAnimationHandler : MonoBehaviour
         {
             animator.SetBool("WALKING", false);
             animator.SetBool("RUNNING", false);
-        }
-
-        //Jetpack Boosting Charge
-        if (mm.InAirBoostCharge())
-        {
-            animator.SetBool("HORIZONTAL_CHARGE", true);
-            animator.SetBool("HORIZONTAL_BOOST", false);
-
-        }
-        else
-        {
-            animator.SetBool("HORIZONTAL_CHARGE", false);
-        }
-
-
-        //Jetpack Boosting
-        if (mm.InAirBoost())
-        {
-            animator.SetBool("HORIZONTAL_CHARGE", false);
-            animator.SetBool("HORIZONTAL_BOOST", true);
-        }
-        else
-        {
-            animator.SetBool("HORIZONTAL_BOOST", false);
         }
     }
 }
