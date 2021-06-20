@@ -60,7 +60,6 @@ public class MovementMaster : UsesInputActions
     private CharacterController charCont;
     private HorizontalMovement horizMove;
     private VerticalMovement vertMove;
-    private MovementInfo mi;
 
     // UnityEvents
     [HideInInspector] public UnityEvent mm_OnJump;
@@ -88,7 +87,6 @@ public class MovementMaster : UsesInputActions
 
     private void InitializeAssets()
     {
-        mi = GetComponent<MovementInfo>();
         charCont = GetComponent<CharacterController>();
         horizMove = GetComponent<HorizontalMovement>();
         vertMove = GetComponent<VerticalMovement>();
@@ -243,7 +241,7 @@ public class MovementMaster : UsesInputActions
 
     private void UpdateHorizontalStates()
     {
-        if (GetHorizDissonance() > dissonanceForHardTurn && mi.currentSpeed > hardTurnMinSpeed && !isInHardTurn && isOnGround)
+        if (GetHorizDissonance() > dissonanceForHardTurn && horizMove.GetSpeed() > hardTurnMinSpeed && !isInHardTurn && isOnGround)
         {
             // First frame of hard turn
             StartHardTurn();
@@ -586,15 +584,5 @@ public class MovementMaster : UsesInputActions
     public bool IsAirReversing()
     {
         return isAirReversing;
-    }
-
-    public InputActions ia()
-    {
-        return inputActions;
-    }
-
-    public bool tripleJumpValid()
-    {
-        return tjJumpCount == 3;
     }
 }

@@ -46,4 +46,9 @@ public class VertAirBoost : AMove
 
         return this;
     }
+
+    public override string ToString()
+    {
+        return "vertairboost";
+    }
 }

@@ -6,36 +6,27 @@ using UnityEngine;
 /// </summary>
 public class Run : AMove
 {
-    MovementSettings ms;
-    MovementInputInfo mii;
-    MovementInfo mi;
-
-    public Run(MovementMaster mm, MovementSettings ms, MovementInputInfo mii, MovementInfo mi) : base(mm)
-    {
-        this.ms = ms;
-        this.mii = mii;
-        this.mi = mi;
-    }
+    public Run(HorizontalMovement hm, VerticalMovement vm, MovementMaster mm) : base(hm, vm, mm) { }
 
     public override float GetHorizSpeedThisFrame()
     {
-        if (mi.currentSpeed > ms.defaultMaxSpeedX)
+        if (hm.currentSpeed > hm.defaultMaxSpeed)
         {
             return
                 InputUtils.SmoothedInput(
-                    mi.currentSpeed,
-                    mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.runSensitivityX,
-                    ms.runGravityX);
+                    hm.currentSpeed,
+                    hm.getHorizontalInput().magnitude * hm.defaultMaxSpeed,
+                    hm.sensitivity,
+                    hm.gravity);
         }
         else
         {
             return
                 InputUtils.SmoothedInput(
-                    mi.currentSpeed,
-                    mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.runSensitivityX,
-                    ms.runGravityX);
+                    hm.currentSpeed,
+                    hm.getHorizontalInput().magnitude * hm.defaultMaxSpeed,
+                    hm.sensitivity,
+                    hm.gravity);
         }
     }
 
@@ -46,24 +37,11 @@ public class Run : AMove
 
     public override IMove GetNextMove()
     {
-        if (mm.IsJumping() && mm.tripleJumpValid())
-        {
-            return new TripleJump(mm, ms, mii, mi);
-        }
-        if (mm.IsJumping())
-        {
-            return new Jump(mm, ms, mii, mi);
-        }
-        if (!mm.IsOnGround())
-        {
-            return new Fall(mm, ms, mii, mi);
-        }
-        if (mm.IsInHardTurn())
-        {
-            return new HardTurn(mm, ms, mii, mi);
-        }
-        // todo make ground boost possible
+        throw new NotImplementedException();
+    }
 
-        return this;
+    public override string ToString()
+    {
+        return "run";
     }
 }

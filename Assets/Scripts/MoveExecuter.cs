@@ -10,8 +10,10 @@ using UnityEngine;
 public class MoveExecuter : MonoBehaviour
 {
     IMove moveThisFrame;
+    // TODO for speedThisFrame, maybe get rid of the one in movementinfo
+    // (and that class in general)
+    public float speedThisFrame { get; private set; }
     CharacterController charCont;
-    HorizontalMovement hm;
     MovementMaster mm;
     MovementSettings ms;
     MovementInfo mi;
@@ -28,8 +30,9 @@ public class MoveExecuter : MonoBehaviour
     void Update()
     {
         Vector3 dir = directionOfMovement();
-        float speedThisFrame = moveThisFrame.GetHorizSpeedThisFrame();
-        mi.currentSpeed = speedThisFrame;
+        float speed = moveThisFrame.GetHorizSpeedThisFrame();
+        mi.currentSpeed = speed;
+        this.speedThisFrame = speed;
         Vector3 horizMovement = dir * speedThisFrame;
         charCont.Move(horizMovement * Time.deltaTime);
         Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
@@ -59,5 +62,16 @@ public class MoveExecuter : MonoBehaviour
         Vector3 dir = new Vector3(xDelta, yDelta, zDelta);
         if (dir.magnitude > 1) { dir = dir.normalized; }
         return dir;
+    }
+
+    /// <summary>
+    /// Returns the currently active move in string form. Strings are all
+    /// lowercase and have no spaces in them, but other than that, they're
+    /// identical to their class names.
+    /// </summary>
+    /// <returns></returns>
+    public string currentMoveAsString()
+    {
+        return moveThisFrame.ToString();
     }
 }
