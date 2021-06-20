@@ -76,4 +76,9 @@ public class TripleJump : AMove
     {
         throw new NotImplementedException();
     }
+
+    public override string ToString()
+    {
+        return "triplejump";
+    }
 }

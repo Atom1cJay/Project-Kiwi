@@ -29,4 +29,9 @@ public class VertAirBoostCharge : AMove
     {
         throw new NotImplementedException();
     }
+
+    public override string ToString()
+    {
+        return "vertairboostcharge";
+    }
 }
