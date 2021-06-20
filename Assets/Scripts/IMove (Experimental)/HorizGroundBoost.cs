@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO THIS MOVE CURRENTLY DOESNT WORK
 public class HorizGroundBoost : AMove
 {
     public HorizGroundBoost(HorizontalMovement hm, VerticalMovement vm, MovementMaster mm) : base(hm, vm, mm) { }
@@ -25,10 +24,5 @@ public class HorizGroundBoost : AMove
     public override IMove GetNextMove()
     {
         throw new NotImplementedException();
-    }
-
-    public override string ToString()
-    {
-        return "horizgroundboost";
     }
 }

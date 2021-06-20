@@ -26,10 +26,4 @@ public class HorizAirBoost : AMove
     {
         throw new NotImplementedException();
     }
-
-
-    public override string ToString()
-    {
-        return "horizairboost";
-    }
 }

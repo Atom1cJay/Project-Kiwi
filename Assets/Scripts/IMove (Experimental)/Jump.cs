@@ -81,10 +81,5 @@ public class Jump : AMove
     {
         throw new NotImplementedException();
     }
-
-    public override string ToString()
-    {
-        return "jump";
-    }
 }
    

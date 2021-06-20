@@ -39,9 +39,4 @@ public class Run : AMove
     {
         throw new NotImplementedException();
     }
-
-    public override string ToString()
-    {
-        return "run";
-    }
 }
