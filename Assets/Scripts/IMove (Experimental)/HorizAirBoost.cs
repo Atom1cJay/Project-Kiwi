@@ -49,4 +49,9 @@ public class HorizAirBoost : AMove
 
         return this;
     }
+
+    public override string asString()
+    {
+        return "horizairboost";
+    }
 }

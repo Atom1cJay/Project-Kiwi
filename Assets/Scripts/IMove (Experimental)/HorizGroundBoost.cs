@@ -35,4 +35,9 @@ public class HorizGroundBoost : AMove
         // todo change
         return new Run(mm, ms, mii, mi);
     }
+
+    public override string asString()
+    {
+        return "horizgroundboost";
+    }
 }

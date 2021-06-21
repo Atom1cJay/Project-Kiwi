@@ -43,4 +43,9 @@ public class Dive : AMove
             return this;
         }
     }
+
+    public override string asString()
+    {
+        return "dive";
+    }
 }

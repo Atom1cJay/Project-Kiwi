@@ -54,4 +54,9 @@ public class HorizAirBoostCharge : AMove
             return this;
         }
     }
+
+    public override string asString()
+    {
+        return "horizairboostcharge";
+    }
 }

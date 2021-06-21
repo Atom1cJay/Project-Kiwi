@@ -80,4 +80,9 @@ public class Fall : AMove
 
         return this;
     }
+
+    public override string asString()
+    {
+        return "fall";
+    }
 }

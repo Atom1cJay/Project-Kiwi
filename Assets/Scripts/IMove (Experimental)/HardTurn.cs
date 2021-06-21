@@ -48,4 +48,9 @@ public class HardTurn : AMove
         }
         return this;
     }
+
+    public override string asString()
+    {
+        return "hardturn";
+    }
 }

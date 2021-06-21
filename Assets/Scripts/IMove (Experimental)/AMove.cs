@@ -19,4 +19,6 @@ public abstract class AMove : IMove
     public abstract float GetVertSpeedThisFrame();
 
     public abstract IMove GetNextMove();
+
+    public abstract string asString();
 }

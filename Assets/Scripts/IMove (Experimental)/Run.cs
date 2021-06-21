@@ -66,4 +66,9 @@ public class Run : AMove
 
         return this;
     }
+
+    public override string asString()
+    {
+        return "run";
+    }
 }

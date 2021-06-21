@@ -26,4 +26,10 @@ public interface IMove
     /// </summary>
     /// <returns></returns>
     IMove GetNextMove();
+
+    /// <summary>
+    /// Gives this move as a String with no spaces, all in lowercase
+    /// </summary>
+    /// <returns></returns>
+    string asString();
 }

@@ -104,5 +104,10 @@ public class Jump : AMove
 
         return this;
     }
+
+    public override string asString()
+    {
+        return "jump";
+    }
 }
    

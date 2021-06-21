@@ -49,4 +49,9 @@ public class VertAirBoostCharge : AMove
 
         return this;
     }
+
+    public override string asString()
+    {
+        return "vertairboostcharge";
+    }
 }
