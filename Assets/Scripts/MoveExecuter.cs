@@ -27,7 +27,6 @@ public class MoveExecuter : MonoBehaviour
 
     void Update()
     {
-        print(moveThisFrame.asString());
         Vector3 dir = directionOfMovement();
         float speedThisFrame = moveThisFrame.GetHorizSpeedThisFrame();
         mi.currentSpeed = speedThisFrame;

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerAnimationHandler : MonoBehaviour
 {
-    [SerializeField] MovementMaster mm;
+    [SerializeField] MoveExecuter me;
+    //[SerializeField] MovementMaster mm;
     [SerializeField] Animator animator;
 
     void Start()
@@ -18,7 +19,10 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     void FixedUpdate()
     {
+        print(me.currentMoveAsString());
+
         //Jumping and Falling Animation Controllers
+        /*
         if (mm.IsJumping())
         {
             animator.SetBool("JUMPING", true);
@@ -52,5 +56,6 @@ public class PlayerAnimationHandler : MonoBehaviour
             animator.SetBool("WALKING", false);
             animator.SetBool("RUNNING", false);
         }
+        */
     }
 }
