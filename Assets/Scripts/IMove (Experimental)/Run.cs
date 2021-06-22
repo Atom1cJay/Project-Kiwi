@@ -46,6 +46,10 @@ public class Run : AMove
 
     public override IMove GetNextMove()
     {
+        if (mi.currentSpeed == 0)
+        {
+            return new Idle(mm, ms, mii, mi);
+        }
         if (mm.IsJumping() && mm.tripleJumpValid())
         {
             return new TripleJump(mm, ms, mii, mi);
