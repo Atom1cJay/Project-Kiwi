@@ -5,4 +5,5 @@ using UnityEngine;
 public class MovementInfo : MonoBehaviour
 {
     [HideInInspector] public float currentSpeed;
+
 }
