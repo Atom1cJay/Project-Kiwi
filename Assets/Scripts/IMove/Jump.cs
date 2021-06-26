@@ -6,16 +6,14 @@ public class Jump : AMove
 {
     float gravity;
     float vertVel;
-    MovementSettings ms;
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public Jump(MovementMaster mm, MovementSettings ms, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    public Jump(MovementMaster mm, MovementInputInfo mii, MovementInfo mi) : base(mm)
     {
-        gravity = ms.jumpInitGravity;
-        vertVel = ms.jumpInitVel;
+        gravity = movementSettings.JumpInitGravity;
+        vertVel = movementSettings.JumpInitVel;
         mm.mm_OnJumpCanceled.AddListener(OnJumpCanceled);
-        this.ms = ms;
         this.mii = mii;
         this.mi = mi;
     }
@@ -29,28 +27,28 @@ public class Jump : AMove
             toReturn =
                 InputUtils.SmoothedInput(
                     mi.currentSpeed,
-                    -mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.airReverseSensitivityX,
-                    ms.airReverseGravityX);
+                    -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.AirReverseSensitivityX,
+                    movementSettings.AirReverseGravityX);
             if (toReturn < 0) toReturn = 0;
         }
-        else if (mi.currentSpeed > ms.defaultMaxSpeedX)
+        else if (mi.currentSpeed > movementSettings.MaxSpeed)
         {
             toReturn =
                 InputUtils.SmoothedInput(
                     mi.currentSpeed,
-                    mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.airSensitivityX,
-                    ms.airGravityXOverTopSpeed);
+                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.AirSensitivityX,
+                    movementSettings.AirGravityXOverTopSpeed);
         }
         else
         {
             toReturn =
                 InputUtils.SmoothedInput(
                     mi.currentSpeed,
-                    mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.airSensitivityX,
-                    ms.airGravityX);
+                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.AirSensitivityX,
+                    movementSettings.AirGravityX);
         }
 
         return toReturn;
@@ -60,14 +58,14 @@ public class Jump : AMove
     {
         // Decide Gravity
         if (mm.JumpInputCancelled())
-            gravity += ms.jumpCancelledGravityIncreaseRate * Time.deltaTime;
+            gravity += movementSettings.JumpCancelledGravityIncrease * Time.deltaTime;
         else
-            gravity += ms.jumpUncancelledGravityIncreaseRate * Time.deltaTime;
+            gravity += movementSettings.JumpUncancelledGravityIncrease * Time.deltaTime;
 
-        if (gravity > ms.jumpMaxUncancelledGravity && !mm.JumpInputCancelled())
-            gravity = ms.jumpMaxUncancelledGravity;
-        else if (gravity > ms.jumpMaxCancelledGravity && mm.JumpInputCancelled())
-            gravity = ms.jumpMaxCancelledGravity;
+        if (gravity > movementSettings.JumpMaxUncancelledGravity && !mm.JumpInputCancelled())
+            gravity = movementSettings.JumpMaxUncancelledGravity;
+        else if (gravity > movementSettings.JumpMaxCancelledGravity && mm.JumpInputCancelled())
+            gravity = movementSettings.JumpMaxCancelledGravity;
 
         // Effect Gravity
         vertVel -= gravity * Time.deltaTime;
@@ -79,7 +77,7 @@ public class Jump : AMove
         // todo add a point of no return?
         if (vertVel > 0)
         {
-            vertVel *= ms.jumpVelMultiplierAtCancel;
+            vertVel *= movementSettings.JumpVelMultiplierAtCancel;
         }
     }
 
@@ -87,19 +85,19 @@ public class Jump : AMove
     {
         if (mm.IsOnGround())
         {
-            return new Run(mm, ms, mii, mi);
+            return new Run(mm, mii, mi);
         }
         if (mm.IsAirDiving())
         {
-            return new Dive(mm, ms, mii, mi);
+            return new Dive(mm, mii, mi);
         }
         if (mm.InAirBoostCharge())
         {
-            return new HorizAirBoostCharge(mm, ms, mii, mi, vertVel);
+            return new HorizAirBoostCharge(mm, mii, mi, vertVel);
         }
         if (mm.InVertAirBoostCharge())
         {
-            return new VertAirBoostCharge(mm, ms, mii, mi, vertVel);
+            return new VertAirBoostCharge(mm, mii, mi, vertVel);
         }
 
         return this;

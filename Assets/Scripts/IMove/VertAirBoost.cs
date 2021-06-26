@@ -5,14 +5,12 @@ using UnityEngine;
 public class VertAirBoost : AMove
 {
     float vertVel;
-    MovementSettings ms;
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public VertAirBoost(MovementMaster mm, MovementSettings ms, MovementInputInfo mii, MovementInfo mi, float propCharged) : base(mm)
+    public VertAirBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float propCharged) : base(mm)
     {
-        vertVel = ms.vertBoostMinVel + (propCharged * (ms.vertBoostMaxVel - ms.vertBoostMinVel));
-        this.ms = ms;
+        vertVel = movementSettings.VertBoostMinVel + (propCharged * (movementSettings.VertBoostMaxVel - movementSettings.VertBoostMinVel));
         this.mii = mii;
         this.mi = mi;
     }
@@ -22,14 +20,14 @@ public class VertAirBoost : AMove
         return
             InputUtils.SmoothedInput(
                 mi.currentSpeed,
-                mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                ms.airSensitivityX,
-                ms.airGravityX);
+                mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                movementSettings.AirSensitivityX,
+                movementSettings.AirGravityX);
     }
 
     public override float GetVertSpeedThisFrame()
     {
-        vertVel -= ms.vertBoostGravity * Time.deltaTime;
+        vertVel -= movementSettings.VertBoostGravity * Time.deltaTime;
         return vertVel;
     }
 
@@ -37,11 +35,11 @@ public class VertAirBoost : AMove
     {
         if (mm.IsOnGround())
         {
-            return new Run(mm, ms, mii, mi);
+            return new Run(mm, mii, mi);
         }
         if (mm.IsAirDiving())
         {
-            return new Dive(mm, ms, mii, mi);
+            return new Dive(mm, mii, mi);
         }
 
         return this;

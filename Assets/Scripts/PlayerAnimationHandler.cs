@@ -50,8 +50,9 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     void FixedUpdate()
     {
+
         string cM = me.currentMoveAsString();
-        //Debug.Log(cM);
+        Debug.Log(cM);
         //walking state not implemented yet
         
         if (cM == "walking")

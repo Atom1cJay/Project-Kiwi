@@ -5,15 +5,13 @@ public class HardTurn : AMove
 {
     float timeLeft;
     bool tookJumpInput;
-    MovementSettings ms;
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public HardTurn(MovementMaster mm, MovementSettings ms, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    public HardTurn(MovementMaster mm, MovementInputInfo mii, MovementInfo mi) : base(mm)
     {
         mm.mm_OnJump.AddListener(onJumpInput);
         timeLeft = mm.hardTurnTime;
-        this.ms = ms;
         this.mii = mii;
         this.mi = mi;
     }
@@ -21,7 +19,7 @@ public class HardTurn : AMove
     public override float GetHorizSpeedThisFrame()
     {
         return InputUtils.SmoothedInput(
-                   mi.currentSpeed, 0, 0, ms.hardTurnGravityX);
+                   mi.currentSpeed, 0, 0, movementSettings.HardTurnGravityX);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -40,11 +38,11 @@ public class HardTurn : AMove
 
         if (timeLeft < 0)
         {
-            return new Run(mm, ms, mii, mi);
+            return new Run(mm, mii, mi);
         }
         if (tookJumpInput)
         {
-            return new Jump(mm, ms, mii, mi);
+            return new Jump(mm, mii, mi);
         }
         return this;
     }

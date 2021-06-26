@@ -4,6 +4,7 @@ using System.Collections;
 public abstract class AMove : IMove
 {
     protected MovementMaster mm;
+    protected MovementSettingsSO movementSettings = MovementSettingsSO.instance;
 
     protected AMove(MovementMaster mm)
     {

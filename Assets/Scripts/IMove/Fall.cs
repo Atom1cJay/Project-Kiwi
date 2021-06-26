@@ -5,14 +5,12 @@ using UnityEngine;
 public class Fall : AMove
 {
     float vertVel;
-    MovementSettings ms;
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public Fall(MovementMaster mm, MovementSettings ms, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    public Fall(MovementMaster mm, MovementInputInfo mii, MovementInfo mi) : base(mm)
     {
         vertVel = 0;
-        this.ms = ms;
         this.mii = mii;
         this.mi = mi;
     }
@@ -26,28 +24,28 @@ public class Fall : AMove
             toReturn =
                 InputUtils.SmoothedInput(
                     mi.currentSpeed,
-                    -mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.airReverseSensitivityX,
-                    ms.airReverseGravityX);
+                    -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.AirReverseSensitivityX,
+                    movementSettings.AirReverseGravityX);
             if (toReturn < 0) toReturn = 0;
         }
-        else if (mi.currentSpeed > ms.defaultMaxSpeedX)
+        else if (mi.currentSpeed > movementSettings.MaxSpeed)
         {
             toReturn =
                 InputUtils.SmoothedInput(
                     mi.currentSpeed,
-                    mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.airSensitivityX,
-                    ms.airGravityXOverTopSpeed);
+                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.AirSensitivityX,
+                    movementSettings.AirGravityXOverTopSpeed);
         }
         else
         {
             toReturn =
                 InputUtils.SmoothedInput(
                     mi.currentSpeed,
-                    mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.airSensitivityX,
-                    ms.airGravityX);
+                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.AirSensitivityX,
+                    movementSettings.AirGravityX);
         }
 
         return toReturn;
@@ -55,7 +53,7 @@ public class Fall : AMove
 
     public override float GetVertSpeedThisFrame()
     {
-        vertVel -= ms.defaultGravity * Time.deltaTime;
+        vertVel -= movementSettings.DefaultGravity * Time.deltaTime;
         return vertVel;
     }
 
@@ -63,19 +61,19 @@ public class Fall : AMove
     {
         if (mm.IsOnGround())
         {
-            return new Run(mm, ms, mii, mi);
+            return new Run(mm, mii, mi);
         }
         if (mm.IsAirDiving())
         {
-            return new Dive(mm, ms, mii, mi);
+            return new Dive(mm, mii, mi);
         }
         if (mm.InAirBoostCharge())
         {
-            return new HorizAirBoostCharge(mm, ms, mii, mi, vertVel);
+            return new HorizAirBoostCharge(mm, mii, mi, vertVel);
         }
         if (mm.InVertAirBoostCharge())
         {
-            return new VertAirBoostCharge(mm, ms, mii, mi, vertVel);
+            return new VertAirBoostCharge(mm, mii, mi, vertVel);
         }
 
         return this;

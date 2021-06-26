@@ -11,23 +11,20 @@ public class MoveExecuter : MonoBehaviour
 {
     IMove moveThisFrame;
     CharacterController charCont;
-    HorizontalMovement hm;
     MovementMaster mm;
-    MovementSettings ms;
     MovementInfo mi;
+    MovementSettingsSO movementSettings = MovementSettingsSO.instance;
 
     private void Awake()
     {
         charCont = GetComponent<CharacterController>();
         mm = GetComponent<MovementMaster>();
-        ms = GetComponent<MovementSettings>();
         mi = GetComponent<MovementInfo>();
-        moveThisFrame = new Fall(mm, ms, GetComponent<MovementInputInfo>(), mi);
+        moveThisFrame = new Fall(mm, GetComponent<MovementInputInfo>(), mi);
     }
 
     void Update()
     {
-        print(MovementSettingsSO.instance.maxSpeed);
         Vector3 dir = directionOfMovement();
         float speedThisFrame = moveThisFrame.GetHorizSpeedThisFrame();
         mi.currentSpeed = speedThisFrame;
@@ -55,7 +52,7 @@ public class MoveExecuter : MonoBehaviour
 
         // Fixing the quirks of y movement
         if (yDelta > 0) yDelta = 0; // CharacterController will take care of ascension
-        if (mm.IsOnGround()) yDelta -= Mathf.Abs(yDelta * ms.stickToGroundMultiplier); // To keep player stuck to ground
+        if (mm.IsOnGround()) yDelta -= Mathf.Abs(yDelta * movementSettings.StickToGroundMultiplier); // To keep player stuck to ground
 
         Vector3 dir = new Vector3(xDelta, yDelta, zDelta);
         if (dir.magnitude > 1) { dir = dir.normalized; }

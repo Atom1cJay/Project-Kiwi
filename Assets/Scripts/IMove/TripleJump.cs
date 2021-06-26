@@ -6,16 +6,14 @@ public class TripleJump : AMove
 {
     float gravity;
     float vertVel;
-    MovementSettings ms;
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public TripleJump(MovementMaster mm, MovementSettings ms, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    public TripleJump(MovementMaster mm, MovementInputInfo mii, MovementInfo mi) : base(mm)
     {
-        gravity = ms.tjInitGravity;
-        vertVel = ms.tjInitJumpVel;
+        gravity = movementSettings.TjInitGravity;
+        vertVel = movementSettings.TjInitJumpVel;
         mm.mm_OnJumpCanceled.AddListener(OnJumpCanceled);
-        this.ms = ms;
         this.mii = mii;
         this.mi = mi;
     }
@@ -29,9 +27,9 @@ public class TripleJump : AMove
             toReturn =
                 InputUtils.SmoothedInput(
                     mi.currentSpeed,
-                    -mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.airReverseSensitivityX,
-                    ms.airReverseGravityX);
+                    -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.AirReverseSensitivityX,
+                    movementSettings.AirReverseGravityX);
             if (toReturn < 0) toReturn = 0;
         }
         else
@@ -39,9 +37,9 @@ public class TripleJump : AMove
             toReturn =
                 InputUtils.SmoothedInput(
                     mi.currentSpeed,
-                    mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.tjAirSensitivityX,
-                    ms.tjInputGravityX);
+                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.TjAirSensitivityX,
+                    movementSettings.TjInputGravityX);
         }
 
         return toReturn;
@@ -51,14 +49,14 @@ public class TripleJump : AMove
     {
         // Decide Gravity
         if (mm.JumpInputCancelled())
-            gravity += ms.tjGravityIncRateAtCancel * Time.deltaTime;
+            gravity += movementSettings.TjGravityIncRateAtCancel * Time.deltaTime;
         else
-            gravity += ms.tjGravityIncRate * Time.deltaTime;
+            gravity += movementSettings.TjGravityIncRate * Time.deltaTime;
 
-        if (gravity > ms.tjUncancelledMaxGravity && !mm.JumpInputCancelled())
-            gravity = ms.tjUncancelledMaxGravity;
-        else if (gravity > ms.tjCancelledMaxGravity && mm.JumpInputCancelled())
-            gravity = ms.tjCancelledMaxGravity;
+        if (gravity > movementSettings.TjUncancelledMaxGravity && !mm.JumpInputCancelled())
+            gravity = movementSettings.TjUncancelledMaxGravity;
+        else if (gravity > movementSettings.TjCancelledMaxGravity && mm.JumpInputCancelled())
+            gravity = movementSettings.TjCancelledMaxGravity;
 
         // Effect Gravity
         vertVel -= gravity * Time.deltaTime;
@@ -74,7 +72,7 @@ public class TripleJump : AMove
         // TODO point of no return?
         if (vertVel > 0)
         {
-            vertVel *= ms.tjVelocityMultiplier;
+            vertVel *= movementSettings.TjVelocityMultiplier;
         }
     }
 
@@ -82,19 +80,19 @@ public class TripleJump : AMove
     {
         if (mm.IsOnGround())
         {
-            return new Run(mm, ms, mii, mi);
+            return new Run(mm, mii, mi);
         }
         if (mm.IsAirDiving())
         {
-            return new Dive(mm, ms, mii, mi);
+            return new Dive(mm, mii, mi);
         }
         if (mm.InAirBoostCharge())
         {
-            return new HorizAirBoostCharge(mm, ms, mii, mi, vertVel);
+            return new HorizAirBoostCharge(mm, mii, mi, vertVel);
         }
         if (mm.InVertAirBoostCharge())
         {
-            return new VertAirBoostCharge(mm, ms, mii, mi, vertVel);
+            return new VertAirBoostCharge(mm, mii, mi, vertVel);
         }
 
         return this;

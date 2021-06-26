@@ -13,8 +13,6 @@ public class CollisionDetector : MonoBehaviour
     /// <returns>Whether or not the <code>CollisionDetector</code> is activated</returns>
     public bool Colliding()
     {
-        RaycastHit hit;
-
         foreach (Collider c in Physics.OverlapSphere(transform.position, (transform.localScale.magnitude / 2) / 1.3f)) // TODO FIX BAD GENERALIZE
         {
             if (!gameObjectsToIgnore.Contains(c.gameObject))

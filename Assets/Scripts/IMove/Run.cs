@@ -6,36 +6,34 @@ using UnityEngine;
 /// </summary>
 public class Run : AMove
 {
-    MovementSettings ms;
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public Run(MovementMaster mm, MovementSettings ms, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    public Run(MovementMaster mm, MovementInputInfo mii, MovementInfo mi) : base(mm)
     {
-        this.ms = ms;
         this.mii = mii;
         this.mi = mi;
     }
 
     public override float GetHorizSpeedThisFrame()
     {
-        if (mi.currentSpeed > ms.defaultMaxSpeedX)
+        if (mi.currentSpeed > movementSettings.MaxSpeed)
         {
             return
                 InputUtils.SmoothedInput(
                     mi.currentSpeed,
-                    mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.runSensitivityX,
-                    ms.runGravityX);
+                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.RunSensitivityX,
+                    movementSettings.RunGravityX);
         }
         else
         {
             return
                 InputUtils.SmoothedInput(
                     mi.currentSpeed,
-                    mii.GetHorizontalInput().magnitude * ms.defaultMaxSpeedX,
-                    ms.runSensitivityX,
-                    ms.runGravityX);
+                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.RunSensitivityX,
+                    movementSettings.RunGravityX);
         }
     }
 
@@ -48,23 +46,23 @@ public class Run : AMove
     {
         if (mi.currentSpeed == 0)
         {
-            return new Idle(mm, ms, mii, mi);
+            return new Idle(mm, mii, mi);
         }
         if (mm.IsJumping() && mm.tripleJumpValid())
         {
-            return new TripleJump(mm, ms, mii, mi);
+            return new TripleJump(mm, mii, mi);
         }
         if (mm.IsJumping())
         {
-            return new Jump(mm, ms, mii, mi);
+            return new Jump(mm, mii, mi);
         }
         if (!mm.IsOnGround())
         {
-            return new Fall(mm, ms, mii, mi);
+            return new Fall(mm, mii, mi);
         }
         if (mm.IsInHardTurn())
         {
-            return new HardTurn(mm, ms, mii, mi);
+            return new HardTurn(mm, mii, mi);
         }
         // todo make ground boost possible
 
