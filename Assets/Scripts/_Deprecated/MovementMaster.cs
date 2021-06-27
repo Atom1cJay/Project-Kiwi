@@ -5,9 +5,10 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
-public class MovementMaster : UsesInputActions
+public class MovementMaster : MonoBehaviour
 {
     // Serialized Fields
+    [SerializeField] InputActionsHolder iah;
     [SerializeField] public GameObject relevantCamera;
     [SerializeField] public CollisionDetector groundDetector;
     [Header("Jumping Settings")]
@@ -76,7 +77,7 @@ public class MovementMaster : UsesInputActions
 
     // INITIALIZATION /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected override void Awake2()
+    void Awake()
     {
         InitializeAssets();
         InitializeInputEvents();
@@ -90,11 +91,11 @@ public class MovementMaster : UsesInputActions
 
     private void InitializeInputEvents()
     {
-        inputActions.Player.Jump.performed += _ => OnJumpInputPerformed();
-        inputActions.Player.Jump.canceled += _ => OnJumpInputCanceled();
-        inputActions.Player.Boost.started += _ => OnBoostPerformed();
-        inputActions.Player.VertBoost.started += _ => OnVertBoostChargePerformed();
-        inputActions.Player.Dive.performed += _ => OnDivePerformed();
+        iah.inputActions.Player.Jump.performed += _ => OnJumpInputPerformed();
+        iah.inputActions.Player.Jump.canceled += _ => OnJumpInputCanceled();
+        iah.inputActions.Player.Boost.started += _ => OnBoostPerformed();
+        iah.inputActions.Player.VertBoost.started += _ => OnVertBoostChargePerformed();
+        iah.inputActions.Player.Dive.performed += _ => OnDivePerformed();
     }
 
     // STATE CONTROL /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,7 +131,7 @@ public class MovementMaster : UsesInputActions
 
         while (timePassed < reverseCoyoteTime)
         {
-            bool pressingJump = inputActions.Player.Jump.ReadValue<float>() > 0;
+            bool pressingJump = iah.inputActions.Player.Jump.ReadValue<float>() > 0;
 
             if (isOnGround && pressingJump)
             {
@@ -330,7 +331,7 @@ public class MovementMaster : UsesInputActions
 
     IEnumerator DoGroundBoost()
     {
-        yield return new WaitUntil(() => inputActions.Player.Boost.ReadValue<float>() == 0);
+        yield return new WaitUntil(() => iah.inputActions.Player.Boost.ReadValue<float>() == 0);
         isGroundBoosting = false;
     }
 
@@ -346,7 +347,7 @@ public class MovementMaster : UsesInputActions
                 curAirBoostChargeTime = airBoostMaxChargeTime;
             }
 
-            if (inputActions.Player.Boost.ReadValue<float>() == 0 || curAirBoostChargeTime >= airBoostMaxChargeTime)
+            if (iah.inputActions.Player.Boost.ReadValue<float>() == 0 || curAirBoostChargeTime >= airBoostMaxChargeTime)
             {
                 StartCoroutine("ExecuteAirBoost");
                 isAirBoostCharging = false;
@@ -421,7 +422,7 @@ public class MovementMaster : UsesInputActions
                 curAirBoostChargeTime = vertAirBoostMaxChargeTime;
             }
 
-            if (inputActions.Player.VertBoost.ReadValue<float>() == 0 || curAirBoostChargeTime >= vertAirBoostMaxChargeTime)
+            if (iah.inputActions.Player.VertBoost.ReadValue<float>() == 0 || curAirBoostChargeTime >= vertAirBoostMaxChargeTime)
             {
                 ExecuteVertAirBoost();
                 isVertAirBoostCharging = false;
@@ -503,7 +504,7 @@ public class MovementMaster : UsesInputActions
     
     public Vector2 GetHorizontalInput()
     {
-        Vector2 rawInput = inputActions.Player.Move.ReadValue<Vector2>();
+        Vector2 rawInput = iah.inputActions.Player.Move.ReadValue<Vector2>();
 
         if (rawInput.magnitude > 1)
         {
@@ -580,7 +581,7 @@ public class MovementMaster : UsesInputActions
 
     public InputActions ia()
     {
-        return inputActions;
+        return iah.inputActions;
     }
 
     public bool tripleJumpValid()

@@ -6,9 +6,9 @@ using UnityEngine;
 /// Represents a container and calculator for information relevant to
 /// the input of the user.
 /// </summary>
-public class MovementInputInfo : UsesInputActions
+public class MovementInputInfo : MonoBehaviour
 {
-    private InputActions ia;
+    [SerializeField] InputActionsHolder usesInputActions;
     public bool JumpInputPending { get; private set; }
     public bool JumpCancelInputPending { get; private set; }
     public bool DiveInputPending { get; private set; }
@@ -20,23 +20,13 @@ public class MovementInputInfo : UsesInputActions
     public float VertBoostInput { get; private set; }
 
     /// <summary>
-    /// Constructs a MovementInputInfo, initializing the InputActions class
-    /// it will use to obtain information about the player's input.
-    /// </summary>
-    /// <param name="ia"></param>
-    public MovementInputInfo(InputActions ia)
-    {
-        this.ia = Utilities.RequireNonNull(ia);
-    }
-
-    /// <summary>
     /// Gives the InputActions instance being used to calculate
     /// input information on the player.
     /// </summary>
     /// <returns></returns>
     public InputActions GetInputActions()
     {
-        return ia;
+        return usesInputActions.inputActions;
     }
 
     /// <summary>
@@ -45,7 +35,7 @@ public class MovementInputInfo : UsesInputActions
     /// <returns></returns>
     public Vector2 GetHorizontalInput()
     {
-        Vector2 rawInput = inputActions.Player.Move.ReadValue<Vector2>();
+        Vector2 rawInput = usesInputActions.inputActions.Player.Move.ReadValue<Vector2>();
 
         if (rawInput.magnitude > 1)
         {
