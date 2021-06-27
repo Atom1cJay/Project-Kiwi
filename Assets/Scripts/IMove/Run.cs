@@ -9,7 +9,7 @@ public class Run : AMove
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public Run(MovementMaster mm, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    public Run(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         this.mii = mii;
         this.mi = mi;
@@ -46,23 +46,23 @@ public class Run : AMove
     {
         if (mi.currentSpeedHoriz == 0)
         {
-            return new Idle(mm, mii, mi);
+            return new Idle(mm, mii, mi, movementSettings);
         }
         if (mm.IsJumping() && mm.tripleJumpValid())
         {
-            return new TripleJump(mm, mii, mi);
+            return new TripleJump(mm, mii, mi, movementSettings);
         }
         if (mm.IsJumping())
         {
-            return new Jump(mm, mii, mi);
+            return new Jump(mm, mii, mi, movementSettings);
         }
         if (!mm.IsOnGround())
         {
-            return new Fall(mm, mii, mi);
+            return new Fall(mm, mii, mi, movementSettings);
         }
         if (mm.IsInHardTurn())
         {
-            return new HardTurn(mm, mii, mi);
+            return new HardTurn(mm, mii, mi, movementSettings);
         }
         // todo make ground boost possible
 

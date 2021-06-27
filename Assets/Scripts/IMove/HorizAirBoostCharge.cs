@@ -12,7 +12,7 @@ public class HorizAirBoostCharge : AMove
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public HorizAirBoostCharge(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float prevVertVel) : base(mm)
+    public HorizAirBoostCharge(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float prevVertVel, MovementSettingsSO ms) : base(mm, ms)
     {
         vertVel = (prevVertVel < 0) ? 0 : prevVertVel;
 
@@ -45,7 +45,7 @@ public class HorizAirBoostCharge : AMove
 
         if (timeCharging > maxTimeToCharge || ia.Player.Boost.ReadValue<float>() == 0)
         {
-            return new HorizAirBoost(mm, mii, mi, (timeCharging / maxTimeToCharge) * mm.airBoostMaxTime);
+            return new HorizAirBoost(mm, mii, mi, (timeCharging / maxTimeToCharge) * mm.airBoostMaxTime, movementSettings);
         }
         else
         {

@@ -4,15 +4,16 @@ using System.Collections;
 public abstract class AMove : IMove
 {
     protected MovementMaster mm;
-    protected MovementSettingsSO movementSettings = MovementSettingsSO.instance;
+    protected MovementSettingsSO movementSettings;
 
-    protected AMove(MovementMaster mm)
+    protected AMove(MovementMaster mm, MovementSettingsSO movementSettings)
     {
         if (mm == null)
         {
             Debug.LogError("Null args passed into move");
         }
         this.mm = mm;
+        this.movementSettings = movementSettings;
     }
 
     public abstract float GetHorizSpeedThisFrame();

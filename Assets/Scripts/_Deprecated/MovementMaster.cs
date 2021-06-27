@@ -77,7 +77,7 @@ public class MovementMaster : MonoBehaviour
 
     // INITIALIZATION /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void Awake()
+    void Start()
     {
         InitializeAssets();
         InitializeInputEvents();

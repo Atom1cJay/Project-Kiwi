@@ -8,7 +8,7 @@ public class VertAirBoost : AMove
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public VertAirBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float propCharged) : base(mm)
+    public VertAirBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float propCharged, MovementSettingsSO ms) : base(mm, ms)
     {
         vertVel = movementSettings.VertBoostMinVel + (propCharged * (movementSettings.VertBoostMaxVel - movementSettings.VertBoostMinVel));
         this.mii = mii;
@@ -35,11 +35,11 @@ public class VertAirBoost : AMove
     {
         if (mm.IsOnGround())
         {
-            return new Run(mm, mii, mi);
+            return new Run(mm, mii, mi, movementSettings);
         }
         if (mm.IsAirDiving())
         {
-            return new Dive(mm, mii, mi);
+            return new Dive(mm, mii, mi, movementSettings);
         }
 
         return this;

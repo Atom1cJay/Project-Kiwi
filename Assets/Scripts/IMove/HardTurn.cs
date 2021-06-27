@@ -8,7 +8,7 @@ public class HardTurn : AMove
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public HardTurn(MovementMaster mm, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    public HardTurn(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         mm.mm_OnJump.AddListener(onJumpInput);
         timeLeft = mm.hardTurnTime;
@@ -38,11 +38,11 @@ public class HardTurn : AMove
 
         if (timeLeft < 0)
         {
-            return new Run(mm, mii, mi);
+            return new Run(mm, mii, mi, movementSettings);
         }
         if (tookJumpInput)
         {
-            return new Jump(mm, mii, mi);
+            return new Jump(mm, mii, mi, movementSettings);
         }
         return this;
     }

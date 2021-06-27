@@ -8,7 +8,7 @@ public class HorizGroundBoost : AMove
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public HorizGroundBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    public HorizGroundBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         this.mii = mii;
         this.mi = mi;
@@ -31,7 +31,7 @@ public class HorizGroundBoost : AMove
     public override IMove GetNextMove()
     {
         // todo change
-        return new Run(mm, mii, mi);
+        return new Run(mm, mii, mi, movementSettings);
     }
 
     public override string asString()

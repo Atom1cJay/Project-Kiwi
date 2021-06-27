@@ -9,7 +9,7 @@ public class Jump : AMove
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public Jump(MovementMaster mm, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    public Jump(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         gravity = movementSettings.JumpInitGravity;
         vertVel = movementSettings.JumpInitVel;
@@ -85,19 +85,19 @@ public class Jump : AMove
     {
         if (mm.IsOnGround())
         {
-            return new Run(mm, mii, mi);
+            return new Run(mm, mii, mi, movementSettings);
         }
         if (mm.IsAirDiving())
         {
-            return new Dive(mm, mii, mi);
+            return new Dive(mm, mii, mi, movementSettings);
         }
         if (mm.InAirBoostCharge())
         {
-            return new HorizAirBoostCharge(mm, mii, mi, vertVel);
+            return new HorizAirBoostCharge(mm, mii, mi, vertVel, movementSettings);
         }
         if (mm.InVertAirBoostCharge())
         {
-            return new VertAirBoostCharge(mm, mii, mi, vertVel);
+            return new VertAirBoostCharge(mm, mii, mi, vertVel, movementSettings);
         }
 
         return this;

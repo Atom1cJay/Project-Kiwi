@@ -10,14 +10,15 @@ public class MoveExecuter : MonoBehaviour
     CharacterController charCont;
     MovementMaster mm;
     MovementInfo mi;
-    MovementSettingsSO movementSettings = MovementSettingsSO.instance;
+    MovementSettingsSO movementSettings;
 
     private void Awake()
     {
+        movementSettings = MovementSettingsSO.Instance;
         charCont = GetComponent<CharacterController>();
         mm = GetComponent<MovementMaster>();
         mi = GetComponent<MovementInfo>();
-        moveThisFrame = new Fall(mm, GetComponent<MovementInputInfo>(), mi);
+        moveThisFrame = new Fall(mm, GetComponent<MovementInputInfo>(), mi, movementSettings);
     }
 
     void Update()

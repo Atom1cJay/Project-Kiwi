@@ -94,10 +94,11 @@ GameObject:
   - component: {fileID: 5116987452351034287}
   - component: {fileID: 5116987452351034282}
   - component: {fileID: 5116987452351034283}
-  - component: {fileID: 5116987452351034284}
-  - component: {fileID: 5116987452351034285}
   - component: {fileID: 5116987452351034281}
   - component: {fileID: 298682199}
+  - component: {fileID: 1704877077}
+  - component: {fileID: 1704877078}
+  - component: {fileID: 1704877080}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -153,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4830649ad6efd46f7928ac830af37fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iah: {fileID: 0}
   relevantCamera: {fileID: 0}
   groundDetector: {fileID: 5116987453668295350}
   groundableTimer: 0.1
@@ -225,74 +227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c07e9be395347fd86d1585cb259981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5116987452351034284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5116987452351034272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5de3b17f9960e44fb89a5eed1abd6113, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultMaxSpeed: 5
-  sensitivity: 7
-  gravity: 15
-  overTopSpeedGravity: 10
-  airSensitivity: 4
-  airGravity: 4
-  overTopSpeedAirGravity: 2
-  tjAirSensitivity: 4
-  tjAirGravity: 5
-  stickToGroundMultiplier: 0.2
-  hardTurnGravity: 30
-  airBoostSpeed: 9
-  airBoostChargeGravity: 6
-  vertAirBoostChargeGravity: 12
-  groundBoostSpeed: 8
-  groundBoostSensitivity: 6
-  groundBoostGravity: 4
-  diveSpeed: 5
-  airReverseSensitivity: 7
-  airReverseGravity: 7
-  currentSpeed: 0
---- !u!114 &5116987452351034285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5116987452351034272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1433c74c436cf43dfb73f61f4332e9ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initJumpVel: 7
-  initGravity: 0
-  maxGravity: 20
-  maxGravityAtCancel: 28
-  velocityMultiplierAtCancel: 0.5
-  gravityIncRate: 100
-  gravityIncRateAtCancel: 200
-  tjInitJumpVel: 9
-  tjInitGravity: 0
-  tjMaxGravity: 17
-  tjMaxGravityAtCancel: 17
-  tjVelocityMultiplierAtCancel: 1
-  tjGravityIncRate: 100
-  tjGravityIncRateAtCancel: 100
-  nonJumpGravity: 20
-  airBoostGravity: 5
-  airBoostChargeGravity: 0.5
-  airBoostEndGravity: 20
-  minVertAirBoostVel: 6
-  maxVertAirBoostVel: 12
-  vertAirBoostGravity: 20
-  diveInitVel: 5
-  diveGravity: 23
 --- !u!114 &5116987452351034281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,6 +259,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinLength: 0.01
   physicsCollider: {fileID: 8297694118939758205}
+--- !u!114 &1704877077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5116987452351034272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b3e5af48915d4dc5a2e7a260357eb62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1704877078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5116987452351034272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396240b35bfbb4891bdc67d85a298db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usesInputActions: {fileID: 0}
+--- !u!114 &1704877080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5116987452351034272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e459952d36d2540cb9cfe6db294b117a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSpeedHoriz: 0
+  currentSpeedVert: 0
+  tjJumpCount: 0
 --- !u!1 &5116987453668295340
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,20 +397,6 @@ MonoBehaviour:
   gameObjectsToIgnore:
   - {fileID: 5116987452351034272}
   - {fileID: 8297694118939758205}
---- !u!114 &2238100579682644903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6726380268404088382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 543bf1e38154ce944a1e7c771bb94598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  me: {fileID: 0}
-  animator: {fileID: 2413177715135108758}
 --- !u!95 &2413177715135108758
 Animator:
   serializedVersion: 3
@@ -456,6 +416,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2238100579682644903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6726380268404088382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543bf1e38154ce944a1e7c771bb94598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  me: {fileID: 1704877077}
+  animator: {fileID: 2413177715135108758}
 --- !u!1 &8297694118939758205
 GameObject:
   m_ObjectHideFlags: 0

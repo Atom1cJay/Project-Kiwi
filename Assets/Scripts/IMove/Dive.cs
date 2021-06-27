@@ -12,7 +12,7 @@ public class Dive : AMove
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public Dive(MovementMaster mm, MovementInputInfo mii, MovementInfo mi) : base(mm)
+    public Dive(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         vertVel = movementSettings.DiveInitVel;
         this.mii = mii;
@@ -34,7 +34,7 @@ public class Dive : AMove
     {
         if (mm.IsOnGround())
         {
-            return new Run(mm, mii, mi);
+            return new Run(mm, mii, mi, movementSettings);
         }
         else
         {

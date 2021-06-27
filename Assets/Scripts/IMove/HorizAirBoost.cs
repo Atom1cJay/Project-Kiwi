@@ -9,7 +9,7 @@ public class HorizAirBoost : AMove
     MovementInputInfo mii;
     MovementInfo mi;
 
-    public HorizAirBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float timeLeft) : base(mm)
+    public HorizAirBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float timeLeft, MovementSettingsSO ms) : base(mm, ms)
     {
         vertVel = 0;
         this.timeLeft = timeLeft;
@@ -34,15 +34,15 @@ public class HorizAirBoost : AMove
 
         if (timeLeft < 0)
         {
-            return new Fall(mm, mii, mi);
+            return new Fall(mm, mii, mi, movementSettings);
         }
         if (mm.IsOnGround())
         {
-            return new Run(mm, mii, mi);
+            return new Run(mm, mii, mi, movementSettings);
         }
         if (mm.IsAirDiving())
         {
-            return new Dive(mm, mii, mi);
+            return new Dive(mm, mii, mi, movementSettings);
         }
 
         return this;
