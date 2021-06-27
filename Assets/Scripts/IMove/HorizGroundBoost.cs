@@ -17,7 +17,7 @@ public class HorizGroundBoost : AMove
     public override float GetHorizSpeedThisFrame()
     {
         return InputUtils.SmoothedInput(
-            mi.currentSpeed,
+            mi.currentSpeedHoriz,
             movementSettings.GroundBoostMaxSpeedX,
             movementSettings.GroundBoostSensitivityX,
             movementSettings.GroundBoostGravityX);

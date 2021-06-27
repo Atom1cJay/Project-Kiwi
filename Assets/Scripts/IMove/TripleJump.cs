@@ -26,7 +26,7 @@ public class TripleJump : AMove
         {
             toReturn =
                 InputUtils.SmoothedInput(
-                    mi.currentSpeed,
+                    mi.currentSpeedHoriz,
                     -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.AirReverseSensitivityX,
                     movementSettings.AirReverseGravityX);
@@ -36,7 +36,7 @@ public class TripleJump : AMove
         {
             toReturn =
                 InputUtils.SmoothedInput(
-                    mi.currentSpeed,
+                    mi.currentSpeedHoriz,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.TjAirSensitivityX,
                     movementSettings.TjInputGravityX);

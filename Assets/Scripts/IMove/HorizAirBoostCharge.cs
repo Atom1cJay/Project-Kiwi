@@ -29,7 +29,7 @@ public class HorizAirBoostCharge : AMove
     public override float GetHorizSpeedThisFrame()
     {
         return InputUtils.SmoothedInput(
-            mi.currentSpeed, 0, 0, movementSettings.HorizBoostChargeGravityX);
+            mi.currentSpeedHoriz, 0, 0, movementSettings.HorizBoostChargeGravityX);
     }
 
     public override float GetVertSpeedThisFrame()

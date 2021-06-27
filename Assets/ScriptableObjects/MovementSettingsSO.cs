@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ScriptableObject meant to hold the global movement settings.
-/// NOTE: Unfortunately there's not really a good way to enforce 
+/// ScriptableObject meant to hold constants related to player movement.
+/// A singleton can be obtained in order to get the constants.
 /// </summary>
 [CreateAssetMenu]
 public class MovementSettingsSO : ScriptableObject
@@ -53,9 +53,13 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float horizBoostGravity;
     [SerializeField] float horizBoostChargeGravity;
     [SerializeField] float horizBoostEndGravity;
+    [SerializeField] float horizBoostMaxChargeTime;
+    [SerializeField] float horizBoostMaxTime;
     [SerializeField] float vertBoostMinVel;
     [SerializeField] float vertBoostMaxVel;
     [SerializeField] float vertBoostGravity;
+    [SerializeField] float vertBoostMaxChargeTime;
+    [SerializeField] float vertBoostMaxTime;
 
     [Header("Dive Settings")]
     [SerializeField] float diveInitVel;
@@ -64,6 +68,9 @@ public class MovementSettingsSO : ScriptableObject
     [Header("Misc. Vertical")]
     [SerializeField] float defaultGravity;
     [SerializeField] float stickToGroundMultiplier;
+
+    [Header("Misc.")]
+    [SerializeField] float hardTurnTime;
 
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
@@ -84,7 +91,7 @@ public class MovementSettingsSO : ScriptableObject
     public float GroundBoostGravityX { get { return groundBoostGravityX; } }
     public float DiveSpeedX { get { return diveSpeedX; } }
     public float AirReverseSensitivityX { get { return airReverseSensitivityX; } }
-    public float AirReverseGravityX { get { return AirReverseGravityX; } }
+    public float AirReverseGravityX { get { return airReverseGravityX; } }
 
     public float JumpInitVel { get { return jumpInitVel; } }
     public float JumpInitGravity { get { return jumpInitGravity; } }
@@ -105,15 +112,21 @@ public class MovementSettingsSO : ScriptableObject
     public float HorizBoostGravity { get { return horizBoostGravity; } }
     public float HorizBoostChargeGravity { get { return horizBoostChargeGravity; } }
     public float HorizBoostEndGravity { get { return horizBoostEndGravity; } }
+    public float HorizBoostMaxChargeTime { get { return horizBoostMaxChargeTime; } }
+    public float HorizBoostMaxTime { get { return horizBoostMaxTime; } }
     public float VertBoostMinVel { get { return vertBoostMinVel; } }
     public float VertBoostMaxVel { get { return vertBoostMaxVel; } }
     public float VertBoostGravity { get { return vertBoostGravity; } }
+    public float VertBoostMaxChargeTime { get { return vertBoostMaxChargeTime; } }
+    public float VertBoostMaxTime { get { return vertBoostMaxTime; } }
 
     public float DiveInitVel { get { return diveInitVel; } }
     public float DiveGravity { get { return diveGravity; } }
 
     public float DefaultGravity { get { return defaultGravity; } }
     public float StickToGroundMultiplier { get { return maxSpeed; } }
+
+    public float HardTurnTime { get { return hardTurnTime; } }
 
     public static MovementSettingsSO instance;
 

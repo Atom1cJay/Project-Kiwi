@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(HorizontalMovement))]
 [RequireComponent(typeof(MovementMaster))]
 public class RotationMovement : MonoBehaviour
 {
@@ -44,7 +43,7 @@ public class RotationMovement : MonoBehaviour
             float rotationSpeed = DetermineRotationSpeed();
             if (rawInput.magnitude == 0) return;
             Quaternion targetRotation = Quaternion.Euler(0, inputDirection * Mathf.Rad2Deg, 0);
-            bool underInstantRotSpeed = mi.currentSpeed <= instantRotationSpeed;
+            bool underInstantRotSpeed = mi.currentSpeedHoriz <= instantRotationSpeed;
             transform.rotation =
                 underInstantRotSpeed && !inAirBoostOrCharge()
                 ? targetRotation

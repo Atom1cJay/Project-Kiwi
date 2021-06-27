@@ -19,7 +19,7 @@ public class VertAirBoost : AMove
     {
         return
             InputUtils.SmoothedInput(
-                mi.currentSpeed,
+                mi.currentSpeedHoriz,
                 mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                 movementSettings.AirSensitivityX,
                 movementSettings.AirGravityX);

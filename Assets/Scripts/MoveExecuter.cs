@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(HorizontalMovement))]
-[RequireComponent(typeof(VerticalMovement))]
 [RequireComponent(typeof(MovementMaster))]
-[RequireComponent(typeof(MovementSettings))]
 [RequireComponent(typeof(CharacterController))]
 public class MoveExecuter : MonoBehaviour
 {
@@ -27,7 +24,7 @@ public class MoveExecuter : MonoBehaviour
     {
         Vector3 dir = directionOfMovement();
         float speedThisFrame = moveThisFrame.GetHorizSpeedThisFrame();
-        mi.currentSpeed = speedThisFrame;
+        mi.currentSpeedHoriz = speedThisFrame;
         Vector3 horizMovement = dir * speedThisFrame;
         charCont.Move(horizMovement * Time.deltaTime);
         Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();

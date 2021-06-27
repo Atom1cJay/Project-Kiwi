@@ -26,17 +26,17 @@ public class Jump : AMove
         {
             toReturn =
                 InputUtils.SmoothedInput(
-                    mi.currentSpeed,
+                    mi.currentSpeedHoriz,
                     -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.AirReverseSensitivityX,
                     movementSettings.AirReverseGravityX);
             if (toReturn < 0) toReturn = 0;
         }
-        else if (mi.currentSpeed > movementSettings.MaxSpeed)
+        else if (mi.currentSpeedHoriz > movementSettings.MaxSpeed)
         {
             toReturn =
                 InputUtils.SmoothedInput(
-                    mi.currentSpeed,
+                    mi.currentSpeedHoriz,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.AirSensitivityX,
                     movementSettings.AirGravityXOverTopSpeed);
@@ -45,7 +45,7 @@ public class Jump : AMove
         {
             toReturn =
                 InputUtils.SmoothedInput(
-                    mi.currentSpeed,
+                    mi.currentSpeedHoriz,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.AirSensitivityX,
                     movementSettings.AirGravityX);

@@ -17,11 +17,11 @@ public class Run : AMove
 
     public override float GetHorizSpeedThisFrame()
     {
-        if (mi.currentSpeed > movementSettings.MaxSpeed)
+        if (mi.currentSpeedHoriz > movementSettings.MaxSpeed)
         {
             return
                 InputUtils.SmoothedInput(
-                    mi.currentSpeed,
+                    mi.currentSpeedHoriz,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.RunSensitivityX,
                     movementSettings.RunGravityX);
@@ -30,7 +30,7 @@ public class Run : AMove
         {
             return
                 InputUtils.SmoothedInput(
-                    mi.currentSpeed,
+                    mi.currentSpeedHoriz,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.RunSensitivityX,
                     movementSettings.RunGravityX);
@@ -44,7 +44,7 @@ public class Run : AMove
 
     public override IMove GetNextMove()
     {
-        if (mi.currentSpeed == 0)
+        if (mi.currentSpeedHoriz == 0)
         {
             return new Idle(mm, mii, mi);
         }

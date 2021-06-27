@@ -2,8 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a container and calculator for information relevant to
+/// the input of the user.
+/// </summary>
 public class MovementInputInfo : UsesInputActions
 {
+    private InputActions ia;
+    public bool JumpInputPending { get; private set; }
+    public bool JumpCancelInputPending { get; private set; }
+    public bool DiveInputPending { get; private set; }
+    public bool HorizAirBoostChargeInputPending { get; private set; }
+    public bool HorizAirBoostReleaseInputPending { get; private set; }
+    public bool VertAirBoostChargeInputPending { get; private set; }
+    public bool VertAirBoostReleaseInputPending { get; private set; }
+    public float HorizBoostInput { get; private set; }
+    public float VertBoostInput { get; private set; }
+
+    /// <summary>
+    /// Constructs a MovementInputInfo, initializing the InputActions class
+    /// it will use to obtain information about the player's input.
+    /// </summary>
+    /// <param name="ia"></param>
+    public MovementInputInfo(InputActions ia)
+    {
+        this.ia = Utilities.RequireNonNull(ia);
+    }
+
+    /// <summary>
+    /// Gives the InputActions instance being used to calculate
+    /// input information on the player.
+    /// </summary>
+    /// <returns></returns>
+    public InputActions GetInputActions()
+    {
+        return ia;
+    }
+
     /// <summary>
     /// Gives the normalized horizontal movement input.
     /// </summary>
@@ -18,5 +53,15 @@ public class MovementInputInfo : UsesInputActions
         }
 
         return rawInput;
+    }
+
+    public bool IsAirReversing()
+    {
+        return false; // todo stub
+    }
+
+    public bool IsHardTurning()
+    {
+        return false; // todo stub
     }
 }

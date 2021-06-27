@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(VerticalMovement))]
-[RequireComponent(typeof(HorizontalMovement))]
 [RequireComponent(typeof(CharacterController))]
 public class MovementMaster : UsesInputActions
 {
@@ -58,8 +56,6 @@ public class MovementMaster : UsesInputActions
 
     // Helpful Assets for Subclasses
     private CharacterController charCont;
-    private HorizontalMovement horizMove;
-    private VerticalMovement vertMove;
     private MovementInfo mi;
 
     // UnityEvents
@@ -90,8 +86,6 @@ public class MovementMaster : UsesInputActions
     {
         mi = GetComponent<MovementInfo>();
         charCont = GetComponent<CharacterController>();
-        horizMove = GetComponent<HorizontalMovement>();
-        vertMove = GetComponent<VerticalMovement>();
     }
 
     private void InitializeInputEvents()
@@ -182,7 +176,7 @@ public class MovementMaster : UsesInputActions
         {
             // On ground
             
-            if (!isOnGround && vertMove.GetFrameVerticalMovement() <= 0.01f)
+            if (!isOnGround /*&& vertMove.GetFrameVerticalMovement() <= 0.01f*/)
             {
                 // First frame on ground
                 isAirReversing = false;
@@ -243,13 +237,13 @@ public class MovementMaster : UsesInputActions
 
     private void UpdateHorizontalStates()
     {
-        if (GetHorizDissonance() > dissonanceForHardTurn && mi.currentSpeed > hardTurnMinSpeed && !isInHardTurn && isOnGround)
+        if (GetHorizDissonance() > dissonanceForHardTurn && mi.currentSpeedHoriz > hardTurnMinSpeed && !isInHardTurn && isOnGround)
         {
             // First frame of hard turn
             StartHardTurn();
         }
 
-        if (!isOnGround && GetHorizDissonance() > dissonanceForAirReverse && horizMove.GetSpeed() > airReverseMinActivationSpeed)
+        if (!isOnGround && GetHorizDissonance() > dissonanceForAirReverse /*&& horizMove.GetSpeed() > airReverseMinActivationSpeed*/)
         {
             isAirReversing = true; // True until hitting ground
         }
@@ -502,15 +496,11 @@ public class MovementMaster : UsesInputActions
         return charCont;
     }
 
-    public float GetHorizSpeed()
-    {
-        return horizMove.GetSpeed();
-    }
-
     /// <summary>
     /// Gives the normalized horizontal movement input.
     /// </summary>
     /// <returns></returns>
+    
     public Vector2 GetHorizontalInput()
     {
         Vector2 rawInput = inputActions.Player.Move.ReadValue<Vector2>();

@@ -19,7 +19,7 @@ public class HardTurn : AMove
     public override float GetHorizSpeedThisFrame()
     {
         return InputUtils.SmoothedInput(
-                   mi.currentSpeed, 0, 0, movementSettings.HardTurnGravityX);
+                   mi.currentSpeedHoriz, 0, 0, movementSettings.HardTurnGravityX);
     }
 
     public override float GetVertSpeedThisFrame()
