@@ -7,8 +7,7 @@ public class MovementInfo : MonoBehaviour
     [HideInInspector] public float currentSpeedHoriz;
     [HideInInspector] public float currentSpeedVert;
     [HideInInspector] public int tjJumpCount;
-
-    public bool IsOnGround { get; private set; }
+    [SerializeField] CollisionDetector groundDetector;
 
     public bool IsJumpValid()
     {
@@ -19,5 +18,13 @@ public class MovementInfo : MonoBehaviour
     public bool isTripleJumpValid()
     {
         return false; // TODO stub
+    }
+
+    /// <summary>
+    /// Determines whether the player is currently touching the ground.
+    /// </summary>
+    public bool touchingGround()
+    {
+        return groundDetector.Colliding();
     }
 }

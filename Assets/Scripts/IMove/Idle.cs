@@ -42,16 +42,10 @@ public class Idle : AMove
         {
             return new Jump(mm, mii, mi, movementSettings);
         }
-        if (!mm.IsOnGround())
+        if (!mi.touchingGround())
         {
             return new Fall(mm, mii, mi, movementSettings);
         }
-        /*
-        if (mm.IsInHardTurn())
-        {
-            return new HardTurn(mm, mii, mi, movementSettings);
-        }
-        */
         // todo make ground boost possible
 
         return this;

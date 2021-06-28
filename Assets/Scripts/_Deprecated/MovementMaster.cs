@@ -62,24 +62,10 @@ public class MovementMaster : MonoBehaviour
 
     private void InitializeInputEvents()
     {
-        iah.inputActions.Player.Jump.performed += _ => OnJumpInputPerformed();
         iah.inputActions.Player.VertBoost.started += _ => OnVertBoostChargePerformed();
     }
 
     // STATE CONTROL /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private void OnJumpInputPerformed()
-    {
-        if (isOnGround || inCoyoteTime)
-        {
-            Jump();
-        }
-
-        if (!isOnGround && !inCoyoteTime)
-        {
-            StartCoroutine("ReverseCoyoteTime");
-        }
-    }
 
     private void Jump()
     {

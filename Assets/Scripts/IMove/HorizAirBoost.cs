@@ -43,7 +43,7 @@ public class HorizAirBoost : AMove
         {
             return new Fall(mm, mii, mi, movementSettings);
         }
-        if (mm.IsOnGround())
+        if (mi.touchingGround())
         {
             return new Run(mm, mii, mi, movementSettings);
         }

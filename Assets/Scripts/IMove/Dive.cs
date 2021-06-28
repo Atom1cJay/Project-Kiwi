@@ -37,7 +37,7 @@ public class Dive : AMove
 
     public override IMove GetNextMove()
     {
-        if (mm.IsOnGround())
+        if (mi.touchingGround())
         {
             return new Run(mm, mii, mi, movementSettings);
         }

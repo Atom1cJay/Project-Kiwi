@@ -1,6 +1,6 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class Jump : AMove
 {
@@ -12,9 +12,11 @@ public class Jump : AMove
     bool vertBoostChargePending;
     bool horizBoostChargePending;
     bool jumpCancelled;
+    bool jumpGroundableTimerComplete;
 
     public Jump(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
+        MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForJumpGroundableTimer());
         gravity = movementSettings.JumpInitGravity;
         vertVel = movementSettings.JumpInitVel;
         this.mii = mii;
@@ -27,6 +29,13 @@ public class Jump : AMove
             vertVel *= movementSettings.JumpVelMultiplierAtCancel;
         });
         this.mi = mi;
+    }
+
+    // This can be run as a coroutine by using MonobehaviorUtils
+    private IEnumerator WaitForJumpGroundableTimer()
+    {
+        yield return new WaitForSeconds(movementSettings.JumpGroundableTimer);
+        jumpGroundableTimerComplete = true;
     }
 
     public override float GetHorizSpeedThisFrame()
@@ -90,7 +99,7 @@ public class Jump : AMove
 
     public override IMove GetNextMove()
     {
-        if (mm.IsOnGround())
+        if (mi.touchingGround() && jumpGroundableTimerComplete)
         {
             return new Run(mm, mii, mi, movementSettings);
         }

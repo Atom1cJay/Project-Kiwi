@@ -63,7 +63,7 @@ public class Run : AMove
         {
             return new Jump(mm, mii, mi, movementSettings);
         }
-        if (!mm.IsOnGround())
+        if (!mi.touchingGround())
         {
             return new Fall(mm, mii, mi, movementSettings);
         }
