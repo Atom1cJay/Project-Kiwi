@@ -32,6 +32,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float airReverseGravityX;
 
     [Header("Jump Settings")]
+    [SerializeField] float jumpGroundableTimer;
     [SerializeField] float jumpInitVel;
     [SerializeField] float jumpInitGravity;
     [SerializeField] float jumpMaxUncancelledGravity;
@@ -39,6 +40,15 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float jumpVelMultiplierAtCancel;
     [SerializeField] float jumpUncancelledGravityIncrease;
     [SerializeField] float jumpCancelledGravityIncrease;
+
+    [Header("Coyote Time Settings")]
+    [SerializeField] float reverseCoyoteTime;
+    [SerializeField] float coyoteTime;
+
+    [Header("Hard Turn Settings")]
+    [SerializeField] float dissonanceForHardTurn;
+    [SerializeField] float hardTurnMinSpeed;
+    [SerializeField] float hardTurnTime;
 
     [Header("Triple Jump Settings")]
     [SerializeField] float tjInitJumpVel;
@@ -49,7 +59,14 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float tjGravityIncRate;
     [SerializeField] float tjGravityIncRateAtCancel;
 
-    [Header("Boost Settiungs")]
+    [Header("Triple Jump Activator Settings")]
+    [SerializeField] float tjMinHorizInputMagnitude; // new
+    [SerializeField] float tjMaxTimeBtwnJumps; // new
+    [SerializeField] float tjMinJumpTime; // new
+    [SerializeField] float tjMaxJumpTime; // new
+    [SerializeField] float tjMaxDissonance; // new
+
+    [Header("Boost Settings")]
     [SerializeField] float horizBoostGravity;
     [SerializeField] float horizBoostChargeGravity;
     [SerializeField] float horizBoostEndGravity;
@@ -69,8 +86,17 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float defaultGravity;
     [SerializeField] float stickToGroundMultiplier;
 
-    [Header("Misc.")]
-    [SerializeField] float hardTurnTime;
+    [Header("Misc. Horizontal")]
+    [SerializeField] float dissonanceForAirReverse;
+    [SerializeField] float airReverseMinActivationSpeed;
+
+    [Header("Rotation Settings")]
+    [SerializeField] float instantRotationSpeed;
+    [SerializeField] float groundRotationSpeed;
+    [SerializeField] float airRotationSpeed;
+    [SerializeField] float boostAftermathRotationSpeed;
+    [SerializeField] float diveRotationSpeed;
+    [SerializeField] float groundBoostRotationSpeed;
 
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
@@ -93,6 +119,7 @@ public class MovementSettingsSO : ScriptableObject
     public float AirReverseSensitivityX { get { return airReverseSensitivityX; } }
     public float AirReverseGravityX { get { return airReverseGravityX; } }
 
+    public float JumpGroundableTimer { get { return jumpGroundableTimer; } }
     public float JumpInitVel { get { return jumpInitVel; } }
     public float JumpInitGravity { get { return jumpInitGravity; } }
     public float JumpMaxUncancelledGravity { get { return jumpMaxUncancelledGravity; } }
@@ -101,6 +128,13 @@ public class MovementSettingsSO : ScriptableObject
     public float JumpUncancelledGravityIncrease { get { return jumpUncancelledGravityIncrease; } }
     public float JumpCancelledGravityIncrease { get { return jumpCancelledGravityIncrease; } }
 
+    public float ReverseCoyoteTime { get { return reverseCoyoteTime; } }
+    public float CoyoteTime { get { return coyoteTime; } }
+
+    public float DissonanceForHardTurn { get { return dissonanceForHardTurn; } }
+    public float HardTurnMinSpeed { get { return hardTurnMinSpeed; } }
+    public float HardTurnTime { get { return hardTurnTime; } }
+
     public float TjInitJumpVel { get { return tjInitJumpVel; } }
     public float TjInitGravity { get { return tjInitGravity; } }
     public float TjUncancelledMaxGravity { get { return tjUncancelledMaxGravity; } }
@@ -108,6 +142,12 @@ public class MovementSettingsSO : ScriptableObject
     public float TjVelocityMultiplier { get { return tjVelocityMultiplier; } }
     public float TjGravityIncRate { get { return tjGravityIncRate; } }
     public float TjGravityIncRateAtCancel { get { return tjGravityIncRateAtCancel; } }
+
+    public float TjMinHorizInputMagnitude { get { return tjMinHorizInputMagnitude; } }
+    public float TjMaxTimeBtwnJumps { get { return tjMaxTimeBtwnJumps; } }
+    public float TjMaxJumpTime { get { return tjMaxJumpTime; } }
+    public float TjMinJumpTime { get { return tjMinJumpTime; } }
+    public float TjMaxDissonance { get { return tjMaxDissonance; } }
 
     public float HorizBoostGravity { get { return horizBoostGravity; } }
     public float HorizBoostChargeGravity { get { return horizBoostChargeGravity; } }
@@ -126,7 +166,15 @@ public class MovementSettingsSO : ScriptableObject
     public float DefaultGravity { get { return defaultGravity; } }
     public float StickToGroundMultiplier { get { return maxSpeed; } }
 
-    public float HardTurnTime { get { return hardTurnTime; } }
+    public float DissonanceForAirReverse { get { return dissonanceForAirReverse; } }
+    public float AirReverseMinActivationSpeed { get { return airReverseMinActivationSpeed; } }
+
+    public float InstantRotationSpeed { get { return instantRotationSpeed; } }
+    public float GroundRotationSpeed { get { return groundRotationSpeed; } }
+    public float AirRotationSpeed { get { return airRotationSpeed; } }
+    public float BoostAftermathRotationSpeed { get { return boostAftermathRotationSpeed; } }
+    public float DiveRotationSpeed { get { return diveRotationSpeed; } }
+    public float GroundBoostRotationSpeed { get { return groundBoostRotationSpeed; } }
 
     static MovementSettingsSO _instance;
     public static MovementSettingsSO Instance

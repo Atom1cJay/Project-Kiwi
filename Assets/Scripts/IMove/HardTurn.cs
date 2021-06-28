@@ -11,7 +11,7 @@ public class HardTurn : AMove
     public HardTurn(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         mm.mm_OnJump.AddListener(onJumpInput);
-        timeLeft = mm.hardTurnTime;
+        timeLeft = movementSettings.HardTurnTime;
         this.mii = mii;
         this.mi = mi;
     }
@@ -30,6 +30,11 @@ public class HardTurn : AMove
     private void onJumpInput()
     {
         tookJumpInput = true;
+    }
+
+    public override float GetRotationThisFrame()
+    {
+        return 0;
     }
 
     public override IMove GetNextMove()

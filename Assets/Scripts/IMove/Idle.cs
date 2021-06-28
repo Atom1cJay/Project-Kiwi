@@ -11,12 +11,17 @@ public class Idle : AMove
         this.mi = mi;
     }
 
-    public override string asString()
+    public override float GetHorizSpeedThisFrame()
     {
-        return "idle";
+        return 0;
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override float GetRotationThisFrame()
+    {
+        return movementSettings.GroundRotationSpeed;
+    }
+
+    public override float GetVertSpeedThisFrame()
     {
         return 0;
     }
@@ -48,8 +53,8 @@ public class Idle : AMove
         return this;
     }
 
-    public override float GetVertSpeedThisFrame()
+    public override string asString()
     {
-        return 0;
+        return "idle";
     }
 }

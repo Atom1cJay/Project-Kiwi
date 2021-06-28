@@ -61,4 +61,10 @@ public class MoveExecuter : MonoBehaviour
     {
         return moveThisFrame.asString();
     }
+
+    public float rotationThisFrame()
+    {
+        // TODO HANDLE ROTATION BY SELF INSTEAD OF PASSING IT TO ROTATIONER
+        return moveThisFrame.GetRotationThisFrame();
+    }
 }

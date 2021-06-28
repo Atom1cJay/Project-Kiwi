@@ -8,6 +8,7 @@ public class TripleJump : AMove
     float vertVel;
     MovementInputInfo mii;
     MovementInfo mi;
+    bool divePending;
 
     public TripleJump(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
@@ -15,6 +16,7 @@ public class TripleJump : AMove
         vertVel = movementSettings.TjInitJumpVel;
         mm.mm_OnJumpCanceled.AddListener(OnJumpCanceled);
         this.mii = mii;
+        mii.OnDiveInput.AddListener(() => divePending = true);
         this.mi = mi;
     }
 
@@ -76,13 +78,18 @@ public class TripleJump : AMove
         }
     }
 
+    public override float GetRotationThisFrame()
+    {
+        return movementSettings.AirRotationSpeed;
+    }
+
     public override IMove GetNextMove()
     {
         if (mm.IsOnGround())
         {
             return new Run(mm, mii, mi, movementSettings);
         }
-        if (mm.IsAirDiving())
+        if (divePending)
         {
             return new Dive(mm, mii, mi, movementSettings);
         }

@@ -16,9 +16,9 @@ public sealed class InputActionsHolder : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        inputActions = new InputActions();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        inputActions = new InputActions();
     }
 
     /// <summary>

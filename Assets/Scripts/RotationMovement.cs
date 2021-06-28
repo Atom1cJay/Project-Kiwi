@@ -2,22 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MovementInputInfo))]
 [RequireComponent(typeof(MovementMaster))]
+[RequireComponent(typeof(MoveExecuter))]
 public class RotationMovement : MonoBehaviour
 {
+    /*
     [SerializeField] private float instantRotationSpeed = 0.2f;
     [SerializeField] private float groundRotationSpeed = 600;
     [SerializeField] private float airRotationSpeed = 200;
     [SerializeField] private float boostAftermathRotationSpeed = 50;
     [SerializeField] private float diveRotationSpeed = 50;
     [SerializeField] private float groundBoostRotationSpeed;
+    */
     private MovementMaster mm;
     private MovementInfo mi;
+    private MoveExecuter me;
 
     private void Awake()
     {
         mi = GetComponent<MovementInfo>();
         mm = GetComponent<MovementMaster>();
+        me = GetComponent<MoveExecuter>();
         mm.mm_OnHardTurnEnd.AddListener(OnHardTurnEnd);
     }
 
@@ -43,7 +49,7 @@ public class RotationMovement : MonoBehaviour
             float rotationSpeed = DetermineRotationSpeed();
             if (rawInput.magnitude == 0) return;
             Quaternion targetRotation = Quaternion.Euler(0, inputDirection * Mathf.Rad2Deg, 0);
-            bool underInstantRotSpeed = mi.currentSpeedHoriz <= instantRotationSpeed;
+            bool underInstantRotSpeed = mi.currentSpeedHoriz <= MovementSettingsSO.Instance.InstantRotationSpeed;
             transform.rotation =
                 underInstantRotSpeed && !inAirBoostOrCharge()
                 ? targetRotation
@@ -58,32 +64,7 @@ public class RotationMovement : MonoBehaviour
     /// <returns></returns>
     float DetermineRotationSpeed()
     {
-        if (mm.IsAirReversing())
-        {
-            return 0;
-        }
-
-        if (mm.IsGroundBoosting() && mm.IsOnGround())
-        {
-            return groundBoostRotationSpeed;
-        }
-
-        if (mm.IsAirDiving())
-        {
-            return diveRotationSpeed;
-        }
-
-        if (mm.IsInAirBoostAftermath())
-        {
-            return boostAftermathRotationSpeed;
-        }
-
-        if (inAirBoostOrCharge())
-        {
-            return 0;
-        }
-        
-        return mm.IsOnGround() ? groundRotationSpeed : airRotationSpeed;
+        return me.rotationThisFrame();
     }
 
     bool inAirBoostOrCharge()

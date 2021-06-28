@@ -16,7 +16,7 @@ public class VertAirBoostCharge : AMove
     {
         vertVel = (prevVertVel < 0) ? 0 : prevVertVel;
         timeActive = 0;
-        maxTimeActive = mm.vertAirBoostMaxChargeTime;
+        maxTimeActive = movementSettings.VertBoostMaxChargeTime;
         ia = mm.ia();
         this.mii = mii;
         this.mi = mi;
@@ -33,6 +33,11 @@ public class VertAirBoostCharge : AMove
         float gravityType = (vertVel > 0) ? movementSettings.DefaultGravity : movementSettings.HorizBoostChargeGravity;
         vertVel -= gravityType * Time.fixedDeltaTime;
         return vertVel;
+    }
+
+    public override float GetRotationThisFrame()
+    {
+        return 0;
     }
 
     public override IMove GetNextMove()

@@ -7,11 +7,13 @@ public class Fall : AMove
     float vertVel;
     MovementInputInfo mii;
     MovementInfo mi;
+    bool divePending;
 
     public Fall(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         vertVel = 0;
         this.mii = mii;
+        mii.OnDiveInput.AddListener(() => divePending = true);
         this.mi = mi;
     }
 
@@ -57,13 +59,18 @@ public class Fall : AMove
         return vertVel;
     }
 
+    public override float GetRotationThisFrame()
+    {
+        return mm.IsAirReversing() ? 0 : movementSettings.AirRotationSpeed;
+    }
+
     public override IMove GetNextMove()
     {
         if (mm.IsOnGround())
         {
             return new Run(mm, mii, mi, movementSettings);
         }
-        if (mm.IsAirDiving())
+        if (divePending)
         {
             return new Dive(mm, mii, mi, movementSettings);
         }

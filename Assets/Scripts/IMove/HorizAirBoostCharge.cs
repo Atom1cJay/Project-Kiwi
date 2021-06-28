@@ -17,7 +17,7 @@ public class HorizAirBoostCharge : AMove
         vertVel = (prevVertVel < 0) ? 0 : prevVertVel;
 
         timeCharging = 0;
-        maxTimeToCharge = mm.airBoostMaxChargeTime;
+        maxTimeToCharge = movementSettings.HorizBoostMaxChargeTime;
 
         // To detect end of boost
         ia = mm.ia();
@@ -39,13 +39,18 @@ public class HorizAirBoostCharge : AMove
         return vertVel;
     }
 
+    public override float GetRotationThisFrame()
+    {
+        return 0;
+    }
+
     public override IMove GetNextMove()
     {
         timeCharging += Time.deltaTime;
 
         if (timeCharging > maxTimeToCharge || ia.Player.Boost.ReadValue<float>() == 0)
         {
-            return new HorizAirBoost(mm, mii, mi, (timeCharging / maxTimeToCharge) * mm.airBoostMaxTime, movementSettings);
+            return new HorizAirBoost(mm, mii, mi, (timeCharging / maxTimeToCharge) * movementSettings.HorizBoostMaxTime, movementSettings);
         }
         else
         {
@@ -55,6 +60,6 @@ public class HorizAirBoostCharge : AMove
 
     public override string asString()
     {
-        return "horizairboostcharge";
+        return "horizairboost";
     }
 }

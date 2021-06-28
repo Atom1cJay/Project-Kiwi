@@ -28,6 +28,11 @@ public class HorizGroundBoost : AMove
         return 0;
     }
 
+    public override float GetRotationThisFrame()
+    {
+        return movementSettings.GroundBoostRotationSpeed;
+    }
+
     public override IMove GetNextMove()
     {
         // todo change

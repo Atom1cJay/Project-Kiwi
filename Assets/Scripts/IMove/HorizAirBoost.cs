@@ -8,12 +8,14 @@ public class HorizAirBoost : AMove
     float timeLeft;
     MovementInputInfo mii;
     MovementInfo mi;
+    bool divePending;
 
     public HorizAirBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float timeLeft, MovementSettingsSO ms) : base(mm, ms)
     {
         vertVel = 0;
         this.timeLeft = timeLeft;
         this.mii = mii;
+        mii.OnDiveInput.AddListener(() => divePending = true);
         this.mi = mi;
     }
 
@@ -28,6 +30,11 @@ public class HorizAirBoost : AMove
         return vertVel;
     }
 
+    public override float GetRotationThisFrame()
+    {
+        return 0;
+    }
+
     public override IMove GetNextMove()
     {
         timeLeft -= Time.deltaTime;
@@ -40,7 +47,7 @@ public class HorizAirBoost : AMove
         {
             return new Run(mm, mii, mi, movementSettings);
         }
-        if (mm.IsAirDiving())
+        if (divePending)
         {
             return new Dive(mm, mii, mi, movementSettings);
         }

@@ -22,14 +22,20 @@ public interface IMove
     float GetVertSpeedThisFrame();
 
     /// <summary>
-    /// What move should start being performed next frame?
+    /// Gives this move as a String with no spaces, all in lowercase
     /// </summary>
     /// <returns></returns>
-    IMove GetNextMove();
+    string asString();
 
     /// <summary>
     /// Gives this move as a String with no spaces, all in lowercase
     /// </summary>
     /// <returns></returns>
-    string asString();
+    float GetRotationThisFrame();
+
+    /// <summary>
+    /// What move should start being performed next frame?
+    /// </summary>
+    /// <returns></returns>
+    IMove GetNextMove();
 }

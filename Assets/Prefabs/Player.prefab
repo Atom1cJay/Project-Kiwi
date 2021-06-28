@@ -157,22 +157,6 @@ MonoBehaviour:
   iah: {fileID: 0}
   relevantCamera: {fileID: 0}
   groundDetector: {fileID: 5116987453668295350}
-  groundableTimer: 0.1
-  reverseCoyoteTime: 0.15
-  coyoteTime: 0.08
-  dissonanceForHardTurn: 1.8
-  hardTurnMinSpeed: 4
-  hardTurnTime: 0.2
-  tjMinInputMagnitude: 0.9
-  tjMaxTimeBtwnJumps: 0.1
-  tjMinJumpTime: 0.3
-  tjMaxJumpTime: 1.5
-  tjMaxDissonance: 0.5
-  airBoostMaxChargeTime: 0.8
-  airBoostMaxTime: 0.7
-  vertAirBoostMaxChargeTime: 0.6
-  dissonanceForAirReverse: 1.8
-  airReverseMinActivationSpeed: 0
   mm_OnJump:
     m_PersistentCalls:
       m_Calls: []
@@ -283,7 +267,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396240b35bfbb4891bdc67d85a298db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usesInputActions: {fileID: 0}
+  inputActionsHolder: {fileID: 0}
+  OnJump:
+    m_PersistentCalls:
+      m_Calls: []
+  OnJumpCancelled:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDiveInput:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHorizBoostCharge:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHorizBoostRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  OnVertBoostCharge:
+    m_PersistentCalls:
+      m_Calls: []
+  OnVertBoostRelease:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1704877080
 MonoBehaviour:
   m_ObjectHideFlags: 0

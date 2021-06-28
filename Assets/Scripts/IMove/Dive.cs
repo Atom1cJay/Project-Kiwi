@@ -30,6 +30,11 @@ public class Dive : AMove
         return vertVel;
     }
 
+    public override float GetRotationThisFrame()
+    {
+        return movementSettings.DiveRotationSpeed;
+    }
+
     public override IMove GetNextMove()
     {
         if (mm.IsOnGround())

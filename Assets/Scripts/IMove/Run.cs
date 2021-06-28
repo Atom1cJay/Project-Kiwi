@@ -42,6 +42,11 @@ public class Run : AMove
         return 0;
     }
 
+    public override float GetRotationThisFrame()
+    {
+        return movementSettings.GroundRotationSpeed;
+    }
+
     public override IMove GetNextMove()
     {
         if (mi.currentSpeedHoriz == 0)

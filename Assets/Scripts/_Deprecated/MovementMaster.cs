@@ -9,30 +9,9 @@ public class MovementMaster : MonoBehaviour
 {
     // Serialized Fields
     [SerializeField] InputActionsHolder iah;
+    MovementSettingsSO movementSettings;
     [SerializeField] public GameObject relevantCamera;
     [SerializeField] public CollisionDetector groundDetector;
-    [Header("Jumping Settings")]
-    [SerializeField] public float groundableTimer = 0.1f;
-    [Header("Coyote Time Settings")]
-    [SerializeField] public float reverseCoyoteTime;
-    [SerializeField] public float coyoteTime;
-    [Header("Hard Turn Settings")]
-    [SerializeField] public float dissonanceForHardTurn;
-    [SerializeField] public float hardTurnMinSpeed;
-    [SerializeField] public float hardTurnTime;
-    [Header("Triple Jump Settings")]
-    [SerializeField] public float tjMinInputMagnitude;
-    [SerializeField] public float tjMaxTimeBtwnJumps;
-    [SerializeField] public float tjMinJumpTime;
-    [SerializeField] public float tjMaxJumpTime;
-    [SerializeField] public float tjMaxDissonance;
-    [Header("Boosting Settings")]
-    [SerializeField] public float airBoostMaxChargeTime;
-    [SerializeField] public float airBoostMaxTime;
-    [SerializeField] public float vertAirBoostMaxChargeTime;
-    [Header("Misc. Settings")]
-    [SerializeField] public float dissonanceForAirReverse;
-    [SerializeField] public float airReverseMinActivationSpeed;
 
     // Other variables for internal use only
     private bool isJumping;
@@ -52,7 +31,7 @@ public class MovementMaster : MonoBehaviour
     private bool inAirBoostAftermath;
     private bool isVertAirBoostCharging;
     private bool isGroundBoosting;
-    private bool isAirDiving;
+    //private bool isAirDiving;
     private bool isAirReversing;
 
     // Helpful Assets for Subclasses
@@ -72,8 +51,8 @@ public class MovementMaster : MonoBehaviour
     [HideInInspector] public UnityEvent mm_OnAirBoostEnd;
     [HideInInspector] public UnityEvent mm_OnVertAirBoostChargeStart;
     [HideInInspector] public UnityFloatEvent mm_OnVertAirBoostStart;
-    [HideInInspector] public UnityEvent mm_OnAirDiveStart;
-    [HideInInspector] public UnityEvent mm_OnDiveRecoveryStart;
+    //[HideInInspector] public UnityEvent mm_OnAirDiveStart;
+    //[HideInInspector] public UnityEvent mm_OnDiveRecoveryStart;
 
     // INITIALIZATION /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -85,6 +64,7 @@ public class MovementMaster : MonoBehaviour
 
     private void InitializeAssets()
     {
+        movementSettings = MovementSettingsSO.Instance;
         mi = GetComponent<MovementInfo>();
         charCont = GetComponent<CharacterController>();
     }
@@ -95,7 +75,7 @@ public class MovementMaster : MonoBehaviour
         iah.inputActions.Player.Jump.canceled += _ => OnJumpInputCanceled();
         iah.inputActions.Player.Boost.started += _ => OnBoostPerformed();
         iah.inputActions.Player.VertBoost.started += _ => OnVertBoostChargePerformed();
-        iah.inputActions.Player.Dive.performed += _ => OnDivePerformed();
+        //iah.inputActions.Player.Dive.performed += _ => OnDivePerformed();
     }
 
     // STATE CONTROL /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,13 +95,13 @@ public class MovementMaster : MonoBehaviour
 
     private void Jump()
     {
-        tjJumpCount = (tjTimeBtwnJumps > tjMaxTimeBtwnJumps) ? 1 : tjJumpCount + 1;
+        tjJumpCount = (tjTimeBtwnJumps > movementSettings.TjMaxTimeBtwnJumps) ? 1 : tjJumpCount + 1;
         tjCurJumpTime = 0;
         tjTimeBtwnJumps = 0;
         jumpInputCanceled = false;
         isJumping = true;
         groundable = false;
-        Invoke("MakeGroundable", groundableTimer);
+        Invoke("MakeGroundable", movementSettings.JumpGroundableTimer);
         mm_OnJump.Invoke();
     }
 
@@ -129,19 +109,19 @@ public class MovementMaster : MonoBehaviour
     {
         float timePassed = 0f;
 
-        while (timePassed < reverseCoyoteTime)
+        while (timePassed < movementSettings.ReverseCoyoteTime)
         {
             bool pressingJump = iah.inputActions.Player.Jump.ReadValue<float>() > 0;
 
             if (isOnGround && pressingJump)
             {
                 Jump();
-                timePassed = reverseCoyoteTime;
+                timePassed = movementSettings.ReverseCoyoteTime;
             }
 
             if (!pressingJump)
             {
-                timePassed = reverseCoyoteTime;
+                timePassed = movementSettings.ReverseCoyoteTime;
             }
 
             timePassed += Time.deltaTime;
@@ -182,7 +162,7 @@ public class MovementMaster : MonoBehaviour
                 // First frame on ground
                 isAirReversing = false;
                 hasAirBoostedThisJump = false;
-                if (tjJumpCount == 3 || tjCurJumpTime > tjMaxJumpTime || tjCurJumpTime < tjMinJumpTime)
+                if (tjJumpCount == 3 || tjCurJumpTime > movementSettings.TjMaxJumpTime || tjCurJumpTime < movementSettings.TjMinJumpTime)
                     tjJumpCount = 0;
                 tjCurJumpTime = 0;
                 tjTimeBtwnJumps = 0;
@@ -227,7 +207,7 @@ public class MovementMaster : MonoBehaviour
         float timePassed = 0f;
         inCoyoteTime = true;
 
-        while (timePassed < coyoteTime && !isJumping)
+        while (timePassed < movementSettings.CoyoteTime && !isJumping)
         {
             timePassed += Time.deltaTime;
             yield return new WaitForEndOfFrame();
@@ -238,13 +218,13 @@ public class MovementMaster : MonoBehaviour
 
     private void UpdateHorizontalStates()
     {
-        if (GetHorizDissonance() > dissonanceForHardTurn && mi.currentSpeedHoriz > hardTurnMinSpeed && !isInHardTurn && isOnGround)
+        if (GetHorizDissonance() > movementSettings.DissonanceForHardTurn && mi.currentSpeedHoriz > movementSettings.HardTurnMinSpeed && !isInHardTurn && isOnGround)
         {
             // First frame of hard turn
             StartHardTurn();
         }
 
-        if (!isOnGround && GetHorizDissonance() > dissonanceForAirReverse /*&& horizMove.GetSpeed() > airReverseMinActivationSpeed*/)
+        if (!isOnGround && GetHorizDissonance() > movementSettings.DissonanceForAirReverse /*&& horizMove.GetSpeed() > movementSettings.AirReverseMinActivationSpeed*/)
         {
             isAirReversing = true; // True until hitting ground
         }
@@ -254,7 +234,7 @@ public class MovementMaster : MonoBehaviour
     {
         isInHardTurn = true;
         mm_OnHardTurnStart.Invoke();
-        Invoke("EndHardTurn", hardTurnTime);
+        Invoke("EndHardTurn", movementSettings.HardTurnTime);
     }
 
     private void EndHardTurn()
@@ -275,7 +255,7 @@ public class MovementMaster : MonoBehaviour
         }
 
         // Cancel
-        if (tjJumpCount != 3 && (GetHorizDissonance() > tjMaxDissonance || GetHorizontalInput().magnitude < tjMinInputMagnitude))
+        if (tjJumpCount != 3 && (GetHorizDissonance() > movementSettings.TjMaxDissonance || GetHorizontalInput().magnitude < movementSettings.TjMinHorizInputMagnitude))
         {
             tjJumpCount = 0;
         }
@@ -304,8 +284,8 @@ public class MovementMaster : MonoBehaviour
 
     private void OnBoostPerformed()
     {
-        if (isAirDiving)
-            return;
+        //if (isAirDiving)
+        //    return;
 
         if (isOnGround)
         {
@@ -342,12 +322,12 @@ public class MovementMaster : MonoBehaviour
             curAirBoostChargeTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
 
-            if (curAirBoostChargeTime > airBoostMaxChargeTime)
+            if (curAirBoostChargeTime > movementSettings.HorizBoostMaxChargeTime)
             {
-                curAirBoostChargeTime = airBoostMaxChargeTime;
+                curAirBoostChargeTime = movementSettings.HorizBoostMaxChargeTime;
             }
 
-            if (iah.inputActions.Player.Boost.ReadValue<float>() == 0 || curAirBoostChargeTime >= airBoostMaxChargeTime)
+            if (iah.inputActions.Player.Boost.ReadValue<float>() == 0 || curAirBoostChargeTime >= movementSettings.HorizBoostMaxChargeTime)
             {
                 StartCoroutine("ExecuteAirBoost");
                 isAirBoostCharging = false;
@@ -362,7 +342,7 @@ public class MovementMaster : MonoBehaviour
     IEnumerator ExecuteAirBoost()
     {
         // First frame of air boost
-        curAirBoostTime = airBoostMaxTime - (airBoostMaxTime * (curAirBoostChargeTime / airBoostMaxChargeTime));
+        curAirBoostTime = movementSettings.HorizBoostMaxTime - (movementSettings.HorizBoostMaxTime * (curAirBoostChargeTime / movementSettings.HorizBoostMaxChargeTime));
         // ^ Start mid-boost if low charge
         curAirBoostChargeTime = 0;
         isAirBoosting = true;
@@ -374,7 +354,7 @@ public class MovementMaster : MonoBehaviour
             curAirBoostTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
 
-            if (curAirBoostTime > airBoostMaxTime)
+            if (curAirBoostTime > movementSettings.HorizBoostMaxTime)
             {
                 isAirBoosting = false;
             }
@@ -397,7 +377,7 @@ public class MovementMaster : MonoBehaviour
 
     private void OnVertBoostChargePerformed()
     {
-        if (isOnGround || isAirBoosting || isAirBoostCharging || isVertAirBoostCharging || hasAirBoostedThisJump || isAirDiving)
+        if (isOnGround || isAirBoosting || isAirBoostCharging || isVertAirBoostCharging || hasAirBoostedThisJump /*|| isAirDiving*/)
             return;
 
         // First frame, vert air boost charge
@@ -417,12 +397,12 @@ public class MovementMaster : MonoBehaviour
             curAirBoostChargeTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
 
-            if (curAirBoostChargeTime > vertAirBoostMaxChargeTime)
+            if (curAirBoostChargeTime > movementSettings.VertBoostMaxChargeTime)
             {
-                curAirBoostChargeTime = vertAirBoostMaxChargeTime;
+                curAirBoostChargeTime = movementSettings.VertBoostMaxChargeTime;
             }
 
-            if (iah.inputActions.Player.VertBoost.ReadValue<float>() == 0 || curAirBoostChargeTime >= vertAirBoostMaxChargeTime)
+            if (iah.inputActions.Player.VertBoost.ReadValue<float>() == 0 || curAirBoostChargeTime >= movementSettings.VertBoostMaxChargeTime)
             {
                 ExecuteVertAirBoost();
                 isVertAirBoostCharging = false;
@@ -437,11 +417,12 @@ public class MovementMaster : MonoBehaviour
     void ExecuteVertAirBoost()
     {
         // Only frame of vert air boost
-        mm_OnVertAirBoostStart.Invoke(curAirBoostChargeTime / vertAirBoostMaxChargeTime);
+        mm_OnVertAirBoostStart.Invoke(curAirBoostChargeTime / movementSettings.VertBoostMaxChargeTime);
         curAirBoostChargeTime = 0;
         curAirBoostTime = 0;
     }
 
+    /*
     void OnDivePerformed()
     {
         if (!isOnGround && !isAirBoostCharging && !isVertAirBoostCharging)
@@ -459,6 +440,7 @@ public class MovementMaster : MonoBehaviour
         yield return new WaitUntil(() => isOnGround);
         isAirDiving = false;
     }
+    */
 
     /// <summary>
     /// Gives the distance (min = 0, max = PI) between the direction the player is facing and the
@@ -564,10 +546,12 @@ public class MovementMaster : MonoBehaviour
         return isVertAirBoostCharging;
     }
 
+    /*
     public bool IsAirDiving()
     {
         return isAirDiving;
     }
+    */
 
     public bool IsGroundBoosting()
     {
