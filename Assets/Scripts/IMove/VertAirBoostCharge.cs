@@ -8,17 +8,17 @@ public class VertAirBoostCharge : AMove
     float vertVel;
     float timeActive;
     float maxTimeActive;
-    InputActions ia;
     MovementInputInfo mii;
     MovementInfo mi;
+    bool boostReleasePending;
 
     public VertAirBoostCharge(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float prevVertVel, MovementSettingsSO ms) : base(mm, ms)
     {
         vertVel = (prevVertVel < 0) ? 0 : prevVertVel;
         timeActive = 0;
         maxTimeActive = movementSettings.VertBoostMaxChargeTime;
-        ia = mm.ia();
         this.mii = mii;
+        mii.OnVertBoostRelease.AddListener(() => boostReleasePending = true);
         this.mi = mi;
     }
 
@@ -44,7 +44,7 @@ public class VertAirBoostCharge : AMove
     {
         timeActive += Time.fixedDeltaTime;
 
-        if (timeActive > maxTimeActive || ia.Player.VertBoost.ReadValue<float>() == 0)
+        if (timeActive > maxTimeActive || boostReleasePending)
         {
             float propCharged = Mathf.Clamp01(timeActive / maxTimeActive);
             return new VertAirBoost(mm, mii, mi, propCharged, movementSettings);

@@ -8,10 +8,12 @@ public class Run : AMove
 {
     MovementInputInfo mii;
     MovementInfo mi;
+    bool jumpPending;
 
     public Run(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         this.mii = mii;
+        mii.OnJump.AddListener(() => jumpPending = true);
         this.mi = mi;
     }
 
@@ -53,11 +55,11 @@ public class Run : AMove
         {
             return new Idle(mm, mii, mi, movementSettings);
         }
-        if (mm.IsJumping() && mm.tripleJumpValid())
+        if (jumpPending && mm.tripleJumpValid())
         {
             return new TripleJump(mm, mii, mi, movementSettings);
         }
-        if (mm.IsJumping())
+        if (jumpPending)
         {
             return new Jump(mm, mii, mi, movementSettings);
         }

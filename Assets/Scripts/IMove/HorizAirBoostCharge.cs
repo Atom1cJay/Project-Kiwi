@@ -8,9 +8,9 @@ public class HorizAirBoostCharge : AMove
     float vertVel;
     float timeCharging;
     float maxTimeToCharge;
-    InputActions ia;
     MovementInputInfo mii;
     MovementInfo mi;
+    bool boostReleasePending;
 
     public HorizAirBoostCharge(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float prevVertVel, MovementSettingsSO ms) : base(mm, ms)
     {
@@ -19,10 +19,8 @@ public class HorizAirBoostCharge : AMove
         timeCharging = 0;
         maxTimeToCharge = movementSettings.HorizBoostMaxChargeTime;
 
-        // To detect end of boost
-        ia = mm.ia();
-
         this.mii = mii;
+        mii.OnHorizBoostRelease.AddListener(() => boostReleasePending = true);
         this.mi = mi;
     }
 
@@ -48,7 +46,7 @@ public class HorizAirBoostCharge : AMove
     {
         timeCharging += Time.deltaTime;
 
-        if (timeCharging > maxTimeToCharge || ia.Player.Boost.ReadValue<float>() == 0)
+        if (timeCharging > maxTimeToCharge || boostReleasePending)
         {
             return new HorizAirBoost(mm, mii, mi, (timeCharging / maxTimeToCharge) * movementSettings.HorizBoostMaxTime, movementSettings);
         }

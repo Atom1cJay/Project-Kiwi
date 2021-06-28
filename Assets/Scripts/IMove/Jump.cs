@@ -9,14 +9,23 @@ public class Jump : AMove
     MovementInputInfo mii;
     MovementInfo mi;
     bool divePending;
+    bool vertBoostChargePending;
+    bool horizBoostChargePending;
+    bool jumpCancelled;
 
     public Jump(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         gravity = movementSettings.JumpInitGravity;
         vertVel = movementSettings.JumpInitVel;
-        mm.mm_OnJumpCanceled.AddListener(OnJumpCanceled);
         this.mii = mii;
         mii.OnDiveInput.AddListener(() => divePending = true);
+        mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
+        mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
+        mii.OnJumpCancelled.AddListener(() =>
+        {
+            jumpCancelled = true;
+            vertVel *= movementSettings.JumpVelMultiplierAtCancel;
+        });
         this.mi = mi;
     }
 
@@ -59,28 +68,19 @@ public class Jump : AMove
     public override float GetVertSpeedThisFrame()
     {
         // Decide Gravity
-        if (mm.JumpInputCancelled())
+        if (jumpCancelled)
             gravity += movementSettings.JumpCancelledGravityIncrease * Time.deltaTime;
         else
             gravity += movementSettings.JumpUncancelledGravityIncrease * Time.deltaTime;
 
-        if (gravity > movementSettings.JumpMaxUncancelledGravity && !mm.JumpInputCancelled())
+        if (gravity > movementSettings.JumpMaxUncancelledGravity && !jumpCancelled)
             gravity = movementSettings.JumpMaxUncancelledGravity;
-        else if (gravity > movementSettings.JumpMaxCancelledGravity && mm.JumpInputCancelled())
+        else if (gravity > movementSettings.JumpMaxCancelledGravity && jumpCancelled)
             gravity = movementSettings.JumpMaxCancelledGravity;
 
         // Effect Gravity
         vertVel -= gravity * Time.deltaTime;
         return vertVel;
-    }
-
-    private void OnJumpCanceled()
-    {
-        // todo add a point of no return?
-        if (vertVel > 0)
-        {
-            vertVel *= movementSettings.JumpVelMultiplierAtCancel;
-        }
     }
 
     public override float GetRotationThisFrame()
@@ -98,11 +98,11 @@ public class Jump : AMove
         {
             return new Dive(mm, mii, mi, movementSettings);
         }
-        if (mm.InAirBoostCharge())
+        if (horizBoostChargePending)
         {
             return new HorizAirBoostCharge(mm, mii, mi, vertVel, movementSettings);
         }
-        if (mm.InVertAirBoostCharge())
+        if (vertBoostChargePending)
         {
             return new VertAirBoostCharge(mm, mii, mi, vertVel, movementSettings);
         }

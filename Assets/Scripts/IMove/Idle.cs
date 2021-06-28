@@ -4,10 +4,12 @@ public class Idle : AMove
 {
     MovementInputInfo mii;
     MovementInfo mi;
+    bool jumpPending;
 
     public Idle(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         this.mii = mii;
+        mii.OnJump.AddListener(() => jumpPending = true);
         this.mi = mi;
     }
 
@@ -28,15 +30,15 @@ public class Idle : AMove
 
     public override IMove GetNextMove()
     {
-        if (mm.GetHorizontalInput().magnitude != 0)
+        if (mii.GetHorizontalInput().magnitude != 0)
         {
             return new Run(mm, mii, mi, movementSettings);
         }
-        if (mm.IsJumping() && mm.tripleJumpValid())
+        if (jumpPending && mm.tripleJumpValid())
         {
             return new TripleJump(mm, mii, mi, movementSettings);
         }
-        if (mm.IsJumping())
+        if (jumpPending)
         {
             return new Jump(mm, mii, mi, movementSettings);
         }
@@ -44,10 +46,12 @@ public class Idle : AMove
         {
             return new Fall(mm, mii, mi, movementSettings);
         }
+        /*
         if (mm.IsInHardTurn())
         {
             return new HardTurn(mm, mii, mi, movementSettings);
         }
+        */
         // todo make ground boost possible
 
         return this;

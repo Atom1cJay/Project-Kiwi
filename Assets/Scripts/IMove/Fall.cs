@@ -8,12 +8,16 @@ public class Fall : AMove
     MovementInputInfo mii;
     MovementInfo mi;
     bool divePending;
+    bool vertBoostChargePending;
+    bool horizBoostChargePending;
 
     public Fall(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         vertVel = 0;
         this.mii = mii;
         mii.OnDiveInput.AddListener(() => divePending = true);
+        mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
+        mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
         this.mi = mi;
     }
 
@@ -74,11 +78,11 @@ public class Fall : AMove
         {
             return new Dive(mm, mii, mi, movementSettings);
         }
-        if (mm.InAirBoostCharge())
+        if (horizBoostChargePending)
         {
             return new HorizAirBoostCharge(mm, mii, mi, vertVel, movementSettings);
         }
-        if (mm.InVertAirBoostCharge())
+        if (vertBoostChargePending)
         {
             return new VertAirBoostCharge(mm, mii, mi, vertVel, movementSettings);
         }

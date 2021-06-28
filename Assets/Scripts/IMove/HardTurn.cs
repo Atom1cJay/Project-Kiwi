@@ -4,15 +4,15 @@ using UnityEngine;
 public class HardTurn : AMove
 {
     float timeLeft;
-    bool tookJumpInput;
+    bool jumpInputPending;
     MovementInputInfo mii;
     MovementInfo mi;
 
     public HardTurn(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
-        mm.mm_OnJump.AddListener(onJumpInput);
         timeLeft = movementSettings.HardTurnTime;
         this.mii = mii;
+        mii.OnJump.AddListener(() => jumpInputPending = true);
         this.mi = mi;
     }
 
@@ -25,11 +25,6 @@ public class HardTurn : AMove
     public override float GetVertSpeedThisFrame()
     {
         return 0;
-    }
-
-    private void onJumpInput()
-    {
-        tookJumpInput = true;
     }
 
     public override float GetRotationThisFrame()
@@ -45,7 +40,7 @@ public class HardTurn : AMove
         {
             return new Run(mm, mii, mi, movementSettings);
         }
-        if (tookJumpInput)
+        if (jumpInputPending)
         {
             return new Jump(mm, mii, mi, movementSettings);
         }

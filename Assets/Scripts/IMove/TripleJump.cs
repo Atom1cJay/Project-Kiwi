@@ -9,14 +9,23 @@ public class TripleJump : AMove
     MovementInputInfo mii;
     MovementInfo mi;
     bool divePending;
+    bool vertBoostChargePending;
+    bool horizBoostChargePending;
+    bool jumpCancelled;
 
     public TripleJump(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         gravity = movementSettings.TjInitGravity;
         vertVel = movementSettings.TjInitJumpVel;
-        mm.mm_OnJumpCanceled.AddListener(OnJumpCanceled);
         this.mii = mii;
         mii.OnDiveInput.AddListener(() => divePending = true);
+        mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
+        mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
+        mii.OnJumpCancelled.AddListener(() =>
+        {
+            jumpCancelled = true;
+            vertVel *= movementSettings.JumpVelMultiplierAtCancel;
+        });
         this.mi = mi;
     }
 
@@ -50,32 +59,19 @@ public class TripleJump : AMove
     public override float GetVertSpeedThisFrame()
     {
         // Decide Gravity
-        if (mm.JumpInputCancelled())
+        if (jumpCancelled)
             gravity += movementSettings.TjGravityIncRateAtCancel * Time.deltaTime;
         else
             gravity += movementSettings.TjGravityIncRate * Time.deltaTime;
 
-        if (gravity > movementSettings.TjUncancelledMaxGravity && !mm.JumpInputCancelled())
+        if (gravity > movementSettings.TjUncancelledMaxGravity && !jumpCancelled)
             gravity = movementSettings.TjUncancelledMaxGravity;
-        else if (gravity > movementSettings.TjCancelledMaxGravity && mm.JumpInputCancelled())
+        else if (gravity > movementSettings.TjCancelledMaxGravity && jumpCancelled)
             gravity = movementSettings.TjCancelledMaxGravity;
 
         // Effect Gravity
         vertVel -= gravity * Time.deltaTime;
         return vertVel;
-    }
-
-    /// <summary>
-    /// Marks a jump as cancelled (meaning the arc should begin to decrease)
-    /// if we are in the proper part of the jump.
-    /// </summary>
-    private void OnJumpCanceled()
-    {
-        // TODO point of no return?
-        if (vertVel > 0)
-        {
-            vertVel *= movementSettings.TjVelocityMultiplier;
-        }
     }
 
     public override float GetRotationThisFrame()
@@ -93,11 +89,11 @@ public class TripleJump : AMove
         {
             return new Dive(mm, mii, mi, movementSettings);
         }
-        if (mm.InAirBoostCharge())
+        if (horizBoostChargePending)
         {
             return new HorizAirBoostCharge(mm, mii, mi, vertVel, movementSettings);
         }
-        if (mm.InVertAirBoostCharge())
+        if (vertBoostChargePending)
         {
             return new VertAirBoostCharge(mm, mii, mi, vertVel, movementSettings);
         }

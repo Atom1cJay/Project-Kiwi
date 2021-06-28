@@ -34,6 +34,8 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Player.Jump.canceled += _ => OnJumpCancelled.Invoke();
         inputActionsHolder.inputActions.Player.Boost.started += _ => OnHorizBoostCharge.Invoke();
         inputActionsHolder.inputActions.Player.VertBoost.started += _ => OnVertBoostCharge.Invoke();
+        inputActionsHolder.inputActions.Player.Boost.canceled += _ => OnHorizBoostRelease.Invoke();
+        inputActionsHolder.inputActions.Player.VertBoost.canceled += _ => OnVertBoostRelease.Invoke();
         inputActionsHolder.inputActions.Player.Dive.performed += _ => OnDiveInput.Invoke();
     }
 

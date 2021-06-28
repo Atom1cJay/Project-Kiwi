@@ -7,14 +7,6 @@ using UnityEngine;
 [RequireComponent(typeof(MoveExecuter))]
 public class RotationMovement : MonoBehaviour
 {
-    /*
-    [SerializeField] private float instantRotationSpeed = 0.2f;
-    [SerializeField] private float groundRotationSpeed = 600;
-    [SerializeField] private float airRotationSpeed = 200;
-    [SerializeField] private float boostAftermathRotationSpeed = 50;
-    [SerializeField] private float diveRotationSpeed = 50;
-    [SerializeField] private float groundBoostRotationSpeed;
-    */
     private MovementMaster mm;
     private MovementInfo mi;
     private MoveExecuter me;
