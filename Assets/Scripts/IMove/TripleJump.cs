@@ -7,19 +7,23 @@ public class TripleJump : AMove
     float gravity;
     float horizVel;
     float vertVel;
-    readonly MovementInputInfo mii;
-    readonly MovementInfo mi;
     bool divePending;
     bool vertBoostChargePending;
     bool horizBoostChargePending;
     bool jumpCancelled;
     bool hasInitiatedAirReverse; // permanent once activated todo change?
 
-    public TripleJump(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
+    /// <summary>
+    /// Constructs a TripleJump, initializing the objects that hold all the
+    /// information it needs to function.
+    /// </summary>
+    /// <param name="mii">Information on the player's input</param>
+    /// <param name="mi">Information on the state of the player</param>
+    /// <param name="ms">Constants related to movement</param>
+    public TripleJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
     {
         gravity = movementSettings.TjInitGravity;
         vertVel = movementSettings.TjInitJumpVel;
-        this.mii = mii;
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
@@ -28,7 +32,6 @@ public class TripleJump : AMove
             jumpCancelled = true;
             vertVel *= movementSettings.JumpVelMultiplierAtCancel;
         });
-        this.mi = mi;
     }
 
     public override void AdvanceTime()
@@ -90,19 +93,19 @@ public class TripleJump : AMove
     {
         if (mi.TouchingGround())
         {
-            return new Run(mm, mii, mi, movementSettings);
+            return new Run(mii, mi, movementSettings, horizVel);
         }
         if (divePending)
         {
-            return new Dive(mm, mii, mi, movementSettings);
+            return new Dive(mii, mi, movementSettings);
         }
         if (horizBoostChargePending)
         {
-            return new HorizAirBoostCharge(mm, mii, mi, vertVel, movementSettings);
+            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, horizVel);
         }
         if (vertBoostChargePending)
         {
-            return new VertAirBoostCharge(mm, mii, mi, vertVel, movementSettings);
+            return new VertAirBoostCharge(mii, mi, vertVel, movementSettings);
         }
 
         return this;

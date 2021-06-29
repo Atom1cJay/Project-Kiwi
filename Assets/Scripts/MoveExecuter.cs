@@ -18,7 +18,7 @@ public class MoveExecuter : MonoBehaviour
         charCont = GetComponent<CharacterController>();
         mm = GetComponent<MovementMaster>();
         mi = GetComponent<MovementInfo>();
-        moveThisFrame = new Fall(mm, GetComponent<MovementInputInfo>(), mi, movementSettings);
+        moveThisFrame = new Fall(GetComponent<MovementInputInfo>(), mi, movementSettings, 0);
     }
 
     void Update()

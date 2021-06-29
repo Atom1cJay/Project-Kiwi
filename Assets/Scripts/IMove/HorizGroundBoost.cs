@@ -6,19 +6,24 @@ using UnityEngine;
 public class HorizGroundBoost : AMove
 {
     float horizVel;
-    readonly MovementInputInfo mii;
-    readonly MovementInfo mi;
 
-    public HorizGroundBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
+    /// <summary>
+    /// Constructs a HorizGroundBoost, initializing the objects that hold all the
+    /// information it needs to function.
+    /// </summary>
+    /// <param name="mii">Information on the player's input</param>
+    /// <param name="mi">Information on the state of the player</param>
+    /// <param name="ms">Constants related to movement</param>
+    /// <param name="horizVel">The horizontal speed moving into this move</param>
+    public HorizGroundBoost(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
-        this.mii = mii;
-        this.mi = mi;
+        this.horizVel = horizVel;
     }
 
     public override void AdvanceTime()
     {
         horizVel = InputUtils.SmoothedInput(
-            mi.currentSpeedHoriz,
+            horizVel,
             movementSettings.GroundBoostMaxSpeedX,
             movementSettings.GroundBoostSensitivityX,
             movementSettings.GroundBoostGravityX);
@@ -42,7 +47,7 @@ public class HorizGroundBoost : AMove
     public override IMove GetNextMove()
     {
         // todo change
-        return new Run(mm, mii, mi, movementSettings);
+        return new Run(mii, mi, movementSettings, horizVel);
     }
 
     public override string AsString()

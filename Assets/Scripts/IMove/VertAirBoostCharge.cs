@@ -9,18 +9,21 @@ public class VertAirBoostCharge : AMove
     float horizVel;
     float timeActive;
     readonly float maxTimeActive;
-    readonly MovementInputInfo mii;
-    readonly MovementInfo mi;
     bool boostReleasePending;
 
-    public VertAirBoostCharge(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float prevVertVel, MovementSettingsSO ms) : base(mm, ms)
+    /// <summary>
+    /// Constructs a VertAirBoostCharge, initializing the objects that hold all
+    /// the information it needs to function.
+    /// </summary>
+    /// <param name="mii">Information on the player's input</param>
+    /// <param name="mi">Information on the state of the player</param>
+    /// <param name="ms">Constants related to movement</param>
+    public VertAirBoostCharge(MovementInputInfo mii, MovementInfo mi, float prevVertVel, MovementSettingsSO ms) : base(ms, mi, mii)
     {
         vertVel = (prevVertVel < 0) ? 0 : prevVertVel;
         timeActive = 0;
         maxTimeActive = movementSettings.VertBoostMaxChargeTime;
-        this.mii = mii;
         mii.OnVertBoostRelease.AddListener(() => boostReleasePending = true);
-        this.mi = mi;
     }
 
     public override void AdvanceTime()
@@ -56,7 +59,7 @@ public class VertAirBoostCharge : AMove
         if (timeActive > maxTimeActive || boostReleasePending)
         {
             float propCharged = Mathf.Clamp01(timeActive / maxTimeActive);
-            return new VertAirBoost(mm, mii, mi, propCharged, movementSettings);
+            return new VertAirBoost(mii, mi, propCharged, movementSettings);
         }
         return this;
     }

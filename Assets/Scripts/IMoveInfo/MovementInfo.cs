@@ -7,8 +7,8 @@ public class MovementInfo : MonoBehaviour
 {
     [HideInInspector] public float currentSpeedHoriz;
     [HideInInspector] public float currentSpeedVert;
-    private int tjJumpCount;
     [SerializeField] CollisionDetector groundDetector;
+    private int tjJumpCount;
     IMoveImmutable storedMove; // The move from the last frame
     MoveExecuter me;
 
@@ -28,7 +28,6 @@ public class MovementInfo : MonoBehaviour
     private void Update()
     {
         UpdateTripleJumpStatus();
-        print(tjJumpCount);
     }
 
     /// <summary>

@@ -2,15 +2,18 @@
 
 public class Idle : AMove
 {
-    readonly MovementInputInfo mii;
-    readonly MovementInfo mi;
     bool jumpPending;
 
-    public Idle(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
+    /// <summary>
+    /// Constructs a Idle, initializing the objects that hold all the
+    /// information it needs to function.
+    /// </summary>
+    /// <param name="mii">Information on the player's input</param>
+    /// <param name="mi">Information on the state of the player</param>
+    /// <param name="ms">Constants related to movement</param>
+    public Idle(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
     {
-        this.mii = mii;
         mii.OnJump.AddListener(() => jumpPending = true);
-        this.mi = mi;
     }
 
     public override void AdvanceTime()
@@ -37,15 +40,15 @@ public class Idle : AMove
     {
         if (mii.GetHorizontalInput().magnitude != 0)
         {
-            return new Run(mm, mii, mi, movementSettings);
+            return new Run(mii, mi, movementSettings, 0);
         }
         if (jumpPending)
         {
-            return new Jump(mm, mii, mi, movementSettings);
+            return new Jump(mii, mi, movementSettings, 0);
         }
         if (!mi.TouchingGround())
         {
-            return new Fall(mm, mii, mi, movementSettings);
+            return new Fall(mii, mi, movementSettings, GetHorizSpeedThisFrame());
         }
         // todo make ground boost possible
 

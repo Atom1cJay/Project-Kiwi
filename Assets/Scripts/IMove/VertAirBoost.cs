@@ -7,16 +7,19 @@ public class VertAirBoost : AMove
 {
     float vertVel;
     float horizVel;
-    readonly MovementInputInfo mii;
-    readonly MovementInfo mi;
     bool divePending;
 
-    public VertAirBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float propCharged, MovementSettingsSO ms) : base(mm, ms)
+    /// <summary>
+    /// Constructs a VertAirBoost, initializing the objects that hold all the
+    /// information it needs to function.
+    /// </summary>
+    /// <param name="mii">Information on the player's input</param>
+    /// <param name="mi">Information on the state of the player</param>
+    /// <param name="ms">Constants related to movement</param>
+    public VertAirBoost(MovementInputInfo mii, MovementInfo mi, float propCharged, MovementSettingsSO ms) : base(ms, mi, mii)
     {
         vertVel = movementSettings.VertBoostMinVel + (propCharged * (movementSettings.VertBoostMaxVel - movementSettings.VertBoostMinVel));
-        this.mii = mii;
         mii.OnDiveInput.AddListener(() => divePending = true);
-        this.mi = mi;
     }
 
     public override void AdvanceTime()
@@ -50,11 +53,11 @@ public class VertAirBoost : AMove
     {
         if (mi.TouchingGround())
         {
-            return new Run(mm, mii, mi, movementSettings);
+            return new Run(mii, mi, movementSettings, horizVel);
         }
         if (divePending)
         {
-            return new Dive(mm, mii, mi, movementSettings);
+            return new Dive(mii, mi, movementSettings);
         }
 
         return this;

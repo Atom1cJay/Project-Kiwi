@@ -9,27 +9,31 @@ public class HorizAirBoostCharge : AMove
     float vertVel;
     float timeCharging;
     readonly float maxTimeToCharge;
-    readonly MovementInputInfo mii;
-    readonly MovementInfo mi;
     bool boostReleasePending;
 
-    public HorizAirBoostCharge(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float prevVertVel, MovementSettingsSO ms) : base(mm, ms)
+    /// <summary>
+    /// Constructs a HorizAirBoostCharge, initializing the objects that hold all
+    /// the information it needs to function.
+    /// </summary>
+    /// <param name="mii">Information on the player's input</param>
+    /// <param name="mi">Information on the state of the player</param>
+    /// <param name="ms">Constants related to movement</param>
+    /// <param name="vertVel">The vertical speed moving into this move</param>
+    /// <param name="horizVel">The horizontal speed moving into this move</param>
+    public HorizAirBoostCharge(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float vertVel, float horizVel) : base(ms, mi, mii)
     {
-        vertVel = (prevVertVel < 0) ? 0 : prevVertVel;
-
+        this.horizVel = horizVel;
+        this.vertVel = (vertVel < 0) ? 0 : vertVel;
         timeCharging = 0;
         maxTimeToCharge = movementSettings.HorizBoostMaxChargeTime;
-
-        this.mii = mii;
         mii.OnHorizBoostRelease.AddListener(() => boostReleasePending = true);
-        this.mi = mi;
     }
 
     public override void AdvanceTime()
     {
         // Horizontal
         horizVel = InputUtils.SmoothedInput(
-            mi.currentSpeedHoriz, 0, 0, movementSettings.HorizBoostChargeGravityX);
+            horizVel, 0, 0, movementSettings.HorizBoostChargeGravityX);
         float gravityType = (vertVel > 0) ? movementSettings.DefaultGravity : movementSettings.HorizBoostChargeGravity;
         // Vertical
         vertVel -= gravityType * Time.deltaTime;
@@ -56,7 +60,7 @@ public class HorizAirBoostCharge : AMove
 
         if (timeCharging > maxTimeToCharge || boostReleasePending)
         {
-            return new HorizAirBoost(mm, mii, mi, (timeCharging / maxTimeToCharge) * movementSettings.HorizBoostMaxTime, movementSettings);
+            return new HorizAirBoost(mii, mi, (timeCharging / maxTimeToCharge) * movementSettings.HorizBoostMaxTime, movementSettings);
         }
         else
         {

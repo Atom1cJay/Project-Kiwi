@@ -8,27 +8,32 @@ using UnityEngine;
 public class Run : AMove
 {
     float horizVel;
-    readonly MovementInputInfo mii;
-    readonly MovementInfo mi;
     bool jumpPending;
     bool timeBetweenJumpsBreaksTJ;
 
-    public Run(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
+    /// <summary>
+    /// Constructs a Run, initializing the objects that hold all the
+    /// information it needs to function.
+    /// </summary>
+    /// <param name="mii">Information on the player's input</param>
+    /// <param name="mi">Information on the state of the player</param>
+    /// <param name="ms">Constants related to movement</param>
+    /// <param name="horizVel">The horizontal speed moving into this move</param>
+    public Run(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
-        this.mii = mii;
+        this.horizVel = horizVel;
         mii.OnJump.AddListener(() => jumpPending = true);
-        this.mi = mi;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitToBreakTimeBetweenJumps());
     }
 
     public override void AdvanceTime()
     {
         // Horizontal
-        if (mi.currentSpeedHoriz > movementSettings.MaxSpeed)
+        if (horizVel > movementSettings.MaxSpeed)
         {
             horizVel =
                 InputUtils.SmoothedInput(
-                    mi.currentSpeedHoriz,
+                    horizVel,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.RunSensitivityX,
                     movementSettings.RunGravityX);
@@ -37,7 +42,7 @@ public class Run : AMove
         {
             horizVel =
                 InputUtils.SmoothedInput(
-                    mi.currentSpeedHoriz,
+                    horizVel,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.RunSensitivityX,
                     movementSettings.RunGravityX);
@@ -68,25 +73,25 @@ public class Run : AMove
 
     public override IMove GetNextMove()
     {
-        if (mi.currentSpeedHoriz == 0)
+        if (horizVel == 0)
         {
-            return new Idle(mm, mii, mi, movementSettings);
+            return new Idle(mii, mi, movementSettings);
         }
         if (jumpPending && mi.NextJumpIsTripleJump())
         {
-            return new TripleJump(mm, mii, mi, movementSettings);
+            return new TripleJump(mii, mi, movementSettings);
         }
         if (jumpPending)
         {
-            return new Jump(mm, mii, mi, movementSettings);
+            return new Jump(mii, mi, movementSettings, horizVel);
         }
         if (!mi.TouchingGround())
         {
-            return new Fall(mm, mii, mi, movementSettings);
+            return new Fall(mii, mi, movementSettings, horizVel);
         }
         if (mii.HardTurnInput())
         {
-            return new HardTurn(mm, mii, mi, movementSettings);
+            return new HardTurn(mii, mi, movementSettings, horizVel);
         }
         // todo make ground boost possible
 

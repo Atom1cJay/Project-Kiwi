@@ -9,19 +9,22 @@ using UnityEngine;
 public class Dive : AMove
 {
     float vertVel;
-    readonly MovementInputInfo mii;
-    readonly MovementInfo mi;
 
-    public Dive(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
+    /// <summary>
+    /// Constructs a Dive, initializing the objects that hold all the
+    /// information it needs to function.
+    /// </summary>
+    /// <param name="mii">Information on the player's input</param>
+    /// <param name="mi">Information on the state of the player</param>
+    /// <param name="ms">Constants related to movement</param>
+    public Dive(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
     {
         vertVel = movementSettings.DiveInitVel;
-        this.mii = mii;
-        this.mi = mi;
     }
 
     public override void AdvanceTime()
     {
-        // The only changing information within this move is vertVel
+        // Vertical
         vertVel -= movementSettings.DiveGravity * Time.deltaTime;
     }
 
@@ -44,7 +47,7 @@ public class Dive : AMove
     {
         if (mi.TouchingGround())
         {
-            return new Run(mm, mii, mi, movementSettings);
+            return new Run(mii, mi, movementSettings, GetHorizSpeedThisFrame());
         }
         return this;
     }

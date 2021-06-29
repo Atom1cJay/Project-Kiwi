@@ -6,15 +6,20 @@ public class HardTurn : AMove
     float horizVel;
     float timeLeft;
     bool jumpInputPending;
-    readonly MovementInputInfo mii;
-    readonly MovementInfo mi;
 
-    public HardTurn(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
+    /// <summary>
+    /// Constructs a HardTurn, initializing the objects that hold all the
+    /// information it needs to function.
+    /// </summary>
+    /// <param name="mii">Information on the player's input</param>
+    /// <param name="mi">Information on the state of the player</param>
+    /// <param name="ms">Constants related to movement</param>
+    /// <param name="horizVel">The horizontal speed moving into this move</param>
+    public HardTurn(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
+        this.horizVel = horizVel;
         timeLeft = movementSettings.HardTurnTime;
-        this.mii = mii;
         mii.OnJump.AddListener(() => jumpInputPending = true);
-        this.mi = mi;
     }
 
     public override void AdvanceTime()
@@ -23,7 +28,7 @@ public class HardTurn : AMove
         timeLeft -= Time.deltaTime;
         // Horizontal
         horizVel = InputUtils.SmoothedInput(
-            mi.currentSpeedHoriz, 0, 0, movementSettings.HardTurnGravityX);
+            horizVel, 0, 0, movementSettings.HardTurnGravityX);
     }
 
     public override float GetHorizSpeedThisFrame()
@@ -45,11 +50,15 @@ public class HardTurn : AMove
     {
         if (timeLeft < 0)
         {
-            return new Run(mm, mii, mi, movementSettings);
+            return new Run(mii, mi, movementSettings, horizVel);
         }
         if (jumpInputPending)
         {
-            return new Jump(mm, mii, mi, movementSettings);
+            return new Jump(mii, mi, movementSettings, horizVel);
+        }
+        if (!mi.TouchingGround())
+        {
+            return new Fall(mii, mi, movementSettings, horizVel);
         }
         return this;
     }

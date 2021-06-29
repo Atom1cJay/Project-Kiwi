@@ -6,17 +6,20 @@ public class HorizAirBoost : AMove
 {
     float vertVel;
     float timeLeft;
-    readonly MovementInputInfo mii;
-    readonly MovementInfo mi;
     bool divePending;
 
-    public HorizAirBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float timeLeft, MovementSettingsSO ms) : base(mm, ms)
+    /// <summary>
+    /// Constructs a HorizAirBoost, initializing the objects that hold all the
+    /// information it needs to function.
+    /// </summary>
+    /// <param name="mii">Information on the player's input</param>
+    /// <param name="mi">Information on the state of the player</param>
+    /// <param name="ms">Constants related to movement</param>
+    public HorizAirBoost(MovementInputInfo mii, MovementInfo mi, float timeLeft, MovementSettingsSO ms) : base(ms, mi, mii)
     {
         vertVel = 0;
         this.timeLeft = timeLeft;
-        this.mii = mii;
         mii.OnDiveInput.AddListener(() => divePending = true);
-        this.mi = mi;
     }
 
     public override void AdvanceTime()
@@ -46,15 +49,15 @@ public class HorizAirBoost : AMove
     {
         if (timeLeft < 0)
         {
-            return new Fall(mm, mii, mi, movementSettings);
+            return new Fall(mii, mi, movementSettings, GetHorizSpeedThisFrame());
         }
         if (mi.TouchingGround())
         {
-            return new Run(mm, mii, mi, movementSettings);
+            return new Run(mii, mi, movementSettings, GetHorizSpeedThisFrame());
         }
         if (divePending)
         {
-            return new Dive(mm, mii, mi, movementSettings);
+            return new Dive(mii, mi, movementSettings);
         }
 
         return this;
