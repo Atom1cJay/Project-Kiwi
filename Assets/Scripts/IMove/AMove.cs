@@ -3,26 +3,28 @@ using System.Collections;
 
 public abstract class AMove : IMove
 {
-    protected MovementMaster mm;
-    protected MovementSettingsSO movementSettings;
+    protected readonly MovementMaster mm;
+    protected readonly MovementSettingsSO movementSettings;
 
     protected AMove(MovementMaster mm, MovementSettingsSO movementSettings)
     {
-        if (mm == null)
-        {
-            Debug.LogError("Null args passed into move");
-        }
-        this.mm = mm;
-        this.movementSettings = movementSettings;
+        this.mm = Utilities.RequireNonNull(mm);
+        this.movementSettings = Utilities.RequireNonNull(movementSettings);
     }
+
+    public abstract void AdvanceTime();
 
     public abstract float GetHorizSpeedThisFrame();
 
     public abstract float GetVertSpeedThisFrame();
 
-    public abstract float GetRotationThisFrame();
+    public abstract float GetRotationSpeed();
 
     public abstract IMove GetNextMove();
 
-    public abstract string asString();
+    public abstract bool IncrementsTJcounter();
+
+    public abstract bool TJshouldBreak();
+
+    public abstract string AsString();
 }

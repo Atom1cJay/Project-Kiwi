@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -6,22 +7,26 @@ using UnityEngine;
 /// </summary>
 public class Run : AMove
 {
-    MovementInputInfo mii;
-    MovementInfo mi;
+    float horizVel;
+    readonly MovementInputInfo mii;
+    readonly MovementInfo mi;
     bool jumpPending;
+    bool timeBetweenJumpsBreaksTJ;
 
     public Run(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
         this.mii = mii;
         mii.OnJump.AddListener(() => jumpPending = true);
         this.mi = mi;
+        MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitToBreakTimeBetweenJumps());
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override void AdvanceTime()
     {
+        // Horizontal
         if (mi.currentSpeedHoriz > movementSettings.MaxSpeed)
         {
-            return
+            horizVel =
                 InputUtils.SmoothedInput(
                     mi.currentSpeedHoriz,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
@@ -30,7 +35,7 @@ public class Run : AMove
         }
         else
         {
-            return
+            horizVel =
                 InputUtils.SmoothedInput(
                     mi.currentSpeedHoriz,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
@@ -39,12 +44,24 @@ public class Run : AMove
         }
     }
 
+    // Call with MonobehaviourUtils for a coroutine
+    IEnumerator WaitToBreakTimeBetweenJumps()
+    {
+        yield return new WaitForSeconds(movementSettings.TjMaxTimeBtwnJumps);
+        timeBetweenJumpsBreaksTJ = true;
+    }
+
+    public override float GetHorizSpeedThisFrame()
+    {
+        return horizVel;
+    }
+
     public override float GetVertSpeedThisFrame()
     {
         return 0;
     }
 
-    public override float GetRotationThisFrame()
+    public override float GetRotationSpeed()
     {
         return movementSettings.GroundRotationSpeed;
     }
@@ -55,7 +72,7 @@ public class Run : AMove
         {
             return new Idle(mm, mii, mi, movementSettings);
         }
-        if (jumpPending && mm.tripleJumpValid())
+        if (jumpPending && mi.NextJumpIsTripleJump())
         {
             return new TripleJump(mm, mii, mi, movementSettings);
         }
@@ -63,11 +80,11 @@ public class Run : AMove
         {
             return new Jump(mm, mii, mi, movementSettings);
         }
-        if (!mi.touchingGround())
+        if (!mi.TouchingGround())
         {
             return new Fall(mm, mii, mi, movementSettings);
         }
-        if (mm.IsInHardTurn())
+        if (mii.HardTurnInput())
         {
             return new HardTurn(mm, mii, mi, movementSettings);
         }
@@ -76,8 +93,20 @@ public class Run : AMove
         return this;
     }
 
-    public override string asString()
+    public override string AsString()
     {
         return "run";
+    }
+
+    public override bool IncrementsTJcounter()
+    {
+        return false;
+    }
+
+    public override bool TJshouldBreak()
+    {
+        return mii.GetHorizDissonance() > movementSettings.TjMaxDissonance
+            || mii.GetHorizontalInput().magnitude < movementSettings.TjMinHorizInputMagnitude
+            || timeBetweenJumpsBreaksTJ;
     }
 }

@@ -10,6 +10,7 @@ using UnityEngine.Events;
 public class MovementInputInfo : MonoBehaviour
 {
     [SerializeField] InputActionsHolder inputActionsHolder;
+    [SerializeField] GameObject relevantCamera;
     public bool JumpInputPending { get; private set; }
     public bool JumpCancelInputPending { get; private set; }
     public bool DiveInputPending { get; private set; }
@@ -28,8 +29,11 @@ public class MovementInputInfo : MonoBehaviour
     [HideInInspector] public UnityEvent OnVertBoostCharge;
     [HideInInspector] public UnityEvent OnVertBoostRelease;
 
+    private MovementSettingsSO movementSettings;
+
     void Start()
     {
+        movementSettings = MovementSettingsSO.Instance;
         inputActionsHolder.inputActions.Player.Jump.performed += _ => OnJump.Invoke();
         inputActionsHolder.inputActions.Player.Jump.canceled += _ => OnJumpCancelled.Invoke();
         inputActionsHolder.inputActions.Player.Boost.started += _ => OnHorizBoostCharge.Invoke();
@@ -43,7 +47,6 @@ public class MovementInputInfo : MonoBehaviour
     /// Gives the InputActions instance being used to calculate
     /// input information on the player.
     /// </summary>
-    /// <returns></returns>
     public InputActions GetInputActions()
     {
         return inputActionsHolder.inputActions;
@@ -52,7 +55,6 @@ public class MovementInputInfo : MonoBehaviour
     /// <summary>
     /// Gives the normalized horizontal movement input.
     /// </summary>
-    /// <returns></returns>
     public Vector2 GetHorizontalInput()
     {
         Vector2 rawInput = inputActionsHolder.inputActions.Player.Move.ReadValue<Vector2>();
@@ -65,13 +67,33 @@ public class MovementInputInfo : MonoBehaviour
         return rawInput;
     }
 
-    public bool IsAirReversing()
+    /// <summary>
+    /// Is the horizontal input dissonance high enough for an air reverse to be registered?
+    /// </summary>
+    public bool AirReverseInput()
     {
-        return false; // todo stub
+        return GetHorizDissonance() > movementSettings.DissonanceForAirReverse;
     }
 
-    public bool IsHardTurning()
+    /// <summary>
+    /// Is the horizontal input dissonance high enough for a hard turn to be registered?
+    /// </summary>
+    public bool HardTurnInput()
     {
-        return false; // todo stub
+        return GetHorizDissonance() > movementSettings.DissonanceForHardTurn;
+    }
+
+    /// <summary>
+    /// Gives the distance (min = 0, max = PI) between the direction the player is facing and the
+    /// direction of horizontal input
+    /// </summary>
+    public float GetHorizDissonance()
+    {
+        Vector2 rawInput = GetHorizontalInput();
+        float camDirection = relevantCamera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
+        float directionFacing = transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
+        float inputDirection = Mathf.Atan2(rawInput.x, rawInput.y) + camDirection;
+        float inputVsFacing = Mathf.PI - Mathf.Abs(Mathf.Abs((inputDirection - directionFacing) % (2 * Mathf.PI)) - Mathf.PI);
+        return inputVsFacing;
     }
 }

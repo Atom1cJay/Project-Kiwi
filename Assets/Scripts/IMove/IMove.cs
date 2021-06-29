@@ -3,39 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IMove
+/// <summary>
+/// Provides access to methods for moves which can modify their contents
+/// in some way.
+/// </summary>
+public interface IMove : IMoveImmutable
 {
     /// <summary>
-    /// Gives the horizontal speed the player should be at this frame for
-    /// this move. Assumed that this method is called every (update) frame while
-    /// the move is active.
+    /// Simulates the time moving forward for this move by exactly one
+    /// (Update) frame. 
     /// </summary>
-    /// <returns></returns>
-    float GetHorizSpeedThisFrame();
-
-    /// <summary>
-    /// Gives the vertical speed the player should be at this frame for
-    /// this move. Assumed that this method is called every (update) frame while
-    /// the move is active.
-    /// </summary>
-    /// <returns></returns>
-    float GetVertSpeedThisFrame();
-
-    /// <summary>
-    /// Gives this move as a String with no spaces, all in lowercase
-    /// </summary>
-    /// <returns></returns>
-    string asString();
-
-    /// <summary>
-    /// Gives this move as a String with no spaces, all in lowercase
-    /// </summary>
-    /// <returns></returns>
-    float GetRotationThisFrame();
-
-    /// <summary>
-    /// What move should start being performed next frame?
-    /// </summary>
-    /// <returns></returns>
-    IMove GetNextMove();
+    void AdvanceTime();
 }

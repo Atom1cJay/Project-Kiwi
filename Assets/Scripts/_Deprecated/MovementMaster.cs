@@ -8,13 +8,12 @@ public class MovementMaster : MonoBehaviour
     // Serialized Fields
     [SerializeField] InputActionsHolder iah;
     MovementSettingsSO movementSettings;
-    [SerializeField] public GameObject relevantCamera;
-    [SerializeField] public CollisionDetector groundDetector;
+    public GameObject relevantCamera;
+    public CollisionDetector groundDetector;
 
     // Other variables for internal use only
     private bool isJumping;
     private bool groundable; // Should a jump/vert boost end if player is touching ground?
-    private bool inCoyoteTime;
     private bool isOnGround;
     private bool isInHardTurn;
     private float tjCurJumpTime; // The elapsed time for the current jump. 0 if there is no jump happening.
@@ -25,7 +24,6 @@ public class MovementMaster : MonoBehaviour
     private bool hasAirBoostedThisJump; // Applies to all boosts
     private bool isVertAirBoostCharging;
     private bool isGroundBoosting;
-    private bool isAirReversing;
 
     // Helpful Assets for Subclasses
     private CharacterController charCont;
@@ -78,30 +76,6 @@ public class MovementMaster : MonoBehaviour
         mm_OnJump.Invoke();
     }
 
-    IEnumerator ReverseCoyoteTime()
-    {
-        float timePassed = 0f;
-
-        while (timePassed < movementSettings.ReverseCoyoteTime)
-        {
-            bool pressingJump = iah.inputActions.Player.Jump.ReadValue<float>() > 0;
-
-            if (isOnGround && pressingJump)
-            {
-                Jump();
-                timePassed = movementSettings.ReverseCoyoteTime;
-            }
-
-            if (!pressingJump)
-            {
-                timePassed = movementSettings.ReverseCoyoteTime;
-            }
-
-            timePassed += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-    }
-
     private void MakeGroundable()
     {
         groundable = true;
@@ -127,7 +101,6 @@ public class MovementMaster : MonoBehaviour
             if (!isOnGround /*&& vertMove.GetFrameVerticalMovement() <= 0.01f*/)
             {
                 // First frame on ground
-                isAirReversing = false;
                 hasAirBoostedThisJump = false;
                 if (tjJumpCount == 3 || tjCurJumpTime > movementSettings.TjMaxJumpTime || tjCurJumpTime < movementSettings.TjMinJumpTime)
                     tjJumpCount = 0;
@@ -145,11 +118,6 @@ public class MovementMaster : MonoBehaviour
             {
                 // First frame off ground
                 isOnGround = false;
-
-                if (!isJumping)
-                {
-                    StartCoroutine("CoyoteTime");
-                }
             }
         }
 
@@ -169,31 +137,12 @@ public class MovementMaster : MonoBehaviour
         }
     }
 
-    IEnumerator CoyoteTime()
-    {
-        float timePassed = 0f;
-        inCoyoteTime = true;
-
-        while (timePassed < movementSettings.CoyoteTime && !isJumping)
-        {
-            timePassed += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-
-        inCoyoteTime = false;
-    }
-
     private void UpdateHorizontalStates()
     {
         if (GetHorizDissonance() > movementSettings.DissonanceForHardTurn && mi.currentSpeedHoriz > movementSettings.HardTurnMinSpeed && !isInHardTurn && isOnGround)
         {
             // First frame of hard turn
             StartHardTurn();
-        }
-
-        if (!isOnGround && GetHorizDissonance() > movementSettings.DissonanceForAirReverse /*&& horizMove.GetSpeed() > movementSettings.AirReverseMinActivationSpeed*/)
-        {
-            isAirReversing = true; // True until hitting ground
         }
     }
 
@@ -348,11 +297,6 @@ public class MovementMaster : MonoBehaviour
     public bool IsGroundBoosting()
     {
         return isGroundBoosting;
-    }
-
-    public bool IsAirReversing()
-    {
-        return isAirReversing;
     }
 
     public bool tripleJumpValid()

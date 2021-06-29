@@ -6,10 +6,11 @@ using UnityEngine;
 public class VertAirBoostCharge : AMove
 {
     float vertVel;
+    float horizVel;
     float timeActive;
-    float maxTimeActive;
-    MovementInputInfo mii;
-    MovementInfo mi;
+    readonly float maxTimeActive;
+    readonly MovementInputInfo mii;
+    readonly MovementInfo mi;
     bool boostReleasePending;
 
     public VertAirBoostCharge(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float prevVertVel, MovementSettingsSO ms) : base(mm, ms)
@@ -22,39 +23,56 @@ public class VertAirBoostCharge : AMove
         this.mi = mi;
     }
 
+    public override void AdvanceTime()
+    {
+        // Meta
+        timeActive += Time.deltaTime;
+        // Vertical
+        float gravityType = (vertVel > 0) ?
+            movementSettings.DefaultGravity : movementSettings.HorizBoostChargeGravity;
+        vertVel -= gravityType * Time.fixedDeltaTime;
+        // Horizontal
+        horizVel = InputUtils.SmoothedInput(
+            mi.currentSpeedHoriz, 0, 0, movementSettings.VertBoostChargeGravityX);
+    }
+
     public override float GetHorizSpeedThisFrame()
     {
-        return InputUtils.SmoothedInput(
-            mi.currentSpeedHoriz, 0, 0, movementSettings.VertBoostChargeGravityX);
+        return horizVel;
     }
 
     public override float GetVertSpeedThisFrame()
     {
-        float gravityType = (vertVel > 0) ? movementSettings.DefaultGravity : movementSettings.HorizBoostChargeGravity;
-        vertVel -= gravityType * Time.fixedDeltaTime;
         return vertVel;
     }
 
-    public override float GetRotationThisFrame()
+    public override float GetRotationSpeed()
     {
         return 0;
     }
 
     public override IMove GetNextMove()
     {
-        timeActive += Time.fixedDeltaTime;
-
         if (timeActive > maxTimeActive || boostReleasePending)
         {
             float propCharged = Mathf.Clamp01(timeActive / maxTimeActive);
             return new VertAirBoost(mm, mii, mi, propCharged, movementSettings);
         }
-
         return this;
     }
 
-    public override string asString()
+    public override string AsString()
     {
         return "vertairboostcharge";
+    }
+
+    public override bool IncrementsTJcounter()
+    {
+        return false;
+    }
+
+    public override bool TJshouldBreak()
+    {
+        return true;
     }
 }

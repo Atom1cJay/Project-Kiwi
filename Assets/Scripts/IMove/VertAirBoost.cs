@@ -6,8 +6,9 @@ using UnityEngine;
 public class VertAirBoost : AMove
 {
     float vertVel;
-    MovementInputInfo mii;
-    MovementInfo mi;
+    float horizVel;
+    readonly MovementInputInfo mii;
+    readonly MovementInfo mi;
     bool divePending;
 
     public VertAirBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float propCharged, MovementSettingsSO ms) : base(mm, ms)
@@ -18,30 +19,36 @@ public class VertAirBoost : AMove
         this.mi = mi;
     }
 
+    public override void AdvanceTime()
+    {
+        // Vertical
+        vertVel -= movementSettings.VertBoostGravity * Time.deltaTime;
+        // Horizontal
+        horizVel = InputUtils.SmoothedInput(
+            mi.currentSpeedHoriz,
+            mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+            movementSettings.AirSensitivityX,
+            movementSettings.AirGravityX);
+    }
+
     public override float GetHorizSpeedThisFrame()
     {
-        return
-            InputUtils.SmoothedInput(
-                mi.currentSpeedHoriz,
-                mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                movementSettings.AirSensitivityX,
-                movementSettings.AirGravityX);
+        return horizVel;
     }
 
     public override float GetVertSpeedThisFrame()
     {
-        vertVel -= movementSettings.VertBoostGravity * Time.deltaTime;
         return vertVel;
     }
 
-    public override float GetRotationThisFrame()
+    public override float GetRotationSpeed()
     {
         return movementSettings.AirRotationSpeed;
     }
 
     public override IMove GetNextMove()
     {
-        if (mi.touchingGround())
+        if (mi.TouchingGround())
         {
             return new Run(mm, mii, mi, movementSettings);
         }
@@ -53,9 +60,18 @@ public class VertAirBoost : AMove
         return this;
     }
 
-    public override string asString()
+    public override string AsString()
     {
         return "vertairboost";
     }
 
+    public override bool IncrementsTJcounter()
+    {
+        return false;
+    }
+
+    public override bool TJshouldBreak()
+    {
+        return true;
+    }
 }

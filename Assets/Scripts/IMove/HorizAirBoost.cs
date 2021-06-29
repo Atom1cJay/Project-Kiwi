@@ -6,8 +6,8 @@ public class HorizAirBoost : AMove
 {
     float vertVel;
     float timeLeft;
-    MovementInputInfo mii;
-    MovementInfo mi;
+    readonly MovementInputInfo mii;
+    readonly MovementInfo mi;
     bool divePending;
 
     public HorizAirBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float timeLeft, MovementSettingsSO ms) : base(mm, ms)
@@ -19,6 +19,14 @@ public class HorizAirBoost : AMove
         this.mi = mi;
     }
 
+    public override void AdvanceTime()
+    {
+        // Meta
+        timeLeft -= Time.deltaTime;
+        // Horizontal
+        vertVel -= movementSettings.HorizBoostGravity * Time.deltaTime;
+    }
+
     public override float GetHorizSpeedThisFrame()
     {
         return movementSettings.HorizBoostSpeedX;
@@ -26,24 +34,21 @@ public class HorizAirBoost : AMove
 
     public override float GetVertSpeedThisFrame()
     {
-        vertVel -= movementSettings.HorizBoostGravity * Time.deltaTime;
         return vertVel;
     }
 
-    public override float GetRotationThisFrame()
+    public override float GetRotationSpeed()
     {
         return 0;
     }
 
     public override IMove GetNextMove()
     {
-        timeLeft -= Time.deltaTime;
-
         if (timeLeft < 0)
         {
             return new Fall(mm, mii, mi, movementSettings);
         }
-        if (mi.touchingGround())
+        if (mi.TouchingGround())
         {
             return new Run(mm, mii, mi, movementSettings);
         }
@@ -55,8 +60,18 @@ public class HorizAirBoost : AMove
         return this;
     }
 
-    public override string asString()
+    public override string AsString()
     {
         return "horizairboost";
+    }
+
+    public override bool IncrementsTJcounter()
+    {
+        return false;
+    }
+
+    public override bool TJshouldBreak()
+    {
+        return true;
     }
 }

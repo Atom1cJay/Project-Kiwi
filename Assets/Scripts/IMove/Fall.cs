@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Fall : AMove
 {
+    float horizVel;
     float vertVel;
-    MovementInputInfo mii;
-    MovementInfo mi;
+    readonly MovementInputInfo mii;
+    readonly MovementInfo mi;
     bool divePending;
     bool vertBoostChargePending;
     bool horizBoostChargePending;
+    bool hasInitiatedAirReverse; // Permanent once it starts TODO change?
 
     public Fall(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
@@ -21,23 +23,27 @@ public class Fall : AMove
         this.mi = mi;
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override void AdvanceTime()
     {
-        float toReturn;
-
-        if (mm.IsAirReversing())
+        // Horizontal
+        if (mii.AirReverseInput())
         {
-            toReturn =
+            hasInitiatedAirReverse = true;
+        }
+
+        if (hasInitiatedAirReverse)
+        {
+            horizVel =
                 InputUtils.SmoothedInput(
                     mi.currentSpeedHoriz,
                     -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.AirReverseSensitivityX,
                     movementSettings.AirReverseGravityX);
-            if (toReturn < 0) toReturn = 0;
+            if (horizVel < 0) horizVel = 0;
         }
         else if (mi.currentSpeedHoriz > movementSettings.MaxSpeed)
         {
-            toReturn =
+            horizVel =
                 InputUtils.SmoothedInput(
                     mi.currentSpeedHoriz,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
@@ -46,31 +52,35 @@ public class Fall : AMove
         }
         else
         {
-            toReturn =
+            horizVel =
                 InputUtils.SmoothedInput(
                     mi.currentSpeedHoriz,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.AirSensitivityX,
                     movementSettings.AirGravityX);
         }
+        // Vertical
+        vertVel -= movementSettings.DefaultGravity * Time.deltaTime;
+    }
 
-        return toReturn;
+    public override float GetHorizSpeedThisFrame()
+    {
+        return horizVel;
     }
 
     public override float GetVertSpeedThisFrame()
     {
-        vertVel -= movementSettings.DefaultGravity * Time.deltaTime;
         return vertVel;
     }
 
-    public override float GetRotationThisFrame()
+    public override float GetRotationSpeed()
     {
-        return mm.IsAirReversing() ? 0 : movementSettings.AirRotationSpeed;
+        return hasInitiatedAirReverse ? 0 : movementSettings.AirRotationSpeed;
     }
 
     public override IMove GetNextMove()
     {
-        if (mi.touchingGround())
+        if (mi.TouchingGround())
         {
             return new Run(mm, mii, mi, movementSettings);
         }
@@ -90,8 +100,18 @@ public class Fall : AMove
         return this;
     }
 
-    public override string asString()
+    public override string AsString()
     {
         return "fall";
+    }
+
+    public override bool IncrementsTJcounter()
+    {
+        return false;
+    }
+
+    public override bool TJshouldBreak()
+    {
+        return true;
     }
 }

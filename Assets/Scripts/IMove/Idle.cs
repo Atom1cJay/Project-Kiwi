@@ -2,8 +2,8 @@
 
 public class Idle : AMove
 {
-    MovementInputInfo mii;
-    MovementInfo mi;
+    readonly MovementInputInfo mii;
+    readonly MovementInfo mi;
     bool jumpPending;
 
     public Idle(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
@@ -13,12 +13,17 @@ public class Idle : AMove
         this.mi = mi;
     }
 
+    public override void AdvanceTime()
+    {
+        // Nothing changes over time
+    }
+
     public override float GetHorizSpeedThisFrame()
     {
         return 0;
     }
 
-    public override float GetRotationThisFrame()
+    public override float GetRotationSpeed()
     {
         return movementSettings.GroundRotationSpeed;
     }
@@ -34,15 +39,11 @@ public class Idle : AMove
         {
             return new Run(mm, mii, mi, movementSettings);
         }
-        if (jumpPending && mm.tripleJumpValid())
-        {
-            return new TripleJump(mm, mii, mi, movementSettings);
-        }
         if (jumpPending)
         {
             return new Jump(mm, mii, mi, movementSettings);
         }
-        if (!mi.touchingGround())
+        if (!mi.TouchingGround())
         {
             return new Fall(mm, mii, mi, movementSettings);
         }
@@ -51,8 +52,18 @@ public class Idle : AMove
         return this;
     }
 
-    public override string asString()
+    public override string AsString()
     {
         return "idle";
+    }
+
+    public override bool IncrementsTJcounter()
+    {
+        return false;
+    }
+
+    public override bool TJshouldBreak()
+    {
+        return true;
     }
 }

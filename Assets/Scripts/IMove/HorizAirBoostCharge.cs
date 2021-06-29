@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class HorizAirBoostCharge : AMove
 {
+    float horizVel;
     float vertVel;
     float timeCharging;
-    float maxTimeToCharge;
-    MovementInputInfo mii;
-    MovementInfo mi;
+    readonly float maxTimeToCharge;
+    readonly MovementInputInfo mii;
+    readonly MovementInfo mi;
     bool boostReleasePending;
 
     public HorizAirBoostCharge(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, float prevVertVel, MovementSettingsSO ms) : base(mm, ms)
@@ -24,20 +25,27 @@ public class HorizAirBoostCharge : AMove
         this.mi = mi;
     }
 
+    public override void AdvanceTime()
+    {
+        // Horizontal
+        horizVel = InputUtils.SmoothedInput(
+            mi.currentSpeedHoriz, 0, 0, movementSettings.HorizBoostChargeGravityX);
+        float gravityType = (vertVel > 0) ? movementSettings.DefaultGravity : movementSettings.HorizBoostChargeGravity;
+        // Vertical
+        vertVel -= gravityType * Time.deltaTime;
+    }
+
     public override float GetHorizSpeedThisFrame()
     {
-        return InputUtils.SmoothedInput(
-            mi.currentSpeedHoriz, 0, 0, movementSettings.HorizBoostChargeGravityX);
+        return horizVel;
     }
 
     public override float GetVertSpeedThisFrame()
     {
-        float gravityType = (vertVel > 0) ? movementSettings.DefaultGravity : movementSettings.HorizBoostChargeGravity;
-        vertVel -= gravityType * Time.deltaTime;
         return vertVel;
     }
 
-    public override float GetRotationThisFrame()
+    public override float GetRotationSpeed()
     {
         return 0;
     }
@@ -56,8 +64,18 @@ public class HorizAirBoostCharge : AMove
         }
     }
 
-    public override string asString()
+    public override string AsString()
     {
         return "horizairboost";
+    }
+
+    public override bool IncrementsTJcounter()
+    {
+        return false;
+    }
+
+    public override bool TJshouldBreak()
+    {
+        return true;
     }
 }

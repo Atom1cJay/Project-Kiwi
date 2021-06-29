@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class HardTurn : AMove
 {
+    float horizVel;
     float timeLeft;
     bool jumpInputPending;
-    MovementInputInfo mii;
-    MovementInfo mi;
+    readonly MovementInputInfo mii;
+    readonly MovementInfo mi;
 
     public HardTurn(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
@@ -16,10 +17,18 @@ public class HardTurn : AMove
         this.mi = mi;
     }
 
+    public override void AdvanceTime()
+    {
+        // Meta
+        timeLeft -= Time.deltaTime;
+        // Horizontal
+        horizVel = InputUtils.SmoothedInput(
+            mi.currentSpeedHoriz, 0, 0, movementSettings.HardTurnGravityX);
+    }
+
     public override float GetHorizSpeedThisFrame()
     {
-        return InputUtils.SmoothedInput(
-                   mi.currentSpeedHoriz, 0, 0, movementSettings.HardTurnGravityX);
+        return horizVel;
     }
 
     public override float GetVertSpeedThisFrame()
@@ -27,15 +36,13 @@ public class HardTurn : AMove
         return 0;
     }
 
-    public override float GetRotationThisFrame()
+    public override float GetRotationSpeed()
     {
         return 0;
     }
 
     public override IMove GetNextMove()
     {
-        timeLeft -= Time.deltaTime;
-
         if (timeLeft < 0)
         {
             return new Run(mm, mii, mi, movementSettings);
@@ -47,8 +54,18 @@ public class HardTurn : AMove
         return this;
     }
 
-    public override string asString()
+    public override string AsString()
     {
         return "hardturn";
+    }
+
+    public override bool IncrementsTJcounter()
+    {
+        return false;
+    }
+
+    public override bool TJshouldBreak()
+    {
+        return true;
     }
 }

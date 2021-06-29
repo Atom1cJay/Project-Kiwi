@@ -6,16 +6,20 @@ public class Jump : AMove
 {
     float gravity;
     float vertVel;
-    MovementInputInfo mii;
-    MovementInfo mi;
+    float horizVel;
+    readonly MovementInputInfo mii;
+    readonly MovementInfo mi;
     bool divePending;
     bool vertBoostChargePending;
     bool horizBoostChargePending;
     bool jumpCancelled;
     bool jumpGroundableTimerComplete;
+    bool jumpTimeShouldBreakTJ;
+    bool hasInitiatedAirReverse; // permanent once activated todo change?
 
     public Jump(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
+        MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", IncrementJumpTimer());
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForJumpGroundableTimer());
         gravity = movementSettings.JumpInitGravity;
         vertVel = movementSettings.JumpInitVel;
@@ -31,52 +35,9 @@ public class Jump : AMove
         this.mi = mi;
     }
 
-    // This can be run as a coroutine by using MonobehaviorUtils
-    private IEnumerator WaitForJumpGroundableTimer()
+    public override void AdvanceTime()
     {
-        yield return new WaitForSeconds(movementSettings.JumpGroundableTimer);
-        jumpGroundableTimerComplete = true;
-    }
-
-    public override float GetHorizSpeedThisFrame()
-    {
-        float toReturn;
-
-        if (mm.IsAirReversing())
-        {
-            toReturn =
-                InputUtils.SmoothedInput(
-                    mi.currentSpeedHoriz,
-                    -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                    movementSettings.AirReverseSensitivityX,
-                    movementSettings.AirReverseGravityX);
-            if (toReturn < 0) toReturn = 0;
-        }
-        else if (mi.currentSpeedHoriz > movementSettings.MaxSpeed)
-        {
-            toReturn =
-                InputUtils.SmoothedInput(
-                    mi.currentSpeedHoriz,
-                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                    movementSettings.AirSensitivityX,
-                    movementSettings.AirGravityXOverTopSpeed);
-        }
-        else
-        {
-            toReturn =
-                InputUtils.SmoothedInput(
-                    mi.currentSpeedHoriz,
-                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                    movementSettings.AirSensitivityX,
-                    movementSettings.AirGravityX);
-        }
-
-        return toReturn;
-    }
-
-    public override float GetVertSpeedThisFrame()
-    {
-        // Decide Gravity
+        // Vertical
         if (jumpCancelled)
             gravity += movementSettings.JumpCancelledGravityIncrease * Time.deltaTime;
         else
@@ -86,20 +47,74 @@ public class Jump : AMove
             gravity = movementSettings.JumpMaxUncancelledGravity;
         else if (gravity > movementSettings.JumpMaxCancelledGravity && jumpCancelled)
             gravity = movementSettings.JumpMaxCancelledGravity;
-
-        // Effect Gravity
         vertVel -= gravity * Time.deltaTime;
+        // Horizontal
+        if (mii.AirReverseInput())
+        {
+            hasInitiatedAirReverse = true;
+        }
+
+        if (hasInitiatedAirReverse)
+        {
+            horizVel =
+                InputUtils.SmoothedInput(
+                    mi.currentSpeedHoriz,
+                    -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.AirReverseSensitivityX,
+                    movementSettings.AirReverseGravityX);
+            if (horizVel < 0) horizVel = 0;
+        }
+        else if (mi.currentSpeedHoriz > movementSettings.MaxSpeed)
+        {
+            horizVel =
+                InputUtils.SmoothedInput(
+                    mi.currentSpeedHoriz,
+                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.AirSensitivityX,
+                    movementSettings.AirGravityXOverTopSpeed);
+        }
+        else
+        {
+            horizVel =
+                InputUtils.SmoothedInput(
+                    mi.currentSpeedHoriz,
+                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    movementSettings.AirSensitivityX,
+                    movementSettings.AirGravityX);
+        }
+    }
+
+    IEnumerator IncrementJumpTimer()
+    {
+        yield return new WaitForSeconds(movementSettings.TjMaxJumpTime);
+        jumpTimeShouldBreakTJ = true;
+    }
+
+    // This can be run as a coroutine by using MonobehaviorUtils
+    private IEnumerator WaitForJumpGroundableTimer()
+    {
+        yield return new WaitForSeconds(movementSettings.JumpGroundableTimer);
+        jumpGroundableTimerComplete = true;
+    }
+
+    public override float GetHorizSpeedThisFrame()
+    {
+        return horizVel;
+    }
+
+    public override float GetVertSpeedThisFrame()
+    {
         return vertVel;
     }
 
-    public override float GetRotationThisFrame()
+    public override float GetRotationSpeed()
     {
-        return mm.IsAirReversing() ? 0 : movementSettings.AirRotationSpeed;
+        return hasInitiatedAirReverse ? 0 : movementSettings.AirRotationSpeed;
     }
 
     public override IMove GetNextMove()
     {
-        if (mi.touchingGround() && jumpGroundableTimerComplete)
+        if (mi.TouchingGround() && jumpGroundableTimerComplete)
         {
             return new Run(mm, mii, mi, movementSettings);
         }
@@ -119,9 +134,21 @@ public class Jump : AMove
         return this;
     }
 
-    public override string asString()
+    public override string AsString()
     {
         return "jump";
+    }
+
+    public override bool IncrementsTJcounter()
+    {
+        return true;
+    }
+
+    public override bool TJshouldBreak()
+    {
+        return mii.GetHorizDissonance() > movementSettings.TjMaxDissonance
+            || mii.GetHorizontalInput().magnitude < movementSettings.TjMinHorizInputMagnitude
+            || jumpTimeShouldBreakTJ;
     }
 }
    

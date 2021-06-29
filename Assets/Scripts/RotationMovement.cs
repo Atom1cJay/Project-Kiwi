@@ -56,7 +56,7 @@ public class RotationMovement : MonoBehaviour
     /// <returns></returns>
     float DetermineRotationSpeed()
     {
-        return me.rotationThisFrame();
+        return me.GetCurrentMove().GetRotationSpeed();
     }
 
     bool inAirBoostOrCharge()

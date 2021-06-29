@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class HorizGroundBoost : AMove
 {
-    MovementInputInfo mii;
-    MovementInfo mi;
+    float horizVel;
+    readonly MovementInputInfo mii;
+    readonly MovementInfo mi;
 
     public HorizGroundBoost(MovementMaster mm, MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(mm, ms)
     {
@@ -14,13 +15,18 @@ public class HorizGroundBoost : AMove
         this.mi = mi;
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override void AdvanceTime()
     {
-        return InputUtils.SmoothedInput(
+        horizVel = InputUtils.SmoothedInput(
             mi.currentSpeedHoriz,
             movementSettings.GroundBoostMaxSpeedX,
             movementSettings.GroundBoostSensitivityX,
             movementSettings.GroundBoostGravityX);
+    }
+
+    public override float GetHorizSpeedThisFrame()
+    {
+        return horizVel;
     }
 
     public override float GetVertSpeedThisFrame()
@@ -28,7 +34,7 @@ public class HorizGroundBoost : AMove
         return 0;
     }
 
-    public override float GetRotationThisFrame()
+    public override float GetRotationSpeed()
     {
         return movementSettings.GroundBoostRotationSpeed;
     }
@@ -39,8 +45,18 @@ public class HorizGroundBoost : AMove
         return new Run(mm, mii, mi, movementSettings);
     }
 
-    public override string asString()
+    public override string AsString()
     {
         return "horizgroundboost";
+    }
+
+    public override bool IncrementsTJcounter()
+    {
+        return false;
+    }
+
+    public override bool TJshouldBreak()
+    {
+        return false;
     }
 }

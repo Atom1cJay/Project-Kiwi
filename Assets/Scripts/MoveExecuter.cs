@@ -23,7 +23,8 @@ public class MoveExecuter : MonoBehaviour
 
     void Update()
     {
-        Vector3 dir = directionOfMovement();
+        Vector3 dir = DirectionOfMovement();
+        moveThisFrame.AdvanceTime();
         float speedThisFrame = moveThisFrame.GetHorizSpeedThisFrame();
         mi.currentSpeedHoriz = speedThisFrame;
         Vector3 horizMovement = dir * speedThisFrame;
@@ -38,7 +39,7 @@ public class MoveExecuter : MonoBehaviour
     /// Gives the direction of player movement based on the player's rotation
     /// and the slope they're standing on.
     /// </summary>
-    private Vector3 directionOfMovement()
+    private Vector3 DirectionOfMovement()
     {
         if (mm.IsJumping()) return transform.forward;
 
@@ -57,14 +58,11 @@ public class MoveExecuter : MonoBehaviour
         return dir;
     }
 
-    public string currentMoveAsString()
+    /// <summary>
+    /// Provides immutable access to the move which is currently taking place.
+    /// </summary>
+    public IMoveImmutable GetCurrentMove()
     {
-        return moveThisFrame.asString();
-    }
-
-    public float rotationThisFrame()
-    {
-        // TODO HANDLE ROTATION BY SELF INSTEAD OF PASSING IT TO ROTATIONER
-        return moveThisFrame.GetRotationThisFrame();
+        return moveThisFrame;
     }
 }
