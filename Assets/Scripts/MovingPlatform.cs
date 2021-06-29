@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestMovingPlatform : MonoBehaviour
+public class MovingPlatform : MonoBehaviour
 {
     [SerializeField] Vector3 distanceToMove;
     [SerializeField] float speed;
