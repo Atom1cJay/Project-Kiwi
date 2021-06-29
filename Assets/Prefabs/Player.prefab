@@ -92,13 +92,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5116987452351034286}
   - component: {fileID: 5116987452351034287}
-  - component: {fileID: 5116987452351034282}
   - component: {fileID: 5116987452351034283}
   - component: {fileID: 5116987452351034281}
   - component: {fileID: 298682199}
   - component: {fileID: 1704877077}
   - component: {fileID: 1704877078}
   - component: {fileID: 1704877080}
+  - component: {fileID: 103829155}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -142,63 +142,6 @@ CharacterController:
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5116987452351034282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5116987452351034272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4830649ad6efd46f7928ac830af37fd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  iah: {fileID: 0}
-  relevantCamera: {fileID: 0}
-  groundDetector: {fileID: 5116987453668295350}
-  mm_OnJump:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_OnJumpCanceled:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_OnFirstFrameGrounded:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_FixedUpdateWhileInAir:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_FixedUpdateWhileGrounded:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_OnHardTurnStart:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_OnHardTurnEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_OnAirBoostChargeStart:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_OnAirBoostStart:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_OnAirBoostEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_OnVertAirBoostChargeStart:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_OnVertAirBoostStart:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_OnAirDiveStart:
-    m_PersistentCalls:
-      m_Calls: []
-  mm_OnDiveRecoveryStart:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5116987452351034283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,12 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a359c4fd7f67a42858be79f484b013e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instantRotationSpeed: 0.3
-  groundRotationSpeed: 800
-  airRotationSpeed: 200
-  boostAftermathRotationSpeed: 50
-  diveRotationSpeed: 50
-  groundBoostRotationSpeed: 400
 --- !u!114 &298682199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputActionsHolder: {fileID: 0}
+  relevantCamera: {fileID: 0}
   OnJump:
     m_PersistentCalls:
       m_Calls: []
@@ -301,9 +239,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e459952d36d2540cb9cfe6db294b117a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentSpeedHoriz: 0
-  currentSpeedVert: 0
-  tjJumpCount: 0
+  groundDetector: {fileID: 5116987453668295350}
+--- !u!114 &103829155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5116987452351034272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049007130e5a0473eb5475c4768b90d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5116987453668295340
 GameObject:
   m_ObjectHideFlags: 0
