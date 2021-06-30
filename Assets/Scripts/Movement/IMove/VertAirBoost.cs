@@ -8,6 +8,8 @@ public class VertAirBoost : AMove
     float vertVel;
     float horizVel;
     bool divePending;
+    bool groundPoundPending;
+    bool airReverseInitiated;
 
     /// <summary>
     /// Constructs a VertAirBoost, initializing the objects that hold all the
@@ -22,6 +24,7 @@ public class VertAirBoost : AMove
         this.horizVel = horizVel;
         vertVel = movementSettings.VertBoostMinVel + (propCharged * (movementSettings.VertBoostMaxVel - movementSettings.VertBoostMinVel));
         mii.OnDiveInput.AddListener(() => divePending = true);
+        mii.OnGroundPound.AddListener(() => groundPoundPending = true);
     }
 
     public override void AdvanceTime()
@@ -29,11 +32,26 @@ public class VertAirBoost : AMove
         // Vertical
         vertVel -= movementSettings.VertBoostGravity * Time.deltaTime;
         // Horizontal
-        horizVel = InputUtils.SmoothedInput(
-            horizVel,
-            mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-            movementSettings.AirSensitivityX,
-            movementSettings.AirGravityX);
+        if (mii.AirReverseInput())
+        {
+            airReverseInitiated = true;
+        }
+        if (airReverseInitiated)
+        {
+            horizVel = InputUtils.SmoothedInput(
+                horizVel,
+                0,
+                movementSettings.AirReverseSensitivityX,
+                movementSettings.AirReverseGravityX);
+        }
+        else
+        {
+            horizVel = InputUtils.SmoothedInput(
+                horizVel,
+                mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                movementSettings.AirSensitivityX,
+                movementSettings.AirGravityX);
+        }
     }
 
     public override float GetHorizSpeedThisFrame()
@@ -48,6 +66,10 @@ public class VertAirBoost : AMove
 
     public override float GetRotationSpeed()
     {
+        if (airReverseInitiated)
+        {
+            return 0;
+        }
         return horizVel < movementSettings.InstantRotationSpeed ?
             float.MaxValue : movementSettings.AirRotationSpeed;
     }
@@ -57,6 +79,10 @@ public class VertAirBoost : AMove
         if (mi.TouchingGround())
         {
             return new Run(mii, mi, movementSettings, horizVel);
+        }
+        if (groundPoundPending)
+        {
+            return new GroundPound(mii, mi, movementSettings);
         }
         if (divePending)
         {

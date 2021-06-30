@@ -67,11 +67,17 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float tjMaxDissonance; // new
 
     [Header("Boost Settings")]
-    [SerializeField] float horizBoostGravity;
+    [SerializeField] float horizBoostMinGravity;
+    [SerializeField] float horizBoostMaxGravity;
     [SerializeField] float horizBoostChargeGravity;
     [SerializeField] float horizBoostEndGravity;
     [SerializeField] float horizBoostMaxChargeTime;
     [SerializeField] float horizBoostMaxTime;
+    [SerializeField] float horizBoostRotation;
+    [SerializeField] float horizBoostAirReverseGravity;
+    [SerializeField] float horizBoostNonAirReverseGravity;
+    [SerializeField] float horizBoostMinActivationX;
+    [SerializeField] float horizBoostMaxActivationX;
     [SerializeField] float vertBoostMinVel;
     [SerializeField] float vertBoostMaxVel;
     [SerializeField] float vertBoostGravity;
@@ -85,6 +91,10 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float diagonalBoostMaxStartSpeedY;
     [SerializeField] float diagonalBoostGravityX;
     [SerializeField] float diagonalBoostSensitivityX;
+
+    [Header("Ground Pound Settings")]
+    [SerializeField] float gpSuspensionTime;
+    [SerializeField] float gpDownSpeed;
 
     [Header("Dive Settings")]
     [SerializeField] float diveInitVel;
@@ -157,11 +167,17 @@ public class MovementSettingsSO : ScriptableObject
     public float TjMinJumpTime { get { return tjMinJumpTime; } }
     public float TjMaxDissonance { get { return tjMaxDissonance; } }
 
-    public float HorizBoostGravity { get { return horizBoostGravity; } }
+    public float HorizBoostMinGravity { get { return horizBoostMinGravity; } }
+    public float HorizBoostMaxGravity { get { return horizBoostMaxGravity; } }
     public float HorizBoostChargeGravity { get { return horizBoostChargeGravity; } }
     public float HorizBoostEndGravity { get { return horizBoostEndGravity; } }
     public float HorizBoostMaxChargeTime { get { return horizBoostMaxChargeTime; } }
     public float HorizBoostMaxTime { get { return horizBoostMaxTime; } }
+    public float HorizBoostRotation { get { return horizBoostRotation; } }
+    public float HorizBoostAirReverseGravity { get { return horizBoostAirReverseGravity; } }
+    public float HorizBoostNonAirReverseGravity { get { return horizBoostNonAirReverseGravity; } }
+    public float HorizBoostMinActivationX { get { return horizBoostMinActivationX; } }
+    public float HorizBoostMaxActivationX { get { return horizBoostMaxActivationX; } }
     public float VertBoostMinVel { get { return vertBoostMinVel; } }
     public float VertBoostMaxVel { get { return vertBoostMaxVel; } }
     public float VertBoostGravity { get { return vertBoostGravity; } }
@@ -174,6 +190,9 @@ public class MovementSettingsSO : ScriptableObject
     public float DiagonalBoostMaxStartSpeedY { get { return diagonalBoostMaxStartSpeedY; } }
     public float DiagonalBoostGravityX { get { return diagonalBoostGravityX; } }
     public float DiagonalBoostSensitivityX { get { return diagonalBoostSensitivityX; } }
+
+    public float GpSuspensionTime { get { return gpSuspensionTime; } }
+    public float GpDownSpeed { get { return gpDownSpeed; } }
 
     public float DiveInitVel { get { return diveInitVel; } }
     public float DiveGravity { get { return diveGravity; } }

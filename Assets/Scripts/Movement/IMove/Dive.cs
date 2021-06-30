@@ -8,7 +8,9 @@ using UnityEngine;
 /// </summary>
 public class Dive : AMove
 {
+    float horizVel;
     float vertVel;
+    bool airReverseInitiated;
 
     /// <summary>
     /// Constructs a Dive, initializing the objects that hold all the
@@ -20,17 +22,27 @@ public class Dive : AMove
     public Dive(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
     {
         vertVel = movementSettings.DiveInitVel;
+        horizVel = movementSettings.DiveSpeedX;
     }
 
     public override void AdvanceTime()
     {
         // Vertical
         vertVel -= movementSettings.DiveGravity * Time.deltaTime;
+        // Horizontal
+        if (mii.AirReverseInput())
+        {
+            airReverseInitiated = true;
+        }
+        if (airReverseInitiated)
+        {
+            horizVel = InputUtils.SmoothedInput(horizVel, 0, 0, movementSettings.AirGravityX);
+        }
     }
 
     public override float GetHorizSpeedThisFrame()
     {
-        return movementSettings.DiveSpeedX;
+        return horizVel;
     }
 
     public override float GetVertSpeedThisFrame()
@@ -40,6 +52,10 @@ public class Dive : AMove
 
     public override float GetRotationSpeed()
     {
+        if (airReverseInitiated)
+        {
+            return 0;
+        }
         return movementSettings.DiveRotationSpeed;
     }
 

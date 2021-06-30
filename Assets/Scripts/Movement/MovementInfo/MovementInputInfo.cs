@@ -19,6 +19,7 @@ public class MovementInputInfo : MonoBehaviour
     [HideInInspector] public UnityEvent OnHorizBoostRelease;
     [HideInInspector] public UnityEvent OnVertBoostCharge;
     [HideInInspector] public UnityEvent OnVertBoostRelease;
+    [HideInInspector] public UnityEvent OnGroundPound;
 
     private MovementSettingsSO movementSettings;
 
@@ -34,6 +35,7 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Player.Boost.canceled += _ => OnHorizBoostRelease.Invoke();
         inputActionsHolder.inputActions.Player.VertBoost.canceled += _ => OnVertBoostRelease.Invoke();
         inputActionsHolder.inputActions.Player.Dive.performed += _ => OnDiveInput.Invoke();
+        inputActionsHolder.inputActions.Player.GroundPound.performed += _ => OnGroundPound.Invoke();
         OnJump.AddListener(() => StartCoroutine(WaitReverseCoyoteTime()));
     }
 
@@ -124,5 +126,10 @@ public class MovementInputInfo : MonoBehaviour
         }
 
         inReverseCoyoteTime = false;
+    }
+
+    public bool PressingBoost()
+    {
+        return inputActionsHolder.inputActions.Player.Boost.ReadValue<float>() > 0;
     }
 }

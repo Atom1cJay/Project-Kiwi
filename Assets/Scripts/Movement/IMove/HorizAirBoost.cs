@@ -4,9 +4,12 @@ using System.Collections;
 
 public class HorizAirBoost : AMove
 {
+    readonly float gravity;
     float vertVel;
-    float timeLeft;
+    float horizVel;
     bool divePending;
+    bool groundPoundPending;
+    bool airReverseActivated;
 
     /// <summary>
     /// Constructs a HorizAirBoost, initializing the objects that hold all the
@@ -17,22 +20,39 @@ public class HorizAirBoost : AMove
     /// <param name="ms">Constants related to movement</param>
     public HorizAirBoost(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float propCharged) : base(ms, mi, mii)
     {
+        gravity = movementSettings.HorizBoostMinGravity;
+        horizVel = movementSettings.HorizBoostMinActivationX + (propCharged * (movementSettings.HorizBoostMaxActivationX - movementSettings.HorizBoostMinActivationX));
         vertVel = 0;
-        timeLeft = propCharged * movementSettings.HorizBoostMaxTime;
         mii.OnDiveInput.AddListener(() => divePending = true);
+        mii.OnGroundPound.AddListener(() => groundPoundPending = true);
     }
 
     public override void AdvanceTime()
     {
-        // Meta
-        timeLeft -= Time.deltaTime;
+        // Vertical
+        vertVel -= gravity * Time.deltaTime;
         // Horizontal
-        vertVel -= movementSettings.HorizBoostGravity * Time.deltaTime;
+        if (mii.AirReverseInput())
+        {
+            airReverseActivated = true;
+        }
+        if (!airReverseActivated)
+        {
+            horizVel = InputUtils.SmoothedInput(
+                horizVel,
+                movementSettings.MaxSpeed * mii.GetHorizontalInput().magnitude,
+                0, movementSettings.HorizBoostNonAirReverseGravity);
+        }
+        else
+        {
+            horizVel = InputUtils.SmoothedInput(
+                horizVel, 0, 0, movementSettings.HorizBoostAirReverseGravity);   
+        }
     }
 
     public override float GetHorizSpeedThisFrame()
     {
-        return movementSettings.HorizBoostSpeedX;
+        return horizVel;
     }
 
     public override float GetVertSpeedThisFrame()
@@ -42,18 +62,18 @@ public class HorizAirBoost : AMove
 
     public override float GetRotationSpeed()
     {
-        return 0;
+        return airReverseActivated ? 0 : movementSettings.HorizBoostRotation;
     }
 
     public override IMove GetNextMove()
     {
-        if (timeLeft < 0)
-        {
-            return new Fall(mii, mi, movementSettings, GetHorizSpeedThisFrame(), false);
-        }
         if (mi.TouchingGround())
         {
             return new Run(mii, mi, movementSettings, GetHorizSpeedThisFrame());
+        }
+        if (groundPoundPending)
+        {
+            return new GroundPound(mii, mi, movementSettings);
         }
         if (divePending)
         {

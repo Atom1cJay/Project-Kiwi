@@ -9,6 +9,7 @@ public class Run : AMove
 {
     float horizVel;
     bool jumpPending;
+    bool vertBoostPending;
     bool timeBetweenJumpsBreaksTJ;
 
     /// <summary>
@@ -23,13 +24,23 @@ public class Run : AMove
     {
         this.horizVel = horizVel;
         mii.OnJump.AddListener(() => jumpPending = true);
+        mii.OnVertBoostCharge.AddListener(() => vertBoostPending = true);
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitToBreakTimeBetweenJumps());
     }
 
     public override void AdvanceTime()
     {
         // Horizontal
-        if (horizVel > movementSettings.MaxSpeed)
+        if (mii.PressingBoost())
+        {
+            horizVel =
+                InputUtils.SmoothedInput(
+                    horizVel,
+                    mii.GetHorizontalInput().magnitude * movementSettings.GroundBoostMaxSpeedX,
+                    movementSettings.GroundBoostSensitivityX,
+                    movementSettings.GroundBoostGravityX);
+        }
+        else if (horizVel > movementSettings.MaxSpeed)
         {
             horizVel =
                 InputUtils.SmoothedInput(
@@ -68,12 +79,20 @@ public class Run : AMove
 
     public override float GetRotationSpeed()
     {
+        if (mii.PressingBoost())
+        {
+            return movementSettings.GroundBoostRotationSpeed;
+        }
         return (horizVel < movementSettings.InstantRotationSpeed) ?
             float.MaxValue : movementSettings.GroundRotationSpeed;
     }
 
     public override IMove GetNextMove()
     {
+        //if (vertBoostPending)
+        //{
+        //    return new VertGroundBoostCharge(mii, mi, movementSettings, horizVel);
+        //}
         if (horizVel == 0)
         {
             return new Idle(mii, mi, movementSettings);

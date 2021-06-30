@@ -10,10 +10,12 @@ public class Jump : AMove
     bool divePending;
     bool vertBoostChargePending;
     bool horizBoostChargePending;
+    bool groundPoundPending;
     bool jumpCancelled;
     bool jumpGroundableTimerComplete;
     bool jumpTimeShouldBreakTJ;
     bool hasInitiatedAirReverse; // permanent once activated todo change?
+    bool firstFrameAirReverse;
 
     /// <summary>
     /// Constructs a Jump, initializing the objects that hold all the
@@ -33,6 +35,7 @@ public class Jump : AMove
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
+        mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnJumpCancelled.AddListener(() =>
         {
             jumpCancelled = true;
@@ -59,7 +62,16 @@ public class Jump : AMove
             hasInitiatedAirReverse = true;
         }
 
-        if (hasInitiatedAirReverse)
+        if (mii.PressingBoost())
+        {
+            horizVel =
+                InputUtils.SmoothedInput(
+                    horizVel,
+                    movementSettings.GroundBoostMaxSpeedX,
+                    movementSettings.GroundBoostSensitivityX,
+                    movementSettings.GroundBoostGravityX);
+        }
+        else if (hasInitiatedAirReverse)
         {
             horizVel =
                 InputUtils.SmoothedInput(
@@ -123,7 +135,11 @@ public class Jump : AMove
 
     public override IMove GetNextMove()
     {
-        if (mi.TouchingGround() && jumpGroundableTimerComplete)
+        if (groundPoundPending)
+        {
+            return new GroundPound(mii, mi, movementSettings);
+        }
+        if (mi.TouchingGround() && jumpGroundableTimerComplete && vertVel < 0)
         {
             return new Run(mii, mi, movementSettings, horizVel);
         }

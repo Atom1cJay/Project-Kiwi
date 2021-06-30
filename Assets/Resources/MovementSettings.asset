@@ -25,8 +25,8 @@ MonoBehaviour:
   horizBoostSpeedX: 10
   horizBoostChargeGravityX: 6
   vertBoostChargeGravityX: 12
-  groundBoostMaxSpeedX: 8
-  groundBoostSensitivityX: 6
+  groundBoostMaxSpeedX: 9.5
+  groundBoostSensitivityX: 8
   groundBoostGravityX: 4
   diveSpeedX: 6.5
   airReverseSensitivityX: 7
@@ -56,11 +56,17 @@ MonoBehaviour:
   tjMinJumpTime: 0.3
   tjMaxJumpTime: 1.5
   tjMaxDissonance: 0.5
-  horizBoostGravity: 5
+  horizBoostMinGravity: 6
+  horizBoostMaxGravity: 12
   horizBoostChargeGravity: 0.5
   horizBoostEndGravity: 20
   horizBoostMaxChargeTime: 0.8
   horizBoostMaxTime: 0.7
+  horizBoostRotation: 50
+  horizBoostAirReverseGravity: 10
+  horizBoostNonAirReverseGravity: 7
+  horizBoostMinActivationX: 10
+  horizBoostMaxActivationX: 15
   vertBoostMinVel: 6
   vertBoostMaxVel: 12
   vertBoostGravity: 20
@@ -72,6 +78,8 @@ MonoBehaviour:
   diagonalBoostMaxStartSpeedY: 9
   diagonalBoostGravityX: 3
   diagonalBoostSensitivityX: 5
+  gpSuspensionTime: 0.2
+  gpDownSpeed: 10
   diveInitVel: 5
   diveGravity: 23
   defaultGravity: 20
@@ -80,7 +88,7 @@ MonoBehaviour:
   airReverseMinActivationSpeed: 0
   instantRotationSpeed: 1
   groundRotationSpeed: 800
-  airRotationSpeed: 200
+  airRotationSpeed: 100
   boostAftermathRotationSpeed: 50
   diveRotationSpeed: 50
-  groundBoostRotationSpeed: 400
+  groundBoostRotationSpeed: 200

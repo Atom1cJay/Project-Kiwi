@@ -11,6 +11,7 @@ public class Fall : AMove
     bool horizBoostChargePending;
     bool jumpPending;
     bool hasInitiatedAirReverse; // Permanent once it starts TODO change?
+    bool groundPoundPending;
     float coyoteTime;
 
     /// <summary>
@@ -30,6 +31,7 @@ public class Fall : AMove
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
+        mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnJump.AddListener(() => jumpPending = true);
     }
 
@@ -50,7 +52,16 @@ public class Fall : AMove
             hasInitiatedAirReverse = true;
         }
 
-        if (hasInitiatedAirReverse)
+        if (mii.PressingBoost())
+        {
+            horizVel =
+                InputUtils.SmoothedInput(
+                    horizVel,
+                    movementSettings.GroundBoostMaxSpeedX,
+                    movementSettings.GroundBoostSensitivityX,
+                    movementSettings.GroundBoostGravityX);
+        }
+        else if (hasInitiatedAirReverse)
         {
             horizVel =
                 InputUtils.SmoothedInput(
@@ -94,11 +105,19 @@ public class Fall : AMove
 
     public override float GetRotationSpeed()
     {
+        if (mii.PressingBoost())
+        {
+            return movementSettings.GroundBoostRotationSpeed;
+        }
         return hasInitiatedAirReverse ? 0 : movementSettings.AirRotationSpeed;
     }
 
     public override IMove GetNextMove()
     {
+        if (groundPoundPending)
+        {
+            return new GroundPound(mii, mi, movementSettings);
+        }
         if (mi.TouchingGround())
         {
             return new Run(mii, mi, movementSettings, horizVel);
