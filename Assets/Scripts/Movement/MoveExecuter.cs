@@ -10,24 +10,22 @@ public class MoveExecuter : MonoBehaviour
     MovementInfo mi;
     MovementSettingsSO movementSettings;
 
-    private void Awake()
+    private void Start()
     {
         movementSettings = MovementSettingsSO.Instance;
         charCont = GetComponent<CharacterController>();
         mi = GetComponent<MovementInfo>();
-        moveThisFrame = new Fall(GetComponent<MovementInputInfo>(), mi, movementSettings, 0);
+        moveThisFrame = new Fall(GetComponent<MovementInputInfo>(), mi, movementSettings, 0, false);
     }
 
     void Update()
     {
         Vector3 dir = DirectionOfMovement();
         moveThisFrame.AdvanceTime();
-        print(moveThisFrame.AsString());
         float speedThisFrame = moveThisFrame.GetHorizSpeedThisFrame();
         Vector3 horizMovement = dir * speedThisFrame;
-        charCont.Move(horizMovement * Time.deltaTime);
         Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
-        charCont.Move(vertMovement * Time.deltaTime);
+        charCont.Move((vertMovement + horizMovement) * Time.deltaTime);
         IMove next = moveThisFrame.GetNextMove();
         moveThisFrame = next;
     }
@@ -48,10 +46,10 @@ public class MoveExecuter : MonoBehaviour
 
         // Fixing the quirks of y movement
         if (yDelta > 0) yDelta = 0; // CharacterController will take care of ascension
-        if (mi.TouchingGround()) yDelta -= Mathf.Abs(yDelta * movementSettings.StickToGroundMultiplier); // To keep player stuck to ground
+        //if (moveThisFrame.AdjustToSlope()) yDelta -= Mathf.Abs(yDelta * movementSettings.StickToGroundMultiplier); // To keep player stuck to ground
 
         Vector3 dir = new Vector3(xDelta, yDelta, zDelta);
-        if (dir.magnitude > 1) { dir = dir.normalized; }
+        //if (dir.magnitude > 1) { dir = dir.normalized; }
         return dir;
     }
 

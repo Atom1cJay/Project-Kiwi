@@ -15,10 +15,10 @@ public class HorizAirBoost : AMove
     /// <param name="mii">Information on the player's input</param>
     /// <param name="mi">Information on the state of the player</param>
     /// <param name="ms">Constants related to movement</param>
-    public HorizAirBoost(MovementInputInfo mii, MovementInfo mi, float timeLeft, MovementSettingsSO ms) : base(ms, mi, mii)
+    public HorizAirBoost(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float propCharged) : base(ms, mi, mii)
     {
         vertVel = 0;
-        this.timeLeft = timeLeft;
+        timeLeft = propCharged * movementSettings.HorizBoostMaxTime;
         mii.OnDiveInput.AddListener(() => divePending = true);
     }
 
@@ -49,7 +49,7 @@ public class HorizAirBoost : AMove
     {
         if (timeLeft < 0)
         {
-            return new Fall(mii, mi, movementSettings, GetHorizSpeedThisFrame());
+            return new Fall(mii, mi, movementSettings, GetHorizSpeedThisFrame(), false);
         }
         if (mi.TouchingGround())
         {

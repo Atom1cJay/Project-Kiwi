@@ -52,13 +52,13 @@ public class HardTurn : AMove
         {
             return new Run(mii, mi, movementSettings, horizVel);
         }
-        if (jumpInputPending)
+        if (jumpInputPending || mii.InReverseCoyoteTime())
         {
             return new Jump(mii, mi, movementSettings, horizVel);
         }
         if (!mi.TouchingGround())
         {
-            return new Fall(mii, mi, movementSettings, horizVel);
+            return new Fall(mii, mi, movementSettings, horizVel, false);
         }
         return this;
     }

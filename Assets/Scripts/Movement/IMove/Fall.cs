@@ -9,7 +9,9 @@ public class Fall : AMove
     bool divePending;
     bool vertBoostChargePending;
     bool horizBoostChargePending;
+    bool jumpPending;
     bool hasInitiatedAirReverse; // Permanent once it starts TODO change?
+    float coyoteTime;
 
     /// <summary>
     /// Constructs a Fall, initializing the objects that hold all the
@@ -19,13 +21,25 @@ public class Fall : AMove
     /// <param name="mi">Information on the state of the player</param>
     /// <param name="ms">Constants related to movement</param>
     /// <param name="horizVel">The horizontal speed moving into this move</param>
-    public Fall(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
+    public Fall(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool giveCoyoteTime) : base(ms, mi, mii)
     {
         this.horizVel = horizVel;
         vertVel = 0;
+        coyoteTime = giveCoyoteTime ? movementSettings.CoyoteTime : 0;
+        MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", AllowCoyoteTime());
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
+        mii.OnJump.AddListener(() => jumpPending = true);
+    }
+
+    IEnumerator AllowCoyoteTime()
+    {
+        while (coyoteTime > 0)
+        {
+            coyoteTime -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     public override void AdvanceTime()
@@ -88,6 +102,10 @@ public class Fall : AMove
         if (mi.TouchingGround())
         {
             return new Run(mii, mi, movementSettings, horizVel);
+        }
+        if (jumpPending && coyoteTime > 0)
+        {
+            return new Jump(mii, mi, movementSettings, horizVel);
         }
         if (divePending)
         {

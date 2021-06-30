@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: MovementSettings
   m_EditorClassIdentifier: 
   maxSpeed: 6.5
-  runSensitivityX: 10
-  runGravityX: 18
+  runSensitivityX: 8
+  runGravityX: 20
   runGravityXOverTopSpeed: 10
   airSensitivityX: 4
   airGravityX: 4
@@ -40,17 +40,17 @@ MonoBehaviour:
   jumpUncancelledGravityIncrease: 75
   jumpCancelledGravityIncrease: 150
   reverseCoyoteTime: 0.15
-  coyoteTime: 0.08
+  coyoteTime: 0.12
   dissonanceForHardTurn: 1.8
-  hardTurnMinSpeed: 4
+  hardTurnMinSpeed: 1
   hardTurnTime: 0.2
-  tjInitJumpVel: 9
+  tjInitJumpVel: 10
   tjInitGravity: 0
   tjUncancelledMaxGravity: 17
   tjCancelledMaxGravity: 17
-  tjVelocityMultiplier: 1
-  tjGravityIncRate: 100
-  tjGravityIncRateAtCancel: 100
+  tjVelocityMultiplier: 0.7
+  tjGravityIncRate: 75
+  tjGravityIncRateAtCancel: 75
   tjMinHorizInputMagnitude: 0.9
   tjMaxTimeBtwnJumps: 0.1
   tjMinJumpTime: 0.3
@@ -66,13 +66,19 @@ MonoBehaviour:
   vertBoostGravity: 20
   vertBoostMaxChargeTime: 0.6
   vertBoostMaxTime: 0.7
+  diagonalBoostMinStartSpeedX: 3
+  diagonalBoostMaxStartSpeedX: 5
+  diagonalBoostMinStartSpeedY: 5
+  diagonalBoostMaxStartSpeedY: 9
+  diagonalBoostGravityX: 3
+  diagonalBoostSensitivityX: 5
   diveInitVel: 5
   diveGravity: 23
   defaultGravity: 20
-  stickToGroundMultiplier: 0.2
+  stickToGroundMultiplier: 0
   dissonanceForAirReverse: 1.8
   airReverseMinActivationSpeed: 0
-  instantRotationSpeed: 0.3
+  instantRotationSpeed: 1
   groundRotationSpeed: 800
   airRotationSpeed: 200
   boostAftermathRotationSpeed: 50

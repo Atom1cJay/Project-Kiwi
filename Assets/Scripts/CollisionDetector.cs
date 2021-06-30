@@ -4,8 +4,25 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
+    private bool colliding;
     private GameObject collidingWith = null;
     [SerializeField] private List<GameObject> gameObjectsToIgnore;
+
+    private void UpdateCollisionStatus()
+    {
+        foreach (Collider c in Physics.OverlapSphere(transform.position, (transform.localScale.magnitude / 2) / 1.3f)) // TODO FIX BAD GENERALIZE
+        {
+            if (!gameObjectsToIgnore.Contains(c.gameObject))
+            {
+                collidingWith = c.gameObject;
+                colliding = true;
+                return;
+            }
+        }
+
+        collidingWith = null;
+        colliding = false;
+    }
 
     /// <summary>
     /// Is the Collision Detector colliding with something it can detect?
@@ -13,17 +30,8 @@ public class CollisionDetector : MonoBehaviour
     /// <returns>Whether or not the <code>CollisionDetector</code> is activated</returns>
     public bool Colliding()
     {
-        foreach (Collider c in Physics.OverlapSphere(transform.position, (transform.localScale.magnitude / 2) / 1.3f)) // TODO FIX BAD GENERALIZE
-        {
-            if (!gameObjectsToIgnore.Contains(c.gameObject))
-            {
-                collidingWith = c.gameObject;
-                return true;
-            }
-        }
-
-        collidingWith = null;
-        return false;
+        UpdateCollisionStatus();
+        return colliding;
     }
 
     /// <summary>
@@ -33,6 +41,7 @@ public class CollisionDetector : MonoBehaviour
     /// <returns></returns>
     public GameObject CollidingWith()
     {
+        UpdateCollisionStatus();
         return collidingWith;
     }
 }

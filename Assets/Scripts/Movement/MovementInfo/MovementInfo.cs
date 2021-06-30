@@ -52,6 +52,7 @@ public class MovementInfo : MonoBehaviour
     /// </summary>
     public bool NextJumpIsTripleJump()
     {
+        UpdateTripleJumpStatus();
         return tjJumpCount == 2;
     }
 

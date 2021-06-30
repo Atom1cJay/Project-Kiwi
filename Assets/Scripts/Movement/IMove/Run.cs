@@ -78,19 +78,20 @@ public class Run : AMove
         {
             return new Idle(mii, mi, movementSettings);
         }
-        if (jumpPending && mi.NextJumpIsTripleJump())
+        if ((jumpPending || mii.InReverseCoyoteTime()) && mi.NextJumpIsTripleJump())
         {
             return new TripleJump(mii, mi, movementSettings, horizVel);
         }
-        if (jumpPending)
+        if (jumpPending || mii.InReverseCoyoteTime())
         {
             return new Jump(mii, mi, movementSettings, horizVel);
         }
         if (!mi.TouchingGround())
         {
-            return new Fall(mii, mi, movementSettings, horizVel);
+            return new Fall(mii, mi, movementSettings, horizVel, true);
         }
-        if (mii.HardTurnInput() && mii.GetHorizontalInput().magnitude > 0)
+        if (mii.HardTurnInput() && mii.GetHorizontalInput().magnitude > 0
+            && horizVel > movementSettings.HardTurnMinSpeed)
         {
             return new HardTurn(mii, mi, movementSettings, horizVel);
         }

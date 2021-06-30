@@ -42,13 +42,13 @@ public class Idle : AMove
         {
             return new Run(mii, mi, movementSettings, 0);
         }
-        if (jumpPending)
+        if (jumpPending || mii.InReverseCoyoteTime())
         {
             return new Jump(mii, mi, movementSettings, 0);
         }
         if (!mi.TouchingGround())
         {
-            return new Fall(mii, mi, movementSettings, GetHorizSpeedThisFrame());
+            return new Fall(mii, mi, movementSettings, GetHorizSpeedThisFrame(), true);
         }
         // todo make ground boost possible
 

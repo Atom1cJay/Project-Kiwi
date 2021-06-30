@@ -32,7 +32,7 @@ public class TripleJump : AMove
         mii.OnJumpCancelled.AddListener(() =>
         {
             jumpCancelled = true;
-            vertVel *= movementSettings.JumpVelMultiplierAtCancel;
+            vertVel *= movementSettings.TjVelocityMultiplier;
         });
     }
 

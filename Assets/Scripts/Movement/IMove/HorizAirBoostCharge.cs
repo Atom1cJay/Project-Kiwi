@@ -60,7 +60,8 @@ public class HorizAirBoostCharge : AMove
 
         if (timeCharging > maxTimeToCharge || boostReleasePending)
         {
-            return new HorizAirBoost(mii, mi, (timeCharging / maxTimeToCharge) * movementSettings.HorizBoostMaxTime, movementSettings);
+            float propCharged = timeCharging / maxTimeToCharge;
+            return new HorizAirBoost(mii, mi, movementSettings, propCharged);
         }
         else
         {
@@ -70,7 +71,7 @@ public class HorizAirBoostCharge : AMove
 
     public override string AsString()
     {
-        return "horizairboost";
+        return "horizairboostcharge";
     }
 
     public override bool IncrementsTJcounter()

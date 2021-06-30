@@ -11,15 +11,6 @@ public class MovementInputInfo : MonoBehaviour
 {
     [SerializeField] InputActionsHolder inputActionsHolder;
     [SerializeField] GameObject relevantCamera;
-    public bool JumpInputPending { get; private set; }
-    public bool JumpCancelInputPending { get; private set; }
-    public bool DiveInputPending { get; private set; }
-    public bool HorizAirBoostChargeInputPending { get; private set; }
-    public bool HorizAirBoostReleaseInputPending { get; private set; }
-    public bool VertAirBoostChargeInputPending { get; private set; }
-    public bool VertAirBoostReleaseInputPending { get; private set; }
-    public float HorizBoostInput { get; private set; }
-    public float VertBoostInput { get; private set; }
 
     [HideInInspector] public UnityEvent OnJump;
     [HideInInspector] public UnityEvent OnJumpCancelled;
@@ -31,6 +22,8 @@ public class MovementInputInfo : MonoBehaviour
 
     private MovementSettingsSO movementSettings;
 
+    bool inReverseCoyoteTime;
+
     void Start()
     {
         movementSettings = MovementSettingsSO.Instance;
@@ -41,6 +34,7 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Player.Boost.canceled += _ => OnHorizBoostRelease.Invoke();
         inputActionsHolder.inputActions.Player.VertBoost.canceled += _ => OnVertBoostRelease.Invoke();
         inputActionsHolder.inputActions.Player.Dive.performed += _ => OnDiveInput.Invoke();
+        OnJump.AddListener(() => StartCoroutine(WaitReverseCoyoteTime()));
     }
 
     /// <summary>
@@ -106,5 +100,29 @@ public class MovementInputInfo : MonoBehaviour
         Vector2 rawInput = GetHorizontalInput();
         float camDirection = relevantCamera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
         return Mathf.Atan2(rawInput.x, rawInput.y) + camDirection;
+    }
+
+    /// <summary>
+    /// Has the player been holding the jump button a short enough time that a
+    /// jump would be acceptable if the player landed on the ground now?
+    /// </summary>
+    /// <returns></returns>
+    public bool InReverseCoyoteTime()
+    {
+        return inReverseCoyoteTime;
+    }
+
+    IEnumerator WaitReverseCoyoteTime()
+    {
+        float t = 0;
+        inReverseCoyoteTime = true;
+
+        while (t < movementSettings.ReverseCoyoteTime && inputActionsHolder.inputActions.Player.Jump.ReadValue<float>() > 0)
+        {
+            t += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        inReverseCoyoteTime = false;
     }
 }

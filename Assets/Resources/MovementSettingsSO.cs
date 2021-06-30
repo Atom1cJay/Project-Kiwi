@@ -78,6 +78,14 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float vertBoostMaxChargeTime;
     [SerializeField] float vertBoostMaxTime;
 
+    [Header("Diagonal Boost Settings")]
+    [SerializeField] float diagonalBoostMinStartSpeedX;
+    [SerializeField] float diagonalBoostMaxStartSpeedX;
+    [SerializeField] float diagonalBoostMinStartSpeedY;
+    [SerializeField] float diagonalBoostMaxStartSpeedY;
+    [SerializeField] float diagonalBoostGravityX;
+    [SerializeField] float diagonalBoostSensitivityX;
+
     [Header("Dive Settings")]
     [SerializeField] float diveInitVel;
     [SerializeField] float diveGravity;
@@ -159,6 +167,13 @@ public class MovementSettingsSO : ScriptableObject
     public float VertBoostGravity { get { return vertBoostGravity; } }
     public float VertBoostMaxChargeTime { get { return vertBoostMaxChargeTime; } }
     public float VertBoostMaxTime { get { return vertBoostMaxTime; } }
+
+    public float DiagonalBoostMinStartSpeedX { get { return diagonalBoostMinStartSpeedX; } }
+    public float DiagonalBoostMaxStartSpeedX { get { return diagonalBoostMaxStartSpeedX; } }
+    public float DiagonalBoostMinStartSpeedY { get { return diagonalBoostMinStartSpeedY; } }
+    public float DiagonalBoostMaxStartSpeedY { get { return diagonalBoostMaxStartSpeedY; } }
+    public float DiagonalBoostGravityX { get { return diagonalBoostGravityX; } }
+    public float DiagonalBoostSensitivityX { get { return diagonalBoostSensitivityX; } }
 
     public float DiveInitVel { get { return diveInitVel; } }
     public float DiveGravity { get { return diveGravity; } }
