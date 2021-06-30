@@ -57,6 +57,16 @@ public class MovementInfo : MonoBehaviour
     }
 
     /// <summary>
+    /// Determines whether, if a jump was done right at this frame, it should
+    /// be a double jump.
+    /// </summary>
+    public bool NextJumpIsDoubleJump()
+    {
+        UpdateTripleJumpStatus();
+        return tjJumpCount == 1;
+    }
+
+    /// <summary>
     /// Gives the ground detector being used for movement calculations.
     /// </summary>
     public CollisionDetector GetGroundDetector()

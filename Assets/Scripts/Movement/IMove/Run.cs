@@ -97,6 +97,10 @@ public class Run : AMove
         {
             return new Idle(mii, mi, movementSettings);
         }
+        if ((jumpPending || mii.InReverseCoyoteTime()) && mi.NextJumpIsDoubleJump())
+        {
+            return new DoubleJump(mii, mi, movementSettings, horizVel);
+        }
         if ((jumpPending || mii.InReverseCoyoteTime()) && mi.NextJumpIsTripleJump())
         {
             return new TripleJump(mii, mi, movementSettings, horizVel);

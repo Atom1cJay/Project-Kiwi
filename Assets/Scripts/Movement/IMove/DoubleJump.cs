@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Jump : AMove
+public class DoubleJump : AMove
 {
     float gravity;
     float vertVel;
@@ -24,7 +24,7 @@ public class Jump : AMove
     /// <param name="mi">Information on the state of the player</param>
     /// <param name="ms">Constants related to movement</param>
     /// <param name="horizVel">The horizontal speed moving into this move</param>
-    public Jump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
+    public DoubleJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
         this.horizVel = horizVel;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", IncrementJumpTimer());
@@ -160,7 +160,7 @@ public class Jump : AMove
 
     public override string AsString()
     {
-        return "jump";
+        return "doublejump";
     }
 
     public override bool IncrementsTJcounter()
@@ -180,4 +180,3 @@ public class Jump : AMove
         return false;
     }
 }
-   
