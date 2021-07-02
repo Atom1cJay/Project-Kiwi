@@ -14,6 +14,7 @@ public class CameraControl : MonoBehaviour
     [SerializeField] private float pivotGravity;
     [SerializeField] private float maxPivotSpeedHoriz;
     [SerializeField] private float maxPivotSpeedVert;
+    [SerializeField] private float autoAdjustTime;
     private float horizPivotSpeed = 0;
     private float vertPivotSpeed = 0;
     private CameraUtils camUtils;
@@ -21,6 +22,7 @@ public class CameraControl : MonoBehaviour
     private void Start()
     {
         camUtils = GetComponent<CameraUtils>();
+        iah.inputActions.Camera.AutoAdjust.performed += _ => AutoAdjust();
     }
 
     private void Update()
@@ -50,5 +52,10 @@ public class CameraControl : MonoBehaviour
             vertMove = vertPivotSpeed * maxPivotSpeedVert * Time.deltaTime;
             camUtils.RotateBy(horizMove, vertMove);
         }
+    }
+
+    void AutoAdjust()
+    {
+        camUtils.RotateToTargetY(autoAdjustTime);
     }
 }

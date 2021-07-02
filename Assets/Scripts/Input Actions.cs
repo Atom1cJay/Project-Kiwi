@@ -320,6 +320,14 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Axis"",
                     ""processors"": ""Invert,AxisDeadzone(max=1)"",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""AutoAdjust"",
+                    ""type"": ""Button"",
+                    ""id"": ""e2c55936-ee8b-47db-ad02-66ffec06334b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": ""Invert,AxisDeadzone(max=1)"",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -388,6 +396,39 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""HorizontalRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3947540-f52f-4082-a766-5dec348e3b2d"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""AutoAdjust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""817fa2e9-a660-4ab2-8a99-1257785032c0"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AutoAdjust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4e2eff9-040e-43a4-a6d7-26c9827d7abe"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AutoAdjust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -429,6 +470,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_HorizontalRotate = m_Camera.FindAction("HorizontalRotate", throwIfNotFound: true);
         m_Camera_VerticalRotate = m_Camera.FindAction("VerticalRotate", throwIfNotFound: true);
+        m_Camera_AutoAdjust = m_Camera.FindAction("AutoAdjust", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -553,12 +595,14 @@ public class @InputActions : IInputActionCollection, IDisposable
     private ICameraActions m_CameraActionsCallbackInterface;
     private readonly InputAction m_Camera_HorizontalRotate;
     private readonly InputAction m_Camera_VerticalRotate;
+    private readonly InputAction m_Camera_AutoAdjust;
     public struct CameraActions
     {
         private @InputActions m_Wrapper;
         public CameraActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @HorizontalRotate => m_Wrapper.m_Camera_HorizontalRotate;
         public InputAction @VerticalRotate => m_Wrapper.m_Camera_VerticalRotate;
+        public InputAction @AutoAdjust => m_Wrapper.m_Camera_AutoAdjust;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -574,6 +618,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @VerticalRotate.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnVerticalRotate;
                 @VerticalRotate.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnVerticalRotate;
                 @VerticalRotate.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnVerticalRotate;
+                @AutoAdjust.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnAutoAdjust;
+                @AutoAdjust.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnAutoAdjust;
+                @AutoAdjust.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnAutoAdjust;
             }
             m_Wrapper.m_CameraActionsCallbackInterface = instance;
             if (instance != null)
@@ -584,6 +631,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @VerticalRotate.started += instance.OnVerticalRotate;
                 @VerticalRotate.performed += instance.OnVerticalRotate;
                 @VerticalRotate.canceled += instance.OnVerticalRotate;
+                @AutoAdjust.started += instance.OnAutoAdjust;
+                @AutoAdjust.performed += instance.OnAutoAdjust;
+                @AutoAdjust.canceled += instance.OnAutoAdjust;
             }
         }
     }
@@ -619,5 +669,6 @@ public class @InputActions : IInputActionCollection, IDisposable
     {
         void OnHorizontalRotate(InputAction.CallbackContext context);
         void OnVerticalRotate(InputAction.CallbackContext context);
+        void OnAutoAdjust(InputAction.CallbackContext context);
     }
 }

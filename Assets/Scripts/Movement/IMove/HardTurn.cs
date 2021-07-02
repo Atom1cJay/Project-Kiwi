@@ -38,7 +38,7 @@ public class HardTurn : AMove
 
     public override float GetVertSpeedThisFrame()
     {
-        return 0;
+        return -3;
     }
 
     public override float GetRotationSpeed()

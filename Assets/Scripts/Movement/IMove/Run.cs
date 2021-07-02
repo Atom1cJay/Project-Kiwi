@@ -74,7 +74,7 @@ public class Run : AMove
 
     public override float GetVertSpeedThisFrame()
     {
-        return 0;
+        return -0.5f;
     }
 
     public override float GetRotationSpeed()

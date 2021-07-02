@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(MoveExecuter))]
 public class MovementInfo : MonoBehaviour
@@ -9,9 +10,15 @@ public class MovementInfo : MonoBehaviour
     private int tjJumpCount;
     IMoveImmutable storedMove; // The move from the last frame
     MoveExecuter me;
+    private Vector3 prevPosXZ;
+    private float effectiveSpeedXZ;
+    private float prevDeltaTime;
 
     private void Awake()
     {
+        prevDeltaTime = 0.01f;
+        prevPosXZ = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
+        effectiveSpeedXZ = 0;
         me = GetComponent<MoveExecuter>();
     }
 
@@ -26,6 +33,7 @@ public class MovementInfo : MonoBehaviour
     private void Update()
     {
         UpdateTripleJumpStatus();
+        UpdateEffectiveSpeed();
     }
 
     /// <summary>
@@ -72,5 +80,18 @@ public class MovementInfo : MonoBehaviour
     public CollisionDetector GetGroundDetector()
     {
         return groundDetector;
+    }
+
+    private void UpdateEffectiveSpeed()
+    {
+        Vector3 currentXZ = new Vector3(transform.position.x, 0, transform.position.z);
+        effectiveSpeedXZ = (currentXZ - prevPosXZ).magnitude / prevDeltaTime;
+        prevPosXZ = currentXZ;
+        prevDeltaTime = Time.deltaTime;
+    }
+
+    public float GetEffectiveSpeed()
+    {
+        return effectiveSpeedXZ;
     }
 }

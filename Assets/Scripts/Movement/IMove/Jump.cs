@@ -56,6 +56,7 @@ public class Jump : AMove
             gravity = movementSettings.JumpMaxCancelledGravity;
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
+        horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
         if (mii.AirReverseInput())
         {
             hasInitiatedAirReverse = true;

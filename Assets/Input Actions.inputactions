@@ -307,6 +307,14 @@
                     "expectedControlType": "Axis",
                     "processors": "Invert,AxisDeadzone(max=1)",
                     "interactions": ""
+                },
+                {
+                    "name": "AutoAdjust",
+                    "type": "Button",
+                    "id": "e2c55936-ee8b-47db-ad02-66ffec06334b",
+                    "expectedControlType": "Button",
+                    "processors": "Invert,AxisDeadzone(max=1)",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -373,6 +381,39 @@
                     "processors": "",
                     "groups": "GamePad",
                     "action": "HorizontalRotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3947540-f52f-4082-a766-5dec348e3b2d",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "AutoAdjust",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "817fa2e9-a660-4ab2-8a99-1257785032c0",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AutoAdjust",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d4e2eff9-040e-43a4-a6d7-26c9827d7abe",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AutoAdjust",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraUtils : MonoBehaviour
 {
     [SerializeField] private Transform target; // Object to look at / surround
+    [SerializeField] private Transform player; // For rotation reference
     [SerializeField] private float radiusToTarget; // Distance from target
     [SerializeField] private float initHorizAngle = 0; // 0 = directly behind, 1.57 = to right. Initial value serialized.
     [SerializeField] private float initVertAngle = 0; // 0 = exactly aligned, 1.57 = on top. Initial value serialized.
@@ -29,6 +30,39 @@ public class CameraUtils : MonoBehaviour
         horizAngle += horizAmount;
         vertAngle += vertAmount;
         vertAngle = Mathf.Clamp(vertAngle, vertAngleMin, vertAngleMax);
+    }
+
+    /// <summary>
+    /// Takes the given amount of time to rotate to the given radian rotation.
+    /// </summary>
+    public void RotateToTargetY(float time)
+    {
+        StopCoroutine("RotateTowardsY");
+        StartCoroutine("RotateTowardsY", time);
+    }
+
+    IEnumerator RotateTowardsY(float time)
+    {
+        float initialY = -transform.eulerAngles.y * Mathf.Deg2Rad;
+        float goalY = -player.eulerAngles.y * Mathf.Deg2Rad;
+        Quaternion angle1 = Quaternion.Euler(0, initialY * Mathf.Rad2Deg, 0);
+        Quaternion angle2 = Quaternion.Euler(0, goalY * Mathf.Rad2Deg, 0);
+        Quaternion targetRotation = Quaternion.Euler(0, goalY * Mathf.Rad2Deg, 0);
+        float rotationSpeed = Mathf.Abs(Quaternion.Angle(angle1, angle2)) / time;
+        float elapsed = 0;
+        while (elapsed < time)
+        {
+            Quaternion shit = Quaternion.Euler(0, -transform.eulerAngles.y, 0);
+            Quaternion shit2 = Quaternion.Euler(0, -player.eulerAngles.y, 0);
+            Quaternion newRot = Quaternion.RotateTowards(shit, shit2, rotationSpeed * Time.deltaTime);
+            print(newRot.eulerAngles.y);
+            horizAngle = newRot.eulerAngles.y * Mathf.Deg2Rad;
+            MoveCamera();
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        //transform.rotation = player.rotation;
+        //horizAngle = -player.rotation.eulerAngles.y * Mathf.Deg2Rad;
     }
 
     private void Update()

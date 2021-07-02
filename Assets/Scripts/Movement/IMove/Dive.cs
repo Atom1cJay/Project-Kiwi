@@ -63,7 +63,7 @@ public class Dive : AMove
     {
         if (mi.TouchingGround())
         {
-            return new Run(mii, mi, movementSettings, GetHorizSpeedThisFrame());
+            return new DiveRecovery(mii, mi, movementSettings, horizVel);
         }
         return this;
     }

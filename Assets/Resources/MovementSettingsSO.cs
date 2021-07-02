@@ -70,6 +70,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float horizBoostMinGravity;
     [SerializeField] float horizBoostMaxGravity;
     [SerializeField] float horizBoostChargeGravity;
+    [SerializeField] float horizBoostChargeRotationSpeed;
     [SerializeField] float horizBoostEndGravity;
     [SerializeField] float horizBoostMaxChargeTime;
     [SerializeField] float horizBoostMaxTime;
@@ -99,6 +100,7 @@ public class MovementSettingsSO : ScriptableObject
     [Header("Dive Settings")]
     [SerializeField] float diveInitVel;
     [SerializeField] float diveGravity;
+    [SerializeField] float diveRecoveryTime;
 
     [Header("Misc. Vertical")]
     [SerializeField] float defaultGravity;
@@ -172,6 +174,7 @@ public class MovementSettingsSO : ScriptableObject
     public float HorizBoostChargeGravity { get { return horizBoostChargeGravity; } }
     public float HorizBoostEndGravity { get { return horizBoostEndGravity; } }
     public float HorizBoostMaxChargeTime { get { return horizBoostMaxChargeTime; } }
+    public float HorizBoostChargeRotationSpeed { get { return horizBoostChargeRotationSpeed; } }
     public float HorizBoostMaxTime { get { return horizBoostMaxTime; } }
     public float HorizBoostRotation { get { return horizBoostRotation; } }
     public float HorizBoostAirReverseGravity { get { return horizBoostAirReverseGravity; } }
@@ -196,6 +199,7 @@ public class MovementSettingsSO : ScriptableObject
 
     public float DiveInitVel { get { return diveInitVel; } }
     public float DiveGravity { get { return diveGravity; } }
+    public float DiveRecoveryTime { get { return diveRecoveryTime;  } }
 
     public float DefaultGravity { get { return defaultGravity; } }
     public float StickToGroundMultiplier { get { return maxSpeed; } }

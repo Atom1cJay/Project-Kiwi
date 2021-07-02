@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Provides important knowledge based on the slope the player is currently standing on.
 /// </summary>
+[RequireComponent(typeof(MovementInfo))]
 public class PlayerSlopeHandler : MonoBehaviour
 {
     /// <summary>
@@ -35,7 +36,6 @@ public class PlayerSlopeHandler : MonoBehaviour
     {
         XDeriv = -hit.normal.x;
         ZDeriv = -hit.normal.z;
-
         AngleOfSlope = GetAngleOfSlope(hit.normal);
         BeyondMaxAngle = maxSlopeAngle < AngleOfSlope;
     }
