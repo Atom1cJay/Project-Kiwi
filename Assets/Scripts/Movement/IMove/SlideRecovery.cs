@@ -1,15 +1,24 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class SlideRecovery : AMove
 {
     Vector2 initHorizVector;
     Vector2 horizVector;
+    bool recovered;
 
     public SlideRecovery(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
         initHorizVector = horizVector;
         this.horizVector = horizVector;
+        MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForRecoveryTimeEnd());
+    }
+
+    IEnumerator WaitForRecoveryTimeEnd()
+    {
+        yield return new WaitForSeconds(1f / movementSettings.SlideRecoveryPace);
+        recovered = true;
     }
 
     public override bool AdjustToSlope()
@@ -19,7 +28,7 @@ public class SlideRecovery : AMove
 
     public override void AdvanceTime()
     {
-        horizVector -= (initHorizVector * movementSettings.SlideEndSpeed) * Time.deltaTime;
+        horizVector -= (initHorizVector * movementSettings.SlideRecoveryPace) * Time.deltaTime;
     }
 
     public override string AsString()
@@ -34,13 +43,13 @@ public class SlideRecovery : AMove
 
     public override IMove GetNextMove()
     {
-        if (PlayerSlopeHandler.BeyondMaxAngle)
+        if (recovered)
         {
-            return new Slide(mii, mi, movementSettings);
+            return new Idle(mii, mi, movementSettings);
         }
-        if (horizVector.magnitude < 0.1f)
+        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
-            return new Run(mii, mi, movementSettings, 0);
+            return new Slide(mii, mi, movementSettings, horizVector);
         }
         if (!mi.TouchingGround())
         {

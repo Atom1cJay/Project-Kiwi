@@ -119,8 +119,9 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float groundBoostRotationSpeed;
 
     [Header("Slide Settings")]
-    [SerializeField] float slideSpeed;
-    [SerializeField] float slideEndSpeed;
+    [SerializeField] float slideForce;
+    [SerializeField] float slideMaxSpeed;
+    [SerializeField] float slideRecoveryPace;
 
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
@@ -218,8 +219,9 @@ public class MovementSettingsSO : ScriptableObject
     public float DiveRotationSpeed { get { return diveRotationSpeed; } }
     public float GroundBoostRotationSpeed { get { return groundBoostRotationSpeed; } }
 
-    public float SlideSpeed { get { return slideSpeed; } }
-    public float SlideEndSpeed { get { return slideEndSpeed; } }
+    public float SlideForce { get { return slideForce; } }
+    public float SlideMaxSpeed { get { return slideMaxSpeed; } }
+    public float SlideRecoveryPace { get { return slideRecoveryPace; } }
 
     static MovementSettingsSO _instance;
     public static MovementSettingsSO Instance

@@ -136,7 +136,7 @@ public class Jump : AMove
     {
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
-            return new Slide(mii, mi, movementSettings);
+            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
         if (groundPoundPending)
         {

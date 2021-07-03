@@ -134,6 +134,10 @@ public class DoubleJump : AMove
 
     public override IMove GetNextMove()
     {
+        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
+        {
+            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
         if (groundPoundPending)
         {
             return new GroundPound(mii, mi, movementSettings);

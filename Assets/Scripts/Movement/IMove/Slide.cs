@@ -5,9 +5,9 @@ public class Slide : AMove
 {
     Vector2 horizVector;
 
-    public Slide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
+    public Slide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
-        // Default Constructor
+        this.horizVector = horizVector;
     }
 
     public override bool AdjustToSlope()
@@ -19,9 +19,12 @@ public class Slide : AMove
     {
         float xDeriv = PlayerSlopeHandler.XDeriv;
         float zDeriv = PlayerSlopeHandler.ZDeriv;
-        float xInc = Mathf.Cos(Mathf.Asin(xDeriv)) * -Mathf.Sign(xDeriv);
-        float zInc = Mathf.Cos(Mathf.Asin(zDeriv)) * -Mathf.Sign(zDeriv);
-        horizVector += new Vector2(xInc, zInc) * movementSettings.SlideSpeed;
+        Vector2 toChange = new Vector2(xDeriv, zDeriv);
+        horizVector -= toChange * movementSettings.SlideForce;
+        if (horizVector.magnitude > movementSettings.SlideMaxSpeed)
+        {
+            horizVector = horizVector.normalized * movementSettings.SlideMaxSpeed;
+        }
     }
 
     public override string AsString()
@@ -38,7 +41,7 @@ public class Slide : AMove
     {
         if (!mi.TouchingGround())
         {
-            return new Fall(mii, mi, movementSettings, horizVector.magnitude, false);
+            return new HelplessFall(mii, mi, movementSettings, horizVector);
         }
         if (mi.TouchingGround() && !PlayerSlopeHandler.BeyondMaxAngle)
         {

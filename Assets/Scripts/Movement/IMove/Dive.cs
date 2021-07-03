@@ -61,7 +61,11 @@ public class Dive : AMove
 
     public override IMove GetNextMove()
     {
-        if (mi.TouchingGround())
+        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
+        {
+            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
+        else if (mi.TouchingGround())
         {
             return new DiveRecovery(mii, mi, movementSettings, horizVel);
         }

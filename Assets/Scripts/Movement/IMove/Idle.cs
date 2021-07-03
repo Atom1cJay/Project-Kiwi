@@ -39,6 +39,10 @@ public class Idle : AMove
 
     public override IMove GetNextMove()
     {
+        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
+        {
+            return new Slide(mii, mi, movementSettings, Vector2.zero);
+        }
         if (mii.GetHorizontalInput().magnitude != 0)
         {
             return new Run(mii, mi, movementSettings, 0);

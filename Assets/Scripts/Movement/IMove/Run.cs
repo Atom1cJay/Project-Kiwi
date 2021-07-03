@@ -89,12 +89,15 @@ public class Run : AMove
 
     public override IMove GetNextMove()
     {
-        Debug.Log(ForwardMovement(horizVel));
         //if (vertBoostPending)
         //{
         //    return new VertGroundBoostCharge(mii, mi, movementSettings, horizVel);
         //}
-        if (horizVel == 0)
+        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
+        {
+            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
+        else if (horizVel == 0)
         {
             return new Idle(mii, mi, movementSettings);
         }
