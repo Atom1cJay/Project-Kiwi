@@ -40,7 +40,7 @@ public class VertAirBoost : AMove
         {
             horizVel = InputUtils.SmoothedInput(
                 horizVel,
-                0,
+                -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                 movementSettings.AirReverseSensitivityX,
                 movementSettings.AirReverseGravityX);
         }
@@ -54,9 +54,9 @@ public class VertAirBoost : AMove
         }
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVel;
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -78,6 +78,10 @@ public class VertAirBoost : AMove
     {
         if (mi.TouchingGround())
         {
+            if (horizVel < 0)
+            {
+                horizVel = 0;
+            }
             return new Run(mii, mi, movementSettings, horizVel);
         }
         if (groundPoundPending)

@@ -17,7 +17,7 @@ public abstract class AMove : IMove
 
     public abstract void AdvanceTime();
 
-    public abstract float GetHorizSpeedThisFrame();
+    public abstract Vector2 GetHorizSpeedThisFrame();
 
     public abstract float GetVertSpeedThisFrame();
 
@@ -32,4 +32,18 @@ public abstract class AMove : IMove
     public abstract bool AdjustToSlope();
 
     public abstract string AsString();
+
+    /// <summary>
+    /// Gives the vector of horizontal movement that the player should move,
+    /// given that they are moving forward relative to their rotation, and given
+    /// the horizontal speed.
+    /// </summary>
+    protected Vector2 ForwardMovement(float horizSpeed)
+    {
+        Transform transform = mi.GetPlayerTransform();
+        float horizAngleFaced = Mathf.Atan2(transform.forward.z, transform.forward.x);
+        float xDelta = horizSpeed * Mathf.Cos(horizAngleFaced);
+        float zDelta = horizSpeed * Mathf.Sin(horizAngleFaced);
+        return new Vector2(xDelta, zDelta);
+    }
 }

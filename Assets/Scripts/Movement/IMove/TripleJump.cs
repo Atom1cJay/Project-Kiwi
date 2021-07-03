@@ -52,6 +52,7 @@ public class TripleJump : AMove
             gravity = movementSettings.TjCancelledMaxGravity;
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
+        horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
         if (mii.AirReverseInput())
         {
             hasInitiatedAirReverse = true;
@@ -74,7 +75,6 @@ public class TripleJump : AMove
                     -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.AirReverseSensitivityX,
                     movementSettings.AirReverseGravityX);
-            if (horizVel < 0) horizVel = 0;
         }
         else
         {
@@ -87,9 +87,9 @@ public class TripleJump : AMove
         }
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVel;
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -103,7 +103,7 @@ public class TripleJump : AMove
         {
             return movementSettings.GroundBoostRotationSpeed;
         }
-        if (horizVel < movementSettings.InstantRotationSpeed)
+        if (horizVel < movementSettings.InstantRotationSpeed && !hasInitiatedAirReverse)
         {
             return float.MaxValue;
         }
@@ -114,6 +114,7 @@ public class TripleJump : AMove
     {
         if (mi.TouchingGround())
         {
+            if (horizVel < 0) horizVel = 0;
             return new Run(mii, mi, movementSettings, horizVel);
         }
         if (groundPoundPending)

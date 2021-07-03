@@ -36,7 +36,7 @@ public class Run : AMove
             horizVel =
                 InputUtils.SmoothedInput(
                     horizVel,
-                    mii.GetHorizontalInput().magnitude * movementSettings.GroundBoostMaxSpeedX,
+                    movementSettings.GroundBoostMaxSpeedX,
                     movementSettings.GroundBoostSensitivityX,
                     movementSettings.GroundBoostGravityX);
         }
@@ -67,9 +67,9 @@ public class Run : AMove
         timeBetweenJumpsBreaksTJ = true;
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVel;
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -89,6 +89,7 @@ public class Run : AMove
 
     public override IMove GetNextMove()
     {
+        Debug.Log(ForwardMovement(horizVel));
         //if (vertBoostPending)
         //{
         //    return new VertGroundBoostCharge(mii, mi, movementSettings, horizVel);
@@ -114,7 +115,8 @@ public class Run : AMove
             return new Fall(mii, mi, movementSettings, horizVel, true);
         }
         if (mii.HardTurnInput() && mii.GetHorizontalInput().magnitude > 0
-            && horizVel > movementSettings.HardTurnMinSpeed)
+            && horizVel > movementSettings.HardTurnMinSpeed
+            && !mii.PressingBoost())
         {
             return new HardTurn(mii, mi, movementSettings, horizVel);
         }

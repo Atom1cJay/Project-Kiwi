@@ -17,9 +17,9 @@ public class GroundPound : AMove
         timePassed += Time.deltaTime;
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return 0;
+        return Vector2.zero;
     }
 
     public override float GetVertSpeedThisFrame()

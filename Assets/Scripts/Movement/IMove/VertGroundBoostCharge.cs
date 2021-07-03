@@ -57,9 +57,9 @@ public class VertGroundBoostCharge : AMove
         return "vertgroundboostcharge";
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVel;
+        return ForwardMovement(horizVel);
     }
 
     public override IMove GetNextMove()

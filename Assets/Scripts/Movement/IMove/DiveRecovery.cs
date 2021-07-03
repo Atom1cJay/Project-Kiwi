@@ -26,20 +26,20 @@ public class DiveRecovery : AMove
         return "diverecovery";
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVel;
+        return ForwardMovement(horizVel);
     }
 
     public override IMove GetNextMove()
     {
         if (!mi.TouchingGround())
         {
-            return new Fall(mii, mi, movementSettings, GetHorizSpeedThisFrame(), false);
+            return new Fall(mii, mi, movementSettings, horizVel, false);
         }
         if (timePassed > movementSettings.DiveRecoveryTime)
         {
-            return new Run(mii, mi, movementSettings, GetHorizSpeedThisFrame());
+            return new Run(mii, mi, movementSettings, horizVel);
         }
         return this; 
     }

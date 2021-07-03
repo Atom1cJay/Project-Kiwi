@@ -29,9 +29,9 @@ public class HorizGroundBoost : AMove
             movementSettings.GroundBoostGravityX);
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVel;
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()

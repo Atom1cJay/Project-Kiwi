@@ -56,6 +56,7 @@ public class DoubleJump : AMove
             gravity = movementSettings.JumpMaxCancelledGravity;
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
+        horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
         if (mii.AirReverseInput())
         {
             hasInitiatedAirReverse = true;
@@ -78,7 +79,6 @@ public class DoubleJump : AMove
                     -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.AirReverseSensitivityX,
                     movementSettings.AirReverseGravityX);
-            if (horizVel < 0) horizVel = 0;
         }
         else if (horizVel > movementSettings.MaxSpeed)
         {
@@ -113,9 +113,9 @@ public class DoubleJump : AMove
         jumpGroundableTimerComplete = true;
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVel;
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -125,7 +125,7 @@ public class DoubleJump : AMove
 
     public override float GetRotationSpeed()
     {
-        if (horizVel < movementSettings.InstantRotationSpeed)
+        if (horizVel < movementSettings.InstantRotationSpeed && !hasInitiatedAirReverse)
         {
             return float.MaxValue;
         }
@@ -140,6 +140,7 @@ public class DoubleJump : AMove
         }
         if (mi.TouchingGround() && jumpGroundableTimerComplete && vertVel < 0)
         {
+            if (horizVel < 0) horizVel = 0;
             return new Run(mii, mi, movementSettings, horizVel);
         }
         if (divePending)

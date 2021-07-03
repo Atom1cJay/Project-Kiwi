@@ -31,9 +31,9 @@ public class HardTurn : AMove
             horizVel, 0, 0, movementSettings.HardTurnGravityX);
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVel;
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()

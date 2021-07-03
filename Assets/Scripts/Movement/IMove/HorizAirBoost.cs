@@ -50,9 +50,9 @@ public class HorizAirBoost : AMove
         }
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVel;
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -69,7 +69,7 @@ public class HorizAirBoost : AMove
     {
         if (mi.TouchingGround())
         {
-            return new Run(mii, mi, movementSettings, GetHorizSpeedThisFrame());
+            return new Run(mii, mi, movementSettings, horizVel);
         }
         if (groundPoundPending)
         {

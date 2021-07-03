@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// Provides access to an IMove object, without the ability to mutate its
@@ -10,7 +11,7 @@ public interface IMoveImmutable
     /// Gives the horizontal speed the player should be at this frame for
     /// this move, based on the current simulated time this frame.
     /// </summary>
-    float GetHorizSpeedThisFrame();
+    Vector2 GetHorizSpeedThisFrame();
 
     /// <summary>
     /// Gives the vertical speed the player should be at this frame for

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,6 +48,7 @@ public class Fall : AMove
     public override void AdvanceTime()
     {
         // Horizontal
+        horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
         if (mii.AirReverseInput())
         {
             hasInitiatedAirReverse = true;
@@ -93,9 +95,9 @@ public class Fall : AMove
         vertVel -= movementSettings.DefaultGravity * Time.deltaTime;
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVel;
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -114,6 +116,10 @@ public class Fall : AMove
 
     public override IMove GetNextMove()
     {
+        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
+        {
+            return new Slide(mii, mi, movementSettings);
+        }
         if (groundPoundPending)
         {
             return new GroundPound(mii, mi, movementSettings);

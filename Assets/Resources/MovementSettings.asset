@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89a9c384f4044d949915fc3cf99a7e4, type: 3}
   m_Name: MovementSettings
   m_EditorClassIdentifier: 
-  maxSpeed: 6.5
+  maxSpeed: 6
   runSensitivityX: 8
   runGravityX: 20
   runGravityXOverTopSpeed: 10
   airSensitivityX: 4
-  airGravityX: 4
+  airGravityX: 6
   airGravityXOverTopSpeed: 2
   tjAirSensitivityX: 4
   tjInputGravityX: 5
@@ -26,7 +26,7 @@ MonoBehaviour:
   horizBoostChargeGravityX: 6
   vertBoostChargeGravityX: 12
   groundBoostMaxSpeedX: 8.5
-  groundBoostSensitivityX: 12
+  groundBoostSensitivityX: 10
   groundBoostGravityX: 4
   diveSpeedX: 6.5
   airReverseSensitivityX: 7
@@ -36,7 +36,7 @@ MonoBehaviour:
   jumpInitGravity: 0
   jumpMaxUncancelledGravity: 20
   jumpMaxCancelledGravity: 28
-  jumpVelMultiplierAtCancel: 0.55
+  jumpVelMultiplierAtCancel: 0.5
   jumpUncancelledGravityIncrease: 75
   jumpCancelledGravityIncrease: 150
   reverseCoyoteTime: 0.15
@@ -83,7 +83,7 @@ MonoBehaviour:
   gpDownSpeed: 10
   diveInitVel: 5
   diveGravity: 23
-  diveRecoveryTime: 0.2
+  diveRecoveryTime: 0.1
   defaultGravity: 25
   stickToGroundMultiplier: 0
   dissonanceForAirReverse: 1.8
@@ -94,3 +94,5 @@ MonoBehaviour:
   boostAftermathRotationSpeed: 50
   diveRotationSpeed: 50
   groundBoostRotationSpeed: 200
+  slideSpeed: 0.1
+  slideEndSpeed: 2

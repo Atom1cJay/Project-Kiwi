@@ -94,4 +94,9 @@ public class MovementInfo : MonoBehaviour
     {
         return effectiveSpeedXZ;
     }
+
+    public Transform GetPlayerTransform()
+    {
+        return transform;
+    }
 }

@@ -79,7 +79,6 @@ public class Jump : AMove
                     -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.AirReverseSensitivityX,
                     movementSettings.AirReverseGravityX);
-            if (horizVel < 0) horizVel = 0;
         }
         else if (horizVel > movementSettings.MaxSpeed)
         {
@@ -114,9 +113,9 @@ public class Jump : AMove
         jumpGroundableTimerComplete = true;
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVel;
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -126,7 +125,7 @@ public class Jump : AMove
 
     public override float GetRotationSpeed()
     {
-        if (horizVel < movementSettings.InstantRotationSpeed)
+        if (horizVel < movementSettings.InstantRotationSpeed && !hasInitiatedAirReverse)
         {
             return float.MaxValue;
         }
@@ -135,12 +134,17 @@ public class Jump : AMove
 
     public override IMove GetNextMove()
     {
+        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
+        {
+            return new Slide(mii, mi, movementSettings);
+        }
         if (groundPoundPending)
         {
             return new GroundPound(mii, mi, movementSettings);
         }
         if (mi.TouchingGround() && jumpGroundableTimerComplete && vertVel < 0)
         {
+            if (horizVel < 0) horizVel = 0;
             return new Run(mii, mi, movementSettings, horizVel);
         }
         if (divePending)

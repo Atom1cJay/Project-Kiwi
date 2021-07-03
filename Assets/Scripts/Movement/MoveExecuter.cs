@@ -20,25 +20,25 @@ public class MoveExecuter : MonoBehaviour
 
     void Update()
     {
-        Vector3 dir = DirectionOfMovement();
         moveThisFrame.AdvanceTime();
-        float speedThisFrame = moveThisFrame.GetHorizSpeedThisFrame();
-        Vector3 horizMovement = dir * speedThisFrame;
+        Vector2 horizMovement = moveThisFrame.GetHorizSpeedThisFrame();
+        Vector3 dir = DirectionOfMovement(horizMovement);
+        Vector3 horizMovementAdjusted = dir * horizMovement.magnitude;
         Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
-        charCont.Move((vertMovement + horizMovement) * Time.deltaTime);
+        charCont.Move((vertMovement + horizMovementAdjusted) * Time.deltaTime);
         IMove next = moveThisFrame.GetNextMove();
         moveThisFrame = next;
     }
 
     /// <summary>
-    /// Gives the direction of player movement based on the player's rotation
-    /// and the slope they're standing on.
+    /// Gives the direction of player movement based on the player's horizontal
+    /// movement vector and the slope they're standing on.
     /// </summary>
-    private Vector3 DirectionOfMovement()
+    private Vector3 DirectionOfMovement(Vector2 horizMovement)
     {
-        if (!moveThisFrame.AdjustToSlope()) return transform.forward;
+        if (!moveThisFrame.AdjustToSlope()) return new Vector3(horizMovement.x, 0, horizMovement.y).normalized;
 
-        float horizAngleFaced = Mathf.Atan2(transform.forward.z, transform.forward.x);
+        float horizAngleFaced = Mathf.Atan2(horizMovement.y, horizMovement.x);
 
         float xDelta = Mathf.Cos(horizAngleFaced);
         float zDelta = Mathf.Sin(horizAngleFaced);
@@ -46,10 +46,8 @@ public class MoveExecuter : MonoBehaviour
 
         // Fixing the quirks of y movement
         if (yDelta > 0) yDelta = 0; // CharacterController will take care of ascension
-        //if (moveThisFrame.AdjustToSlope()) yDelta -= Mathf.Abs(yDelta * movementSettings.StickToGroundMultiplier); // To keep player stuck to ground
 
         Vector3 dir = new Vector3(xDelta, yDelta, zDelta);
-        //if (dir.magnitude > 1) { dir = dir.normalized; }
         return dir;
     }
 

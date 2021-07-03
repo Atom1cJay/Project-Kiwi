@@ -37,7 +37,19 @@ public class PlayerSlopeHandler : MonoBehaviour
         XDeriv = -hit.normal.x;
         ZDeriv = -hit.normal.z;
         AngleOfSlope = GetAngleOfSlope(hit.normal);
-        BeyondMaxAngle = maxSlopeAngle < AngleOfSlope;
+        DetermineIfBeyondAngle();
+    }
+
+    private void DetermineIfBeyondAngle()
+    {
+        if (!BeyondMaxAngle)
+        {
+            BeyondMaxAngle = maxSlopeAngle < AngleOfSlope;
+        }
+        else
+        {
+            BeyondMaxAngle = maxSlopeAngle < AngleOfSlope + 1;
+        }
     }
 
     /// <summary>

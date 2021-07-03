@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class Idle : AMove
 {
@@ -21,9 +22,9 @@ public class Idle : AMove
         // Nothing changes over time
     }
 
-    public override float GetHorizSpeedThisFrame()
+    public override Vector2 GetHorizSpeedThisFrame()
     {
-        return 0;
+        return Vector2.zero;
     }
 
     public override float GetRotationSpeed()
@@ -48,7 +49,7 @@ public class Idle : AMove
         }
         if (!mi.TouchingGround())
         {
-            return new Fall(mii, mi, movementSettings, GetHorizSpeedThisFrame(), true);
+            return new Fall(mii, mi, movementSettings, 0, true);
         }
         // todo make ground boost possible
 
