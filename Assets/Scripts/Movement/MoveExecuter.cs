@@ -27,7 +27,7 @@ public class MoveExecuter : MonoBehaviour
         Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
         charCont.Move((vertMovement + horizMovementAdjusted) * Time.deltaTime);
         IMove next = moveThisFrame.GetNextMove();
-        print("calledNextMove");
+        //print("calledNextMove");
         moveThisFrame = next;
     }
 
