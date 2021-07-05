@@ -123,6 +123,14 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float slideMaxSpeed;
     [SerializeField] float slideRecoveryPace;
 
+    [Header("Glide Settings")]
+    [SerializeField] float glideRotationSpeed;
+    [SerializeField] float glideRotationSpeedSensitivity;
+    [SerializeField] float glideRotationSpeedGravity;
+    [SerializeField] float glideTiltSensitivity;
+    [SerializeField] float glideAirLoss;
+    [SerializeField] float gliderWeight;
+
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
     public float RunSensitivityX { get { return runSensitivityX; } }
@@ -222,6 +230,13 @@ public class MovementSettingsSO : ScriptableObject
     public float SlideForce { get { return slideForce; } }
     public float SlideMaxSpeed { get { return slideMaxSpeed; } }
     public float SlideRecoveryPace { get { return slideRecoveryPace; } }
+
+    public float GlideRotationSpeed { get { return glideRotationSpeed; } }
+    public float GlideRotationSpeedSensitivity { get { return glideRotationSpeedSensitivity; } }
+    public float GlideRotationSpeedGravity { get { return glideRotationSpeedGravity; } }
+    public float GlideTiltSensitivity { get { return glideTiltSensitivity; } }
+    public float GlideAirLoss { get { return glideAirLoss; } }
+    public float GliderWeight { get { return gliderWeight; } }
 
     static MovementSettingsSO _instance;
     public static MovementSettingsSO Instance

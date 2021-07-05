@@ -11,6 +11,7 @@ public class Jump : AMove
     bool vertBoostChargePending;
     bool horizBoostChargePending;
     bool groundPoundPending;
+    bool glidePending;
     bool jumpCancelled;
     bool jumpGroundableTimerComplete;
     bool jumpTimeShouldBreakTJ;
@@ -35,6 +36,7 @@ public class Jump : AMove
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
+        mii.OnGlide.AddListener(() => glidePending = true);
         mii.OnJumpCancelled.AddListener(() =>
         {
             jumpCancelled = true;
@@ -134,6 +136,10 @@ public class Jump : AMove
 
     public override IMove GetNextMove()
     {
+        if (glidePending)
+        {
+            return new Glide(mii, mi, movementSettings, horizVel, vertVel);
+        }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
