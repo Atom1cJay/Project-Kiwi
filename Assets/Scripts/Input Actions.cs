@@ -440,6 +440,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""AutoAdjust"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f23fea8a-5033-4352-b97f-57254a4ec39d"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/trigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AutoAdjust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
