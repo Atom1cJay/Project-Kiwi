@@ -66,6 +66,21 @@ public class MovementInputInfo : MonoBehaviour
     }
 
     /// <summary>
+    /// Gives the normalized horizontal movement input.
+    /// </summary>
+    public Vector2 GetCameraInput()
+    {
+        float rawInputX = inputActionsHolder.inputActions.Camera.HorizontalRotate.ReadValue<float>();
+        float rawInputY = inputActionsHolder.inputActions.Camera.VerticalRotate.ReadValue<float>();
+        Vector2 rawInput = new Vector2(rawInputX, rawInputY);
+        if (rawInput.magnitude > 1)
+        {
+            rawInput = rawInput.normalized;
+        }
+        return rawInput;
+    }
+
+    /// <summary>
     /// Is the horizontal input dissonance high enough for an air reverse to be registered?
     /// </summary>
     public bool AirReverseInput()

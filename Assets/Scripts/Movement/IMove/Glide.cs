@@ -17,6 +17,7 @@ public class Glide : AMove
 
     public override void AdvanceTime()
     {
+        Debug.Log("Left: " + mii.GetHorizontalInput() + ", " + "Right: " + mii.GetCameraInput());
         // Tilt
         tilt += movementSettings.GlideTiltSensitivity * mii.GetHorizontalInput().y * Time.deltaTime;
         // Horizontal
