@@ -310,7 +310,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b3e30e7d-9d16-4b99-8a0d-53aad700e982"",
-                    ""path"": ""<HID::Core (Plus) Wired Controller>/button4"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/trigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
@@ -336,6 +336,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""Glide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6bb6895c-e9f7-49d6-9c6f-713713562eb7"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/button4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""Glide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -474,10 +485,21 @@ public class @InputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f23fea8a-5033-4352-b97f-57254a4ec39d"",
-                    ""path"": ""<HID::Core (Plus) Wired Controller>/trigger"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/button5"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""AutoAdjust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19091afe-d70d-4185-9026-a21d166164da"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/button6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""AutoAdjust"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
