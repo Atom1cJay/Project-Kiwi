@@ -65,6 +65,14 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Glide"",
+                    ""type"": ""Button"",
+                    ""id"": ""9352f2b2-3ea4-4746-a1fa-73abf04be3bb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -280,7 +288,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3cce94b2-2eaf-4978-937d-16cd6d1a78e1"",
-                    ""path"": ""<Mouse>/press"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -307,6 +315,28 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""GamePad"",
                     ""action"": ""GroundPound"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77fb4ea4-8ff4-4a91-a506-c150ee2cc2a5"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Glide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00f709b6-678f-4ef9-a39c-bb55cbbd1e76"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Glide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -488,6 +518,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_Player_VertBoost = m_Player.FindAction("VertBoost", throwIfNotFound: true);
         m_Player_Dive = m_Player.FindAction("Dive", throwIfNotFound: true);
         m_Player_GroundPound = m_Player.FindAction("GroundPound", throwIfNotFound: true);
+        m_Player_Glide = m_Player.FindAction("Glide", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_HorizontalRotate = m_Camera.FindAction("HorizontalRotate", throwIfNotFound: true);
@@ -548,6 +579,7 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_VertBoost;
     private readonly InputAction m_Player_Dive;
     private readonly InputAction m_Player_GroundPound;
+    private readonly InputAction m_Player_Glide;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -558,6 +590,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         public InputAction @VertBoost => m_Wrapper.m_Player_VertBoost;
         public InputAction @Dive => m_Wrapper.m_Player_Dive;
         public InputAction @GroundPound => m_Wrapper.m_Player_GroundPound;
+        public InputAction @Glide => m_Wrapper.m_Player_Glide;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -585,6 +618,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @GroundPound.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGroundPound;
                 @GroundPound.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGroundPound;
                 @GroundPound.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGroundPound;
+                @Glide.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGlide;
+                @Glide.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGlide;
+                @Glide.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGlide;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -607,6 +643,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @GroundPound.started += instance.OnGroundPound;
                 @GroundPound.performed += instance.OnGroundPound;
                 @GroundPound.canceled += instance.OnGroundPound;
+                @Glide.started += instance.OnGlide;
+                @Glide.performed += instance.OnGlide;
+                @Glide.canceled += instance.OnGlide;
             }
         }
     }
@@ -686,6 +725,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         void OnVertBoost(InputAction.CallbackContext context);
         void OnDive(InputAction.CallbackContext context);
         void OnGroundPound(InputAction.CallbackContext context);
+        void OnGlide(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {
