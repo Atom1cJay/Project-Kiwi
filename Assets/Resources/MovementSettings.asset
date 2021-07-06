@@ -97,9 +97,17 @@ MonoBehaviour:
   slideForce: 0.25
   slideMaxSpeed: 7
   slideRecoveryPace: 2
-  glideRotationSpeed: 100
+  glideRotationSpeed: 300
   glideRotationSpeedSensitivity: 50
   glideRotationSpeedGravity: 50
   glideTiltSensitivity: 0.8
   glideAirLoss: 0.5
-  gliderWeight: 0.15
+  glideHorizontalSpeed: 30
+  glideMaxHorizontalSpeed: 16
+  glideVerticalSpeed: 7
+  glideMaxVerticalSpeed: 2
+  glideDriftMovementVector: {x: 6, y: -3}
+  glideEnterDriftSpeed: 3.5
+  glideTimeToStartDrift: 1.5
+  glideDriftDuration: 2.5
+  glideDriftBufferDuration: 0.5

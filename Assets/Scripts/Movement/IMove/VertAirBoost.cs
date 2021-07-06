@@ -8,6 +8,7 @@ public class VertAirBoost : AMove
     float vertVel;
     float horizVel;
     bool divePending;
+    bool glidePending;
     bool groundPoundPending;
     bool airReverseInitiated;
 
@@ -25,6 +26,7 @@ public class VertAirBoost : AMove
         vertVel = movementSettings.VertBoostMinVel + (propCharged * (movementSettings.VertBoostMaxVel - movementSettings.VertBoostMinVel));
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
+        mii.OnGlide.AddListener(() => glidePending = true);
     }
 
     public override void AdvanceTime()
@@ -76,6 +78,10 @@ public class VertAirBoost : AMove
 
     public override IMove GetNextMove()
     {
+        if (glidePending)
+        {
+            return new Glide(mii, mi, movementSettings, horizVel, vertVel);
+        }
         if (mi.TouchingGround())
         {
             if (horizVel < 0)

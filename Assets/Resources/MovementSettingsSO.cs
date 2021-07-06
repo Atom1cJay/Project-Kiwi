@@ -129,7 +129,15 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float glideRotationSpeedGravity;
     [SerializeField] float glideTiltSensitivity;
     [SerializeField] float glideAirLoss;
-    [SerializeField] float gliderWeight;
+    [SerializeField] float glideHorizontalSpeed;
+    [SerializeField] float glideMaxHorizontalSpeed;
+    [SerializeField] float glideVerticalSpeed;
+    [SerializeField] float glideMaxVerticalSpeed;
+    [SerializeField] Vector2 glideDriftMovementVector;
+    [SerializeField] float glideEnterDriftSpeed;
+    [SerializeField] float glideTimeToStartDrift;
+    [SerializeField] float glideDriftDuration;
+    [SerializeField] float glideDriftBufferDuration;
 
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
@@ -236,7 +244,16 @@ public class MovementSettingsSO : ScriptableObject
     public float GlideRotationSpeedGravity { get { return glideRotationSpeedGravity; } }
     public float GlideTiltSensitivity { get { return glideTiltSensitivity; } }
     public float GlideAirLoss { get { return glideAirLoss; } }
-    public float GliderWeight { get { return gliderWeight; } }
+    public float GlideHorizontalSpeed { get { return glideHorizontalSpeed; } }
+    public float GlideVerticalSpeed { get { return glideVerticalSpeed; } }
+    public float GlideMaxHorizontalSpeed { get { return glideMaxHorizontalSpeed; } }
+    public float GlideMaxVerticalSpeed { get { return glideMaxVerticalSpeed; } }
+    public float GlideEnterDriftSpeed { get { return glideEnterDriftSpeed; } }
+    public float GlideTimeToEnterDrift { get { return glideTimeToStartDrift; } }
+    public float GlideDriftDuration { get { return glideDriftDuration; } }
+    public Vector2 GlideDriftMovementVector {  get { return glideDriftMovementVector; } }
+    public float GlideDriftBufferDuration { get { return glideDriftBufferDuration; } }
+
 
     static MovementSettingsSO _instance;
     public static MovementSettingsSO Instance
