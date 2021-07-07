@@ -33,12 +33,31 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Player.Jump.canceled += _ => OnJumpCancelled.Invoke();
         inputActionsHolder.inputActions.Player.Boost.started += _ => OnHorizBoostCharge.Invoke();
         inputActionsHolder.inputActions.Player.VertBoost.started += _ => OnVertBoostCharge.Invoke();
+        OnVertBoostCharge.AddListener(() => StartCoroutine("WaitForVertBoostRelease"));
         inputActionsHolder.inputActions.Player.Boost.canceled += _ => OnHorizBoostRelease.Invoke();
         inputActionsHolder.inputActions.Player.VertBoost.canceled += _ => OnVertBoostRelease.Invoke();
         inputActionsHolder.inputActions.Player.Dive.performed += _ => OnDiveInput.Invoke();
         inputActionsHolder.inputActions.Player.GroundPound.performed += _ => OnGroundPound.Invoke();
         inputActionsHolder.inputActions.Player.Glide.performed += _ => OnGlide.Invoke();
         OnJump.AddListener(() => StartCoroutine(WaitReverseCoyoteTime()));
+    }
+
+    IEnumerator WaitForVertBoostRelease()
+    {
+        // TODO return to
+        yield return null;
+        /*
+        float timeHeld = 0;
+        while (timeHeld < movementSettings.VertBoostMaxChargeTime && inputActionsHolder.inputActions.Player.VertBoost.ReadValue<float>() != 0)
+        {
+
+        }
+        {
+            if (inputActionsHolder.inputActions.Player.VertBoost.ReadValue<float>() == 0)
+            timeHeld += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        */
     }
 
     /// <summary>

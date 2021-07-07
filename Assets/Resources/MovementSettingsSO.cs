@@ -138,6 +138,9 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float glideTimeToStartDrift;
     [SerializeField] float glideDriftDuration;
     [SerializeField] float glideDriftBufferDuration;
+    [SerializeField] float glideWeight;
+    [SerializeField] float glideMaxTilt;
+    [SerializeField] float glideGravity;
 
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
@@ -253,6 +256,9 @@ public class MovementSettingsSO : ScriptableObject
     public float GlideDriftDuration { get { return glideDriftDuration; } }
     public Vector2 GlideDriftMovementVector {  get { return glideDriftMovementVector; } }
     public float GlideDriftBufferDuration { get { return glideDriftBufferDuration; } }
+    public float GlideWeight { get { return glideWeight; } }
+    public float GlideMaxTilt { get { return glideMaxTilt; } }
+    public float GlideGravity { get { return glideGravity; } }
 
 
     static MovementSettingsSO _instance;
