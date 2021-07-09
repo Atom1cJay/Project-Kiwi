@@ -29,17 +29,37 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// </summary>
     public static bool BeyondMaxAngle { get; private set; }
 
+    private CollisionDetector groundDetector;
+
+    private void Start()
+    {
+        groundDetector = GetComponent<MovementInfo>().GetGroundDetector();
+    }
+
     // Obtains the normal of the platform the player is currently on
     // (Is called whenever the player moves in a way which ends with it touching something)
     // EFFECT: Modifies AngleOfSlope to refer to the correct angle
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        XDeriv = -hit.normal.x;
-        ZDeriv = -hit.normal.z;
-        AngleOfSlope = GetAngleOfSlope(hit.normal);
-        DetermineIfBeyondAngle();
+        // Make sure that this is a valid slope (the platform is angled)
+        RaycastHit rchit;
+        int layerMask = ~(1 << 9);
+        Debug.DrawRay(hit.point + Vector3.up, Vector3.down);
+        if (Physics.Raycast(hit.point + Vector3.up, Vector3.down, out rchit, Mathf.Infinity, layerMask)) // layer mask?
+        {
+            XDeriv = -rchit.normal.x;
+            ZDeriv = -rchit.normal.z;
+            AngleOfSlope = GetAngleOfSlope(rchit.normal);
+            DetermineIfBeyondAngle();
+            print(rchit.normal);
+        }
     }
 
+    /// <summary>
+    /// Determines whether or not the player is beyond the max angle. Has
+    /// different standards depending on the current max angle because
+    /// otherwise, a 45 degree angle would constantly go on and off.
+    /// </summary>
     private void DetermineIfBeyondAngle()
     {
         if (!BeyondMaxAngle)

@@ -9,6 +9,7 @@ public class Jump : AMove
     float horizVel;
     bool divePending;
     bool vertBoostChargePending;
+    bool vertBoostPending;
     bool horizBoostChargePending;
     bool groundPoundPending;
     bool glidePending;
@@ -34,6 +35,7 @@ public class Jump : AMove
         vertVel = movementSettings.JumpInitVel;
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
+        mii.OnVertBoostRelease.AddListener(() => vertBoostPending = true);
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
@@ -136,6 +138,10 @@ public class Jump : AMove
 
     public override IMove GetNextMove()
     {
+        if (vertBoostPending)
+        {
+            return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, horizVel);
+        }
         if (glidePending)
         {
             return new Glidev2(mii, mi, movementSettings, horizVel, vertVel);

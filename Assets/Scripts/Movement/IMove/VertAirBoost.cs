@@ -34,6 +34,7 @@ public class VertAirBoost : AMove
         // Vertical
         vertVel -= movementSettings.VertBoostGravity * Time.deltaTime;
         // Horizontal
+        horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
         if (mii.AirReverseInput())
         {
             airReverseInitiated = true;
@@ -82,7 +83,7 @@ public class VertAirBoost : AMove
         {
             return new Glide(mii, mi, movementSettings, horizVel, vertVel);
         }
-        if (mi.TouchingGround())
+        if (mi.TouchingGround() && vertVel < 0)
         {
             if (horizVel < 0)
             {

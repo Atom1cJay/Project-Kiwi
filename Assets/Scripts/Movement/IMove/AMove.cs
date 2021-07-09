@@ -33,17 +33,36 @@ public abstract class AMove : IMove
 
     public abstract string AsString();
 
+    public virtual bool RotationIsRelative()
+    {
+        return false;
+    }
+
     /// <summary>
     /// Gives the vector of horizontal movement that the player should move,
     /// given that they are moving forward relative to their rotation, and given
     /// the horizontal speed.
     /// </summary>
-    protected Vector2 ForwardMovement(float horizSpeed)
+    protected Vector2 ForwardMovement(float speed)
     {
         Transform transform = mi.GetPlayerTransform();
         float horizAngleFaced = Mathf.Atan2(transform.forward.z, transform.forward.x);
-        float xDelta = horizSpeed * Mathf.Cos(horizAngleFaced);
-        float zDelta = horizSpeed * Mathf.Sin(horizAngleFaced);
+        float xDelta = speed * Mathf.Cos(horizAngleFaced);
+        float zDelta = speed * Mathf.Sin(horizAngleFaced);
+        return new Vector2(xDelta, zDelta);
+    }
+
+    /// <summary>
+    /// Gives the vector of horizontal movement that the player should move,
+    /// given that they are moving sideways relative to their rotation, and given
+    /// the horizontal speed.
+    /// </summary>
+    protected Vector2 SideMovement(float speed)
+    {
+        Transform transform = mi.GetPlayerTransform();
+        float horizAngleFaced = Mathf.Atan2(transform.forward.z, transform.forward.x) + (Mathf.PI / 2);
+        float xDelta = speed * Mathf.Cos(horizAngleFaced);
+        float zDelta = speed * Mathf.Sin(horizAngleFaced);
         return new Vector2(xDelta, zDelta);
     }
 }

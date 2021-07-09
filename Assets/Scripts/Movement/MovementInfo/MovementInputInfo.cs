@@ -25,6 +25,7 @@ public class MovementInputInfo : MonoBehaviour
     private MovementSettingsSO movementSettings;
 
     bool inReverseCoyoteTime;
+    float vertBoostTimeCharged;
 
     void Start()
     {
@@ -35,7 +36,6 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Player.VertBoost.started += _ => OnVertBoostCharge.Invoke();
         OnVertBoostCharge.AddListener(() => StartCoroutine("WaitForVertBoostRelease"));
         inputActionsHolder.inputActions.Player.Boost.canceled += _ => OnHorizBoostRelease.Invoke();
-        inputActionsHolder.inputActions.Player.VertBoost.canceled += _ => OnVertBoostRelease.Invoke();
         inputActionsHolder.inputActions.Player.Dive.performed += _ => OnDiveInput.Invoke();
         inputActionsHolder.inputActions.Player.GroundPound.performed += _ => OnGroundPound.Invoke();
         inputActionsHolder.inputActions.Player.Glide.performed += _ => OnGlide.Invoke();
@@ -44,20 +44,29 @@ public class MovementInputInfo : MonoBehaviour
 
     IEnumerator WaitForVertBoostRelease()
     {
-        // TODO return to
-        yield return null;
-        /*
-        float timeHeld = 0;
-        while (timeHeld < movementSettings.VertBoostMaxChargeTime && inputActionsHolder.inputActions.Player.VertBoost.ReadValue<float>() != 0)
+        vertBoostTimeCharged = 0;
+        while (vertBoostTimeCharged < movementSettings.VertBoostMaxChargeTime
+            && inputActionsHolder.inputActions.Player.VertBoost.ReadValue<float>() != 0)
         {
-
-        }
-        {
-            if (inputActionsHolder.inputActions.Player.VertBoost.ReadValue<float>() == 0)
-            timeHeld += Time.deltaTime;
+            vertBoostTimeCharged += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        */
+        if (vertBoostTimeCharged > movementSettings.VertBoostMaxChargeTime)
+        {
+            vertBoostTimeCharged = movementSettings.VertBoostMaxChargeTime;
+        }
+        OnVertBoostRelease.Invoke();
+    }
+
+    /// <summary>
+    /// Gives the amount of time that the player last charged their vertical
+    /// boost. Maxes out at the maximum amount of time that a vertical boost
+    /// can be charged. Resets every time the player does the input for another
+    /// boost charge.
+    /// </summary>
+    public float VertBoostTimeCharged()
+    {
+        return vertBoostTimeCharged;
     }
 
     /// <summary>
@@ -82,6 +91,21 @@ public class MovementInputInfo : MonoBehaviour
         }
 
         return rawInput;
+    }
+
+    /// <summary>
+    /// Gives the horizontal input with respect to the rotation of the player.
+    /// For instance, if the player is pressing forward but the player is facing
+    /// forward-right, an input of (cos45, sin45) will be given.
+    /// </summary>
+    public Vector2 GetRelativeHorizontalInput()
+    {
+        float difference = relevantCamera.transform.eulerAngles.y - transform.eulerAngles.y;
+        float curHorizAngle = Mathf.Atan2(GetHorizontalInput().y, GetHorizontalInput().x);
+        float curHorizMagnitude = GetHorizontalInput().magnitude;
+        curHorizAngle -= difference * Mathf.Deg2Rad;
+        print(relevantCamera.transform.eulerAngles.y - transform.eulerAngles.y);
+        return new Vector2(Mathf.Cos(curHorizAngle) * curHorizMagnitude, Mathf.Sin(curHorizAngle) * curHorizMagnitude);
     }
 
     /// <summary>

@@ -8,6 +8,7 @@ public class Fall : AMove
     float horizVel;
     float vertVel;
     bool divePending;
+    bool vertBoostPending;
     bool vertBoostChargePending;
     bool horizBoostChargePending;
     bool jumpPending;
@@ -30,6 +31,7 @@ public class Fall : AMove
         coyoteTime = giveCoyoteTime ? movementSettings.CoyoteTime : 0;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", AllowCoyoteTime());
         mii.OnDiveInput.AddListener(() => divePending = true);
+        mii.OnVertBoostRelease.AddListener(() => vertBoostPending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
@@ -116,6 +118,10 @@ public class Fall : AMove
 
     public override IMove GetNextMove()
     {
+        if (vertBoostPending)
+        {
+            return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, horizVel);
+        }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
@@ -124,9 +130,13 @@ public class Fall : AMove
         {
             return new GroundPound(mii, mi, movementSettings);
         }
-        if (mi.TouchingGround())
+        if (mi.TouchingGround() && horizVel > 0)
         {
             return new Run(mii, mi, movementSettings, horizVel);
+        }
+        if (mi.TouchingGround() && horizVel == 0)
+        {
+            return new Idle(mii, mi, movementSettings);
         }
         if (jumpPending && coyoteTime > 0)
         {

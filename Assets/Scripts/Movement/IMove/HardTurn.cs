@@ -6,6 +6,7 @@ public class HardTurn : AMove
     float horizVel;
     float timeLeft;
     bool jumpInputPending;
+    bool vertBoostPending;
 
     /// <summary>
     /// Constructs a HardTurn, initializing the objects that hold all the
@@ -20,6 +21,7 @@ public class HardTurn : AMove
         this.horizVel = horizVel;
         timeLeft = movementSettings.HardTurnTime;
         mii.OnJump.AddListener(() => jumpInputPending = true);
+        mii.OnVertBoostRelease.AddListener(() => vertBoostPending = true);
     }
 
     public override void AdvanceTime()
@@ -48,6 +50,10 @@ public class HardTurn : AMove
 
     public override IMove GetNextMove()
     {
+        if (vertBoostPending)
+        {
+            return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, horizVel);
+        }
         if (timeLeft < 0)
         {
             return new Run(mii, mi, movementSettings, horizVel);

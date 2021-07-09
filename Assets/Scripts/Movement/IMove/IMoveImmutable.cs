@@ -48,6 +48,13 @@ public interface IMoveImmutable
     bool AdjustToSlope();
 
     /// <summary>
+    /// Should the the player rotate relative to their current positioning
+    /// (true), or should they rotate TOWARDS the direction of the stick
+    /// (false)?
+    /// </summary>
+    bool RotationIsRelative();
+
+    /// <summary>
     /// Gives this move as a String with no spaces, all in lowercase.
     /// </summary>
     /// <returns></returns>

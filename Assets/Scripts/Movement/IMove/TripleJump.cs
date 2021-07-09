@@ -8,6 +8,7 @@ public class TripleJump : AMove
     float horizVel;
     float vertVel;
     bool divePending;
+    bool vertBoostPending;
     bool vertBoostChargePending;
     bool horizBoostChargePending;
     bool jumpCancelled;
@@ -28,6 +29,7 @@ public class TripleJump : AMove
         gravity = movementSettings.TjInitGravity;
         vertVel = movementSettings.TjInitJumpVel;
         mii.OnDiveInput.AddListener(() => divePending = true);
+        mii.OnVertBoostRelease.AddListener(() => vertBoostPending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
@@ -112,6 +114,10 @@ public class TripleJump : AMove
 
     public override IMove GetNextMove()
     {
+        if (vertBoostPending)
+        {
+            return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, horizVel);
+        }
         if (mi.TouchingGround())
         {
             if (horizVel < 0) horizVel = 0;

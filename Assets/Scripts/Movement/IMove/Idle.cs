@@ -4,6 +4,7 @@ using UnityEngine;
 public class Idle : AMove
 {
     bool jumpPending;
+    bool vertBoostPending;
 
     /// <summary>
     /// Constructs a Idle, initializing the objects that hold all the
@@ -15,6 +16,7 @@ public class Idle : AMove
     public Idle(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
     {
         mii.OnJump.AddListener(() => jumpPending = true);
+        mii.OnVertBoostRelease.AddListener(() => vertBoostPending = true);
     }
 
     public override void AdvanceTime()
@@ -39,6 +41,10 @@ public class Idle : AMove
 
     public override IMove GetNextMove()
     {
+        if (vertBoostPending)
+        {
+            return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, 0);
+        }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, Vector2.zero);

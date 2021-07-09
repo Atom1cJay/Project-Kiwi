@@ -6,12 +6,14 @@ public class Glidev2 : AMove
     bool groundPoundPending; // Temp
     bool glidePending; // Temp
     float vertVel;
-    float horizVel;
+    float horizVelZ;
+    float horizVelX;
     float tilt; // Angle forward/backward. Positive = forward
+    float roll; // Angle left/right. Positive = right
 
     public Glidev2(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, float vertVel) : base(ms, mi, mii)
     {
-        this.horizVel = horizVel;
+        horizVelZ = horizVel;
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
         tilt = 10 * Mathf.Deg2Rad;
@@ -20,23 +22,25 @@ public class Glidev2 : AMove
     public override void AdvanceTime()
     {
         Debug.Log(tilt * Mathf.Rad2Deg);
-        tilt = InputUtils.SmoothedInput(tilt, mii.GetHorizontalInput().y * movementSettings.GlideMaxTilt, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
+        tilt = InputUtils.SmoothedInput(tilt, mii.GetRelativeHorizontalInput().y * movementSettings.GlideMaxTilt, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
         tilt = Mathf.Clamp(tilt, -movementSettings.GlideMaxTilt * Mathf.Deg2Rad, movementSettings.GlideMaxTilt * Mathf.Deg2Rad);
-        horizVel += movementSettings.GlideWeight * Mathf.Sin(tilt) * Time.deltaTime;
-        vertVel += horizVel * -Mathf.Tan(tilt) * Time.deltaTime;
-        if (vertVel > 0)
+        //roll = InputUtils.SmoothedInput(roll, mii.GetRelativeHorizontalInput().x * movementSettings.GlideMaxTilt, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
+        //roll = Mathf.Clamp(roll, -movementSettings.GlideMaxTilt * Mathf.Deg2Rad, movementSettings.GlideMaxTilt * Mathf.Deg2Rad);
+        // TODO change max tilt to max roll in both above lines
+        horizVelZ += movementSettings.GlideWeight * Mathf.Sin(tilt) * Time.deltaTime;
+        //horizVelX += movementSettings.GlideWeight * Mathf.Sin(roll) * Time.deltaTime;
+        vertVel += horizVelZ * -Mathf.Tan(tilt) * Time.deltaTime;
+        //vertVel += horizVelX * -Mathf.Tan(roll) * Time.deltaTime;
+        vertVel -= movementSettings.GlideAirLoss * Time.deltaTime;
+        if (horizVelZ < 0)
         {
-            vertVel -= movementSettings.GlideGravity * Time.deltaTime;
-        }
-        if (horizVel < 0)
-        {
-            horizVel = 0;
+            horizVelZ = 0;
         }
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
-        return ForwardMovement(horizVel);
+        return ForwardMovement(horizVelZ);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -46,7 +50,7 @@ public class Glidev2 : AMove
 
     public override float GetRotationSpeed()
     {
-        return 0;
+        return mii.GetHorizontalInput().x * movementSettings.GlideRotationSpeed;
     }
 
     public override IMove GetNextMove()
@@ -63,12 +67,12 @@ public class Glidev2 : AMove
             }
             else
             {
-                return new Run(mii, mi, movementSettings, horizVel);
+                return new Run(mii, mi, movementSettings, horizVelZ);
             }
         }
         else if (glidePending)
         {
-            return new Fall(mii, mi, movementSettings, horizVel, false);
+            return new Fall(mii, mi, movementSettings, horizVelZ, false);
         }
         return this;
     }
@@ -86,6 +90,11 @@ public class Glidev2 : AMove
     public override bool AdjustToSlope()
     {
         return false;
+    }
+
+    public override bool RotationIsRelative()
+    {
+        return true;
     }
 
     public override string AsString()

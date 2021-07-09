@@ -24,7 +24,7 @@ public class Run : AMove
     {
         this.horizVel = horizVel;
         mii.OnJump.AddListener(() => jumpPending = true);
-        mii.OnVertBoostCharge.AddListener(() => vertBoostPending = true);
+        mii.OnVertBoostRelease.AddListener(() => vertBoostPending = true);
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitToBreakTimeBetweenJumps());
     }
 
@@ -89,10 +89,10 @@ public class Run : AMove
 
     public override IMove GetNextMove()
     {
-        //if (vertBoostPending)
-        //{
-        //    return new VertGroundBoostCharge(mii, mi, movementSettings, horizVel);
-        //}
+        if (vertBoostPending)
+        {
+            return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, horizVel);
+        }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));

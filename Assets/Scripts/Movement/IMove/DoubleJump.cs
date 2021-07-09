@@ -8,6 +8,7 @@ public class DoubleJump : AMove
     float vertVel;
     float horizVel;
     bool divePending;
+    bool vertBoostPending;
     bool vertBoostChargePending;
     bool horizBoostChargePending;
     bool groundPoundPending;
@@ -32,6 +33,7 @@ public class DoubleJump : AMove
         gravity = movementSettings.JumpInitGravity;
         vertVel = movementSettings.JumpInitVel;
         mii.OnDiveInput.AddListener(() => divePending = true);
+        mii.OnVertBoostRelease.AddListener(() => vertBoostPending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
@@ -134,6 +136,10 @@ public class DoubleJump : AMove
 
     public override IMove GetNextMove()
     {
+        if (vertBoostPending)
+        {
+            return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, horizVel);
+        }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
