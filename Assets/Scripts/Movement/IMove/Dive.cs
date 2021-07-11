@@ -10,7 +10,6 @@ public class Dive : AMove
 {
     float horizVel;
     float vertVel;
-    bool airReverseInitiated;
 
     /// <summary>
     /// Constructs a Dive, initializing the objects that hold all the
@@ -32,10 +31,6 @@ public class Dive : AMove
         // Horizontal
         if (mii.AirReverseInput())
         {
-            airReverseInitiated = true;
-        }
-        if (airReverseInitiated)
-        {
             horizVel = InputUtils.SmoothedInput(horizVel, 0, 0, movementSettings.AirGravityX);
         }
     }
@@ -52,7 +47,7 @@ public class Dive : AMove
 
     public override float GetRotationSpeed()
     {
-        if (airReverseInitiated)
+        if (mii.AirReverseInput())
         {
             return 0;
         }

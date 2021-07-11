@@ -9,7 +9,6 @@ public class HorizAirBoost : AMove
     float horizVel;
     bool divePending;
     bool groundPoundPending;
-    bool airReverseActivated;
 
     /// <summary>
     /// Constructs a HorizAirBoost, initializing the objects that hold all the
@@ -32,11 +31,7 @@ public class HorizAirBoost : AMove
         // Vertical
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
-        if (mii.AirReverseInput())
-        {
-            airReverseActivated = true;
-        }
-        if (!airReverseActivated)
+        if (!mii.AirReverseInput())
         {
             horizVel = InputUtils.SmoothedInput(
                 horizVel,
@@ -62,7 +57,7 @@ public class HorizAirBoost : AMove
 
     public override float GetRotationSpeed()
     {
-        return airReverseActivated ? 0 : movementSettings.HorizBoostRotation;
+        return mii.AirReverseInput() ? 0 : movementSettings.HorizBoostRotation;
     }
 
     public override IMove GetNextMove()

@@ -10,7 +10,6 @@ public class VertAirBoost : AMove
     bool divePending;
     bool glidePending;
     bool groundPoundPending;
-    bool airReverseInitiated;
 
     /// <summary>
     /// Constructs a VertAirBoost, initializing the objects that hold all the
@@ -37,15 +36,11 @@ public class VertAirBoost : AMove
         horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
         if (mii.AirReverseInput())
         {
-            airReverseInitiated = true;
-        }
-        if (airReverseInitiated)
-        {
             horizVel = InputUtils.SmoothedInput(
                 horizVel,
                 -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                movementSettings.AirReverseSensitivityX,
-                movementSettings.AirReverseGravityX);
+                movementSettings.AirSensitivityX,
+                movementSettings.AirGravityX);
         }
         else
         {
@@ -69,7 +64,7 @@ public class VertAirBoost : AMove
 
     public override float GetRotationSpeed()
     {
-        if (airReverseInitiated)
+        if (mii.AirReverseInput())
         {
             return 0;
         }

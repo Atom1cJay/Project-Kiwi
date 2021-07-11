@@ -140,6 +140,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float glideDriftBufferDuration;
     [SerializeField] float glideWeight;
     [SerializeField] float glideMaxTilt;
+    [SerializeField] float glideMaxRoll;
     [SerializeField] float glideGravity;
 
     /// public, readonly variables
@@ -258,6 +259,7 @@ public class MovementSettingsSO : ScriptableObject
     public float GlideDriftBufferDuration { get { return glideDriftBufferDuration; } }
     public float GlideWeight { get { return glideWeight; } }
     public float GlideMaxTilt { get { return glideMaxTilt; } }
+    public float GlideMaxRoll { get { return glideMaxRoll;  } }
     public float GlideGravity { get { return glideGravity; } }
 
 

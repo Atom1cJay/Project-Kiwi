@@ -22,6 +22,7 @@ public class Run : AMove
     /// <param name="horizVel">The horizontal speed moving into this move</param>
     public Run(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
+        if (horizVel < 0) horizVel = 0;
         this.horizVel = horizVel;
         mii.OnJump.AddListener(() => jumpPending = true);
         mii.OnVertBoostRelease.AddListener(() => vertBoostPending = true);

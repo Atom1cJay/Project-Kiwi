@@ -29,8 +29,8 @@ MonoBehaviour:
   groundBoostSensitivityX: 10
   groundBoostGravityX: 4
   diveSpeedX: 6.5
-  airReverseSensitivityX: 7
-  airReverseGravityX: 7
+  airReverseSensitivityX: 15
+  airReverseGravityX: 15
   jumpGroundableTimer: 0.1
   jumpInitVel: 7
   jumpInitGravity: 0
@@ -86,7 +86,7 @@ MonoBehaviour:
   diveRecoveryTime: 0.1
   defaultGravity: 25
   stickToGroundMultiplier: 0
-  dissonanceForAirReverse: 1.8
+  dissonanceForAirReverse: 2.7
   airReverseMinActivationSpeed: 0
   instantRotationSpeed: 1
   groundRotationSpeed: 500
@@ -97,11 +97,11 @@ MonoBehaviour:
   slideForce: 0.25
   slideMaxSpeed: 7
   slideRecoveryPace: 2
-  glideRotationSpeed: 50
+  glideRotationSpeed: 0
   glideRotationSpeedSensitivity: 50
   glideRotationSpeedGravity: 50
   glideTiltSensitivity: 200
-  glideAirLoss: 0.5
+  glideAirLoss: 1.5
   glideHorizontalSpeed: 15
   glideMaxHorizontalSpeed: 16
   glideVerticalSpeed: 5
@@ -111,6 +111,7 @@ MonoBehaviour:
   glideTimeToStartDrift: 1.5
   glideDriftDuration: 2.5
   glideDriftBufferDuration: 0.5
-  glideWeight: 8
-  glideMaxTilt: 35
-  glideGravity: 1
+  glideWeight: 7
+  glideMaxTilt: 60
+  glideMaxRoll: 40
+  glideGravity: 3

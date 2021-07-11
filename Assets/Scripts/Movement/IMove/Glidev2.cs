@@ -22,25 +22,21 @@ public class Glidev2 : AMove
     public override void AdvanceTime()
     {
         Debug.Log(tilt * Mathf.Rad2Deg);
-        tilt = InputUtils.SmoothedInput(tilt, mii.GetRelativeHorizontalInput().y * movementSettings.GlideMaxTilt, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
+        tilt = InputUtils.SmoothedInput(tilt, mii.GetRelativeHorizontalInput().y * movementSettings.GlideMaxTilt * Mathf.Deg2Rad, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
         tilt = Mathf.Clamp(tilt, -movementSettings.GlideMaxTilt * Mathf.Deg2Rad, movementSettings.GlideMaxTilt * Mathf.Deg2Rad);
-        //roll = InputUtils.SmoothedInput(roll, mii.GetRelativeHorizontalInput().x * movementSettings.GlideMaxTilt, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
-        //roll = Mathf.Clamp(roll, -movementSettings.GlideMaxTilt * Mathf.Deg2Rad, movementSettings.GlideMaxTilt * Mathf.Deg2Rad);
+        roll = InputUtils.SmoothedInput(roll, mii.GetRelativeHorizontalInput().x * movementSettings.GlideMaxRoll * Mathf.Deg2Rad, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
+        roll = Mathf.Clamp(roll, -movementSettings.GlideMaxRoll * Mathf.Deg2Rad, movementSettings.GlideMaxRoll * Mathf.Deg2Rad);
         // TODO change max tilt to max roll in both above lines
         horizVelZ += movementSettings.GlideWeight * Mathf.Sin(tilt) * Time.deltaTime;
-        //horizVelX += movementSettings.GlideWeight * Mathf.Sin(roll) * Time.deltaTime;
+        horizVelX += movementSettings.GlideWeight * Mathf.Sin(roll) * Time.deltaTime;
         vertVel += horizVelZ * -Mathf.Tan(tilt) * Time.deltaTime;
-        //vertVel += horizVelX * -Mathf.Tan(roll) * Time.deltaTime;
+        vertVel += horizVelX * -Mathf.Tan(roll) * Time.deltaTime;
         vertVel -= movementSettings.GlideAirLoss * Time.deltaTime;
-        if (horizVelZ < 0)
-        {
-            horizVelZ = 0;
-        }
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
-        return ForwardMovement(horizVelZ);
+        return ForwardMovement(horizVelZ) - SideMovement(horizVelX);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -50,7 +46,7 @@ public class Glidev2 : AMove
 
     public override float GetRotationSpeed()
     {
-        return mii.GetHorizontalInput().x * movementSettings.GlideRotationSpeed;
+        return mii.GetRelativeHorizontalInput().x * movementSettings.GlideRotationSpeed;
     }
 
     public override IMove GetNextMove()

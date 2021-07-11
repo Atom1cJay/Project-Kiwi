@@ -32,7 +32,7 @@ public class RotationMovement : MonoBehaviour
 
         if (curMove.RotationIsRelative())
         {
-            //transform.Rotate(new Vector3(0, rotationSpeed, 0) * Time.deltaTime);
+            transform.Rotate(new Vector3(0, rotationSpeed, 0) * Time.deltaTime);
         }
         else
         {

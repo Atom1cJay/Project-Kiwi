@@ -15,7 +15,6 @@ public class DoubleJump : AMove
     bool jumpCancelled;
     bool jumpGroundableTimerComplete;
     bool jumpTimeShouldBreakTJ;
-    bool hasInitiatedAirReverse; // permanent once activated todo change?
 
     /// <summary>
     /// Constructs a Jump, initializing the objects that hold all the
@@ -59,10 +58,6 @@ public class DoubleJump : AMove
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
         horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
-        if (mii.AirReverseInput())
-        {
-            hasInitiatedAirReverse = true;
-        }
 
         if (mii.PressingBoost())
         {
@@ -73,12 +68,12 @@ public class DoubleJump : AMove
                     movementSettings.GroundBoostSensitivityX,
                     movementSettings.GroundBoostGravityX);
         }
-        else if (hasInitiatedAirReverse)
+        else if (horizVel < 0)
         {
             horizVel =
                 InputUtils.SmoothedInput(
                     horizVel,
-                    -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.AirReverseSensitivityX,
                     movementSettings.AirReverseGravityX);
         }
@@ -127,11 +122,16 @@ public class DoubleJump : AMove
 
     public override float GetRotationSpeed()
     {
-        if (horizVel < movementSettings.InstantRotationSpeed && !hasInitiatedAirReverse)
+        if (horizVel < movementSettings.InstantRotationSpeed && !mii.AirReverseInput())
         {
             return float.MaxValue;
         }
-        return hasInitiatedAirReverse ? 0 : movementSettings.AirRotationSpeed;
+        if (mii.AirReverseInput())
+        {
+            horizVel = -horizVel;
+            return float.MaxValue;
+        }
+        return movementSettings.AirRotationSpeed;
     }
 
     public override IMove GetNextMove()

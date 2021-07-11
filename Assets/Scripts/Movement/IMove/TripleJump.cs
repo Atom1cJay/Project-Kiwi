@@ -13,7 +13,6 @@ public class TripleJump : AMove
     bool horizBoostChargePending;
     bool jumpCancelled;
     bool groundPoundPending;
-    bool hasInitiatedAirReverse; // permanent once activated todo change?
 
     /// <summary>
     /// Constructs a TripleJump, initializing the objects that hold all the
@@ -55,10 +54,6 @@ public class TripleJump : AMove
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
         horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
-        if (mii.AirReverseInput())
-        {
-            hasInitiatedAirReverse = true;
-        }
 
         if (mii.PressingBoost())
         {
@@ -69,7 +64,7 @@ public class TripleJump : AMove
                     movementSettings.GroundBoostSensitivityX,
                     movementSettings.GroundBoostGravityX);
         }
-        else if (hasInitiatedAirReverse)
+        else if (mii.AirReverseInput())
         {
             horizVel =
                 InputUtils.SmoothedInput(
@@ -105,11 +100,11 @@ public class TripleJump : AMove
         {
             return movementSettings.GroundBoostRotationSpeed;
         }
-        if (horizVel < movementSettings.InstantRotationSpeed && !hasInitiatedAirReverse)
+        if (horizVel < movementSettings.InstantRotationSpeed && !mii.AirReverseInput())
         {
             return float.MaxValue;
         }
-        return hasInitiatedAirReverse ? 0 : movementSettings.AirRotationSpeed;
+        return mii.AirReverseInput() ? 0 : movementSettings.AirRotationSpeed;
     }
 
     public override IMove GetNextMove()

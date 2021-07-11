@@ -47,7 +47,6 @@ public class CameraUtils : MonoBehaviour
         float goalY = -player.eulerAngles.y * Mathf.Deg2Rad;
         Quaternion angle1 = Quaternion.Euler(0, initialY * Mathf.Rad2Deg, 0);
         Quaternion angle2 = Quaternion.Euler(0, goalY * Mathf.Rad2Deg, 0);
-        Quaternion targetRotation = Quaternion.Euler(0, goalY * Mathf.Rad2Deg, 0);
         float rotationSpeed = Mathf.Abs(Quaternion.Angle(angle1, angle2)) / time;
         float elapsed = 0;
         while (elapsed < time)
@@ -61,8 +60,6 @@ public class CameraUtils : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        //transform.rotation = player.rotation;
-        //horizAngle = -player.rotation.eulerAngles.y * Mathf.Deg2Rad;
     }
 
     private void Update()

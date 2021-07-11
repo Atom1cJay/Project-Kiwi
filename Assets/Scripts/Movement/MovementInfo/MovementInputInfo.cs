@@ -128,7 +128,8 @@ public class MovementInputInfo : MonoBehaviour
     /// </summary>
     public bool AirReverseInput()
     {
-        return GetHorizDissonance() > movementSettings.DissonanceForAirReverse;
+        return GetHorizDissonance() > movementSettings.DissonanceForAirReverse
+            && GetHorizontalInput().magnitude != 0;
     }
 
     /// <summary>
