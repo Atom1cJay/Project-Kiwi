@@ -34,6 +34,8 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// </summary>
     public static Vector3 AngleContactPoint { get; private set; }
 
+    [SerializeField] float maxHeightOfContactPoint;
+
     private CollisionDetector groundDetector;
 
     private void Start()
@@ -46,16 +48,17 @@ public class PlayerSlopeHandler : MonoBehaviour
     // EFFECT: Modifies AngleOfSlope to refer to the correct angle
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        print("hit");
-        // Make sure that this is a valid slope (the platform is angled)
+        //print("hit");
+        //Debug.DrawRay(hit.point + Vector3.up, Vector3.down);
+        if (hit.point.y > hit.controller.bounds.min.y + maxHeightOfContactPoint)
+        {
+            return;
+        }
         RaycastHit rchit;
         int layerMask = ~(1 << 9);
-        Debug.DrawRay(hit.point + Vector3.up, Vector3.down);
+        // Make sure that this is a valid slope (the platform is angled)
         if (Physics.Raycast(hit.point + Vector3.up, Vector3.down, out rchit, Mathf.Infinity, layerMask)) // layer mask?
         {
-            //print("X Tan: " + Mathf.Tan(Mathf.Asin(rchit.normal.x)) + " - Z Tan: " + Mathf.Tan(Mathf.Asin(rchit.normal.z)));
-            //XDeriv = -rchit.normal.x;
-            //ZDeriv = -rchit.normal.z;
             XDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.x));
             ZDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.z));
             AngleOfSlope = GetAngleOfSlope(rchit.normal);

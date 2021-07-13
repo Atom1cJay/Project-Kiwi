@@ -11,6 +11,7 @@ public class Run : AMove
     bool jumpPending;
     bool vertBoostPending;
     bool timeBetweenJumpsBreaksTJ;
+    bool groundedForFirstFrame;
 
     /// <summary>
     /// Constructs a Run, initializing the objects that hold all the
@@ -75,7 +76,10 @@ public class Run : AMove
 
     public override float GetVertSpeedThisFrame()
     {
-        return 0;
+        // To account for any very slight floating point errors in the
+        // angle, and to make it so the player doesn't go straight horizontally
+        // when running onto another angle
+        return -0.5f;
     }
 
     public override float GetRotationSpeed()

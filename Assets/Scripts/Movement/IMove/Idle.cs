@@ -5,6 +5,7 @@ public class Idle : AMove
 {
     bool jumpPending;
     bool vertBoostPending;
+    bool groundedForFirstFrame;
 
     /// <summary>
     /// Constructs a Idle, initializing the objects that hold all the
@@ -56,10 +57,6 @@ public class Idle : AMove
         if (jumpPending || mii.InReverseCoyoteTime())
         {
             return new Jump(mii, mi, movementSettings, 0);
-        }
-        if (!mi.TouchingGround())
-        {
-            return new Fall(mii, mi, movementSettings, 0, true);
         }
         // todo make ground boost possible
 
