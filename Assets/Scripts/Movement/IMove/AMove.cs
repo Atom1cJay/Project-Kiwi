@@ -38,6 +38,11 @@ public abstract class AMove : IMove
         return false;
     }
 
+    public virtual float CameraRotateTowardsRatio()
+    {
+        return 0;
+    }
+
     /// <summary>
     /// Gives the vector of horizontal movement that the player should move,
     /// given that they are moving forward relative to their rotation, and given

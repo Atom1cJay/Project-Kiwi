@@ -64,4 +64,11 @@ public interface IMoveImmutable
     /// What move should start being performed next frame?
     /// </summary>
     IMove GetNextMove();
+
+    /// <summary>
+    /// What ratio, between the current camera angle and the back
+    /// of the player, should the camera move by every frame?
+    /// If none at all, returns 0.
+    /// </summary>
+    float CameraRotateTowardsRatio();
 }

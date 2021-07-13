@@ -28,6 +28,11 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// Is the player on a slope steeper than it can handle?
     /// </summary>
     public static bool BeyondMaxAngle { get; private set; }
+    /// <summary>
+    /// The contact point which the normal used in angle calculations is
+    /// reflected off of.
+    /// </summary>
+    public static Vector3 AngleContactPoint { get; private set; }
 
     private CollisionDetector groundDetector;
 
@@ -41,17 +46,21 @@ public class PlayerSlopeHandler : MonoBehaviour
     // EFFECT: Modifies AngleOfSlope to refer to the correct angle
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        print("hit");
         // Make sure that this is a valid slope (the platform is angled)
         RaycastHit rchit;
         int layerMask = ~(1 << 9);
         Debug.DrawRay(hit.point + Vector3.up, Vector3.down);
         if (Physics.Raycast(hit.point + Vector3.up, Vector3.down, out rchit, Mathf.Infinity, layerMask)) // layer mask?
         {
-            XDeriv = -rchit.normal.x;
-            ZDeriv = -rchit.normal.z;
+            //print("X Tan: " + Mathf.Tan(Mathf.Asin(rchit.normal.x)) + " - Z Tan: " + Mathf.Tan(Mathf.Asin(rchit.normal.z)));
+            //XDeriv = -rchit.normal.x;
+            //ZDeriv = -rchit.normal.z;
+            XDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.x));
+            ZDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.z));
             AngleOfSlope = GetAngleOfSlope(rchit.normal);
             DetermineIfBeyondAngle();
-            print(rchit.normal);
+            AngleContactPoint = rchit.point;
         }
     }
 

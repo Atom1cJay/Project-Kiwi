@@ -57,7 +57,7 @@ public class Slide : AMove
 
     public override float GetVertSpeedThisFrame()
     {
-        return -10;
+        return 0;
     }
 
     public override bool IncrementsTJcounter()

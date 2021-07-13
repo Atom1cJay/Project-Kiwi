@@ -144,7 +144,7 @@ public class Jump : AMove
         }
         if (glidePending)
         {
-            return new Glidev2(mii, mi, movementSettings, horizVel, vertVel);
+            return new Glidev3(mii, mi, movementSettings, horizVel);
         }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {

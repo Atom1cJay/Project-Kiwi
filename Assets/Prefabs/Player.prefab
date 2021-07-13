@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 1529331734}
   m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,9 +138,9 @@ CharacterController:
   serializedVersion: 2
   m_Height: 1
   m_Radius: 0.25
-  m_SlopeLimit: 180
+  m_SlopeLimit: 90
   m_StepOffset: 0.05
-  m_SkinWidth: 0.01
+  m_SkinWidth: 0.031
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5116987452351034283
@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3e5af48915d4dc5a2e7a260357eb62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraControl: {fileID: 0}
 --- !u!114 &1704877078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +232,9 @@ MonoBehaviour:
   OnGroundPound:
     m_PersistentCalls:
       m_Calls: []
+  OnGlide:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1704877080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +267,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5116987452351034272}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93825722a531c485082118aa56e4ebb3, type: 3}
   m_Name: 
@@ -295,8 +299,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5116987453668295340}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.269, z: 0}
-  m_LocalScale: {x: 0.49, y: 0.49, z: 0.49}
+  m_LocalPosition: {x: 0, y: -0.27, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 5116987452351034286}
   m_RootOrder: 0
@@ -316,7 +320,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5116987453668295340}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -428,7 +432,7 @@ Transform:
   m_GameObject: {fileID: 8297694118939758205}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.65, y: 0.5, z: 0.65}
+  m_LocalScale: {x: 0.7, y: 0.5, z: 0.7}
   m_Children: []
   m_Father: {fileID: 5116987452351034286}
   m_RootOrder: 1
@@ -534,7 +538,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39bd6788393e15949a75d15fd58350fe, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.126
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39bd6788393e15949a75d15fd58350fe, type: 3}
       propertyPath: m_LocalRotation.w

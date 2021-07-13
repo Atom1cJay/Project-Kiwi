@@ -22,7 +22,7 @@ public class CameraControl : MonoBehaviour
     private void Start()
     {
         camUtils = GetComponent<CameraUtils>();
-        iah.inputActions.Camera.AutoAdjust.performed += _ => AutoAdjust();
+        iah.inputActions.Camera.AutoAdjust.performed += _ => AutoAdjustToBack();
     }
 
     private void Update()
@@ -54,8 +54,17 @@ public class CameraControl : MonoBehaviour
         }
     }
 
-    void AutoAdjust()
+    void AutoAdjustToBack()
     {
         camUtils.RotateToTargetY(autoAdjustTime);
+    }
+
+    /// <summary>
+    /// Moves the camera to face the back of the player by the given ratio
+    /// between the current and goal angle.
+    /// </summary>
+    public void AdjustToBackBy(float ratio)
+    {
+        camUtils.RotateToBackBy(ratio);
     }
 }

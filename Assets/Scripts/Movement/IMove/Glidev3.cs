@@ -3,44 +3,29 @@ using UnityEngine;
 
 public class Glidev3 : AMove
 {
-    bool groundPoundPending; // Temp
-    bool glidePending; // Temp
     float vertVel;
-    float horizVelZ;
-    float horizVelX;
-    float tilt; // Angle forward/backward. Positive = forward
-    float roll; // Angle left/right. Positive = right
+    float horizVel;
+    float tilt; // Forward-backward
+    float rotationSpeed;
 
-    public Glidev3(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, float vertVel) : base(ms, mi, mii)
+    public Glidev3(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
-        horizVelZ = horizVel;
-        mii.OnGroundPound.AddListener(() => groundPoundPending = true);
-        mii.OnGlide.AddListener(() => glidePending = true);
-        tilt = 10 * Mathf.Deg2Rad;
+        this.horizVel = horizVel;
     }
 
     public override void AdvanceTime()
     {
-        Debug.Log(tilt * Mathf.Rad2Deg);
-        tilt = mii.GetRelativeHorizontalInput().y * movementSettings.GlideMaxTilt * Mathf.Deg2Rad;
-        tilt = Mathf.Clamp(tilt, -movementSettings.GlideMaxTilt * Mathf.Deg2Rad, movementSettings.GlideMaxTilt * Mathf.Deg2Rad);
-        //roll = InputUtils.SmoothedInput(roll, mii.GetRelativeHorizontalInput().x * movementSettings.GlideMaxTilt, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
-        //roll = Mathf.Clamp(roll, -movementSettings.GlideMaxTilt * Mathf.Deg2Rad, movementSettings.GlideMaxTilt * Mathf.Deg2Rad);
-        // TODO change max tilt to max roll in both above lines
-        horizVelZ = movementSettings.GlideWeight * Mathf.Cos(tilt);
-        //horizVelX += movementSettings.GlideWeight * Mathf.Sin(roll) * Time.deltaTime;
-        vertVel = horizVelZ * -Mathf.Tan(tilt);
-        //vertVel += horizVelX * -Mathf.Tan(roll) * Time.deltaTime;
-        vertVel -= movementSettings.GlideAirLoss * Time.deltaTime;
-        if (horizVelZ < 0)
-        {
-            horizVelZ = 0;
-        }
+        tilt = InputUtils.SmoothedInput(tilt, movementSettings.GlideMaxTilt * Mathf.Deg2Rad * mii.GetRelativeHorizontalInput().y, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
+        horizVel = Mathf.Cos(tilt) * movementSettings.GlideMaxHorizontalSpeed;
+        rotationSpeed = InputUtils.SmoothedInput(rotationSpeed, movementSettings.GlideRotationSpeed * mii.GetRelativeHorizontalInput().x, movementSettings.GlideRotationSpeedSensitivity, movementSettings.GlideRotationSpeedGravity);
+        vertVel = -Mathf.Sin(tilt) * movementSettings.GlideMaxVerticalSpeed;
+        if (vertVel > 0) vertVel = 0;
+        vertVel -= movementSettings.GlideAirLoss;
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
-        return ForwardMovement(horizVelZ);
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -50,16 +35,12 @@ public class Glidev3 : AMove
 
     public override float GetRotationSpeed()
     {
-        return mii.GetHorizontalInput().x * movementSettings.GlideRotationSpeed;
+        return rotationSpeed; // Change
     }
 
     public override IMove GetNextMove()
     {
-        if (groundPoundPending)
-        {
-            return new GroundPound(mii, mi, movementSettings);
-        }
-        else if (mi.TouchingGround())
+        if (mi.TouchingGround())
         {
             if (mii.GetHorizontalInput().magnitude <= .25f)
             {
@@ -67,12 +48,12 @@ public class Glidev3 : AMove
             }
             else
             {
-                return new Run(mii, mi, movementSettings, horizVelZ);
+                return new Run(mii, mi, movementSettings, horizVel);
             }
         }
-        else if (glidePending)
+        else if (mi.GetGroundDetector().Colliding())
         {
-            return new Fall(mii, mi, movementSettings, horizVelZ, false);
+            return new Fall(mii, mi, movementSettings, horizVel, false);
         }
         return this;
     }
@@ -95,6 +76,11 @@ public class Glidev3 : AMove
     public override bool RotationIsRelative()
     {
         return true;
+    }
+
+    public override float CameraRotateTowardsRatio()
+    {
+        return movementSettings.GlideCameraAdjustRatio;
     }
 
     public override string AsString()

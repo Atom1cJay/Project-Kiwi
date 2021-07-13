@@ -97,21 +97,22 @@ MonoBehaviour:
   slideForce: 0.25
   slideMaxSpeed: 7
   slideRecoveryPace: 2
-  glideRotationSpeed: 0
-  glideRotationSpeedSensitivity: 50
-  glideRotationSpeedGravity: 50
-  glideTiltSensitivity: 200
-  glideAirLoss: 1.5
-  glideHorizontalSpeed: 15
-  glideMaxHorizontalSpeed: 16
+  glideRotationSpeed: 50
+  glideRotationSpeedSensitivity: 900
+  glideRotationSpeedGravity: 900
+  glideTiltSensitivity: 2
+  glideAirLoss: 2
+  glideHorizontalSpeed: 80
+  glideMaxHorizontalSpeed: 6.5
   glideVerticalSpeed: 5
-  glideMaxVerticalSpeed: 3
+  glideMaxVerticalSpeed: 5
   glideDriftMovementVector: {x: 6, y: -3}
   glideEnterDriftSpeed: 3
   glideTimeToStartDrift: 1.5
   glideDriftDuration: 2.5
   glideDriftBufferDuration: 0.5
   glideWeight: 7
-  glideMaxTilt: 60
+  glideMaxTilt: 70
   glideMaxRoll: 40
   glideGravity: 3
+  glideCameraAdjustRatio: 0.1

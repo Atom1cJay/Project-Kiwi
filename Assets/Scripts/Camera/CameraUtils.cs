@@ -54,7 +54,6 @@ public class CameraUtils : MonoBehaviour
             Quaternion shit = Quaternion.Euler(0, -transform.eulerAngles.y, 0);
             Quaternion shit2 = Quaternion.Euler(0, -player.eulerAngles.y, 0);
             Quaternion newRot = Quaternion.RotateTowards(shit, shit2, rotationSpeed * Time.deltaTime);
-            print(newRot.eulerAngles.y);
             horizAngle = newRot.eulerAngles.y * Mathf.Deg2Rad;
             MoveCamera();
             elapsed += Time.deltaTime;
@@ -83,5 +82,16 @@ public class CameraUtils : MonoBehaviour
         // Change position
         transform.position = target.position + new Vector3(relativeX, relativeY, relativeZ);
         transform.LookAt(target);
+    }
+
+    /// <summary>
+    /// Moves the camera closer to the back of the player by the ratio given.
+    /// </summary>
+    public void RotateToBackBy(float ratio)
+    {
+        Quaternion angle1 = Quaternion.Euler(0, horizAngle * Mathf.Rad2Deg, 0);
+        Quaternion angle2 = Quaternion.Euler(0, -player.eulerAngles.y, 0);
+        Quaternion newRot = Quaternion.RotateTowards(angle1, angle2, Quaternion.Angle(angle1, angle2) * ratio);
+        horizAngle = newRot.eulerAngles.y * Mathf.Deg2Rad;
     }
 }

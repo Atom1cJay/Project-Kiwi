@@ -9,6 +9,7 @@ public class MoveExecuter : MonoBehaviour
     CharacterController charCont;
     MovementInfo mi;
     MovementSettingsSO movementSettings;
+    [SerializeField] CameraControl cameraControl;
 
     private void Start()
     {
@@ -21,13 +22,13 @@ public class MoveExecuter : MonoBehaviour
     void Update()
     {
         moveThisFrame.AdvanceTime();
+        cameraControl.AdjustToBackBy(moveThisFrame.CameraRotateTowardsRatio());
         Vector2 horizMovement = moveThisFrame.GetHorizSpeedThisFrame();
         Vector3 dir = DirectionOfMovement(horizMovement);
         Vector3 horizMovementAdjusted = dir * horizMovement.magnitude;
         Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
-        charCont.Move((vertMovement + horizMovementAdjusted) * Time.deltaTime);
+        charCont.Move((horizMovementAdjusted + vertMovement) * Time.deltaTime);
         IMove next = moveThisFrame.GetNextMove();
-        //print("calledNextMove");
         moveThisFrame = next;
     }
 
