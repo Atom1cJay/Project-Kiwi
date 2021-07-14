@@ -51,6 +51,7 @@ MonoBehaviour:
   tjVelocityMultiplier: 0.7
   tjGravityIncRate: 75
   tjGravityIncRateAtCancel: 75
+  tjMaxBreakSpeed: 0.5
   tjMinHorizInputMagnitude: 0.9
   tjMaxTimeBtwnJumps: 0.1
   tjMinJumpTime: 0.3
@@ -101,7 +102,7 @@ MonoBehaviour:
   glideRotationSpeedSensitivity: 900
   glideRotationSpeedGravity: 900
   glideTiltSensitivity: 2
-  glideAirLoss: 2
+  glideAirLoss: 1
   glideHorizontalSpeed: 80
   glideMaxHorizontalSpeed: 6.5
   glideVerticalSpeed: 5
@@ -116,3 +117,4 @@ MonoBehaviour:
   glideMaxRoll: 40
   glideGravity: 3
   glideCameraAdjustRatio: 0.1
+  glideNonControlTime: 0.2

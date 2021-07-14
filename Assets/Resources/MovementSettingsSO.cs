@@ -60,11 +60,12 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float tjGravityIncRateAtCancel;
 
     [Header("Triple Jump Activator Settings")]
-    [SerializeField] float tjMinHorizInputMagnitude; // new
-    [SerializeField] float tjMaxTimeBtwnJumps; // new
-    [SerializeField] float tjMinJumpTime; // new
-    [SerializeField] float tjMaxJumpTime; // new
-    [SerializeField] float tjMaxDissonance; // new
+    [SerializeField] float tjMaxBreakSpeed;
+    [SerializeField] float tjMinHorizInputMagnitude; 
+    [SerializeField] float tjMaxTimeBtwnJumps;
+    [SerializeField] float tjMinJumpTime;
+    [SerializeField] float tjMaxJumpTime;
+    [SerializeField] float tjMaxDissonance;
 
     [Header("Boost Settings")]
     [SerializeField] float horizBoostMinGravity;
@@ -143,6 +144,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float glideMaxRoll;
     [SerializeField] float glideGravity;
     [SerializeField] float glideCameraAdjustRatio;
+    [SerializeField] float glideNonControlTime;
 
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
@@ -189,6 +191,7 @@ public class MovementSettingsSO : ScriptableObject
     public float TjGravityIncRate { get { return tjGravityIncRate; } }
     public float TjGravityIncRateAtCancel { get { return tjGravityIncRateAtCancel; } }
 
+    public float TjMaxBreakSpeed { get { return tjMaxBreakSpeed; } }
     public float TjMinHorizInputMagnitude { get { return tjMinHorizInputMagnitude; } }
     public float TjMaxTimeBtwnJumps { get { return tjMaxTimeBtwnJumps; } }
     public float TjMaxJumpTime { get { return tjMaxJumpTime; } }
@@ -263,6 +266,7 @@ public class MovementSettingsSO : ScriptableObject
     public float GlideMaxRoll { get { return glideMaxRoll;  } }
     public float GlideGravity { get { return glideGravity; } }
     public float GlideCameraAdjustRatio { get { return glideCameraAdjustRatio; } }
+    public float GlideNonControlTime { get { return glideNonControlTime; } }
 
 
     static MovementSettingsSO _instance;

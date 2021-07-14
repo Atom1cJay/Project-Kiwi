@@ -11,7 +11,6 @@ public class Run : AMove
     bool jumpPending;
     bool vertBoostPending;
     bool timeBetweenJumpsBreaksTJ;
-    bool groundedForFirstFrame;
 
     /// <summary>
     /// Constructs a Run, initializing the objects that hold all the
@@ -147,7 +146,8 @@ public class Run : AMove
     {
         return mii.GetHorizDissonance() > movementSettings.TjMaxDissonance
             || mii.GetHorizontalInput().magnitude < movementSettings.TjMinHorizInputMagnitude
-            || timeBetweenJumpsBreaksTJ;
+            || timeBetweenJumpsBreaksTJ
+            || Mathf.Min(horizVel, mi.GetEffectiveSpeed()) < movementSettings.TjMaxBreakSpeed;
     }
 
     public override bool AdjustToSlope()

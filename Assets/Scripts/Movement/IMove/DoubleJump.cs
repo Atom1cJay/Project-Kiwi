@@ -15,6 +15,7 @@ public class DoubleJump : AMove
     bool jumpCancelled;
     bool jumpGroundableTimerComplete;
     bool jumpTimeShouldBreakTJ;
+    bool glidePending;
 
     /// <summary>
     /// Constructs a Jump, initializing the objects that hold all the
@@ -41,6 +42,7 @@ public class DoubleJump : AMove
             jumpCancelled = true;
             vertVel *= movementSettings.JumpVelMultiplierAtCancel;
         });
+        mii.OnGlide.AddListener(() => glidePending = true);
     }
 
     public override void AdvanceTime()
@@ -136,6 +138,10 @@ public class DoubleJump : AMove
 
     public override IMove GetNextMove()
     {
+        if (glidePending)
+        {
+            return new Glidev3(mii, mi, movementSettings, horizVel);
+        }
         if (vertBoostPending)
         {
             return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, horizVel);

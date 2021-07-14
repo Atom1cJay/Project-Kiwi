@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Glidev3 : AMove
@@ -7,20 +8,42 @@ public class Glidev3 : AMove
     float horizVel;
     float tilt; // Forward-backward
     float rotationSpeed;
+    bool objectHitPending;
+    bool inControl;
 
     public Glidev3(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
-        this.horizVel = horizVel;
+        MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", GiveControl());
     }
 
     public override void AdvanceTime()
     {
-        tilt = InputUtils.SmoothedInput(tilt, movementSettings.GlideMaxTilt * Mathf.Deg2Rad * mii.GetRelativeHorizontalInput().y, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
-        horizVel = Mathf.Cos(tilt) * movementSettings.GlideMaxHorizontalSpeed;
-        rotationSpeed = InputUtils.SmoothedInput(rotationSpeed, movementSettings.GlideRotationSpeed * mii.GetRelativeHorizontalInput().x, movementSettings.GlideRotationSpeedSensitivity, movementSettings.GlideRotationSpeedGravity);
-        vertVel = -Mathf.Sin(tilt) * movementSettings.GlideMaxVerticalSpeed;
-        if (vertVel > 0) vertVel = 0;
-        vertVel -= movementSettings.GlideAirLoss;
+        if (inControl)
+        {
+            tilt = InputUtils.SmoothedInput(tilt, movementSettings.GlideMaxTilt * Mathf.Deg2Rad * mii.GetRelativeHorizontalInput().y, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
+            horizVel = Mathf.Cos(tilt) * movementSettings.GlideMaxHorizontalSpeed;
+            rotationSpeed = InputUtils.SmoothedInput(rotationSpeed, movementSettings.GlideRotationSpeed * mii.GetRelativeHorizontalInput().x, movementSettings.GlideRotationSpeedSensitivity, movementSettings.GlideRotationSpeedGravity);
+            vertVel = -Mathf.Sin(tilt) * movementSettings.GlideMaxVerticalSpeed;
+            if (vertVel > 0) vertVel = 0;
+            vertVel -= movementSettings.GlideAirLoss;
+            mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
+        }
+    }
+
+    IEnumerator GiveControl()
+    {
+        float timePassed = 0;
+
+        while (timePassed < movementSettings.GlideNonControlTime)
+        {
+            float speed = (timePassed / movementSettings.GlideNonControlTime) * movementSettings.GlideMaxHorizontalSpeed;
+            horizVel = speed;
+            vertVel = -movementSettings.GlideAirLoss * (timePassed / movementSettings.GlideNonControlTime);
+            timePassed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        inControl = true;
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
@@ -51,7 +74,7 @@ public class Glidev3 : AMove
                 return new Run(mii, mi, movementSettings, horizVel);
             }
         }
-        else if (mi.GetGroundDetector().Colliding())
+        else if (objectHitPending)
         {
             return new Fall(mii, mi, movementSettings, horizVel, false);
         }

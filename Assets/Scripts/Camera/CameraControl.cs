@@ -44,14 +44,11 @@ public class CameraControl : MonoBehaviour
         float vertMove = vertPivotSpeed * maxPivotSpeedVert * Time.deltaTime;
         camUtils.RotateBy(horizMove, vertMove);
         // Keyboard
-        if (iah.GetOldMouseInput().x != 0 || iah.GetOldMouseInput().y != 0)
-        {
-            horizPivotSpeed = iah.GetOldMouseInput().x; // THIS IS THE ONLY USE OF THE OLD INPUT SYSTEM IN THE GAME. IT'S BECAUSE THE 
-            vertPivotSpeed = iah.GetOldMouseInput().y; // NEW INPUT SYSTEM WON'T SMOOTH MOUSE MOVEMENT PROPERLY.
-            horizMove = horizPivotSpeed * maxPivotSpeedHoriz * Time.deltaTime;
-            vertMove = vertPivotSpeed * maxPivotSpeedVert * Time.deltaTime;
-            camUtils.RotateBy(horizMove, vertMove);
-        }
+        float horizPivotSpeedMouse = iah.GetOldMouseInput().x; // THIS IS THE ONLY USE OF THE OLD INPUT SYSTEM IN THE GAME. IT'S BECAUSE THE
+        float vertPivotSpeedMouse = iah.GetOldMouseInput().y; // NEW INPUT SYSTEM WON'T SMOOTH MOUSE MOVEMENT PROPERLY.
+        horizMove = horizPivotSpeedMouse * maxPivotSpeedHoriz * Time.deltaTime;
+        vertMove = vertPivotSpeedMouse * maxPivotSpeedVert * Time.deltaTime;
+        camUtils.RotateBy(horizMove, vertMove);
     }
 
     void AutoAdjustToBack()

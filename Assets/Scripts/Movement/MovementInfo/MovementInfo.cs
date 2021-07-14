@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(MoveExecuter))]
 public class MovementInfo : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class MovementInfo : MonoBehaviour
     private Vector3 prevPosXZ;
     private float effectiveSpeedXZ;
     private float prevDeltaTime;
+    private CharacterController charCont;
+
+    [HideInInspector] public UnityEvent OnCharContTouchSomething;
 
     private void Awake()
     {
@@ -20,6 +24,7 @@ public class MovementInfo : MonoBehaviour
         prevPosXZ = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
         effectiveSpeedXZ = 0;
         me = GetComponent<MoveExecuter>();
+        charCont = GetComponent<CharacterController>();
     }
 
     /// <summary>
@@ -98,5 +103,14 @@ public class MovementInfo : MonoBehaviour
     public Transform GetPlayerTransform()
     {
         return transform;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.controller == charCont)
+        {
+            print("hello");
+            OnCharContTouchSomething.Invoke();
+        }
     }
 }

@@ -396,17 +396,6 @@ public class @InputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f198f60d-9f42-4721-bc25-2748832627a6"",
-                    ""path"": ""<Mouse>/delta/y"",
-                    ""interactions"": """",
-                    ""processors"": ""Scale(factor=0.3)"",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""VerticalRotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""adfbe921-de32-4297-a20f-79812f6c59aa"",
                     ""path"": ""<HID::Core (Plus) Wired Controller>/rz"",
                     ""interactions"": """",
@@ -423,17 +412,6 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
-                    ""action"": ""HorizontalRotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""bfd55753-26aa-4edb-bf9f-4f5ac632cab1"",
-                    ""path"": ""<Mouse>/delta/x"",
-                    ""interactions"": """",
-                    ""processors"": ""Scale(factor=0.3)"",
-                    ""groups"": ""Keyboard"",
                     ""action"": ""HorizontalRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

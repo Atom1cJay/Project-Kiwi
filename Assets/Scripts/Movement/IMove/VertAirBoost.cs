@@ -76,7 +76,7 @@ public class VertAirBoost : AMove
     {
         if (glidePending)
         {
-            return new Glide(mii, mi, movementSettings, horizVel, vertVel);
+            return new Glidev3(mii, mi, movementSettings, horizVel);
         }
         if (mi.TouchingGround() && vertVel < 0)
         {
