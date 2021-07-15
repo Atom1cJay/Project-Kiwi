@@ -100,6 +100,8 @@ GameObject:
   - component: {fileID: 1704877080}
   - component: {fileID: 103829155}
   - component: {fileID: 1529331734}
+  - component: {fileID: 2087412584667205258}
+  - component: {fileID: 23901401652546964}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -276,6 +278,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93825722a531c485082118aa56e4ebb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2087412584667205258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5116987452351034272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb36f089cdaf2fe4d8518a1a54820738, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!136 &23901401652546964
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5116987452351034272}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5116987453668295340
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +402,7 @@ MonoBehaviour:
   gameObjectsToIgnore:
   - {fileID: 5116987452351034272}
   - {fileID: 8297694118939758205}
+  cs: {fileID: 0}
 --- !u!95 &2413177715135108758
 Animator:
   serializedVersion: 3

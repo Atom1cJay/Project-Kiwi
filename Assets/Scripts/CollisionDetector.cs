@@ -7,6 +7,7 @@ public class CollisionDetector : MonoBehaviour
     private bool colliding;
     private GameObject collidingWith = null;
     [SerializeField] private List<GameObject> gameObjectsToIgnore;
+    [SerializeField] CollectibleSystem cs;
 
     private void UpdateCollisionStatus()
     {
