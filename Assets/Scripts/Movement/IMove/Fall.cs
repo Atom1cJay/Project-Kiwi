@@ -14,7 +14,6 @@ public class Fall : AMove
     bool jumpPending;
     bool groundPoundPending;
     float coyoteTime;
-    bool glidePending;
 
     /// <summary>
     /// Constructs a Fall, initializing the objects that hold all the
@@ -36,7 +35,6 @@ public class Fall : AMove
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnJump.AddListener(() => jumpPending = true);
-        mii.OnGlide.AddListener(() => glidePending = true);
     }
 
     IEnumerator AllowCoyoteTime()
@@ -119,10 +117,6 @@ public class Fall : AMove
 
     public override IMove GetNextMove()
     {
-        if (glidePending)
-        {
-            return new Glidev3(mii, mi, movementSettings, horizVel);
-        }
         if (vertBoostPending)
         {
             return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, horizVel);

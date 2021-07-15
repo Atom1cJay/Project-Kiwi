@@ -10,10 +10,13 @@ public class Glidev3 : AMove
     float rotationSpeed;
     bool objectHitPending;
     bool inControl;
+    bool glideReleasePending;
 
     public Glidev3(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
+        this.horizVel = horizVel;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", GiveControl());
+        mii.OnGlide.AddListener(() => glideReleasePending = true);
     }
 
     public override void AdvanceTime()
@@ -34,11 +37,16 @@ public class Glidev3 : AMove
     {
         float timePassed = 0;
 
+        while (timePassed < movementSettings.GlideJumpTime)
+        {
+            vertVel = movementSettings.GlideJumpSpeed * (1 - (timePassed / movementSettings.GlideJumpTime));
+            horizVel = horizVel * (1 - (timePassed / movementSettings.GlideJumpTime));
+            timePassed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
         while (timePassed < movementSettings.GlideNonControlTime)
         {
-            float speed = (timePassed / movementSettings.GlideNonControlTime) * movementSettings.GlideMaxHorizontalSpeed;
-            horizVel = speed;
-            vertVel = -movementSettings.GlideAirLoss * (timePassed / movementSettings.GlideNonControlTime);
             timePassed += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
@@ -63,6 +71,10 @@ public class Glidev3 : AMove
 
     public override IMove GetNextMove()
     {
+        if (glideReleasePending)
+        {
+            return new Fall(mii, mi, movementSettings, horizVel, false);
+        }
         if (mi.TouchingGround())
         {
             if (mii.GetHorizontalInput().magnitude <= .25f)

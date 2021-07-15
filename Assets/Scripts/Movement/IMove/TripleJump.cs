@@ -13,7 +13,6 @@ public class TripleJump : AMove
     bool horizBoostChargePending;
     bool jumpCancelled;
     bool groundPoundPending;
-    bool glidePending;
 
     /// <summary>
     /// Constructs a TripleJump, initializing the objects that hold all the
@@ -38,7 +37,6 @@ public class TripleJump : AMove
             jumpCancelled = true;
             vertVel *= movementSettings.TjVelocityMultiplier;
         });
-        mii.OnGlide.AddListener(() => glidePending = true);
     }
 
     public override void AdvanceTime()
@@ -111,10 +109,6 @@ public class TripleJump : AMove
 
     public override IMove GetNextMove()
     {
-        if (glidePending)
-        {
-            return new Glidev3(mii, mi, movementSettings, horizVel);
-        }
         if (vertBoostPending)
         {
             return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, horizVel);
