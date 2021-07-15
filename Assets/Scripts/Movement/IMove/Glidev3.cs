@@ -11,9 +11,11 @@ public class Glidev3 : AMove
     bool objectHitPending;
     bool inControl;
     bool glideReleasePending;
+    float initHorizVel;
 
     public Glidev3(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
+        initHorizVel = horizVel;
         this.horizVel = horizVel;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", GiveControl());
         mii.OnGlide.AddListener(() => glideReleasePending = true);
@@ -39,8 +41,11 @@ public class Glidev3 : AMove
 
         while (timePassed < movementSettings.GlideJumpTime)
         {
-            vertVel = movementSettings.GlideJumpSpeed * (1 - (timePassed / movementSettings.GlideJumpTime));
-            horizVel = horizVel * (1 - (timePassed / movementSettings.GlideJumpTime));
+            tilt = (timePassed / movementSettings.GlideJumpTime) * Mathf.PI / 2;
+            vertVel = Mathf.Cos(tilt) * movementSettings.GlideJumpSpeed;
+            //horizVel = Mathf.Sin(tilt) * movementSettings.GlideJumpSpeed;
+            //vertVel = movementSettings.GlideJumpSpeed * (1 - (timePassed / movementSettings.GlideJumpTime));
+            //horizVel = initHorizVel * (1 - (timePassed / movementSettings.GlideJumpTime));
             timePassed += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
@@ -50,6 +55,8 @@ public class Glidev3 : AMove
             timePassed += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+
+        tilt = 0;
 
         inControl = true;
     }
@@ -115,6 +122,10 @@ public class Glidev3 : AMove
 
     public override float CameraRotateTowardsRatio()
     {
+        if (!inControl)
+        {
+            return 0;
+        }
         return movementSettings.GlideCameraAdjustRatio;
     }
 
