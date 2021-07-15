@@ -66,6 +66,16 @@ public class CameraUtils : MonoBehaviour
         MoveCamera();
     }
 
+    private void FixedUpdate()
+    {
+        MoveCamera();
+    }
+
+    private void LateUpdate()
+    {
+        MoveCamera();
+    }
+
     /// <summary>
     /// Based on the current horizontal / vertical angle, as well as the position/radius
     /// of the target, positions and angles the camera appropriately

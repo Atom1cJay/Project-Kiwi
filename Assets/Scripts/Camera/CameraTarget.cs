@@ -23,6 +23,21 @@ public class CameraTarget : MonoBehaviour
 
     private void Update()
     {
+        AdjustToCamTarget();
+    }
+
+    private void FixedUpdate()
+    {
+        AdjustToCamTarget();
+    }
+
+    private void LateUpdate()
+    {
+        AdjustToCamTarget();
+    }
+
+    private void AdjustToCamTarget()
+    {
         float playerYPoint = mainCam.WorldToViewportPoint(player.position).y;
 
         float myYChange = 0;

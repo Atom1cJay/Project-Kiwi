@@ -25,7 +25,6 @@ public class MovingPlatform : MonoBehaviour
                 rotSpeed.x,
                 rotSpeed.y,
                 rotSpeed.z) * Time.deltaTime;
-
     }
 
     void FixedUpdate()
