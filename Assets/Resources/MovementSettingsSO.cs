@@ -141,6 +141,8 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float glideNonControlTime;
     [SerializeField] float glideMinCamAngleX;
     [SerializeField] float glideMaxCamAngleX;
+    [SerializeField] float glideJumpSpeed;
+    [SerializeField] float glideJumpTime;
 
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
@@ -260,6 +262,8 @@ public class MovementSettingsSO : ScriptableObject
     public float GlideNonControlTime { get { return glideNonControlTime; } }
     public float GlideMinCamAngleX { get { return glideMinCamAngleX; } }
     public float GlideMaxCamAngleX { get { return glideMaxCamAngleX; } }
+    public float GlideJumpSpeed { get { return glideJumpSpeed; } }
+    public float GlideJumpTime { get { return glideJumpTime; } }
 
 
     static MovementSettingsSO _instance;

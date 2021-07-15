@@ -21,6 +21,7 @@ public class MovementInputInfo : MonoBehaviour
     [HideInInspector] public UnityEvent OnVertBoostRelease;
     [HideInInspector] public UnityEvent OnGroundPound;
     [HideInInspector] public UnityEvent OnGlide;
+    [HideInInspector] public UnityEvent OnGlideRelease;
 
     private MovementSettingsSO movementSettings;
 
@@ -39,6 +40,7 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Player.Dive.performed += _ => OnDiveInput.Invoke();
         inputActionsHolder.inputActions.Player.GroundPound.performed += _ => OnGroundPound.Invoke();
         inputActionsHolder.inputActions.Player.Glide.performed += _ => OnGlide.Invoke();
+        inputActionsHolder.inputActions.Player.Glide.canceled += _ => OnGlideRelease.Invoke();
         OnJump.AddListener(() => StartCoroutine(WaitReverseCoyoteTime()));
     }
 
