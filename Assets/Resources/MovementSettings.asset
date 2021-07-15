@@ -74,12 +74,8 @@ MonoBehaviour:
   vertBoostGravity: 20
   vertBoostMaxChargeTime: 0.6
   vertBoostMaxTime: 0.7
-  diagonalBoostMinStartSpeedX: 3
-  diagonalBoostMaxStartSpeedX: 5
-  diagonalBoostMinStartSpeedY: 5
-  diagonalBoostMaxStartSpeedY: 9
-  diagonalBoostGravityX: 3
-  diagonalBoostSensitivityX: 5
+  vertBoostRotationSpeed: 200
+  vertBoostMaxSpeedX: 5
   gpSuspensionTime: 0.6
   gpDownSpeed: 10
   diveInitVel: 5
@@ -96,13 +92,13 @@ MonoBehaviour:
   diveRotationSpeed: 50
   groundBoostRotationSpeed: 400
   slideForce: 0.25
-  slideMaxSpeed: 7
+  slideMaxSpeed: 12
   slideRecoveryPace: 2
   glideRotationSpeed: 50
   glideRotationSpeedSensitivity: 900
   glideRotationSpeedGravity: 900
   glideTiltSensitivity: 2
-  glideAirLoss: 1
+  glideAirLoss: 2
   glideHorizontalSpeed: 80
   glideMaxHorizontalSpeed: 6.5
   glideVerticalSpeed: 5
@@ -116,5 +112,5 @@ MonoBehaviour:
   glideMaxTilt: 70
   glideMaxRoll: 40
   glideGravity: 3
-  glideCameraAdjustRatio: 0.1
+  glideCameraAdjustRatio: 0.05
   glideNonControlTime: 0.2

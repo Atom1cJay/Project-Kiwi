@@ -15,7 +15,7 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// <summary>
     /// The angle of the slope the player is currently colliding with.
     /// </summary>
-    public static float AngleOfSlope { get; private set; }
+    private static float AngleOfSlope;
     /// <summary>
     /// For every positive x unit you move, you go up by this amount.
     /// </summary>
@@ -36,20 +36,11 @@ public class PlayerSlopeHandler : MonoBehaviour
 
     [SerializeField] float maxHeightOfContactPoint;
 
-    private CollisionDetector groundDetector;
-
-    private void Start()
-    {
-        groundDetector = GetComponent<MovementInfo>().GetGroundDetector();
-    }
-
     // Obtains the normal of the platform the player is currently on
     // (Is called whenever the player moves in a way which ends with it touching something)
     // EFFECT: Modifies AngleOfSlope to refer to the correct angle
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        //print("hit");
-        //Debug.DrawRay(hit.point + Vector3.up, Vector3.down);
         if (hit.point.y > hit.controller.bounds.min.y + maxHeightOfContactPoint)
         {
             return;

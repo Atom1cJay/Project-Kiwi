@@ -22,7 +22,15 @@ public class MoveExecuter : MonoBehaviour
     void Update()
     {
         moveThisFrame.AdvanceTime();
-        cameraControl.AdjustToBackBy(moveThisFrame.CameraRotateTowardsRatio());
+        if (moveThisFrame.CameraRotateTowardsRatio() == 0)
+        {
+            cameraControl.HandleManualControl();
+        }
+        else
+        {
+            cameraControl.AdjustToBack(moveThisFrame.CameraRotateTowardsRatio());
+            cameraControl.AdjustVertical(moveThisFrame.CameraRotateTowardsRatio(), moveThisFrame.CameraVerticalAutoTarget());
+        }
         Vector2 horizMovement = moveThisFrame.GetHorizSpeedThisFrame();
         Vector3 dir = DirectionOfMovement(horizMovement);
         Vector3 horizMovementAdjusted = dir * horizMovement.magnitude;

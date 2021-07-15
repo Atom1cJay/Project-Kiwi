@@ -109,7 +109,6 @@ public class MovementInfo : MonoBehaviour
     {
         if (hit.controller == charCont)
         {
-            print("hello");
             OnCharContTouchSomething.Invoke();
         }
     }

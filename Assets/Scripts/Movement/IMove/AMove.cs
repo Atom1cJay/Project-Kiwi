@@ -43,6 +43,11 @@ public abstract class AMove : IMove
         return 0;
     }
 
+    public virtual float CameraVerticalAutoTarget()
+    {
+        return 0;
+    }
+
     /// <summary>
     /// Gives the vector of horizontal movement that the player should move,
     /// given that they are moving forward relative to their rotation, and given

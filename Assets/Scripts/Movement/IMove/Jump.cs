@@ -124,6 +124,10 @@ public class Jump : AMove
 
     public override float GetRotationSpeed()
     {
+        if (horizVel < 0)
+        {
+            return 0;
+        }
         if (horizVel < movementSettings.InstantRotationSpeed && !mii.AirReverseInput())
         {
             return float.MaxValue;

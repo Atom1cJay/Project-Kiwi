@@ -19,11 +19,14 @@ public class Slide : AMove
     {
         float xDeriv = PlayerSlopeHandler.XDeriv;
         float zDeriv = PlayerSlopeHandler.ZDeriv;
-        Vector2 toChange = new Vector2(xDeriv, zDeriv);
+        Vector2 toChange = new Vector2(Mathf.Sin(Mathf.Atan2(xDeriv, 1)), Mathf.Sin(Mathf.Atan2(zDeriv, 1)));
         horizVector -= toChange * movementSettings.SlideForce;
-        if (horizVector.magnitude > movementSettings.SlideMaxSpeed)
+        float yMovement = (xDeriv * horizVector.x) + (zDeriv * horizVector.y);
+        Vector3 totalMovement = new Vector3(horizVector.x, yMovement, horizVector.y);
+        if (totalMovement.magnitude > movementSettings.SlideMaxSpeed)
         {
-            horizVector = horizVector.normalized * movementSettings.SlideMaxSpeed;
+            horizVector.x = totalMovement.normalized.x * movementSettings.SlideMaxSpeed;
+            horizVector.y = totalMovement.normalized.z * movementSettings.SlideMaxSpeed;
         }
     }
 
@@ -57,7 +60,7 @@ public class Slide : AMove
 
     public override float GetVertSpeedThisFrame()
     {
-        return 0;
+        return -5;
     }
 
     public override bool IncrementsTJcounter()

@@ -66,9 +66,16 @@ public interface IMoveImmutable
     IMove GetNextMove();
 
     /// <summary>
-    /// What ratio, between the current camera angle and the back
-    /// of the player, should the camera move by every frame?
-    /// If none at all, returns 0.
+    /// What ratio, between the current camera angle and its target
+    /// (at the back of the player, at a certain vertical angle),
+    /// should the camera move by every frame? If none at all, returns 0.
     /// </summary>
     float CameraRotateTowardsRatio();
+
+    /// <summary>
+    /// Gives the angle (degrees) on the X axis which the camera should target. This
+    /// method only applies to those moves whose CameraRotateTowardsRatio
+    /// is not zero.
+    /// </summary>
+    float CameraVerticalAutoTarget();
 }

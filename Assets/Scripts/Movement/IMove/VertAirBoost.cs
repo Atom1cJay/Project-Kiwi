@@ -38,7 +38,7 @@ public class VertAirBoost : AMove
         {
             horizVel = InputUtils.SmoothedInput(
                 horizVel,
-                -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                -mii.GetHorizontalInput().magnitude * movementSettings.VertBoostMaxSpeedX,
                 movementSettings.AirSensitivityX,
                 movementSettings.AirGravityX);
         }
@@ -46,7 +46,7 @@ public class VertAirBoost : AMove
         {
             horizVel = InputUtils.SmoothedInput(
                 horizVel,
-                mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
+                mii.GetHorizontalInput().magnitude * movementSettings.VertBoostMaxSpeedX,
                 movementSettings.AirSensitivityX,
                 movementSettings.AirGravityX);
         }
@@ -69,7 +69,7 @@ public class VertAirBoost : AMove
             return 0;
         }
         return horizVel < movementSettings.InstantRotationSpeed ?
-            float.MaxValue : movementSettings.AirRotationSpeed;
+            float.MaxValue : movementSettings.VertBoostRotationSpeed;
     }
 
     public override IMove GetNextMove()

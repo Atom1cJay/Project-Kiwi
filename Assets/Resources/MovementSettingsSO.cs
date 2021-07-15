@@ -85,14 +85,8 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float vertBoostGravity;
     [SerializeField] float vertBoostMaxChargeTime;
     [SerializeField] float vertBoostMaxTime;
-
-    [Header("Diagonal Boost Settings")]
-    [SerializeField] float diagonalBoostMinStartSpeedX;
-    [SerializeField] float diagonalBoostMaxStartSpeedX;
-    [SerializeField] float diagonalBoostMinStartSpeedY;
-    [SerializeField] float diagonalBoostMaxStartSpeedY;
-    [SerializeField] float diagonalBoostGravityX;
-    [SerializeField] float diagonalBoostSensitivityX;
+    [SerializeField] float vertBoostRotationSpeed;
+    [SerializeField] float vertBoostMaxSpeedX;
 
     [Header("Ground Pound Settings")]
     [SerializeField] float gpSuspensionTime;
@@ -145,6 +139,8 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float glideGravity;
     [SerializeField] float glideCameraAdjustRatio;
     [SerializeField] float glideNonControlTime;
+    [SerializeField] float glideMinCamAngleX;
+    [SerializeField] float glideMaxCamAngleX;
 
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
@@ -215,13 +211,8 @@ public class MovementSettingsSO : ScriptableObject
     public float VertBoostGravity { get { return vertBoostGravity; } }
     public float VertBoostMaxChargeTime { get { return vertBoostMaxChargeTime; } }
     public float VertBoostMaxTime { get { return vertBoostMaxTime; } }
-
-    public float DiagonalBoostMinStartSpeedX { get { return diagonalBoostMinStartSpeedX; } }
-    public float DiagonalBoostMaxStartSpeedX { get { return diagonalBoostMaxStartSpeedX; } }
-    public float DiagonalBoostMinStartSpeedY { get { return diagonalBoostMinStartSpeedY; } }
-    public float DiagonalBoostMaxStartSpeedY { get { return diagonalBoostMaxStartSpeedY; } }
-    public float DiagonalBoostGravityX { get { return diagonalBoostGravityX; } }
-    public float DiagonalBoostSensitivityX { get { return diagonalBoostSensitivityX; } }
+    public float VertBoostRotationSpeed { get { return vertBoostRotationSpeed; } }
+    public float VertBoostMaxSpeedX { get { return vertBoostMaxSpeedX; } }
 
     public float GpSuspensionTime { get { return gpSuspensionTime; } }
     public float GpDownSpeed { get { return gpDownSpeed; } }
@@ -267,6 +258,8 @@ public class MovementSettingsSO : ScriptableObject
     public float GlideGravity { get { return glideGravity; } }
     public float GlideCameraAdjustRatio { get { return glideCameraAdjustRatio; } }
     public float GlideNonControlTime { get { return glideNonControlTime; } }
+    public float GlideMinCamAngleX { get { return glideMinCamAngleX; } }
+    public float GlideMaxCamAngleX { get { return glideMaxCamAngleX; } }
 
 
     static MovementSettingsSO _instance;

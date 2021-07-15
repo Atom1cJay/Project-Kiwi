@@ -25,15 +25,10 @@ public class CameraControl : MonoBehaviour
         iah.inputActions.Camera.AutoAdjust.performed += _ => AutoAdjustToBack();
     }
 
-    private void Update()
-    {
-        ChangeAngles();
-    }
-
     /// <summary>
     /// Changes horizontal and vertical camera angles depending on camera-based input
     /// </summary>
-    private void ChangeAngles()
+    public void HandleManualControl()
     {
         // Controller
         float horizInput = iah.inputActions.Camera.HorizontalRotate.ReadValue<float>();
@@ -57,11 +52,20 @@ public class CameraControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Moves the camera to face the back of the player by the given ratio
-    /// between the current and goal angle.
+    /// Moves the camera's horizontal angle to face the back of the player,
+    /// with the amount of progress this frame being the given ratio.
     /// </summary>
-    public void AdjustToBackBy(float ratio)
+    public void AdjustToBack(float ratio)
     {
         camUtils.RotateToBackBy(ratio);
+    }
+
+    /// <summary>
+    /// Moves the camera to the given vertical angle (degrees), with the amount of progress
+    /// this frame being the given ratio.
+    /// </summary>
+    public void AdjustVertical(float ratio, float angle)
+    {
+        camUtils.RotateToVertAngle(ratio, angle);
     }
 }

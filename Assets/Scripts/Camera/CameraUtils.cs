@@ -94,4 +94,15 @@ public class CameraUtils : MonoBehaviour
         Quaternion newRot = Quaternion.RotateTowards(angle1, angle2, Quaternion.Angle(angle1, angle2) * ratio);
         horizAngle = newRot.eulerAngles.y * Mathf.Deg2Rad;
     }
+
+    /// <summary>
+    /// Moves the camera closer to the given vertical angle (degrees) by the ratio given.
+    /// </summary>
+    public void RotateToVertAngle(float ratio, float angle)
+    {
+        Quaternion angle1 = Quaternion.Euler(vertAngle * Mathf.Rad2Deg, 0, 0);
+        Quaternion angle2 = Quaternion.Euler(angle, 0, 0);
+        Quaternion newRot = Quaternion.RotateTowards(angle1, angle2, Quaternion.Angle(angle1, angle2) * ratio);
+        vertAngle = newRot.eulerAngles.x * Mathf.Deg2Rad;
+    }
 }

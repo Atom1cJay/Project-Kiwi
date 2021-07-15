@@ -106,6 +106,11 @@ public class Glidev3 : AMove
         return movementSettings.GlideCameraAdjustRatio;
     }
 
+    public override float CameraVerticalAutoTarget()
+    {
+        return movementSettings.GlideMinCamAngleX + ((tilt / (movementSettings.GlideMaxTilt * Mathf.Deg2Rad)) * (movementSettings.GlideMaxCamAngleX - movementSettings.GlideMinCamAngleX));
+    }
+
     public override string AsString()
     {
         return "glide";
