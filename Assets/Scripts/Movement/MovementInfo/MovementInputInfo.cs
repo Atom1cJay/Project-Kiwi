@@ -110,6 +110,19 @@ public class MovementInputInfo : MonoBehaviour
     }
 
     /// <summary>
+    /// Gives the horizontal input with respect to the rotation of the camera.
+    /// For instance, if the player is pressing forward but the camera is facing
+    /// forward-right, an input of (cos45, sin45) will be given.
+    /// </summary>
+    public Vector2 GetRelativeHorizontalInputToCamera()
+    {
+        float curHorizAngle = Mathf.Atan2(GetHorizontalInput().y, GetHorizontalInput().x);
+        float curHorizMagnitude = GetHorizontalInput().magnitude;
+        curHorizAngle -= relevantCamera.transform.eulerAngles.y * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(curHorizAngle) * curHorizMagnitude, Mathf.Sin(curHorizAngle) * curHorizMagnitude);
+    }
+
+    /// <summary>
     /// Gives the normalized horizontal movement input.
     /// </summary>
     public Vector2 GetCameraInput()
