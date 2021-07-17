@@ -8,11 +8,11 @@ public class TripleJump : AMove
     float horizVel;
     float vertVel;
     bool divePending;
-    bool vertBoostPending;
     bool vertBoostChargePending;
     bool horizBoostChargePending;
     bool jumpCancelled;
     bool groundPoundPending;
+    bool glidePending;
 
     /// <summary>
     /// Constructs a TripleJump, initializing the objects that hold all the
@@ -28,14 +28,17 @@ public class TripleJump : AMove
         gravity = movementSettings.TjInitGravity;
         vertVel = movementSettings.TjInitJumpVel;
         mii.OnDiveInput.AddListener(() => divePending = true);
-        mii.OnVertBoostRelease.AddListener(() => vertBoostPending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
+        mii.OnGlide.AddListener(() => glidePending = true);
         mii.OnJumpCancelled.AddListener(() =>
         {
-            jumpCancelled = true;
-            vertVel *= movementSettings.TjVelocityMultiplier;
+            if (vertVel > movementSettings.JumpVelocityOfNoReturn)
+            {
+                jumpCancelled = true;
+                vertVel *= movementSettings.JumpVelMultiplierAtCancel;
+            }
         });
     }
 
@@ -109,14 +112,14 @@ public class TripleJump : AMove
 
     public override IMove GetNextMove()
     {
-        if (vertBoostPending)
-        {
-            return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, horizVel);
-        }
         if (mi.TouchingGround())
         {
             if (horizVel < 0) horizVel = 0;
             return new Run(mii, mi, movementSettings, horizVel);
+        }
+        if (glidePending)
+        {
+            return new Glidev3(mii, mi, movementSettings, horizVel);
         }
         if (groundPoundPending)
         {
@@ -126,11 +129,11 @@ public class TripleJump : AMove
         {
             return new Dive(mii, mi, movementSettings);
         }
-        if (horizBoostChargePending)
+        if (horizBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
             return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, horizVel);
         }
-        if (vertBoostChargePending)
+        if (vertBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
             return new VertAirBoostCharge(mii, mi, movementSettings, vertVel, horizVel);
         }

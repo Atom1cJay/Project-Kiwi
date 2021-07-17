@@ -9,9 +9,7 @@ public class Run : AMove
 {
     float horizVel;
     bool jumpPending;
-    bool vertBoostPending;
     bool timeBetweenJumpsBreaksTJ;
-    bool glidePending;
 
     /// <summary>
     /// Constructs a Run, initializing the objects that hold all the
@@ -26,8 +24,6 @@ public class Run : AMove
         if (horizVel < 0) horizVel = 0;
         this.horizVel = horizVel;
         mii.OnJump.AddListener(() => jumpPending = true);
-        mii.OnVertBoostRelease.AddListener(() => vertBoostPending = true);
-        mii.OnGlide.AddListener(() => glidePending = true);
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitToBreakTimeBetweenJumps());
     }
 
@@ -95,14 +91,6 @@ public class Run : AMove
 
     public override IMove GetNextMove()
     {
-        if (glidePending)
-        {
-            return new Glidev3(mii, mi, movementSettings, horizVel);
-        }
-        if (vertBoostPending)
-        {
-            return new VertAirBoost(mii, mi, mii.VertBoostTimeCharged() / movementSettings.VertBoostMaxChargeTime, movementSettings, horizVel);
-        }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));

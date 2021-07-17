@@ -40,6 +40,8 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float jumpVelMultiplierAtCancel;
     [SerializeField] float jumpUncancelledGravityIncrease;
     [SerializeField] float jumpCancelledGravityIncrease;
+    [SerializeField] float jumpVelocityOfNoReturn;
+    [SerializeField] float jumpMinVel;
 
     [Header("Coyote Time Settings")]
     [SerializeField] float reverseCoyoteTime;
@@ -173,6 +175,8 @@ public class MovementSettingsSO : ScriptableObject
     public float JumpVelMultiplierAtCancel { get { return jumpVelMultiplierAtCancel; } }
     public float JumpUncancelledGravityIncrease { get { return jumpUncancelledGravityIncrease; } }
     public float JumpCancelledGravityIncrease { get { return jumpCancelledGravityIncrease; } }
+    public float JumpVelocityOfNoReturn { get { return jumpVelocityOfNoReturn;  } }
+    public float JumpMinVel { get { return jumpMinVel; } }
 
     public float ReverseCoyoteTime { get { return reverseCoyoteTime; } }
     public float CoyoteTime { get { return coyoteTime; } }

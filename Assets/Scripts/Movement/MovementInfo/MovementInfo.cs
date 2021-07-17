@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class MovementInfo : MonoBehaviour
 {
     [SerializeField] CollisionDetector groundDetector;
+    [SerializeField] CollisionDetector antiBoostDetector;
     private int tjJumpCount;
     IMoveImmutable storedMove; // The move from the last frame
     MoveExecuter me;
@@ -33,6 +34,14 @@ public class MovementInfo : MonoBehaviour
     public bool TouchingGround()
     {
         return groundDetector.Colliding();
+    }
+
+    /// <summary>
+    /// Determines whether the player is currently touching the ground.
+    /// </summary>
+    public bool InAntiBoostZone()
+    {
+        return antiBoostDetector.Colliding();
     }
 
     private void Update()

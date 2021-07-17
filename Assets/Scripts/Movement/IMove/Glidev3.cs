@@ -11,26 +11,25 @@ public class Glidev3 : AMove
     bool objectHitPending;
     bool inControl;
     bool glideReleasePending;
-    float initHorizVel;
+    bool groundPoundPending;
 
     public Glidev3(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
-        initHorizVel = horizVel;
         this.horizVel = horizVel;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", GiveControl());
         mii.OnGlide.AddListener(() => glideReleasePending = true);
+        mii.OnGroundPound.AddListener(() => groundPoundPending = true);
     }
 
     public override void AdvanceTime()
     {
         if (inControl)
         {
-            tilt = InputUtils.SmoothedInput(tilt, movementSettings.GlideMaxTilt * Mathf.Deg2Rad * mii.GetRelativeHorizontalInput().y, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
-            horizVel = Mathf.Cos(tilt) * movementSettings.GlideMaxHorizontalSpeed;
+            //tilt = InputUtils.SmoothedInput(tilt, movementSettings.GlideMaxTilt * Mathf.Deg2Rad * mii.GetRelativeHorizontalInput().y, movementSettings.GlideTiltSensitivity, movementSettings.GlideTiltSensitivity);
+            //horizVel = Mathf.Cos(tilt) * movementSettings.GlideMaxHorizontalSpeed;
             rotationSpeed = InputUtils.SmoothedInput(rotationSpeed, movementSettings.GlideRotationSpeed * mii.GetRelativeHorizontalInput().x, movementSettings.GlideRotationSpeedSensitivity, movementSettings.GlideRotationSpeedGravity);
-            vertVel = -Mathf.Sin(tilt) * movementSettings.GlideMaxVerticalSpeed;
-            if (vertVel > 0) vertVel = 0;
-            vertVel -= movementSettings.GlideAirLoss;
+            //vertVel = -Mathf.Sin(tilt) * movementSettings.GlideMaxVerticalSpeed;
+            vertVel = -movementSettings.GlideAirLoss;
             mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
         }
     }
@@ -42,10 +41,7 @@ public class Glidev3 : AMove
         while (timePassed < movementSettings.GlideJumpTime)
         {
             tilt = (timePassed / movementSettings.GlideJumpTime) * Mathf.PI / 2;
-            vertVel = Mathf.Cos(tilt) * movementSettings.GlideJumpSpeed;
-            //horizVel = Mathf.Sin(tilt) * movementSettings.GlideJumpSpeed;
-            //vertVel = movementSettings.GlideJumpSpeed * (1 - (timePassed / movementSettings.GlideJumpTime));
-            //horizVel = initHorizVel * (1 - (timePassed / movementSettings.GlideJumpTime));
+            vertVel = -Mathf.Cos(tilt) * movementSettings.GlideJumpSpeed - movementSettings.GlideAirLoss;
             timePassed += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
@@ -78,6 +74,10 @@ public class Glidev3 : AMove
 
     public override IMove GetNextMove()
     {
+        if (groundPoundPending)
+        {
+            return new GroundPound(mii, mi, movementSettings);
+        }
         if (glideReleasePending)
         {
             return new Fall(mii, mi, movementSettings, horizVel, false);

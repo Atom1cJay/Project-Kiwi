@@ -106,7 +106,6 @@ public class MovementInputInfo : MonoBehaviour
         float curHorizAngle = Mathf.Atan2(GetHorizontalInput().y, GetHorizontalInput().x);
         float curHorizMagnitude = GetHorizontalInput().magnitude;
         curHorizAngle -= difference * Mathf.Deg2Rad;
-        print(relevantCamera.transform.eulerAngles.y - transform.eulerAngles.y);
         return new Vector2(Mathf.Cos(curHorizAngle) * curHorizMagnitude, Mathf.Sin(curHorizAngle) * curHorizMagnitude);
     }
 

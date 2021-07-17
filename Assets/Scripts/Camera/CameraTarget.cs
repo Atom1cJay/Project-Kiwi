@@ -26,6 +26,7 @@ public class CameraTarget : MonoBehaviour
         AdjustToCamTarget();
     }
 
+    /*
     private void FixedUpdate()
     {
         AdjustToCamTarget();
@@ -35,6 +36,7 @@ public class CameraTarget : MonoBehaviour
     {
         AdjustToCamTarget();
     }
+    */
 
     private void AdjustToCamTarget()
     {
