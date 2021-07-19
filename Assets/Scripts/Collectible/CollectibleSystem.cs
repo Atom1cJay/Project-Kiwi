@@ -11,7 +11,7 @@ public class CollectibleSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("coins:" + coinCount);
+        //Debug.Log("coins:" + coinCount);
         
 
     }

@@ -8,9 +8,10 @@ public class PlayerAnimationHandler : MonoBehaviour
     //[SerializeField] MovementMaster mm;
     [SerializeField] Animator animator;
     bool onGround = false;
-    bool diving = false;
+    bool diving, startRunning;
     float acceleration = 0f;
     float lastSpeed = 0f;
+    string lM, temp, cM;
     //Sets all bools to false except on ground
     void currentMove(string s)
     {
@@ -33,11 +34,16 @@ public class PlayerAnimationHandler : MonoBehaviour
         animator.SetBool("HARDTURN", false);
         animator.SetBool("JETPACKRUN", false);
         animator.SetBool("WALKING", false);
+        animator.SetBool("STARTRUN", false);
 
         animator.SetBool(s, true);
     }
     void Start()
     {
+        //initialize bools
+        diving = false;
+        startRunning = false;
+
         //Initialize all Animation variables as false
         animator.SetBool("IDLE", false);
         animator.SetBool("FALLING", false);
@@ -58,16 +64,24 @@ public class PlayerAnimationHandler : MonoBehaviour
         animator.SetBool("SKID", false);
         animator.SetBool("HARDTURN", false);
         animator.SetBool("JETPACKRUN", false);
+        animator.SetBool("STARTRUN", false);
     }
 
     void FixedUpdate()
     {
 
-
-
         float speed = me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
         StartCoroutine(GetAcceleration(speed));
-        string cM = me.GetCurrentMove().AsString();
+        temp = me.GetCurrentMove().AsString();
+
+        //move changed
+        if (temp != cM)
+        {
+            lM = cM;
+            cM = temp;
+        }
+        //Debug.Log(cM);
+
         //Debug.Log(cM);
         //walking state not implemented yet
 
@@ -78,8 +92,15 @@ public class PlayerAnimationHandler : MonoBehaviour
         }
         else if (cM == "idle")
         {
+            startRunning = true;
             onGround = true;
-            currentMove("IDLE");
+            if (lM == "dive" && diving)
+            {
+                diving = false;
+                currentMove("DIVERECOVERY");
+            }
+            else
+                currentMove("IDLE");
         }
         else if (cM == "fall")
         {
@@ -89,7 +110,17 @@ public class PlayerAnimationHandler : MonoBehaviour
         else if (cM == "run")
         {
             onGround = true;
-            if(speed > 6.25f && !diving)
+            if(lM == "idle" && startRunning)
+            {
+                currentMove("STARTRUN");
+                startRunning = false;
+            }
+            else if (lM == "dive" && diving)
+            {
+                diving = false;
+                currentMove("DIVERECOVERY");
+            }
+            else if(speed > 6.25f && !diving)
             {
                 currentMove("JETPACKRUN");
             }
@@ -111,13 +142,6 @@ public class PlayerAnimationHandler : MonoBehaviour
             onGround = false;
             diving = true;
             currentMove("DIVE");
-
-        }
-        else if (cM == "diverecovery")
-        {
-            onGround = false;
-            Invoke("FinishDive", 1.15f);
-            currentMove("DIVERECOVERY");
 
         }
         else if (cM == "jump")
@@ -201,10 +225,6 @@ public class PlayerAnimationHandler : MonoBehaviour
         }
     }
 
-    void FinishDive()
-    {
-        diving = false;
-    }
     IEnumerator GetAcceleration(float t)
     {
         yield return new WaitForSeconds(0.1f);
