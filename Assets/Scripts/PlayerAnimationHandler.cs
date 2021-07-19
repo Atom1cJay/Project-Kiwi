@@ -120,7 +120,7 @@ public class PlayerAnimationHandler : MonoBehaviour
                 diving = false;
                 currentMove("DIVERECOVERY");
             }
-            else if(speed > 6.25f && !diving)
+            else if(speed > 7f && !diving)
             {
                 currentMove("JETPACKRUN");
             }
