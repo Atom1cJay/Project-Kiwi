@@ -78,7 +78,7 @@ public class VertAirBoost : AMove
             {
                 horizVel = 0;
             }
-            return new Run(mii, mi, movementSettings, horizVel);
+            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
         if (groundPoundPending)
         {

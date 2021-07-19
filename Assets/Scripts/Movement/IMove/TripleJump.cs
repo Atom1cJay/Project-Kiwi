@@ -5,7 +5,7 @@ using System.Collections;
 public class TripleJump : AMove
 {
     float gravity;
-    float horizVel;
+    Vector2 horizVector;
     float vertVel;
     bool divePending;
     bool vertBoostChargePending;
@@ -22,9 +22,9 @@ public class TripleJump : AMove
     /// <param name="mi">Information on the state of the player</param>
     /// <param name="ms">Constants related to movement</param>
     /// <param name="horizVel">The horizontal speed moving into this move</param>
-    public TripleJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
+    public TripleJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
-        this.horizVel = horizVel;
+        this.horizVector = horizVector;
         gravity = movementSettings.TjInitGravity;
         vertVel = movementSettings.TjInitJumpVel;
         mii.OnDiveInput.AddListener(() => divePending = true);
@@ -56,40 +56,38 @@ public class TripleJump : AMove
             gravity = movementSettings.TjCancelledMaxGravity;
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
-        horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
-
-        if (mii.PressingBoost())
+        float startingMagn = Math.Min(horizVector.magnitude, mi.GetEffectiveSpeed());
+        horizVector = horizVector.normalized * startingMagn;
+        // Choose which type of sensitivity to employ
+        if (horizVector.magnitude < movementSettings.MaxSpeed)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    movementSettings.GroundBoostMaxSpeedX,
-                    movementSettings.GroundBoostSensitivityX,
-                    movementSettings.GroundBoostGravityX);
+            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityX * Time.deltaTime;
         }
-        else if (mii.AirReverseInput())
+        else if (horizVector.magnitude >= movementSettings.MaxSpeed)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    -mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                    movementSettings.AirReverseSensitivityX,
-                    movementSettings.AirReverseGravityX);
+            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
         }
-        else
+        // Don't let above the magnitude limit
+        if (!mii.PressingBoost() && horizVector.magnitude > movementSettings.MaxSpeed)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                    movementSettings.TjAirSensitivityX,
-                    movementSettings.TjInputGravityX);
+            horizVector = horizVector.normalized * movementSettings.MaxSpeed;
+        }
+        if (mii.PressingBoost() && horizVector.magnitude > movementSettings.GroundBoostMaxSpeedX)
+        {
+            horizVector = horizVector.normalized * movementSettings.GroundBoostMaxSpeedX;
+        }
+        // Come to a stop
+        if (mii.GetRelativeHorizontalInputToCamera().magnitude < 0.1f)
+        {
+            float magn = horizVector.magnitude;
+            magn -= movementSettings.JumpGravityX * Time.deltaTime;
+            horizVector = horizVector.normalized * magn;
         }
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
-        return ForwardMovement(horizVel);
+        return horizVector;
     }
 
     public override float GetVertSpeedThisFrame()
@@ -99,27 +97,22 @@ public class TripleJump : AMove
 
     public override float GetRotationSpeed()
     {
-        if (mii.PressingBoost())
-        {
-            return movementSettings.GroundBoostRotationSpeed;
-        }
-        if (horizVel < movementSettings.InstantRotationSpeed && !mii.AirReverseInput())
+        if (divePending)
         {
             return float.MaxValue;
         }
-        return mii.AirReverseInput() ? 0 : movementSettings.AirRotationSpeed;
+        return movementSettings.AirRotationSpeed;
     }
 
     public override IMove GetNextMove()
     {
         if (mi.TouchingGround())
         {
-            if (horizVel < 0) horizVel = 0;
-            return new Run(mii, mi, movementSettings, horizVel);
+            return new Run(mii, mi, movementSettings, horizVector);
         }
         if (glidePending)
         {
-            return new Glidev3(mii, mi, movementSettings, horizVel);
+            return new Glidev3(mii, mi, movementSettings, horizVector);
         }
         if (groundPoundPending)
         {
@@ -131,11 +124,11 @@ public class TripleJump : AMove
         }
         if (horizBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
-            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, horizVel);
+            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, ForwardMovement(horizVector.magnitude));
         }
         if (vertBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
-            return new VertAirBoostCharge(mii, mi, movementSettings, vertVel, horizVel);
+            return new VertAirBoostCharge(mii, mi, movementSettings, vertVel, ForwardMovement(horizVector.magnitude));
         }
 
         return this;

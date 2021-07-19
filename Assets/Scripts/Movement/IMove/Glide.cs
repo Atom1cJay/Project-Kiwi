@@ -150,12 +150,12 @@ public class Glide : AMove
             }
             else
             {
-                return new Run(mii, mi, movementSettings, horizVel);
+                return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
             }
         }
         else if (glidePending)
         {
-            return new Fall(mii, mi, movementSettings, horizVel, false);
+            return new Fall(mii, mi, movementSettings, ForwardMovement(horizVel), false);
         }
         return this;
     }

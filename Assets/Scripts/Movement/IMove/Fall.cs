@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Fall : AMove
 {
-    float horizVel;
+    Vector2 horizVector;
     float vertVel;
     bool divePending;
     bool vertBoostChargePending;
@@ -23,9 +23,9 @@ public class Fall : AMove
     /// <param name="mi">Information on the state of the player</param>
     /// <param name="ms">Constants related to movement</param>
     /// <param name="horizVel">The horizontal speed moving into this move</param>
-    public Fall(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool giveCoyoteTime) : base(ms, mi, mii)
+    public Fall(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector, bool giveCoyoteTime) : base(ms, mi, mii)
     {
-        this.horizVel = horizVel;
+        this.horizVector = horizVector;
         vertVel = 0;
         coyoteTime = giveCoyoteTime ? movementSettings.CoyoteTime : 0;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", AllowCoyoteTime());
@@ -49,44 +49,32 @@ public class Fall : AMove
     public override void AdvanceTime()
     {
         // Horizontal
-        horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
-
-        if (mii.AirReverseInput())
+        float startingMagn = Math.Min(horizVector.magnitude, mi.GetEffectiveSpeed());
+        horizVector = horizVector.normalized * startingMagn;
+        // Choose which type of sensitivity to employ
+        if (horizVector.magnitude < movementSettings.MaxSpeed)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    movementSettings.GroundBoostMaxSpeedX,
-                    movementSettings.GroundBoostSensitivityX,
-                    movementSettings.GroundBoostGravityX);
+            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityX * Time.deltaTime;
         }
-        else if (horizVel < 0)
+        else if (horizVector.magnitude >= movementSettings.MaxSpeed)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                    movementSettings.AirReverseSensitivityX,
-                    movementSettings.AirReverseGravityX);
-            if (horizVel < 0) horizVel = 0;
+            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
         }
-        else if (horizVel > movementSettings.MaxSpeed)
+        // Don't let above the magnitude limit
+        if (!mii.PressingBoost() && horizVector.magnitude > movementSettings.MaxSpeed)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                    movementSettings.AirSensitivityX,
-                    movementSettings.AirGravityXOverTopSpeed);
+            horizVector = horizVector.normalized * movementSettings.MaxSpeed;
         }
-        else
+        if (mii.PressingBoost() && horizVector.magnitude > movementSettings.GroundBoostMaxSpeedX)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                    movementSettings.AirSensitivityX,
-                    movementSettings.AirGravityX);
+            horizVector = horizVector.normalized * movementSettings.GroundBoostMaxSpeedX;
+        }
+        // Come to a stop
+        if (mii.GetRelativeHorizontalInputToCamera().magnitude < 0.1f)
+        {
+            float magn = horizVector.magnitude;
+            magn -= movementSettings.JumpGravityX * Time.deltaTime;
+            horizVector = horizVector.normalized * magn;
         }
         // Vertical
         vertVel -= movementSettings.DefaultGravity * Time.deltaTime;
@@ -94,7 +82,7 @@ public class Fall : AMove
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
-        return ForwardMovement(horizVel);
+        return horizVector;
     }
 
     public override float GetVertSpeedThisFrame()
@@ -119,27 +107,27 @@ public class Fall : AMove
     {
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
-            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
+            return new Slide(mii, mi, movementSettings, horizVector);
         }
         if (glidePending)
         {
-            return new Glidev3(mii, mi, movementSettings, horizVel);
+            return new Glidev3(mii, mi, movementSettings, horizVector);
         }
         if (groundPoundPending)
         {
             return new GroundPound(mii, mi, movementSettings);
         }
-        if (mi.TouchingGround() && horizVel > 0)
+        if (mi.TouchingGround() && horizVector.magnitude > 0)
         {
-            return new Run(mii, mi, movementSettings, horizVel);
+            return new Run(mii, mi, movementSettings, horizVector);
         }
-        if (mi.TouchingGround() && horizVel == 0)
+        if (mi.TouchingGround() && horizVector.magnitude == 0)
         {
             return new Idle(mii, mi, movementSettings);
         }
         if (jumpPending && coyoteTime > 0)
         {
-            return new Jump(mii, mi, movementSettings, horizVel);
+            return new Jump(mii, mi, movementSettings, horizVector.magnitude);
         }
         if (divePending)
         {
@@ -147,11 +135,11 @@ public class Fall : AMove
         }
         if (horizBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
-            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, horizVel);
+            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, horizVector);
         }
         if (vertBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
-            return new VertAirBoostCharge(mii, mi, movementSettings, vertVel, horizVel);
+            return new VertAirBoostCharge(mii, mi, movementSettings, vertVel, horizVector);
         }
 
         return this;

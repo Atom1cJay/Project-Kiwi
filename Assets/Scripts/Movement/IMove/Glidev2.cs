@@ -63,12 +63,12 @@ public class Glidev2 : AMove
             }
             else
             {
-                return new Run(mii, mi, movementSettings, horizVelZ);
+                return new Run(mii, mi, movementSettings, ForwardMovement(horizVelZ));
             }
         }
         else if (glidePending)
         {
-            return new Fall(mii, mi, movementSettings, horizVelZ, false);
+            return new Fall(mii, mi, movementSettings, ForwardMovement(horizVelZ), false);
         }
         return this;
     }

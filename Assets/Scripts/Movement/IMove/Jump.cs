@@ -15,6 +15,7 @@ public class Jump : AMove
     bool jumpGroundableTimerComplete;
     bool jumpTimeShouldBreakTJ;
     bool glidePending;
+    Vector2 horizVector;
 
     /// <summary>
     /// Constructs a Jump, initializing the objects that hold all the
@@ -26,7 +27,7 @@ public class Jump : AMove
     /// <param name="horizVel">The horizontal speed moving into this move</param>
     public Jump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
-        this.horizVel = horizVel;
+        horizVector = ForwardMovement(horizVel);
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", IncrementJumpTimer());
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForJumpGroundableTimer());
         gravity = movementSettings.JumpInitGravity;
@@ -64,43 +65,32 @@ public class Jump : AMove
             vertVel = movementSettings.JumpMinVel;
         }
         // Horizontal
-        horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
-
-        if (mii.PressingBoost())
+        float startingMagn = Math.Min(horizVector.magnitude, mi.GetEffectiveSpeed());
+        horizVector = horizVector.normalized * startingMagn;
+        // Choose which type of sensitivity to employ
+        if (horizVector.magnitude < movementSettings.MaxSpeed)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    movementSettings.GroundBoostMaxSpeedX,
-                    movementSettings.GroundBoostSensitivityX,
-                    movementSettings.GroundBoostGravityX);
+            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityX * Time.deltaTime;
         }
-        else if (horizVel < 0)
+        else if (horizVector.magnitude >= movementSettings.MaxSpeed)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                    movementSettings.AirReverseSensitivityX,
-                    movementSettings.AirReverseGravityX);
+            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
         }
-        else if (horizVel > movementSettings.MaxSpeed)
+        // Don't let above the magnitude limit
+        if (!mii.PressingBoost() && horizVector.magnitude > movementSettings.MaxSpeed)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                    movementSettings.AirSensitivityX,
-                    movementSettings.AirGravityXOverTopSpeed);
+            horizVector = horizVector.normalized * movementSettings.MaxSpeed;
         }
-        else
+        if (mii.PressingBoost() && horizVector.magnitude > movementSettings.GroundBoostMaxSpeedX)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
-                    movementSettings.AirSensitivityX,
-                    movementSettings.AirGravityX);
+            horizVector = horizVector.normalized * movementSettings.GroundBoostMaxSpeedX;
+        }
+        // Come to a stop
+        if (mii.GetRelativeHorizontalInputToCamera().magnitude < 0.1f)
+        {
+            float magn = horizVector.magnitude;
+            magn -= movementSettings.JumpGravityX * Time.deltaTime;
+            horizVector = horizVector.normalized * magn;
         }
     }
 
@@ -119,7 +109,8 @@ public class Jump : AMove
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
-        return ForwardMovement(horizVel);
+        return horizVector;
+        //return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -129,17 +120,8 @@ public class Jump : AMove
 
     public override float GetRotationSpeed()
     {
-        if (horizVel < 0)
+        if (divePending)
         {
-            return 0;
-        }
-        if (horizVel < movementSettings.InstantRotationSpeed && !mii.AirReverseInput())
-        {
-            return float.MaxValue;
-        }
-        if (mii.AirReverseInput())
-        {
-            horizVel = -horizVel;
             return float.MaxValue;
         }
         return movementSettings.AirRotationSpeed;
@@ -149,11 +131,11 @@ public class Jump : AMove
     {
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
-            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
+            return new Slide(mii, mi, movementSettings, horizVector/*ForwardMovement(horizVel)*/);
         }
         if (glidePending)
         {
-            return new Glidev3(mii, mi, movementSettings, horizVel);
+            return new Glidev3(mii, mi, movementSettings, horizVector /*horizVel*/);
         }
         if (groundPoundPending)
         {
@@ -162,7 +144,7 @@ public class Jump : AMove
         if (mi.TouchingGround() && jumpGroundableTimerComplete && vertVel < 0)
         {
             if (horizVel < 0) horizVel = 0;
-            return new Run(mii, mi, movementSettings, horizVel);
+            return new Run(mii, mi, movementSettings, /*horizVel*/ horizVector);
         }
         if (divePending)
         {
@@ -170,11 +152,11 @@ public class Jump : AMove
         }
         if (horizBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
-            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, horizVel);
+            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, /*horizVel*/ horizVector);
         }
         if (vertBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
-            return new VertAirBoostCharge(mii, mi, movementSettings, vertVel, horizVel);
+            return new VertAirBoostCharge(mii, mi, movementSettings, vertVel, /*horizVel*/ horizVector);
         }
 
         return this;

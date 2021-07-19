@@ -45,7 +45,7 @@ public class Idle : AMove
         }
         if (mii.GetHorizontalInput().magnitude != 0)
         {
-            return new Run(mii, mi, movementSettings, 0);
+            return new Run(mii, mi, movementSettings, Vector2.zero);
         }
         if (jumpPending || mii.InReverseCoyoteTime())
         {

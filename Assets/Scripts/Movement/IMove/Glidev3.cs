@@ -10,12 +10,12 @@ public class Glidev3 : AMove
     bool glideReleasePending;
     bool groundPoundPending;
 
-    public Glidev3(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
+    public Glidev3(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
-        horizVector = ForwardMovement(horizVel);
-        if (horizVector.magnitude > movementSettings.GlideMaxHorizontalSpeed)
+        this.horizVector = horizVector;
+        if (this.horizVector.magnitude > movementSettings.GlideMaxHorizontalSpeed)
         {
-            horizVector = horizVector.normalized * movementSettings.GlideMaxHorizontalSpeed;
+            this.horizVector = this.horizVector.normalized * movementSettings.GlideMaxHorizontalSpeed;
         }
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", GiveControl());
         mii.OnGlide.AddListener(() => glideReleasePending = true);
@@ -83,7 +83,7 @@ public class Glidev3 : AMove
         }
         if (glideReleasePending)
         {
-            return new Fall(mii, mi, movementSettings, horizVector.magnitude, false);
+            return new Fall(mii, mi, movementSettings, horizVector, false);
         }
         if (mi.TouchingGround())
         {
@@ -93,12 +93,12 @@ public class Glidev3 : AMove
             }
             else
             {
-                return new Run(mii, mi, movementSettings, horizVector.magnitude);
+                return new Run(mii, mi, movementSettings, horizVector);
             }
         }
         else if (objectHitPending)
         {
-            return new Fall(mii, mi, movementSettings, horizVector.magnitude, false);
+            return new Fall(mii, mi, movementSettings, horizVector, false);
         }
         return this;
     }

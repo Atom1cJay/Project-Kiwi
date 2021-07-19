@@ -18,9 +18,9 @@ public class VertAirBoostCharge : AMove
     /// <param name="mii">Information on the player's input</param>
     /// <param name="mi">Information on the state of the player</param>
     /// <param name="ms">Constants related to movement</param>
-    public VertAirBoostCharge(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float vertVel, float horizVel) : base(ms, mi, mii)
+    public VertAirBoostCharge(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float vertVel, Vector2 horizVector) : base(ms, mi, mii)
     {
-        this.horizVel = horizVel;
+        horizVel = GetSharedMagnitudeWithPlayerAngle(horizVector);
         this.vertVel = (vertVel < 0) ? 0 : vertVel;
         timeActive = 0;
         maxTimeActive = movementSettings.VertBoostMaxChargeTime;

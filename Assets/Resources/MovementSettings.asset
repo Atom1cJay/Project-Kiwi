@@ -25,7 +25,7 @@ MonoBehaviour:
   horizBoostSpeedX: 17
   horizBoostChargeGravityX: 6
   vertBoostChargeGravityX: 12
-  groundBoostMaxSpeedX: 8.5
+  groundBoostMaxSpeedX: 9
   groundBoostSensitivityX: 10
   groundBoostGravityX: 4
   diveSpeedX: 6.5
@@ -38,9 +38,12 @@ MonoBehaviour:
   jumpMaxCancelledGravity: 28
   jumpVelMultiplierAtCancel: 0.75
   jumpUncancelledGravityIncrease: 110
-  jumpCancelledGravityIncrease: 90
+  jumpCancelledGravityIncrease: 100
   jumpVelocityOfNoReturn: 3
   jumpMinVel: -30
+  jumpSensitivityX: 8
+  jumpAdjustSensitivityX: 20
+  jumpGravityX: 10
   reverseCoyoteTime: 0.15
   coyoteTime: 0.12
   dissonanceForHardTurn: 1.8
@@ -85,24 +88,24 @@ MonoBehaviour:
   diveRecoveryTime: 0.1
   defaultGravity: 25
   stickToGroundMultiplier: 0
-  dissonanceForAirReverse: 2.7
+  dissonanceForAirReverse: 1.8
   airReverseMinActivationSpeed: 0
   instantRotationSpeed: 1
   groundRotationSpeed: 500
-  airRotationSpeed: 100
+  airRotationSpeed: 800
   boostAftermathRotationSpeed: 50
   diveRotationSpeed: 50
   groundBoostRotationSpeed: 400
   slideForce: 0.25
   slideMaxSpeed: 12
   slideRecoveryPace: 2
-  glideRotationSpeed: 50
+  glideRotationSpeed: 700
   glideRotationSpeedSensitivity: 900
   glideRotationSpeedGravity: 900
   glideTiltSensitivity: 2
-  glideAirLoss: 2
+  glideAirLoss: 1.5
   glideHorizontalSpeed: 80
-  glideMaxHorizontalSpeed: 6.5
+  glideMaxHorizontalSpeed: 6
   glideVerticalSpeed: 5
   glideMaxVerticalSpeed: 5
   glideDriftMovementVector: {x: 6, y: -3}
@@ -115,8 +118,10 @@ MonoBehaviour:
   glideMaxRoll: 40
   glideGravity: 3
   glideCameraAdjustRatio: 0.08
-  glideNonControlTime: 0.5
+  glideNonControlTime: 0
   glideMinCamAngleX: 20
   glideMaxCamAngleX: 40
-  glideJumpSpeed: 4
+  glideJumpSpeed: 2.5
   glideJumpTime: 0.5
+  glideXSensitivity: 15
+  glideXGravity: 5

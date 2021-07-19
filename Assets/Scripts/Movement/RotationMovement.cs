@@ -15,18 +15,13 @@ public class RotationMovement : MonoBehaviour
         mii = GetComponent<MovementInputInfo>();
     }
 
-    private void FixedUpdate()
-    {
-        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-        DetermineRotation();
-    }
-
     /// <summary>
     /// Appropriately rotates the player considering the state they're in
     /// </summary>
     /// <param name="rawInput">The input whose direction will be rotated towards</param>
-    private void DetermineRotation()
+    public void DetermineRotation()
     {
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         IMoveImmutable curMove = me.GetCurrentMove();
         float rotationSpeed = curMove.GetRotationSpeed();
 

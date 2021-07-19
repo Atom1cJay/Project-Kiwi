@@ -50,7 +50,7 @@ public class HardTurn : AMove
     {
         if (timeLeft < 0)
         {
-            return new Run(mii, mi, movementSettings, horizVel);
+            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
         if (jumpInputPending || mii.InReverseCoyoteTime())
         {
@@ -58,7 +58,7 @@ public class HardTurn : AMove
         }
         if (!mi.TouchingGround())
         {
-            return new Fall(mii, mi, movementSettings, horizVel, false);
+            return new Fall(mii, mi, movementSettings, ForwardMovement(horizVel), false);
         }
         return this;
     }

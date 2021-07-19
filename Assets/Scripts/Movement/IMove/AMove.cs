@@ -75,4 +75,19 @@ public abstract class AMove : IMove
         float zDelta = speed * Mathf.Sin(horizAngleFaced);
         return new Vector2(xDelta, zDelta);
     }
+
+    /// <summary>
+    /// Given a vector of horizontal movement, gives the magnitude shared
+    /// between that vector and the angle faced by the player. Useful
+    /// for converting Vector2-based horizontal movement into float-based.
+    /// </summary>
+    /// <param name="horizVector"></param>
+    /// <returns></returns>
+    protected float GetSharedMagnitudeWithPlayerAngle(Vector2 horizVector)
+    {
+        float playerAngle = mi.GetPlayerTransform().eulerAngles.y * Mathf.Deg2Rad;
+        float vectorAngle = (-Mathf.Atan2(horizVector.y, horizVector.x)) + (Mathf.PI / 2);
+        float angleDifference = playerAngle - vectorAngle;
+        return Mathf.Cos(angleDifference) * horizVector.magnitude;
+    }
 }
