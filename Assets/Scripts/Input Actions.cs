@@ -243,6 +243,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""556bf8ae-432c-4785-9ca5-a8da11cb1988"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/button3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""VertBoost"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""16627e8e-72c9-4b9d-837c-3c93d769e8df"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
