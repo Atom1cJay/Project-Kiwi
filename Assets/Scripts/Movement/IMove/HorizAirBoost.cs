@@ -64,7 +64,7 @@ public class HorizAirBoost : AMove
     {
         if (mi.TouchingGround())
         {
-            return new Run(mii, mi, movementSettings, horizVel);
+            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
         if (groundPoundPending)
         {

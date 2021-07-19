@@ -42,6 +42,9 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float jumpCancelledGravityIncrease;
     [SerializeField] float jumpVelocityOfNoReturn;
     [SerializeField] float jumpMinVel;
+    [SerializeField] float jumpSensitivityX;
+    [SerializeField] float jumpAdjustSensitivityX;
+    [SerializeField] float jumpGravityX;
 
     [Header("Coyote Time Settings")]
     [SerializeField] float reverseCoyoteTime;
@@ -179,6 +182,9 @@ public class MovementSettingsSO : ScriptableObject
     public float JumpCancelledGravityIncrease { get { return jumpCancelledGravityIncrease; } }
     public float JumpVelocityOfNoReturn { get { return jumpVelocityOfNoReturn;  } }
     public float JumpMinVel { get { return jumpMinVel; } }
+    public float JumpSensitivityX { get { return jumpSensitivityX; } }
+    public float JumpAdjustSensitivityX { get { return jumpAdjustSensitivityX; } }
+    public float JumpGravityX { get { return jumpGravityX; } }
 
     public float ReverseCoyoteTime { get { return reverseCoyoteTime; } }
     public float CoyoteTime { get { return coyoteTime; } }

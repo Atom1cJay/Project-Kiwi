@@ -20,9 +20,9 @@ public class HorizAirBoostCharge : AMove
     /// <param name="ms">Constants related to movement</param>
     /// <param name="vertVel">The vertical speed moving into this move</param>
     /// <param name="horizVel">The horizontal speed moving into this move</param>
-    public HorizAirBoostCharge(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float vertVel, float horizVel) : base(ms, mi, mii)
+    public HorizAirBoostCharge(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float vertVel, Vector2 horizVector) : base(ms, mi, mii)
     {
-        this.horizVel = horizVel;
+        horizVel = GetSharedMagnitudeWithPlayerAngle(horizVector);
         this.vertVel = (vertVel < 0) ? 0 : vertVel;
         timeCharging = 0;
         maxTimeToCharge = movementSettings.HorizBoostMaxChargeTime;

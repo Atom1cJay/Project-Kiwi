@@ -18,11 +18,10 @@ public class Run : AMove
     /// <param name="mii">Information on the player's input</param>
     /// <param name="mi">Information on the state of the player</param>
     /// <param name="ms">Constants related to movement</param>
-    /// <param name="horizVel">The horizontal speed moving into this move</param>
-    public Run(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
+    /// <param name="horizVector">The horizontal velocity going into this move</param>
+    public Run(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
-        if (horizVel < 0) horizVel = 0;
-        this.horizVel = horizVel;
+        horizVel = GetSharedMagnitudeWithPlayerAngle(horizVector);
         mii.OnJump.AddListener(() => jumpPending = true);
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitToBreakTimeBetweenJumps());
     }
@@ -101,11 +100,11 @@ public class Run : AMove
         }
         if ((jumpPending || mii.InReverseCoyoteTime()) && mi.NextJumpIsDoubleJump())
         {
-            return new DoubleJump(mii, mi, movementSettings, horizVel);
+            return new DoubleJump(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
         if ((jumpPending || mii.InReverseCoyoteTime()) && mi.NextJumpIsTripleJump())
         {
-            return new TripleJump(mii, mi, movementSettings, horizVel);
+            return new TripleJump(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
         if (jumpPending || mii.InReverseCoyoteTime())
         {
@@ -113,7 +112,7 @@ public class Run : AMove
         }
         if (!mi.TouchingGround())
         {
-            return new Fall(mii, mi, movementSettings, horizVel, true);
+            return new Fall(mii, mi, movementSettings, ForwardMovement(horizVel), true);
         }
         if (mii.HardTurnInput() && mii.GetHorizontalInput().magnitude > 0
             && horizVel > movementSettings.HardTurnMinSpeed

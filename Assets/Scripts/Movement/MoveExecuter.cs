@@ -9,6 +9,7 @@ public class MoveExecuter : MonoBehaviour
     CharacterController charCont;
     MovementInfo mi;
     MovementSettingsSO movementSettings;
+    RotationMovement rotator;
     [SerializeField] CameraControl cameraControl;
 
     private void Start()
@@ -16,7 +17,8 @@ public class MoveExecuter : MonoBehaviour
         movementSettings = MovementSettingsSO.Instance;
         charCont = GetComponent<CharacterController>();
         mi = GetComponent<MovementInfo>();
-        moveThisFrame = new Fall(GetComponent<MovementInputInfo>(), mi, movementSettings, 0, false);
+        moveThisFrame = new Fall(GetComponent<MovementInputInfo>(), mi, movementSettings, Vector2.zero, false);
+        rotator = GetComponent<RotationMovement>();
     }
 
     void Update()
@@ -31,6 +33,7 @@ public class MoveExecuter : MonoBehaviour
             cameraControl.AdjustToBack(moveThisFrame.CameraRotateTowardsRatio());
             cameraControl.AdjustVertical(moveThisFrame.CameraRotateTowardsRatio(), moveThisFrame.CameraVerticalAutoTarget());
         }
+        rotator.DetermineRotation();
         Vector2 horizMovement = moveThisFrame.GetHorizSpeedThisFrame();
         Vector3 dir = DirectionOfMovement(horizMovement);
         Vector3 horizMovementAdjusted = dir * horizMovement.magnitude;

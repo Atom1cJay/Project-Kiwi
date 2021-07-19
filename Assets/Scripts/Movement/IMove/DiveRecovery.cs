@@ -35,11 +35,11 @@ public class DiveRecovery : AMove
     {
         if (!mi.TouchingGround())
         {
-            return new Fall(mii, mi, movementSettings, horizVel, false);
+            return new Fall(mii, mi, movementSettings, ForwardMovement(horizVel), false);
         }
         if (timePassed > movementSettings.DiveRecoveryTime)
         {
-            return new Run(mii, mi, movementSettings, horizVel);
+            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
         return this; 
     }

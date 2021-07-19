@@ -53,7 +53,7 @@ public class SlideRecovery : AMove
         }
         if (!mi.TouchingGround())
         {
-            return new Fall(mii, mi, movementSettings, horizVector.magnitude, false);
+            return new Fall(mii, mi, movementSettings, horizVector, false);
         }
         return this;
     }
