@@ -40,6 +40,8 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float jumpVelMultiplierAtCancel;
     [SerializeField] float jumpUncancelledGravityIncrease;
     [SerializeField] float jumpCancelledGravityIncrease;
+    [SerializeField] float jumpVelocityOfNoReturn;
+    [SerializeField] float jumpMinVel;
 
     [Header("Coyote Time Settings")]
     [SerializeField] float reverseCoyoteTime;
@@ -143,6 +145,8 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float glideMaxCamAngleX;
     [SerializeField] float glideJumpSpeed;
     [SerializeField] float glideJumpTime;
+    [SerializeField] float glideXSensitivity;
+    [SerializeField] float glideXGravity;
 
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
@@ -173,6 +177,8 @@ public class MovementSettingsSO : ScriptableObject
     public float JumpVelMultiplierAtCancel { get { return jumpVelMultiplierAtCancel; } }
     public float JumpUncancelledGravityIncrease { get { return jumpUncancelledGravityIncrease; } }
     public float JumpCancelledGravityIncrease { get { return jumpCancelledGravityIncrease; } }
+    public float JumpVelocityOfNoReturn { get { return jumpVelocityOfNoReturn;  } }
+    public float JumpMinVel { get { return jumpMinVel; } }
 
     public float ReverseCoyoteTime { get { return reverseCoyoteTime; } }
     public float CoyoteTime { get { return coyoteTime; } }
@@ -264,6 +270,8 @@ public class MovementSettingsSO : ScriptableObject
     public float GlideMaxCamAngleX { get { return glideMaxCamAngleX; } }
     public float GlideJumpSpeed { get { return glideJumpSpeed; } }
     public float GlideJumpTime { get { return glideJumpTime; } }
+    public float GlideXSensitivity { get { return glideXSensitivity; } }
+    public float GlideXGravity { get { return glideXGravity; } }
 
 
     static MovementSettingsSO _instance;

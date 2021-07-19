@@ -18,13 +18,13 @@ public class MovingPlatform : MonoBehaviour
             new Vector3(
                 waveValue * distanceToMove.x,
                 waveValue * distanceToMove.y,
-                waveValue * distanceToMove.z)* Time.deltaTime;
+                waveValue * distanceToMove.z)* Time.fixedDeltaTime;
 
         amtToRot =
             new Vector3(
                 rotSpeed.x,
                 rotSpeed.y,
-                rotSpeed.z) * Time.deltaTime;
+                rotSpeed.z) * Time.fixedDeltaTime;
     }
 
     void FixedUpdate()

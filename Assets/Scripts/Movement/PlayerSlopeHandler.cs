@@ -50,6 +50,7 @@ public class PlayerSlopeHandler : MonoBehaviour
         // Make sure that this is a valid slope (the platform is angled)
         if (Physics.Raycast(hit.point + Vector3.up, Vector3.down, out rchit, Mathf.Infinity, layerMask)) // layer mask?
         {
+            // Register slope
             XDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.x));
             ZDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.z));
             AngleOfSlope = GetAngleOfSlope(rchit.normal);
