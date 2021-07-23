@@ -10,24 +10,24 @@ using UnityEngine;
 public class MovementSettingsSO : ScriptableObject
 {
     /// Serialized, private variables
-    [Header("Horizontal Settings")]
+    [Header("Run Settings")]
     [SerializeField] float maxSpeed;
     [SerializeField] float runSensitivityX;
     [SerializeField] float runGravityX;
     [SerializeField] float runGravityXOverTopSpeed;
+
+    [Header("Air Settings")]
     [SerializeField] float airSensitivityX;
     [SerializeField] float airGravityX;
     [SerializeField] float airGravityXOverTopSpeed;
-    [SerializeField] float tjAirSensitivityX;
-    [SerializeField] float tjInputGravityX;
+
+    [Header("Hard Turn Settings")]
     [SerializeField] float hardTurnGravityX;
-    [SerializeField] float horizBoostSpeedX;
-    [SerializeField] float horizBoostChargeGravityX;
-    [SerializeField] float vertBoostChargeGravityX;
-    [SerializeField] float groundBoostMaxSpeedX;
-    [SerializeField] float groundBoostSensitivityX;
-    [SerializeField] float groundBoostGravityX;
+
+    [Header("Dive Settings")]
     [SerializeField] float diveSpeedX;
+
+    [Header("Air Reverse Settings")]
     [SerializeField] float airReverseSensitivityX;
     [SerializeField] float airReverseGravityX;
 
@@ -58,6 +58,8 @@ public class MovementSettingsSO : ScriptableObject
     [Header("Triple Jump Settings")]
     [SerializeField] float tjInitJumpVel;
     [SerializeField] float tjInitGravity;
+    [SerializeField] float tjAirSensitivityX;
+    [SerializeField] float tjInputGravityX;
     [SerializeField] float tjUncancelledMaxGravity;
     [SerializeField] float tjCancelledMaxGravity;
     [SerializeField] float tjVelocityMultiplier;
@@ -72,7 +74,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float tjMaxJumpTime;
     [SerializeField] float tjMaxDissonance;
 
-    [Header("Boost Settings")]
+    [Header("Horiz Boost Settings")]
     [SerializeField] float horizBoostMinGravity;
     [SerializeField] float horizBoostMaxGravity;
     [SerializeField] float horizBoostChargeGravity;
@@ -85,6 +87,11 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float horizBoostNonAirReverseGravity;
     [SerializeField] float horizBoostMinActivationX;
     [SerializeField] float horizBoostMaxActivationX;
+    [SerializeField] float horizBoostSpeedX;
+    [SerializeField] float horizBoostChargeGravityX;
+
+    [Header("Vertical Boost Settings")]
+    [SerializeField] float vertBoostChargeGravityX;
     [SerializeField] float vertBoostMinVel;
     [SerializeField] float vertBoostMaxVel;
     [SerializeField] float vertBoostGravity;
@@ -92,6 +99,11 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float vertBoostMaxTime;
     [SerializeField] float vertBoostRotationSpeed;
     [SerializeField] float vertBoostMaxSpeedX;
+
+    [Header("Ground Boost Settings")]
+    [SerializeField] float groundBoostMaxSpeedX;
+    [SerializeField] float groundBoostSensitivityX;
+    [SerializeField] float groundBoostGravityX;
 
     [Header("Ground Pound Settings")]
     [SerializeField] float gpSuspensionTime;
@@ -106,7 +118,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float defaultGravity;
     [SerializeField] float stickToGroundMultiplier;
 
-    [Header("Misc. Horizontal")]
+    [Header("Air Reverse Settings")]
     [SerializeField] float dissonanceForAirReverse;
     [SerializeField] float airReverseMinActivationSpeed;
 
@@ -125,27 +137,9 @@ public class MovementSettingsSO : ScriptableObject
 
     [Header("Glide Settings")]
     [SerializeField] float glideRotationSpeed;
-    [SerializeField] float glideRotationSpeedSensitivity;
-    [SerializeField] float glideRotationSpeedGravity;
-    [SerializeField] float glideTiltSensitivity;
     [SerializeField] float glideAirLoss;
-    [SerializeField] float glideHorizontalSpeed;
     [SerializeField] float glideMaxHorizontalSpeed;
-    [SerializeField] float glideVerticalSpeed;
-    [SerializeField] float glideMaxVerticalSpeed;
-    [SerializeField] Vector2 glideDriftMovementVector;
-    [SerializeField] float glideEnterDriftSpeed;
-    [SerializeField] float glideTimeToStartDrift;
-    [SerializeField] float glideDriftDuration;
-    [SerializeField] float glideDriftBufferDuration;
-    [SerializeField] float glideWeight;
-    [SerializeField] float glideMaxTilt;
-    [SerializeField] float glideMaxRoll;
-    [SerializeField] float glideGravity;
-    [SerializeField] float glideCameraAdjustRatio;
     [SerializeField] float glideNonControlTime;
-    [SerializeField] float glideMinCamAngleX;
-    [SerializeField] float glideMaxCamAngleX;
     [SerializeField] float glideJumpSpeed;
     [SerializeField] float glideJumpTime;
     [SerializeField] float glideXSensitivity;
@@ -156,19 +150,15 @@ public class MovementSettingsSO : ScriptableObject
     public float RunSensitivityX { get { return runSensitivityX; } }
     public float RunGravityX { get { return runGravityX; } }
     public float RunGravityXOverTopSpeed { get { return runGravityXOverTopSpeed; } }
+
     public float AirSensitivityX { get { return airSensitivityX; } }
     public float AirGravityX { get { return airGravityX; } }
     public float AirGravityXOverTopSpeed { get { return airGravityXOverTopSpeed; } }
-    public float TjAirSensitivityX { get { return tjAirSensitivityX; } }
-    public float TjInputGravityX { get { return tjInputGravityX; } }
+
     public float HardTurnGravityX { get { return hardTurnGravityX; } }
-    public float HorizBoostSpeedX { get { return horizBoostSpeedX; } }
-    public float HorizBoostChargeGravityX { get { return horizBoostChargeGravityX; } }
-    public float VertBoostChargeGravityX { get { return vertBoostChargeGravityX; } }
-    public float GroundBoostMaxSpeedX { get { return groundBoostMaxSpeedX; } }
-    public float GroundBoostSensitivityX { get { return groundBoostSensitivityX; } }
-    public float GroundBoostGravityX { get { return groundBoostGravityX; } }
+
     public float DiveSpeedX { get { return diveSpeedX; } }
+
     public float AirReverseSensitivityX { get { return airReverseSensitivityX; } }
     public float AirReverseGravityX { get { return airReverseGravityX; } }
 
@@ -193,6 +183,8 @@ public class MovementSettingsSO : ScriptableObject
     public float HardTurnMinSpeed { get { return hardTurnMinSpeed; } }
     public float HardTurnTime { get { return hardTurnTime; } }
 
+    public float TjAirSensitivityX { get { return tjAirSensitivityX; } }
+    public float TjInputGravityX { get { return tjInputGravityX; } }
     public float TjInitJumpVel { get { return tjInitJumpVel; } }
     public float TjInitGravity { get { return tjInitGravity; } }
     public float TjUncancelledMaxGravity { get { return tjUncancelledMaxGravity; } }
@@ -220,6 +212,9 @@ public class MovementSettingsSO : ScriptableObject
     public float HorizBoostNonAirReverseGravity { get { return horizBoostNonAirReverseGravity; } }
     public float HorizBoostMinActivationX { get { return horizBoostMinActivationX; } }
     public float HorizBoostMaxActivationX { get { return horizBoostMaxActivationX; } }
+    public float HorizBoostSpeedX { get { return horizBoostSpeedX; } }
+    public float HorizBoostChargeGravityX { get { return horizBoostChargeGravityX; } }
+
     public float VertBoostMinVel { get { return vertBoostMinVel; } }
     public float VertBoostMaxVel { get { return vertBoostMaxVel; } }
     public float VertBoostGravity { get { return vertBoostGravity; } }
@@ -227,6 +222,11 @@ public class MovementSettingsSO : ScriptableObject
     public float VertBoostMaxTime { get { return vertBoostMaxTime; } }
     public float VertBoostRotationSpeed { get { return vertBoostRotationSpeed; } }
     public float VertBoostMaxSpeedX { get { return vertBoostMaxSpeedX; } }
+    public float VertBoostChargeGravityX { get { return vertBoostChargeGravityX; } }
+
+    public float GroundBoostMaxSpeedX { get { return groundBoostMaxSpeedX; } }
+    public float GroundBoostSensitivityX { get { return groundBoostSensitivityX; } }
+    public float GroundBoostGravityX { get { return groundBoostGravityX; } }
 
     public float GpSuspensionTime { get { return gpSuspensionTime; } }
     public float GpDownSpeed { get { return gpDownSpeed; } }
@@ -253,32 +253,13 @@ public class MovementSettingsSO : ScriptableObject
     public float SlideRecoveryPace { get { return slideRecoveryPace; } }
 
     public float GlideRotationSpeed { get { return glideRotationSpeed; } }
-    public float GlideRotationSpeedSensitivity { get { return glideRotationSpeedSensitivity; } }
-    public float GlideRotationSpeedGravity { get { return glideRotationSpeedGravity; } }
-    public float GlideTiltSensitivity { get { return glideTiltSensitivity; } }
     public float GlideAirLoss { get { return glideAirLoss; } }
-    public float GlideHorizontalSpeed { get { return glideHorizontalSpeed; } }
-    public float GlideVerticalSpeed { get { return glideVerticalSpeed; } }
     public float GlideMaxHorizontalSpeed { get { return glideMaxHorizontalSpeed; } }
-    public float GlideMaxVerticalSpeed { get { return glideMaxVerticalSpeed; } }
-    public float GlideEnterDriftSpeed { get { return glideEnterDriftSpeed; } }
-    public float GlideTimeToEnterDrift { get { return glideTimeToStartDrift; } }
-    public float GlideDriftDuration { get { return glideDriftDuration; } }
-    public Vector2 GlideDriftMovementVector {  get { return glideDriftMovementVector; } }
-    public float GlideDriftBufferDuration { get { return glideDriftBufferDuration; } }
-    public float GlideWeight { get { return glideWeight; } }
-    public float GlideMaxTilt { get { return glideMaxTilt; } }
-    public float GlideMaxRoll { get { return glideMaxRoll;  } }
-    public float GlideGravity { get { return glideGravity; } }
-    public float GlideCameraAdjustRatio { get { return glideCameraAdjustRatio; } }
     public float GlideNonControlTime { get { return glideNonControlTime; } }
-    public float GlideMinCamAngleX { get { return glideMinCamAngleX; } }
-    public float GlideMaxCamAngleX { get { return glideMaxCamAngleX; } }
     public float GlideJumpSpeed { get { return glideJumpSpeed; } }
     public float GlideJumpTime { get { return glideJumpTime; } }
     public float GlideXSensitivity { get { return glideXSensitivity; } }
     public float GlideXGravity { get { return glideXGravity; } }
-
 
     static MovementSettingsSO _instance;
     public static MovementSettingsSO Instance
