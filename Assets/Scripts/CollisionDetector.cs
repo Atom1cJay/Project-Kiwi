@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CollisionDetector : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class CollisionDetector : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Player"))
         {
-            print("yeah");
+            //print("yeah");
         }
     }
 

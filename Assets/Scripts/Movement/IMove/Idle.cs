@@ -51,7 +51,10 @@ public class Idle : AMove
         {
             return new Jump(mii, mi, movementSettings, 0);
         }
-        // todo make ground boost possible
+        if (!mi.TouchingGround())
+        {
+            return new Fall(mii, mi, movementSettings, Vector2.zero, true);
+        }
 
         return this;
     }

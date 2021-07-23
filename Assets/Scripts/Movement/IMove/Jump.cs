@@ -120,7 +120,7 @@ public class Jump : AMove
 
     public override float GetRotationSpeed()
     {
-        if (divePending)
+        if (divePending || horizBoostChargePending || vertBoostChargePending)
         {
             return float.MaxValue;
         }

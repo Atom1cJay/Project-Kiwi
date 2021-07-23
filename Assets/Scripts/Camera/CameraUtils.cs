@@ -57,18 +57,8 @@ public class CameraUtils : MonoBehaviour
             horizAngle = newRot.eulerAngles.y * Mathf.Deg2Rad;
             MoveCamera();
             elapsed += Time.deltaTime;
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
-    }
-
-    private void Update()
-    {
-        MoveCamera();
-    }
-
-    private void FixedUpdate()
-    {
-        MoveCamera();
     }
 
     private void LateUpdate()

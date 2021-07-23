@@ -60,10 +60,13 @@ public class Dive : AMove
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
-        else if (mi.TouchingGround())
+        else if (mi.TouchingGround() && mii.GetHorizontalInput().magnitude > 0)
         {
-            //return new DiveRecovery(mii, mi, movementSettings, horizVel);
             return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
+        else if (mi.TouchingGround() && mii.GetHorizontalInput().magnitude == 0)
+        {
+            return new Idle(mii, mi, movementSettings);
         }
         return this;
     }

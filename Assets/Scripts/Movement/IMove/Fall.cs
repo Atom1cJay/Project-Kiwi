@@ -92,13 +92,9 @@ public class Fall : AMove
 
     public override float GetRotationSpeed()
     {
-        if (mii.PressingBoost())
+        if (divePending || horizBoostChargePending || vertBoostChargePending)
         {
-            return movementSettings.GroundBoostRotationSpeed;
-        }
-        if (mii.AirReverseInput())
-        {
-            return 0;
+            return float.MaxValue;
         }
         return movementSettings.AirRotationSpeed;
     }

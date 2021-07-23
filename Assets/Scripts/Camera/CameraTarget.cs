@@ -21,22 +21,11 @@ public class CameraTarget : MonoBehaviour
         transform.position = player.position;
     }
 
-    private void Update()
+    public void Adjust()
     {
         AdjustToCamTarget();
+        print("AdjustTarget");
     }
-
-    /*
-    private void FixedUpdate()
-    {
-        AdjustToCamTarget();
-    }
-
-    private void LateUpdate()
-    {
-        AdjustToCamTarget();
-    }
-    */
 
     private void AdjustToCamTarget()
     {

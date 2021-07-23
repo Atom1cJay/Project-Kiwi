@@ -97,7 +97,7 @@ public class TripleJump : AMove
 
     public override float GetRotationSpeed()
     {
-        if (divePending)
+        if (divePending || horizBoostChargePending || vertBoostChargePending)
         {
             return float.MaxValue;
         }
@@ -124,11 +124,11 @@ public class TripleJump : AMove
         }
         if (horizBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
-            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, ForwardMovement(horizVector.magnitude));
+            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, horizVector);
         }
         if (vertBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
-            return new VertAirBoostCharge(mii, mi, movementSettings, vertVel, ForwardMovement(horizVector.magnitude));
+            return new VertAirBoostCharge(mii, mi, movementSettings, vertVel, horizVector);
         }
 
         return this;
