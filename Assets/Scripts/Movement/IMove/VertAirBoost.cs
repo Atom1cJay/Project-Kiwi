@@ -62,6 +62,10 @@ public class VertAirBoost : AMove
 
     public override float GetRotationSpeed()
     {
+        if (divePending)
+        {
+            return float.MaxValue;
+        }
         if (mii.AirReverseInput())
         {
             return 0;

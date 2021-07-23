@@ -19,15 +19,7 @@ MonoBehaviour:
   airSensitivityX: 5
   airGravityX: 7
   airGravityXOverTopSpeed: 2
-  tjAirSensitivityX: 4
-  tjInputGravityX: 5
   hardTurnGravityX: 30
-  horizBoostSpeedX: 17
-  horizBoostChargeGravityX: 6
-  vertBoostChargeGravityX: 12
-  groundBoostMaxSpeedX: 9.5
-  groundBoostSensitivityX: 5
-  groundBoostGravityX: 4
   diveSpeedX: 7.5
   airReverseSensitivityX: 15
   airReverseGravityX: 15
@@ -39,7 +31,7 @@ MonoBehaviour:
   jumpVelMultiplierAtCancel: 0.75
   jumpUncancelledGravityIncrease: 150
   jumpCancelledGravityIncrease: 130
-  jumpVelocityOfNoReturn: 4
+  jumpVelocityOfNoReturn: 2.5
   jumpMinVel: -30
   jumpSensitivityX: 8
   jumpAdjustSensitivityX: 20
@@ -51,6 +43,8 @@ MonoBehaviour:
   hardTurnTime: 0.2
   tjInitJumpVel: 10
   tjInitGravity: 0
+  tjAirSensitivityX: 4
+  tjInputGravityX: 5
   tjUncancelledMaxGravity: 17
   tjCancelledMaxGravity: 17
   tjVelocityMultiplier: 0.7
@@ -58,7 +52,7 @@ MonoBehaviour:
   tjGravityIncRateAtCancel: 75
   tjMaxBreakSpeed: 0.5
   tjMinHorizInputMagnitude: 0.9
-  tjMaxTimeBtwnJumps: 0.1
+  tjMaxTimeBtwnJumps: 0.2
   tjMinJumpTime: 0.3
   tjMaxJumpTime: 1.5
   tjMaxDissonance: 0.5
@@ -74,6 +68,10 @@ MonoBehaviour:
   horizBoostNonAirReverseGravity: 9
   horizBoostMinActivationX: 10
   horizBoostMaxActivationX: 15
+  horizBoostSpeedX: 17
+  horizBoostChargeGravityX: 6
+  horizBoostToGroundBoostSensitivity: 1
+  vertBoostChargeGravityX: 12
   vertBoostMinVel: 6
   vertBoostMaxVel: 12
   vertBoostGravity: 20
@@ -81,6 +79,9 @@ MonoBehaviour:
   vertBoostMaxTime: 0.7
   vertBoostRotationSpeed: 200
   vertBoostMaxSpeedX: 5
+  groundBoostMaxSpeedX: 9.5
+  groundBoostSensitivityX: 5
+  groundBoostGravityX: 4
   gpSuspensionTime: 0.6
   gpDownSpeed: 10
   diveInitVel: 7
@@ -100,27 +101,9 @@ MonoBehaviour:
   slideMaxSpeed: 12
   slideRecoveryPace: 2
   glideRotationSpeed: 700
-  glideRotationSpeedSensitivity: 900
-  glideRotationSpeedGravity: 900
-  glideTiltSensitivity: 2
   glideAirLoss: 1.5
-  glideHorizontalSpeed: 80
   glideMaxHorizontalSpeed: 6
-  glideVerticalSpeed: 5
-  glideMaxVerticalSpeed: 5
-  glideDriftMovementVector: {x: 6, y: -3}
-  glideEnterDriftSpeed: 3
-  glideTimeToStartDrift: 1.5
-  glideDriftDuration: 2.5
-  glideDriftBufferDuration: 0.5
-  glideWeight: 7
-  glideMaxTilt: 60
-  glideMaxRoll: 40
-  glideGravity: 3
-  glideCameraAdjustRatio: 0.08
   glideNonControlTime: 0
-  glideMinCamAngleX: 20
-  glideMaxCamAngleX: 40
   glideJumpSpeed: 2.5
   glideJumpTime: 0.5
   glideXSensitivity: 15

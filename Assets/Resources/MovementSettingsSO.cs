@@ -89,6 +89,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float horizBoostMaxActivationX;
     [SerializeField] float horizBoostSpeedX;
     [SerializeField] float horizBoostChargeGravityX;
+    [SerializeField] float horizBoostToGroundBoostSensitivity;
 
     [Header("Vertical Boost Settings")]
     [SerializeField] float vertBoostChargeGravityX;
@@ -214,6 +215,7 @@ public class MovementSettingsSO : ScriptableObject
     public float HorizBoostMaxActivationX { get { return horizBoostMaxActivationX; } }
     public float HorizBoostSpeedX { get { return horizBoostSpeedX; } }
     public float HorizBoostChargeGravityX { get { return horizBoostChargeGravityX; } }
+    public float HorizBoostToGroundBoostSensitivity { get { return horizBoostToGroundBoostSensitivity; } }
 
     public float VertBoostMinVel { get { return vertBoostMinVel; } }
     public float VertBoostMaxVel { get { return vertBoostMaxVel; } }

@@ -31,7 +31,14 @@ public class HorizAirBoost : AMove
         // Vertical
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
-        if (!mii.AirReverseInput())
+        if (mii.PressingBoost())
+        {
+            horizVel = InputUtils.SmoothedInput(
+                horizVel,
+                movementSettings.GroundBoostMaxSpeedX,
+                movementSettings.HorizBoostToGroundBoostSensitivity, 0);
+        }
+        else if (!mii.AirReverseInput())
         {
             horizVel = InputUtils.SmoothedInput(
                 horizVel,
