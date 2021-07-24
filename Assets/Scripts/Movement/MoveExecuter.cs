@@ -39,7 +39,6 @@ public class MoveExecuter : MonoBehaviour
         Vector3 dir = DirectionOfMovement(horizMovement);
         Vector3 horizMovementAdjusted = dir * horizMovement.magnitude;
         Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
-        print("Move");
         charCont.Move((horizMovementAdjusted + vertMovement) * Time.deltaTime);
         camTarget.Adjust();
         IMove next = moveThisFrame.GetNextMove();

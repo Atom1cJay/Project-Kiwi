@@ -24,7 +24,6 @@ public class CameraTarget : MonoBehaviour
     public void Adjust()
     {
         AdjustToCamTarget();
-        print("AdjustTarget");
     }
 
     private void AdjustToCamTarget()

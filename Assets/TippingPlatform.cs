@@ -1,8 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.ProBuilder;
 
+/// <summary>
+/// To be placed on the GameObject with the trigger collider which triggers
+/// the motion.
+/// </summary>
 public class TippingPlatform : MonoBehaviour
 {
     //private float rotX;
@@ -14,7 +16,7 @@ public class TippingPlatform : MonoBehaviour
 
     // Happens when the player touches the top of the platform (the trigger
     // collider will have to be appropriately adjusted)
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (angle != 0)
         {
@@ -29,6 +31,7 @@ public class TippingPlatform : MonoBehaviour
             float ratioX = (contactPoint.x - transform.position.x) / sizeX;
             float ratioZ = (contactPoint.z - transform.position.z) / sizeZ;
             angle = Mathf.Atan2(ratioZ, ratioX);
+            GetComponent<Collider>().enabled = false;
             StartCoroutine("Fall");
             //rotX = ratioX * 2 * rotMax;
             //rotZ = ratioZ * 2 * rotMax;
@@ -46,8 +49,8 @@ public class TippingPlatform : MonoBehaviour
         {
             xRot += rotAcceleration * xRotMultiplier * Time.fixedDeltaTime;
             zRot += rotAcceleration * zRotMultiplier * Time.fixedDeltaTime;
-            toRotate.Rotate(new Vector3(zRot, 0, -xRot) * Time.fixedDeltaTime);
             yield return new WaitForFixedUpdate();
+            toRotate.Rotate(new Vector3(zRot, 0, -xRot) * Time.fixedDeltaTime);
         }
     }
 }
