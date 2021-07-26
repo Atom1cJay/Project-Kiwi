@@ -29,7 +29,7 @@ public class Run : AMove
     public override void AdvanceTime()
     {
         // Horizontal
-        if (mii.PressingBoost())
+        if (mii.PressingBoost() && horizVel >= movementSettings.MaxSpeed)
         {
             horizVel =
                 InputUtils.SmoothedInput(
@@ -72,6 +72,10 @@ public class Run : AMove
 
     public override float GetVertSpeedThisFrame()
     {
+        if (!mi.TouchingGround() && PlayerSlopeHandler.GroundInProximity)
+        {
+            return -10;
+        }
         // To account for any very slight floating point errors in the
         // angle, and to make it so the player doesn't go straight horizontally
         // when running onto another angle
@@ -110,7 +114,7 @@ public class Run : AMove
         {
             return new Jump(mii, mi, movementSettings, horizVel);
         }
-        if (!mi.TouchingGround())
+        if (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity)
         {
             return new Fall(mii, mi, movementSettings, ForwardMovement(horizVel), true);
         }

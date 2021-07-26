@@ -22,7 +22,6 @@ public class CollectibleSystem : MonoBehaviour
         if (col.gameObject.GetComponent<CollectibleReader>() != null)
         {
             CollectibleReader cr = col.gameObject.GetComponent<CollectibleReader>();
-            Debug.Log("hit coin");
             CollectItem(cr);
             cr.CollectObject();
         }

@@ -34,6 +34,10 @@ public class Idle : AMove
 
     public override float GetVertSpeedThisFrame()
     {
+        if (!mi.TouchingGround() && PlayerSlopeHandler.GroundInProximity)
+        {
+            return -10;
+        }
         return 0;
     }
 
@@ -51,7 +55,7 @@ public class Idle : AMove
         {
             return new Jump(mii, mi, movementSettings, 0);
         }
-        if (!mi.TouchingGround())
+        if (!mi.TouchingGround() && PlayerSlopeHandler.GroundInProximity)
         {
             return new Fall(mii, mi, movementSettings, Vector2.zero, true);
         }

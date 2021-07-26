@@ -8,10 +8,13 @@ using UnityEngine;
 [RequireComponent(typeof(MovementInfo))]
 public class PlayerSlopeHandler : MonoBehaviour
 {
+    private static readonly float lengthOfNearestGroundRay = 1f;
+    public static bool GroundInProximity;
+    private static readonly int layerMask = ~(1 << 9);
     /// <summary>
     /// The largest angle the player is allowed to walk on normally
     /// </summary>
-    private static readonly float maxSlopeAngle = 45;
+    private static readonly float maxSlopeAngle = 60;
     /// <summary>
     /// The angle of the slope the player is currently colliding with.
     /// </summary>
@@ -36,6 +39,29 @@ public class PlayerSlopeHandler : MonoBehaviour
 
     [SerializeField] float maxHeightOfContactPoint;
 
+    private void Update()
+    {
+        DetectIfGroundInProximity();
+    }
+
+    private void DetectIfGroundInProximity()
+    {
+        GroundInProximity = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1 + lengthOfNearestGroundRay, layerMask);
+        /*
+        RaycastHit rchit;
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out rchit, 1 + lengthOfNearestGroundRay, layerMask)) // layer mask?
+        {
+            GroundInProximity = true;
+            print(rchit.collider.gameObject.name);
+        }
+        else
+        {
+            GroundInProximity = false;
+            print("@FAILURE");
+        }
+        */
+    }
+
     // Obtains the normal of the platform the player is currently on
     // (Is called whenever the player moves in a way which ends with it touching something)
     // EFFECT: Modifies AngleOfSlope to refer to the correct angle
@@ -46,7 +72,6 @@ public class PlayerSlopeHandler : MonoBehaviour
             return;
         }
         RaycastHit rchit;
-        int layerMask = ~(1 << 9);
         // Make sure that this is a valid slope (the platform is angled)
         if (Physics.Raycast(hit.point + Vector3.up, Vector3.down, out rchit, Mathf.Infinity, layerMask)) // layer mask?
         {
