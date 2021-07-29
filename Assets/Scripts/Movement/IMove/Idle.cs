@@ -55,7 +55,7 @@ public class Idle : AMove
         {
             return new Jump(mii, mi, movementSettings, 0);
         }
-        if (!mi.TouchingGround() && PlayerSlopeHandler.GroundInProximity)
+        if (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity)
         {
             return new Fall(mii, mi, movementSettings, Vector2.zero, true);
         }

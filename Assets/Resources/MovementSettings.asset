@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89a9c384f4044d949915fc3cf99a7e4, type: 3}
   m_Name: MovementSettings
   m_EditorClassIdentifier: 
-  maxSpeed: 7.5
-  runSensitivityX: 12
+  maxSpeed: 7
+  runSensitivityX: 16
   runGravityX: 23
   runGravityXOverTopSpeed: 10
-  airSensitivityX: 5
+  airSensitivityX: 6
   airGravityX: 7
   airGravityXOverTopSpeed: 2
   hardTurnGravityX: 30
@@ -24,14 +24,14 @@ MonoBehaviour:
   airReverseSensitivityX: 15
   airReverseGravityX: 15
   jumpGroundableTimer: 0.1
-  jumpInitVel: 7
+  jumpInitVel: 7.5
   jumpInitGravity: 0
   jumpMaxUncancelledGravity: 20
   jumpMaxCancelledGravity: 28
   jumpVelMultiplierAtCancel: 0.75
-  jumpUncancelledGravityIncrease: 150
-  jumpCancelledGravityIncrease: 130
-  jumpVelocityOfNoReturn: 2.5
+  jumpUncancelledGravityIncrease: 130
+  jumpCancelledGravityIncrease: 110
+  jumpVelocityOfNoReturn: 1.5
   jumpMinVel: -30
   jumpSensitivityX: 8
   jumpAdjustSensitivityX: 20

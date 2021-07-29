@@ -7,12 +7,13 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] Vector3 distanceToMove;
     [SerializeField] float speed;
     [SerializeField] Vector3 rotSpeed;
+    [SerializeField] float timeOffset;
     Vector3 distToMove;
     Vector3 amtToRot;
 
     void Update()
     {
-        float waveValue = (Mathf.Sin(speed * Time.time) / 2);
+        float waveValue = speed * (Mathf.Sin(speed * (Time.time + timeOffset)) / 2);
 
         distToMove =
             new Vector3(
