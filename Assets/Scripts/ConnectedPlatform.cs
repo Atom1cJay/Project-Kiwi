@@ -5,17 +5,31 @@ using UnityEngine;
 public class ConnectedPlatform : MonoBehaviour
 {
     [SerializeField] MoveExecuter me;
-    [SerializeField] int obj1NotchLimit, obj2NotchLimit;
+    [SerializeField] int obj1NotchMin, obj1NotchMax;
     [SerializeField] float notchHeight;
     [SerializeField] GameObject object1, object2;
+    [SerializeField] float stompDuration;
     int obj1Notch, obj2Notch;
-    float obj1y, obj2y;
     string temp;
     bool canPoundAgain;
+    enum StompMode
+    {
+        NotStomping,
+        Stomping1,
+        Stomping2
+    };
+    StompMode curStompMode;
+    float stompElapsed;
+    float goalPos1;
+    float goalPos2;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (obj1NotchMin > 0 || obj1NotchMax < 0)
+            Debug.LogError("obj1NotchMin/Max badly configured");
+        if (stompDuration <= 0)
+            Debug.LogError("Connected platform cannot function with stomp duration of 0!");
         canPoundAgain = true;
         temp = ""; 
         obj1Notch = 0;
@@ -25,48 +39,70 @@ public class ConnectedPlatform : MonoBehaviour
     private void Update()
     {
         temp = me.GetCurrentMove().AsString();
-
-        Debug.Log(obj1Notch + ", " + obj2Notch);
         if (object1.transform.parent.Find("Player") != null && temp == "groundpound" && canPoundAgain)
-            stompTwo();
+            initiateStompOne();
         if (object2.transform.parent.Find("Player") != null && temp == "groundpound" && canPoundAgain)
-            stompOne();
+            initiateStompTwo();
         
     }
 
-    void ResetPoundTimer()
+    void EndPound()
     {
+        object1.transform.position = new Vector3(object1.transform.position.x, goalPos1, object1.transform.position.z);
+        object2.transform.position = new Vector3(object2.transform.position.x, goalPos2, object2.transform.position.z);
+        stompElapsed = 0;
+        curStompMode = StompMode.NotStomping;
         canPoundAgain = true;
     }
 
     //lower the first object and raise the second object
-    void stompOne()
+    void initiateStompOne()
     {
-        Debug.Log("gp 1");
-        canPoundAgain = false;
-        Invoke("ResetPoundTimer", 0.5f);
-        if (obj1Notch < obj1NotchLimit)
+        if (obj1Notch <= obj1NotchMax && obj1Notch > obj1NotchMin)
         {
-            object1.transform.position -= new Vector3(0f, -notchHeight, 0f);
-            object2.transform.position -= new Vector3(0f, notchHeight, 0f);
-            obj1Notch++;
-            obj2Notch--;
-        }
-    }
-
-    //lower the second object and raise the first object
-    void stompTwo()
-    {
-        Debug.Log("gp 2");
-        canPoundAgain = false;
-        Invoke("ResetPoundTimer", 0.5f);
-        if (obj2Notch < obj2NotchLimit)
-        {
-            object1.transform.position -= new Vector3(0f, notchHeight, 0f);
-            object2.transform.position -= new Vector3(0f, -notchHeight, 0f);
+            stompElapsed = 0;
+            canPoundAgain = false;
+            curStompMode = StompMode.Stomping1;
+            goalPos1 = object1.transform.position.y - notchHeight;
+            goalPos2 = object2.transform.position.y + notchHeight;
             obj1Notch--;
             obj2Notch++;
         }
     }
 
+    //lower the second object and raise the first object
+    void initiateStompTwo()
+    {
+        if (obj1Notch < obj1NotchMax && obj1Notch >= obj1NotchMin)
+        {
+            stompElapsed = 0;
+            canPoundAgain = false;
+            curStompMode = StompMode.Stomping2;
+            goalPos1 = object1.transform.position.y + notchHeight;
+            goalPos2 = object2.transform.position.y - notchHeight;
+            obj1Notch++;
+            obj2Notch--;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (curStompMode == StompMode.Stomping2)
+        {
+            stompElapsed += Time.fixedDeltaTime;
+            object1.transform.position += new Vector3(0f, notchHeight * Time.fixedDeltaTime / stompDuration, 0f);
+            object2.transform.position += new Vector3(0f, -notchHeight * Time.fixedDeltaTime / stompDuration, 0f);
+        }
+        else if (curStompMode == StompMode.Stomping1)
+        {
+            stompElapsed += Time.fixedDeltaTime;
+            object1.transform.position += new Vector3(0f, -notchHeight * Time.fixedDeltaTime / stompDuration, 0f);
+            object2.transform.position += new Vector3(0f, notchHeight * Time.fixedDeltaTime / stompDuration, 0f);
+        }
+
+        if (stompElapsed > stompDuration)
+        {
+            EndPound();
+        }
+    }
 }
