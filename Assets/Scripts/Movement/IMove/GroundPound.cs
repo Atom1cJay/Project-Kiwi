@@ -6,6 +6,8 @@ public class GroundPound : AMove
 {
     float timePassed;
     bool divePending;
+    bool landingStarted;
+    bool landingOver;
 
     public GroundPound(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
     {
@@ -15,6 +17,17 @@ public class GroundPound : AMove
     public override void AdvanceTime()
     {
         timePassed += Time.deltaTime;
+        if (mi.TouchingGround() && !landingStarted)
+        {
+            landingStarted = true;
+            MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForLandingEnd());
+        }
+    }
+
+    IEnumerator WaitForLandingEnd()
+    {
+        yield return new WaitForSeconds(movementSettings.GpLandTime);
+        landingOver = true;
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
@@ -42,7 +55,7 @@ public class GroundPound : AMove
         {
             return new Dive(mii, mi, movementSettings);
         }
-        if (mi.TouchingGround())
+        if (landingOver)
         {
             return new Idle(mii, mi, movementSettings);
         }
