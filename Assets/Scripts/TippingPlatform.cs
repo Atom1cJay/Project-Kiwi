@@ -7,16 +7,19 @@ using UnityEngine;
 /// </summary>
 public class TippingPlatform : MonoBehaviour
 {
-    //private float rotX;
-    //private float rotZ;
     private float angle;
     [SerializeField] Renderer dimensionsRenderer;
     [SerializeField] Transform toRotate;
     [SerializeField] float rotAcceleration;
+    float xRot;
+    float zRot;
+    float xRotMultiplier;
+    float zRotMultiplier;
+    bool rotating;
 
     // Happens when the player touches the top of the platform (the trigger
     // collider will have to be appropriately adjusted)
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (angle != 0)
         {
@@ -31,25 +34,21 @@ public class TippingPlatform : MonoBehaviour
             float ratioX = (contactPoint.x - transform.position.x) / sizeX;
             float ratioZ = (contactPoint.z - transform.position.z) / sizeZ;
             angle = Mathf.Atan2(ratioZ, ratioX);
-            GetComponent<Collider>().enabled = false;
-            StartCoroutine("Fall");
-            //rotX = ratioX * 2 * rotMax;
-            //rotZ = ratioZ * 2 * rotMax;
+            GetComponent<Collider>().isTrigger = false;
+            xRot = 0;
+            zRot = 0;
+            xRotMultiplier = Mathf.Cos(angle);
+            zRotMultiplier = Mathf.Sin(angle);
+            rotating = true;
         }
     }
 
-    IEnumerator Fall()
+    private void FixedUpdate()
     {
-        float xRot = 0;
-        float zRot = 0;
-        float xRotMultiplier = Mathf.Cos(angle);
-        float zRotMultiplier = Mathf.Sin(angle);
-    
-        while (true)
+        if (rotating)
         {
             xRot += rotAcceleration * xRotMultiplier * Time.fixedDeltaTime;
             zRot += rotAcceleration * zRotMultiplier * Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
             toRotate.Rotate(new Vector3(zRot, 0, -xRot) * Time.fixedDeltaTime);
         }
     }
