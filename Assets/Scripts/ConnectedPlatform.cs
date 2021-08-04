@@ -7,7 +7,7 @@ public class ConnectedPlatform : MonoBehaviour
     [SerializeField] MoveExecuter me;
     [SerializeField] int obj1NotchMin, obj1NotchMax;
     [SerializeField] float notchHeight;
-    [SerializeField] GameObject object1, object2;
+    [SerializeField] GameObject object1, object2, button;
     [SerializeField] float stompDuration;
     int obj1Notch, obj2Notch;
     string temp;
@@ -16,12 +16,14 @@ public class ConnectedPlatform : MonoBehaviour
     {
         NotStomping,
         Stomping1,
-        Stomping2
+        Stomping2,
+        Reseting
     };
     StompMode curStompMode;
     float stompElapsed;
     float goalPos1;
     float goalPos2;
+    Vector3 obj1InitialPos, obj2InitialPos;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +36,9 @@ public class ConnectedPlatform : MonoBehaviour
         temp = ""; 
         obj1Notch = 0;
         obj2Notch = 0;
+
+        obj1InitialPos = object1.transform.position;
+        obj2InitialPos = object2.transform.position;
     }
 
     private void Update()
@@ -43,7 +48,9 @@ public class ConnectedPlatform : MonoBehaviour
             initiateStompOne();
         if (object2.transform.parent.Find("Player") != null && temp == "groundpound" && canPoundAgain)
             initiateStompTwo();
-        
+        if (button.transform.parent.Find("Player") != null && temp == "groundpound" && canPoundAgain)
+            initiateReset();
+
     }
 
     void EndPound()
@@ -85,6 +92,17 @@ public class ConnectedPlatform : MonoBehaviour
         }
     }
 
+    void initiateReset()
+    {
+        curStompMode = StompMode.Reseting;
+
+        obj2Notch = 0;
+        obj2Notch = 0;
+
+        goalPos1 = obj1InitialPos.y;
+        goalPos2 = obj2InitialPos.y;
+
+    }
     private void FixedUpdate()
     {
         if (curStompMode == StompMode.Stomping2)
@@ -98,6 +116,12 @@ public class ConnectedPlatform : MonoBehaviour
             stompElapsed += Time.fixedDeltaTime;
             object1.transform.position += new Vector3(0f, -notchHeight * Time.fixedDeltaTime / stompDuration, 0f);
             object2.transform.position += new Vector3(0f, notchHeight * Time.fixedDeltaTime / stompDuration, 0f);
+        }
+        else if (curStompMode == StompMode.Reseting)
+        {
+            stompElapsed += Time.fixedDeltaTime;
+            object1.transform.position += new Vector3(0f, (goalPos1 - object1.transform.position.y) * Time.fixedDeltaTime / stompDuration, 0f);
+            object2.transform.position += new Vector3(0f, (goalPos2 - object2.transform.position.y) * Time.fixedDeltaTime / stompDuration, 0f);
         }
 
         if (stompElapsed > stompDuration)
