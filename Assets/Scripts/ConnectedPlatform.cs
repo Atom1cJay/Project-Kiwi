@@ -48,7 +48,7 @@ public class ConnectedPlatform : MonoBehaviour
             initiateStompOne();
         if (object2.transform.parent.Find("Player") != null && temp == "groundpound" && canPoundAgain)
             initiateStompTwo();
-        if (button.transform.parent.Find("Player") != null && temp == "groundpound" && canPoundAgain)
+        if (button != null && button.transform.parent.Find("Player") != null && temp == "groundpound" && canPoundAgain)
             initiateReset();
 
     }
