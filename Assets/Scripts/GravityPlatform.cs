@@ -5,7 +5,7 @@ using UnityEngine;
 public class GravityPlatform : MonoBehaviour
 {
     [SerializeField] float maxDistanceToMove, fallSpeed, riseSpeed, timeToFall;
-    float lowestHeight, startingHeight, timeToCount, vertSpeed;
+    float lowestHeight, startingHeight, vertSpeed;
     Vector3 mvmtThisFrame;
     Vector3 rotThisFrame;
     bool playerOnPlatform, countingTime;
@@ -15,9 +15,7 @@ public class GravityPlatform : MonoBehaviour
         vertSpeed = 0f;
         lowestHeight = transform.position.y - maxDistanceToMove;
         startingHeight = transform.position.y;
-        timeToCount = 0f;
         playerOnPlatform = false;
-        countingTime = false;
     }
 
     void Update()
@@ -36,35 +34,6 @@ public class GravityPlatform : MonoBehaviour
     {
         transform.Translate(mvmtThisFrame);
     }
-    /*
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("Player") && !countingTime)
-        {
-            countingTime = true;
-            timeToCount = Time.time + timeToFall;
-            Debug.Log("doing thing");
-        }
-    }
-
-    private void OnCollisionStay(Collision other)
-    {
-        if (other.gameObject.CompareTag("Player") && Time.time >= tim && countingTime)
-        {
-            Debug.Log("start thing");
-            playerOnPlatform = true;
-        }
-    }
-    private void OnCollisionExit(Collision other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            countingTime = false;
-            playerOnPlatform = false;
-            Debug.Log("off thing");
-        }
-    }*/
 
     void GetDistanceToMove()
     {
