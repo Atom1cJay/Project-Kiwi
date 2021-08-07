@@ -9,8 +9,7 @@ public class ConnectedPlatform : MonoBehaviour
     [SerializeField] float notchHeight;
     [SerializeField] GameObject object1, object2, button;
     [SerializeField] float stompDuration;
-    int obj1Notch, obj2Notch;
-    string temp;
+    int obj1Notch;
     bool canPoundAgain;
     enum StompMode
     {
@@ -33,24 +32,10 @@ public class ConnectedPlatform : MonoBehaviour
         if (stompDuration <= 0)
             Debug.LogError("Connected platform cannot function with stomp duration of 0!");
         canPoundAgain = true;
-        temp = ""; 
         obj1Notch = 0;
-        obj2Notch = 0;
 
         obj1InitialPos = object1.transform.position;
         obj2InitialPos = object2.transform.position;
-    }
-
-    private void Update()
-    {
-        temp = me.GetCurrentMove().AsString();
-        if (object1.transform.parent.Find("Player") != null && temp == "groundpound" && canPoundAgain)
-            initiateStompOne();
-        if (object2.transform.parent.Find("Player") != null && temp == "groundpound" && canPoundAgain)
-            initiateStompTwo();
-        if (button != null && button.transform.parent.Find("Player") != null && temp == "groundpound" && canPoundAgain)
-            initiateReset();
-
     }
 
     void EndPound()
@@ -62,9 +47,13 @@ public class ConnectedPlatform : MonoBehaviour
         canPoundAgain = true;
     }
 
-    //lower the first object and raise the second object
-    void initiateStompOne()
+    // Lower the first object and raise the second object
+    public void initiateStompOne()
     {
+        if (!canPoundAgain) // Current pound still going
+        {
+            return;
+        }
         if (obj1Notch <= obj1NotchMax && obj1Notch > obj1NotchMin)
         {
             stompElapsed = 0;
@@ -73,13 +62,16 @@ public class ConnectedPlatform : MonoBehaviour
             goalPos1 = object1.transform.position.y - notchHeight;
             goalPos2 = object2.transform.position.y + notchHeight;
             obj1Notch--;
-            obj2Notch++;
         }
     }
 
-    //lower the second object and raise the first object
-    void initiateStompTwo()
+    // Lower the second object and raise the first object
+    public void initiateStompTwo()
     {
+        if (!canPoundAgain) // Current pound still going
+        {
+            return;
+        }
         if (obj1Notch < obj1NotchMax && obj1Notch >= obj1NotchMin)
         {
             stompElapsed = 0;
@@ -88,23 +80,28 @@ public class ConnectedPlatform : MonoBehaviour
             goalPos1 = object1.transform.position.y + notchHeight;
             goalPos2 = object2.transform.position.y - notchHeight;
             obj1Notch++;
-            obj2Notch--;
         }
     }
 
-    void initiateReset()
+    // Reset the positions
+    public void initiateReset()
     {
+        if (!canPoundAgain) // Current pound still going
+        {
+            return;
+        }
         curStompMode = StompMode.Reseting;
-
-        obj2Notch = 0;
-        obj2Notch = 0;
-
+        obj1Notch = 0;
         goalPos1 = obj1InitialPos.y;
         goalPos2 = obj2InitialPos.y;
 
     }
     private void FixedUpdate()
     {
+        if (curStompMode == StompMode.NotStomping)
+        {
+            return;
+        }
         if (curStompMode == StompMode.Stomping2)
         {
             stompElapsed += Time.fixedDeltaTime;
@@ -123,7 +120,6 @@ public class ConnectedPlatform : MonoBehaviour
             object1.transform.position += new Vector3(0f, (goalPos1 - object1.transform.position.y) * Time.fixedDeltaTime / stompDuration, 0f);
             object2.transform.position += new Vector3(0f, (goalPos2 - object2.transform.position.y) * Time.fixedDeltaTime / stompDuration, 0f);
         }
-
         if (stompElapsed > stompDuration)
         {
             EndPound();

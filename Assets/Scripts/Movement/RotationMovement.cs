@@ -33,7 +33,7 @@ public class RotationMovement : MonoBehaviour
         {
             if (mii.GetHorizontalInput().magnitude == 0) return; // Otherwise would trend forward
             Quaternion targetRotation = Quaternion.Euler(0, mii.GetInputDirection() * Mathf.Rad2Deg, 0);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
 }

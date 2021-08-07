@@ -47,19 +47,6 @@ public class PlayerSlopeHandler : MonoBehaviour
     private void DetectIfGroundInProximity()
     {
         GroundInProximity = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1 + lengthOfNearestGroundRay, layerMask);
-        /*
-        RaycastHit rchit;
-        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out rchit, 1 + lengthOfNearestGroundRay, layerMask)) // layer mask?
-        {
-            GroundInProximity = true;
-            print(rchit.collider.gameObject.name);
-        }
-        else
-        {
-            GroundInProximity = false;
-            print("@FAILURE");
-        }
-        */
     }
 
     // Obtains the normal of the platform the player is currently on

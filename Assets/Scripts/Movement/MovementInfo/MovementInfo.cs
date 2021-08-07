@@ -47,7 +47,10 @@ public class MovementInfo : MonoBehaviour
     private void Update()
     {
         UpdateTripleJumpStatus();
-        UpdateEffectiveSpeed();
+        if (Time.timeScale != 0) // To avoid weird bugs
+        {
+            UpdateEffectiveSpeed();
+        }
     }
 
     /// <summary>

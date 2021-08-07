@@ -19,6 +19,13 @@ public class GroundPound : AMove
         timePassed += Time.deltaTime;
         if (mi.TouchingGround() && !landingStarted)
         {
+            // Check if the ground-pounded object has a specific pound event
+            Poundable potentialPoundScript = mi.GetGroundDetector().CollidingWith().GetComponent<Poundable>();
+            if (potentialPoundScript != null)
+            {
+                potentialPoundScript.BroadcastPoundEvent();
+            }
+            // Initiate the landing portion of the pound
             landingStarted = true;
             MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForLandingEnd());
         }
@@ -51,7 +58,7 @@ public class GroundPound : AMove
 
     public override IMove GetNextMove()
     {
-        if (divePending)
+        if (divePending && !landingStarted)
         {
             return new Dive(mii, mi, movementSettings);
         }

@@ -494,6 +494,33 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""31899676-c826-4893-af5b-a55b80294e3f"",
+            ""actions"": [
+                {
+                    ""name"": ""Freeze"",
+                    ""type"": ""Button"",
+                    ""id"": ""3cb7b2f8-0e23-449e-8229-9fd53f912a29"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""835d3680-1351-4c6b-a9a9-6c9ccdd6cead"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Freeze"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -535,6 +562,9 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_Camera_HorizontalRotate = m_Camera.FindAction("HorizontalRotate", throwIfNotFound: true);
         m_Camera_VerticalRotate = m_Camera.FindAction("VerticalRotate", throwIfNotFound: true);
         m_Camera_AutoAdjust = m_Camera.FindAction("AutoAdjust", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_Freeze = m_Debug.FindAction("Freeze", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -710,6 +740,39 @@ public class @InputActions : IInputActionCollection, IDisposable
         }
     }
     public CameraActions @Camera => new CameraActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private IDebugActions m_DebugActionsCallbackInterface;
+    private readonly InputAction m_Debug_Freeze;
+    public struct DebugActions
+    {
+        private @InputActions m_Wrapper;
+        public DebugActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Freeze => m_Wrapper.m_Debug_Freeze;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void SetCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterface != null)
+            {
+                @Freeze.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnFreeze;
+                @Freeze.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnFreeze;
+                @Freeze.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnFreeze;
+            }
+            m_Wrapper.m_DebugActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Freeze.started += instance.OnFreeze;
+                @Freeze.performed += instance.OnFreeze;
+                @Freeze.canceled += instance.OnFreeze;
+            }
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_GamePadSchemeIndex = -1;
     public InputControlScheme GamePadScheme
     {
@@ -743,5 +806,9 @@ public class @InputActions : IInputActionCollection, IDisposable
         void OnHorizontalRotate(InputAction.CallbackContext context);
         void OnVerticalRotate(InputAction.CallbackContext context);
         void OnAutoAdjust(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnFreeze(InputAction.CallbackContext context);
     }
 }

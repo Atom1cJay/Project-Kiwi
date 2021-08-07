@@ -24,25 +24,28 @@ public class MoveExecuter : MonoBehaviour
 
     void Update()
     {
-        moveThisFrame.AdvanceTime();
-        if (moveThisFrame.CameraRotateTowardsRatio() == 0)
+        if (Time.timeScale != 0) // Check for the sake of avoiding weird errors (more explicit state mention?)
         {
-            cameraControl.HandleManualControl();
+            moveThisFrame.AdvanceTime();
+            if (moveThisFrame.CameraRotateTowardsRatio() == 0)
+            {
+                cameraControl.HandleManualControl();
+            }
+            else
+            {
+                cameraControl.AdjustToBack(moveThisFrame.CameraRotateTowardsRatio());
+                cameraControl.AdjustVertical(moveThisFrame.CameraRotateTowardsRatio(), moveThisFrame.CameraVerticalAutoTarget());
+            }
+            rotator.DetermineRotation();
+            Vector2 horizMovement = moveThisFrame.GetHorizSpeedThisFrame();
+            Vector3 dir = DirectionOfMovement(horizMovement);
+            Vector3 horizMovementAdjusted = dir * horizMovement.magnitude;
+            Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
+            charCont.Move((horizMovementAdjusted + vertMovement) * Time.deltaTime);
+            camTarget.Adjust();
+            IMove next = moveThisFrame.GetNextMove();
+            moveThisFrame = next;
         }
-        else
-        {
-            cameraControl.AdjustToBack(moveThisFrame.CameraRotateTowardsRatio());
-            cameraControl.AdjustVertical(moveThisFrame.CameraRotateTowardsRatio(), moveThisFrame.CameraVerticalAutoTarget());
-        }
-        rotator.DetermineRotation();
-        Vector2 horizMovement = moveThisFrame.GetHorizSpeedThisFrame();
-        Vector3 dir = DirectionOfMovement(horizMovement);
-        Vector3 horizMovementAdjusted = dir * horizMovement.magnitude;
-        Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
-        charCont.Move((horizMovementAdjusted + vertMovement) * Time.deltaTime);
-        camTarget.Adjust();
-        IMove next = moveThisFrame.GetNextMove();
-        moveThisFrame = next;
     }
 
     /// <summary>

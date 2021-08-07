@@ -13,6 +13,14 @@ public class CameraUtils : MonoBehaviour
     [SerializeField] private float vertAngleMax = 1.57f;
     private float horizAngle;
     private float vertAngle;
+    private float independentDeltaTime; // Independent of time.timeScale
+    private float independentPrevTime; // Time elapsed (ms) prev frame
+    enum CameraMode
+    {
+        AroundPlayer,
+        Free
+    }
+    CameraMode camMode = CameraMode.AroundPlayer;
 
     private void Awake()
     {
@@ -27,6 +35,11 @@ public class CameraUtils : MonoBehaviour
     /// <param name="vertAmount">The amount of vertical rotation (degrees)</param>
     public void RotateBy(float horizAmount, float vertAmount)
     {
+        if (camMode != CameraMode.AroundPlayer)
+        {
+            //Debug.LogError("Can't rotate camera since it's not in AroundPlayer mode.");
+            return;
+        }
         horizAngle += horizAmount;
         vertAngle += vertAmount;
         vertAngle = Mathf.Clamp(vertAngle, vertAngleMin, vertAngleMax);
@@ -37,6 +50,11 @@ public class CameraUtils : MonoBehaviour
     /// </summary>
     public void RotateToTargetY(float time)
     {
+        if (camMode != CameraMode.AroundPlayer)
+        {
+            //Debug.LogError("Can't rotate camera since it's not in AroundPlayer mode.");
+            return;
+        }
         StopCoroutine("RotateTowardsY");
         StartCoroutine("RotateTowardsY", time);
     }
@@ -55,7 +73,7 @@ public class CameraUtils : MonoBehaviour
             Quaternion shit2 = Quaternion.Euler(0, -player.eulerAngles.y, 0);
             Quaternion newRot = Quaternion.RotateTowards(shit, shit2, rotationSpeed * Time.deltaTime);
             horizAngle = newRot.eulerAngles.y * Mathf.Deg2Rad;
-            MoveCamera();
+            CenterAroundPlayer();
             elapsed += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
@@ -63,14 +81,24 @@ public class CameraUtils : MonoBehaviour
 
     private void LateUpdate()
     {
-        MoveCamera();
+        if (camMode == CameraMode.AroundPlayer)
+        {
+            CenterAroundPlayer();
+        }
+        GetNewIndependentDeltaTime();
+    }
+
+    private void GetNewIndependentDeltaTime()
+    {
+        independentDeltaTime = Time.realtimeSinceStartup - independentPrevTime;
+        independentPrevTime = Time.realtimeSinceStartup;
     }
 
     /// <summary>
     /// Based on the current horizontal / vertical angle, as well as the position/radius
     /// of the target, positions and angles the camera appropriately
     /// </summary>xw
-    private void MoveCamera()
+    private void CenterAroundPlayer()
     {
         // Take horizontal angle into account
         float relativeX = radiusToTarget * Mathf.Sin(horizAngle);
@@ -89,6 +117,11 @@ public class CameraUtils : MonoBehaviour
     /// </summary>
     public void RotateToBackBy(float ratio)
     {
+        if (camMode != CameraMode.AroundPlayer)
+        {
+            //Debug.LogError("Can't rotate camera since it's not in AroundPlayer mode.");
+            return;
+        }
         Quaternion angle1 = Quaternion.Euler(0, horizAngle * Mathf.Rad2Deg, 0);
         Quaternion angle2 = Quaternion.Euler(0, -player.eulerAngles.y, 0);
         Quaternion newRot = Quaternion.RotateTowards(angle1, angle2, Quaternion.Angle(angle1, angle2) * ratio);
@@ -100,9 +133,59 @@ public class CameraUtils : MonoBehaviour
     /// </summary>
     public void RotateToVertAngle(float ratio, float angle)
     {
+        if (camMode != CameraMode.AroundPlayer)
+        {
+            //Debug.LogError("Can't rotate camera since it's not in AroundPlayer mode.");
+            return;
+        }
         Quaternion angle1 = Quaternion.Euler(vertAngle * Mathf.Rad2Deg, 0, 0);
         Quaternion angle2 = Quaternion.Euler(angle, 0, 0);
         Quaternion newRot = Quaternion.RotateTowards(angle1, angle2, Quaternion.Angle(angle1, angle2) * ratio);
         vertAngle = newRot.eulerAngles.x * Mathf.Deg2Rad;
+    }
+
+    public void MoveTo(Vector3 pos, float enterTime, float stayTime, float exitTime)
+    {
+        StartCoroutine(MoveToProcess(pos, enterTime, stayTime, exitTime));
+    }
+
+    IEnumerator MoveToProcess(Vector3 goalPos, float enterTime, float stayTime, float exitTime)
+    {
+        Time.timeScale = 0;
+        camMode = CameraMode.Free;
+
+        // Visit
+        Vector3 initPos = transform.position;
+        float timeElapsed = 0;
+
+        while (timeElapsed < enterTime)
+        {
+            timeElapsed += independentDeltaTime;
+            transform.position = Vector3.Lerp(initPos, goalPos, timeElapsed / enterTime);
+            yield return new WaitForEndOfFrame();
+        }
+
+        //Stay
+        transform.position = goalPos;
+        timeElapsed = 0;
+
+        while (timeElapsed < stayTime)
+        {
+            timeElapsed += independentDeltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        // Exit
+        timeElapsed = 0;
+
+        while (timeElapsed < exitTime)
+        {
+            timeElapsed += independentDeltaTime;
+            transform.position = Vector3.Lerp(goalPos, initPos, timeElapsed / exitTime);
+            yield return new WaitForEndOfFrame();
+        }
+
+        camMode = CameraMode.AroundPlayer;
+        Time.timeScale = 1;
     }
 }

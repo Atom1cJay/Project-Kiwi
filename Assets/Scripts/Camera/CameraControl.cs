@@ -25,6 +25,11 @@ public class CameraControl : MonoBehaviour
         iah.inputActions.Camera.AutoAdjust.performed += _ => AutoAdjustToBack();
     }
 
+    public void MoveTo(Vector3 pos, float enterTime, float stayTime, float exitTime)
+    {
+        camUtils.MoveTo(pos, enterTime, stayTime, exitTime);
+    }
+
     /// <summary>
     /// Changes horizontal and vertical camera angles depending on camera-based input
     /// </summary>
