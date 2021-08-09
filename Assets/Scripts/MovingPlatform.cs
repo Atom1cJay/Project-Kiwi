@@ -22,7 +22,8 @@ public class MovingPlatform : MonoBehaviour
             relativeTransform = transform;
         }
         transform.Rotate(rotSpeed * timeOffset);
-        transform.position += GetDistanceToMove() * ((Mathf.Sin(speed * timeOffset) / 2) /*- (timeOffset / 4)*/);
+        Vector3 midpoint = transform.position + (distanceToMove / 2);
+        transform.position = midpoint + (-Mathf.Cos(speed * timeOffset) * speed * GetDistanceToMove() / 2);
     }
 
     void Update()
