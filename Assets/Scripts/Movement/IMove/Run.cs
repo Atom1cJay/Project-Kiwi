@@ -124,7 +124,6 @@ public class Run : AMove
         {
             return new HardTurn(mii, mi, movementSettings, horizVel);
         }
-        // todo make ground boost possible
 
         return this;
     }

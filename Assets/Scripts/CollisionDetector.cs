@@ -26,14 +26,6 @@ public class CollisionDetector : MonoBehaviour
         colliding = false;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!other.gameObject.CompareTag("Player"))
-        {
-            //print("yeah");
-        }
-    }
-
     /// <summary>
     /// Is the Collision Detector colliding with something it can detect?
     /// </summary>
