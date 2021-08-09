@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GravityPlatform : MonoBehaviour
 {
-    [SerializeField] float maxDistanceToMove, fallSpeed, riseSpeed, timeToFall;
+    [SerializeField] float maxDistanceToMove, fallSpeed, riseSpeed;
     float lowestHeight, startingHeight, vertSpeed;
     Vector3 mvmtThisFrame;
     Vector3 rotThisFrame;
@@ -36,27 +36,31 @@ public class GravityPlatform : MonoBehaviour
     }
 
     void GetDistanceToMove()
-    {
-        if (transform.position.y < lowestHeight)
+{
+        if (playerOnPlatform)
         {
-            transform.position = new Vector3(transform.position.x, lowestHeight, transform.position.z);
-            vertSpeed = 0f;
-        }
-        else if (transform.position.y > startingHeight)
-        {
-
-            transform.position = new Vector3(transform.position.x, startingHeight, transform.position.z);
-            vertSpeed = 0f;
-        }
-        else {
-            if (playerOnPlatform)
+            if (transform.position.y <= lowestHeight)
             {
-                 vertSpeed += fallSpeed * Time.deltaTime;
+                transform.position = new Vector3(transform.position.x, lowestHeight, transform.position.z);
+                vertSpeed = 0f;
             }
             else
+            vertSpeed += fallSpeed * Time.deltaTime;
+        }
+        else
+        {
+            if (transform.position.y >= startingHeight)
             {
-                vertSpeed += riseSpeed * Time.deltaTime;
+                transform.position = new Vector3(transform.position.x, startingHeight, transform.position.z); ;
+                vertSpeed = 0f;
             }
+            else if (transform.position.y < lowestHeight)
+            {
+                transform.position = new Vector3(transform.position.x, lowestHeight + .01f, transform.position.z);
+                vertSpeed = 0f;
+            }
+            else
+                vertSpeed += riseSpeed * Time.deltaTime;
         }
     }
 }
