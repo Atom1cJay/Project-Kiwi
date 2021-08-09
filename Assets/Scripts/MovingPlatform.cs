@@ -8,7 +8,7 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] Vector3 rotSpeed;
     [SerializeField] float timeOffset;
-    [SerializeField] bool movementIsRelative;
+    [SerializeField] bool movementIsRelative, tempFix;
     [SerializeField] Transform relativeTransform; // Relative movement is relative
     // to the rotation of this object
     Vector3 mvmtThisFrame;
@@ -16,12 +16,13 @@ public class MovingPlatform : MonoBehaviour
 
     private void Start()
     {
+        //transform.position += distanceToMove / 2f;
         if (relativeTransform == null)
         {
             relativeTransform = transform;
         }
         transform.Rotate(rotSpeed * timeOffset);
-        transform.position += GetDistanceToMove() * ((-Mathf.Cos(speed * timeOffset) / 2) /*- (timeOffset / 4)*/);
+        transform.position += GetDistanceToMove() * ((Mathf.Sin(speed * timeOffset) / 2) /*- (timeOffset / 4)*/);
     }
 
     void Update()
