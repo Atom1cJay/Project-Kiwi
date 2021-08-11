@@ -4,55 +4,71 @@ using UnityEngine;
 
 public class DisappearingPlatform : MonoBehaviour
 {
-    [SerializeField] float timeToDisappear, timeToRespawn;
+    [SerializeField] float timeToDisappear;
+    [Header("Irrelevant if disappears on Enable")] [SerializeField] float timeToRespawn;
+    [SerializeField] bool disappearsOnEnable;
     Collider col;
     MeshRenderer mr;
-    Color color;
-    bool playerOnPlatform, disappearing;
-    float respawnTime;
+    Color originalColor;
+    bool disappearing;
 
-    private void Start()
+    private void OnEnable()
     {
+        print("enabled");
         col = GetComponent<Collider>();
         mr = GetComponent<MeshRenderer>();
-        color = mr.material.color;
+        originalColor = mr.material.color;
         disappearing = false;
         col.enabled = true;
-        respawnTime = 0f;
+        if (disappearsOnEnable)
+        {
+            StartDisappear();
+        }
     }
 
-    void Update()
+    /// Can be called by a Treadable, Poundable, etc.
+    public void StartDisappear()
     {
-        playerOnPlatform = transform.parent.Find("Player") != null;
-        if (playerOnPlatform && !disappearing)
+        if (!disappearing)
         {
             disappearing = true;
-            StartCoroutine("StartDisappear");
+            StartCoroutine(Disappear());
         }
-
     }
 
-    IEnumerator StartDisappear()
+    IEnumerator Disappear()
     {
-        Color c;
+        float t = timeToDisappear;
 
-        for (int i = 100; i > 0; i--)
+        while (t > 0)
         {
-            c = new Color(color.r, color.g, color.b, i / 100f);
-            mr.material.color = c;
-            yield return new WaitForSeconds(timeToDisappear / 100f);
+            mr.material.color = new Color(originalColor.r, originalColor.g, originalColor.b, t / timeToDisappear);
+            t -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
 
-        c = new Color(color.r, color.g, color.b, 0f);
-        mr.material.color = c;
-
+        mr.material.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
         col.enabled = false;
+
+        if (disappearsOnEnable)
+        {
+            EndDisappear();
+            gameObject.SetActive(false); // Wait for reactivation
+        }
 
         yield return new WaitForSeconds(timeToRespawn);
 
-        col.enabled = true;
-        mr.material.color = color;
-        disappearing = false;
+        EndDisappear();
     }
 
+    /// <summary>
+    /// Resets the object to its pre-disappearance state.
+    /// </summary>
+    void EndDisappear()
+    {
+        // General Reset
+        col.enabled = true;
+        mr.material.color = originalColor;
+        disappearing = false;
+    }
 }

@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// NOTE: This class needs to be put on the HOLDER for whatever platform is
-/// treadable. Said platform also needs to be marked as a moving platform.
-/// </summary>
 public class Treadable : MonoBehaviour
 {
+    [Header("This GameObject Must Be A Moving Platform.")]
     [SerializeField] UnityEvent OnTread;
 
     private void FixedUpdate()
     {
-        if (transform.Find("Player") != null)
+        if (transform.parent.Find("Player") != null)
         {
             BroadcastTreadEvent();
         }
@@ -24,7 +21,6 @@ public class Treadable : MonoBehaviour
     /// </summary>
     private void BroadcastTreadEvent()
     {
-        print("fuck");
         OnTread.Invoke();
     }
 }
