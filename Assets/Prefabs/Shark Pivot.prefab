@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7568561185125617253}
   - component: {fileID: 7568561185125617254}
   - component: {fileID: 7568561185125617255}
+  - component: {fileID: 218371077952436904}
   m_Layer: 0
   m_Name: Shark
   m_TagString: Untagged
@@ -793,6 +794,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &218371077952436904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7568561185125617256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f5370aa75774ef6ab30e82ccce5130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageType: 0
 --- !u!1 &7568561185480313845
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,6 +819,7 @@ GameObject:
   - component: {fileID: 7568561185480313841}
   - component: {fileID: 7568561185480313842}
   - component: {fileID: 7568561185480313843}
+  - component: {fileID: 7621014337698497853}
   m_Layer: 0
   m_Name: Shark Stick
   m_TagString: Untagged
@@ -890,6 +905,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7621014337698497853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7568561185480313845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f5370aa75774ef6ab30e82ccce5130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageType: 0
 --- !u!1 &7568561185649261657
 GameObject:
   m_ObjectHideFlags: 0
