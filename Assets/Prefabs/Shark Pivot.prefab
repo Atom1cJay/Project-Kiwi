@@ -692,7 +692,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2479
+  m_VersionIndex: 2482
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -929,7 +929,8 @@ GameObject:
   - component: {fileID: 7568561185649261656}
   - component: {fileID: 7568561185649261653}
   - component: {fileID: 7568561185649261654}
-  - component: {fileID: 7568561185649261655}
+  - component: {fileID: 1760403830503262587}
+  - component: {fileID: 4767545003634204484}
   m_Layer: 0
   m_Name: Shark Pivot
   m_TagString: Untagged
@@ -1002,7 +1003,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7568561185649261657}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &7568561185649261655
+--- !u!114 &1760403830503262587
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1011,7 +1012,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 7568561185649261657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc550ede61a714b3187090055f2470d7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotation: {x: 0, y: 30, z: 0}
+  distanceToMove: {x: 0, y: 0, z: 0}
+  speed: 0
+  rotSpeed: {x: 0, y: 0, z: 0}
+  timeOffset: 0
+  movementIsRelative: 0
+  tempFix: 0
+  relativeTransform: {fileID: 0}
+--- !u!114 &4767545003634204484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7568561185649261657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59dee6fd401164e29b1060c93777b1a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toDeactivate: {fileID: 1760403830503262587}
+  deactivateDistance: 50
