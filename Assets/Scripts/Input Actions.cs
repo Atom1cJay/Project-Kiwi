@@ -521,6 +521,63 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Checkpoint"",
+            ""id"": ""7b0a17c1-61b1-44af-b970-358bda0d9eac"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""05b4785d-a231-4542-a363-be9432f8ba06"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Respawn"",
+                    ""type"": ""Button"",
+                    ""id"": ""e5cc6880-a11b-4cbc-82be-b5b49164e129"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""56047875-7c73-4e11-8a82-cac8502deae1"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76f52b3a-9eb1-4fd0-a964-2e456e77799d"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Respawn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2861122b-fc42-45d8-b3d6-1541223500b3"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/hat/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Respawn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -565,6 +622,10 @@ public class @InputActions : IInputActionCollection, IDisposable
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_Freeze = m_Debug.FindAction("Freeze", throwIfNotFound: true);
+        // Checkpoint
+        m_Checkpoint = asset.FindActionMap("Checkpoint", throwIfNotFound: true);
+        m_Checkpoint_Newaction = m_Checkpoint.FindAction("New action", throwIfNotFound: true);
+        m_Checkpoint_Respawn = m_Checkpoint.FindAction("Respawn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -773,6 +834,47 @@ public class @InputActions : IInputActionCollection, IDisposable
         }
     }
     public DebugActions @Debug => new DebugActions(this);
+
+    // Checkpoint
+    private readonly InputActionMap m_Checkpoint;
+    private ICheckpointActions m_CheckpointActionsCallbackInterface;
+    private readonly InputAction m_Checkpoint_Newaction;
+    private readonly InputAction m_Checkpoint_Respawn;
+    public struct CheckpointActions
+    {
+        private @InputActions m_Wrapper;
+        public CheckpointActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_Checkpoint_Newaction;
+        public InputAction @Respawn => m_Wrapper.m_Checkpoint_Respawn;
+        public InputActionMap Get() { return m_Wrapper.m_Checkpoint; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CheckpointActions set) { return set.Get(); }
+        public void SetCallbacks(ICheckpointActions instance)
+        {
+            if (m_Wrapper.m_CheckpointActionsCallbackInterface != null)
+            {
+                @Newaction.started -= m_Wrapper.m_CheckpointActionsCallbackInterface.OnNewaction;
+                @Newaction.performed -= m_Wrapper.m_CheckpointActionsCallbackInterface.OnNewaction;
+                @Newaction.canceled -= m_Wrapper.m_CheckpointActionsCallbackInterface.OnNewaction;
+                @Respawn.started -= m_Wrapper.m_CheckpointActionsCallbackInterface.OnRespawn;
+                @Respawn.performed -= m_Wrapper.m_CheckpointActionsCallbackInterface.OnRespawn;
+                @Respawn.canceled -= m_Wrapper.m_CheckpointActionsCallbackInterface.OnRespawn;
+            }
+            m_Wrapper.m_CheckpointActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Newaction.started += instance.OnNewaction;
+                @Newaction.performed += instance.OnNewaction;
+                @Newaction.canceled += instance.OnNewaction;
+                @Respawn.started += instance.OnRespawn;
+                @Respawn.performed += instance.OnRespawn;
+                @Respawn.canceled += instance.OnRespawn;
+            }
+        }
+    }
+    public CheckpointActions @Checkpoint => new CheckpointActions(this);
     private int m_GamePadSchemeIndex = -1;
     public InputControlScheme GamePadScheme
     {
@@ -810,5 +912,10 @@ public class @InputActions : IInputActionCollection, IDisposable
     public interface IDebugActions
     {
         void OnFreeze(InputAction.CallbackContext context);
+    }
+    public interface ICheckpointActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
+        void OnRespawn(InputAction.CallbackContext context);
     }
 }

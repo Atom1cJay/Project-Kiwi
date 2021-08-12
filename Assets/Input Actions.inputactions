@@ -508,6 +508,63 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Checkpoint",
+            "id": "7b0a17c1-61b1-44af-b970-358bda0d9eac",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "05b4785d-a231-4542-a363-be9432f8ba06",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Respawn",
+                    "type": "Button",
+                    "id": "e5cc6880-a11b-4cbc-82be-b5b49164e129",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "56047875-7c73-4e11-8a82-cac8502deae1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76f52b3a-9eb1-4fd0-a964-2e456e77799d",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Respawn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2861122b-fc42-45d8-b3d6-1541223500b3",
+                    "path": "<HID::Core (Plus) Wired Controller>/hat/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Respawn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

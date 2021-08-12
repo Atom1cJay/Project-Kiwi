@@ -1,0 +1,46 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CheckpointSystem : MonoBehaviour
+{
+    private Rigidbody rb;
+    [SerializeField] Material currentCheckpointMat,inactiveCheckpointMat;
+    [SerializeField] CheckpointLoader cL;
+    MeshRenderer mr;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        mr = GetComponent<MeshRenderer>();
+        SetInactive();
+    }
+
+    //Set checkpoint to inactive
+    public void SetInactive()
+    {
+        mr.material = inactiveCheckpointMat;
+    }
+
+    //Set checkpoint to active
+    public void SetActive()
+    {
+        mr.material = currentCheckpointMat;
+    }
+
+    //get position of checkpoint
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer == 9)
+        {
+            cL.SetCheckpoint(this);
+        }
+    }
+}
