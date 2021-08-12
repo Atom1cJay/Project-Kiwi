@@ -6,13 +6,17 @@ public class CollectibleSystem : MonoBehaviour
 {
 
     [SerializeField] static int coinCount, blueCoinCount, starCount;
+    [SerializeField] CollectibleDisplay coinDisplay;
+    //, bluecCoinDisplay, starDisplay;
 
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
-        //Debug.Log("coins:" + coinCount);
-        
+        coinDisplay.UpdateDisplay(0);
+        //bluecCoinDisplay.UpdateDisplay(blueCoinCount);
+       // starDisplay.UpdateDisplay(starCount);
+
 
     }
 
@@ -56,14 +60,17 @@ public class CollectibleSystem : MonoBehaviour
         if (type == Collectible.CollectibleType.COIN)
         {
             coinCount += i;
+            coinDisplay.UpdateDisplay(coinCount);
         }
         else if (type == Collectible.CollectibleType.BLUECOIN)
         {
             blueCoinCount += i;
+            //bluecCoinDisplay.UpdateDisplay(blueCoinCount);
         }
         else if (type == Collectible.CollectibleType.STAR)
         {
             starCount += i;
+            //starDisplay.UpdateDisplay(starCount);
         }
 
         cr.CollectObject();
