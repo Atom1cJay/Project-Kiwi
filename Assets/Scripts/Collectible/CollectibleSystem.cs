@@ -13,7 +13,7 @@ public class CollectibleSystem : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        coinDisplay.UpdateDisplay(0);
+        coinDisplay.UpdateDisplay(coinCount);
         //bluecCoinDisplay.UpdateDisplay(blueCoinCount);
        // starDisplay.UpdateDisplay(starCount);
 
