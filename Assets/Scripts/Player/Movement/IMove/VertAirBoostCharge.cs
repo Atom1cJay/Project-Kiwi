@@ -10,6 +10,7 @@ public class VertAirBoostCharge : AMove
     float timeActive;
     readonly float maxTimeActive;
     bool boostReleasePending;
+    bool swimPending;
 
     /// <summary>
     /// Constructs a VertAirBoostCharge, initializing the objects that hold all
@@ -25,6 +26,7 @@ public class VertAirBoostCharge : AMove
         timeActive = 0;
         maxTimeActive = movementSettings.VertBoostMaxChargeTime;
         mii.OnVertBoostRelease.AddListener(() => boostReleasePending = true);
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
     }
 
     public override void AdvanceTime()
@@ -57,6 +59,10 @@ public class VertAirBoostCharge : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
         if (timeActive > maxTimeActive || boostReleasePending)
         {
             float propCharged = Mathf.Clamp01(timeActive / maxTimeActive);

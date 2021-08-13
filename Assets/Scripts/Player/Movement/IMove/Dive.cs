@@ -10,6 +10,7 @@ public class Dive : AMove
 {
     float horizVel;
     float vertVel;
+    bool swimPending;
 
     /// <summary>
     /// Constructs a Dive, initializing the objects that hold all the
@@ -22,6 +23,7 @@ public class Dive : AMove
     {
         vertVel = movementSettings.DiveInitVel;
         horizVel = movementSettings.DiveSpeedX;
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
     }
 
     public override void AdvanceTime()
@@ -56,6 +58,10 @@ public class Dive : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));

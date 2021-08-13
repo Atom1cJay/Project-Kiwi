@@ -8,10 +8,12 @@ public class GroundPound : AMove
     bool divePending;
     bool landingStarted;
     bool landingOver;
+    bool swimPending;
 
     public GroundPound(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
     {
         mii.OnDiveInput.AddListener(() => divePending = true);
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
     }
 
     public override void AdvanceTime()
@@ -58,6 +60,10 @@ public class GroundPound : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, Vector2.zero);
+        }
         if (divePending && !landingStarted)
         {
             return new Dive(mii, mi, movementSettings);

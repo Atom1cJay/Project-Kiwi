@@ -4,10 +4,12 @@ using UnityEngine;
 public class Slide : AMove
 {
     Vector2 horizVector;
+    bool swimPending;
 
     public Slide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
         this.horizVector = horizVector;
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
     }
 
     public override bool AdjustToSlope()
@@ -42,6 +44,10 @@ public class Slide : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, horizVector);
+        }
         if (!mi.TouchingGround())
         {
             return new HelplessFall(mii, mi, movementSettings, horizVector);

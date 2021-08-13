@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class CheckpointLoader : MonoBehaviour
 {
-    [SerializeField] CheckpointSystem firstCheckpoint;
     [SerializeField] InputActionsHolder IAH;
-
     CheckpointSystem currentCheckpoint = null;
 
     void FixedUpdate()

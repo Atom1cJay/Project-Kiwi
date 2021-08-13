@@ -4,6 +4,7 @@ using UnityEngine;
 public class Idle : AMove
 {
     bool jumpPending;
+    bool swimPending;
 
     /// <summary>
     /// Constructs a Idle, initializing the objects that hold all the
@@ -15,6 +16,7 @@ public class Idle : AMove
     public Idle(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
     {
         mii.OnJump.AddListener(() => jumpPending = true);
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
     }
 
     public override void AdvanceTime()
@@ -43,6 +45,10 @@ public class Idle : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, Vector2.zero);
+        }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, Vector2.zero);

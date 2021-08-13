@@ -9,6 +9,7 @@ public class VertAirBoost : AMove
     float horizVel;
     bool divePending;
     bool groundPoundPending;
+    bool swimPending;
 
     /// <summary>
     /// Constructs a VertAirBoost, initializing the objects that hold all the
@@ -24,6 +25,7 @@ public class VertAirBoost : AMove
         vertVel = movementSettings.VertBoostMinVel + (propCharged * (movementSettings.VertBoostMaxVel - movementSettings.VertBoostMinVel));
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
     }
 
     public override void AdvanceTime()
@@ -76,6 +78,10 @@ public class VertAirBoost : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
         if (mi.TouchingGround() && vertVel < 0)
         {
             if (horizVel < 0)

@@ -15,6 +15,7 @@ public class DoubleJump : AMove
     bool jumpGroundableTimerComplete;
     bool jumpTimeShouldBreakTJ;
     bool glidePending;
+    bool swimPending;
     Vector2 horizVector;
 
     /// <summary>
@@ -37,6 +38,7 @@ public class DoubleJump : AMove
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         mii.OnJumpCancelled.AddListener(() =>
         {
             if (vertVel > movementSettings.JumpVelocityOfNoReturn)
@@ -124,6 +126,10 @@ public class DoubleJump : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, horizVector);
+        }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, horizVector/*ForwardMovement(horizVel)*/);

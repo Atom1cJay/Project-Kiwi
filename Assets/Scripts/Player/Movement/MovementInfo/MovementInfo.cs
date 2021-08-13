@@ -10,6 +10,7 @@ public class MovementInfo : MonoBehaviour
     public static MovementInfo instance;
     [SerializeField] CollisionDetector groundDetector;
     [SerializeField] CollisionDetector antiBoostDetector;
+    [SerializeField] WaterDetector waterDetector;
     private int tjJumpCount;
     IMoveImmutable storedMove; // The move from the last frame
     MoveExecuter me;
@@ -103,6 +104,14 @@ public class MovementInfo : MonoBehaviour
     public CollisionDetector GetGroundDetector()
     {
         return groundDetector;
+    }
+
+    /// <summary>
+    /// Gives the water detector being used for movement calculations.
+    /// </summary>
+    public WaterDetector GetWaterDetector()
+    {
+        return waterDetector;
     }
 
     private void UpdateEffectiveSpeed()

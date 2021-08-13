@@ -13,6 +13,7 @@ public class TripleJump : AMove
     bool jumpCancelled;
     bool groundPoundPending;
     bool glidePending;
+    bool swimPending;
 
     /// <summary>
     /// Constructs a TripleJump, initializing the objects that hold all the
@@ -32,6 +33,7 @@ public class TripleJump : AMove
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         mii.OnJumpCancelled.AddListener(() =>
         {
             if (vertVel > movementSettings.JumpVelocityOfNoReturn)
@@ -106,6 +108,10 @@ public class TripleJump : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, horizVector);
+        }
         if (mi.TouchingGround())
         {
             return new Run(mii, mi, movementSettings, horizVector);

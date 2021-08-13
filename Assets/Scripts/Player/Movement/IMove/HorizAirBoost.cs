@@ -9,6 +9,7 @@ public class HorizAirBoost : AMove
     float horizVel;
     bool divePending;
     bool groundPoundPending;
+    bool swimPending;
 
     /// <summary>
     /// Constructs a HorizAirBoost, initializing the objects that hold all the
@@ -24,6 +25,7 @@ public class HorizAirBoost : AMove
         vertVel = 0;
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
     }
 
     public override void AdvanceTime()
@@ -69,6 +71,10 @@ public class HorizAirBoost : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
         if (mi.TouchingGround())
         {
             return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));

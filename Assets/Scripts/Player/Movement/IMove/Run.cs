@@ -10,6 +10,7 @@ public class Run : AMove
     float horizVel;
     bool jumpPending;
     bool timeBetweenJumpsBreaksTJ;
+    bool swimPending;
 
     /// <summary>
     /// Constructs a Run, initializing the objects that hold all the
@@ -23,6 +24,7 @@ public class Run : AMove
     {
         horizVel = GetSharedMagnitudeWithPlayerAngle(horizVector);
         mii.OnJump.AddListener(() => jumpPending = true);
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitToBreakTimeBetweenJumps());
     }
 
@@ -94,6 +96,10 @@ public class Run : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));

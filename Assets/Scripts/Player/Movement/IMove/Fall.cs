@@ -13,6 +13,7 @@ public class Fall : AMove
     bool jumpPending;
     bool groundPoundPending;
     bool glidePending;
+    bool swimPending;
     float coyoteTime;
 
     /// <summary>
@@ -35,6 +36,7 @@ public class Fall : AMove
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
         mii.OnJump.AddListener(() => jumpPending = true);
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
     }
 
     IEnumerator AllowCoyoteTime()
@@ -101,6 +103,10 @@ public class Fall : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, horizVector);
+        }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, horizVector);

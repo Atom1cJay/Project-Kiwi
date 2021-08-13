@@ -10,6 +10,7 @@ public class HorizAirBoostCharge : AMove
     float timeCharging;
     readonly float maxTimeToCharge;
     bool boostReleasePending;
+    bool swimPending;
 
     /// <summary>
     /// Constructs a HorizAirBoostCharge, initializing the objects that hold all
@@ -27,6 +28,7 @@ public class HorizAirBoostCharge : AMove
         timeCharging = 0;
         maxTimeToCharge = movementSettings.HorizBoostMaxChargeTime;
         mii.OnHorizBoostRelease.AddListener(() => boostReleasePending = true);
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
     }
 
     public override void AdvanceTime()
@@ -56,6 +58,11 @@ public class HorizAirBoostCharge : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
+
         timeCharging += Time.deltaTime;
 
         if (timeCharging > maxTimeToCharge || boostReleasePending)

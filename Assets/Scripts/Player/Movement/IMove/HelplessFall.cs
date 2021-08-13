@@ -6,11 +6,13 @@ public class HelplessFall : AMove
     Vector2 initHorizVector;
     Vector2 horizVector;
     float vertVel;
+    bool swimPending;
 
     public HelplessFall(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
         initHorizVector = horizVector;
         this.horizVector = horizVector;
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
     }
 
     public override bool AdjustToSlope()
@@ -26,7 +28,7 @@ public class HelplessFall : AMove
 
     public override string AsString()
     {
-        return "sliderecovery";
+        return "helplessfall";
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
@@ -36,6 +38,10 @@ public class HelplessFall : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, horizVector);
+        }
         if (PlayerSlopeHandler.BeyondMaxAngle)
         {
             return new Slide(mii, mi, movementSettings, horizVector);

@@ -9,6 +9,7 @@ public class Glidev3 : AMove
     bool objectHitPending;
     bool glideReleasePending;
     bool groundPoundPending;
+    bool swimPending;
 
     public Glidev3(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
@@ -21,6 +22,7 @@ public class Glidev3 : AMove
         mii.OnGlide.AddListener(() => glideReleasePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
+        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
     }
 
     public override void AdvanceTime()
@@ -77,6 +79,10 @@ public class Glidev3 : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, horizVector);
+        }
         if (groundPoundPending)
         {
             return new GroundPound(mii, mi, movementSettings);
