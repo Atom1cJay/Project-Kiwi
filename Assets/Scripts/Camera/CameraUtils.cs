@@ -15,6 +15,7 @@ public class CameraUtils : MonoBehaviour
     private float vertAngle;
     private float independentDeltaTime; // Independent of time.timeScale
     private float independentPrevTime; // Time elapsed (ms) prev frame
+    const int layerMaskNoPlayer = ~(1 << 9);
     enum CameraMode
     {
         AroundPlayer,
@@ -26,6 +27,7 @@ public class CameraUtils : MonoBehaviour
     {
         horizAngle = initHorizAngle;
         vertAngle = initVertAngle;
+        CenterAroundPlayer();
     }
 
     /// <summary>
@@ -52,7 +54,6 @@ public class CameraUtils : MonoBehaviour
     {
         if (camMode != CameraMode.AroundPlayer)
         {
-            //Debug.LogError("Can't rotate camera since it's not in AroundPlayer mode.");
             return;
         }
         StopCoroutine("RotateTowardsY");
@@ -101,15 +102,39 @@ public class CameraUtils : MonoBehaviour
     private void CenterAroundPlayer()
     {
         // Take horizontal angle into account
-        float relativeX = radiusToTarget * Mathf.Sin(horizAngle);
-        float relativeZ = radiusToTarget * -Mathf.Cos(horizAngle);
+        float actualRadius = GetActualRadius();
+        float relativeX = actualRadius * Mathf.Sin(horizAngle);
+        float relativeZ = actualRadius * -Mathf.Cos(horizAngle);
         // Take vertical angle into account
         relativeX *= Mathf.Cos(vertAngle);
         relativeZ *= Mathf.Cos(vertAngle);
-        float relativeY = radiusToTarget * Mathf.Sin(vertAngle);
+        float relativeY = actualRadius * Mathf.Sin(vertAngle);
         // Change position
         transform.position = target.position + new Vector3(relativeX, relativeY, relativeZ);
         transform.LookAt(target);
+    }
+
+    /// <summary>
+    /// What radius should I be around the player, taking into account any walls the camera might be
+    /// behind (which I should not clip through)?
+    /// </summary>
+    /// <returns></returns>
+    /// 
+    private float GetActualRadius()
+    {
+        // TODO come back to this stuff
+        // TODO this might be a problem in the first frame where the player and camera are potentailly far away
+        /*
+        RaycastHit hit;
+        if (Physics.Raycast(target.position, (transform.position - target.position).normalized, out hit, radiusToTarget, layerMaskNoPlayer))
+        {
+            return hit.distance; // Inhibited radius
+        }
+        else
+        {
+        */
+            return radiusToTarget; // Regular radius
+        //}
     }
 
     /// <summary>

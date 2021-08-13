@@ -7,33 +7,25 @@ public class CheckpointLoader : MonoBehaviour
     [SerializeField] CheckpointSystem firstCheckpoint;
     [SerializeField] InputActionsHolder IAH;
 
-    CheckpointSystem currentCheckpoint;
+    CheckpointSystem currentCheckpoint = null;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        currentCheckpoint = firstCheckpoint;
-        currentCheckpoint.SetActive();
-    }
-
-    // Update is called once per frame
     void FixedUpdate()
     {
         //if button is pressed set transform
-        if(IAH.inputActions.Checkpoint.Respawn.ReadValue<float>() > 0f)
+        if(IAH.inputActions.Checkpoint.Respawn.ReadValue<float>() > 0f && currentCheckpoint != null)
         {
             transform.position = currentCheckpoint.GetPosition() + (Vector3.up * 3f);
             Debug.Log(currentCheckpoint.GetPosition() + Vector3.up);
-
         }
-        
     }
 
     public void SetCheckpoint(CheckpointSystem cs)
     {
-        currentCheckpoint.SetInactive();
+        if (currentCheckpoint != null)
+        {
+            currentCheckpoint.SetInactive();
+        }
         currentCheckpoint = cs;
         currentCheckpoint.SetActive();
-
     }
 }

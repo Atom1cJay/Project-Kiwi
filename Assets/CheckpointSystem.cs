@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class CheckpointSystem : MonoBehaviour
 {
-    private Rigidbody rb;
     [SerializeField] Material currentCheckpointMat,inactiveCheckpointMat;
     [SerializeField] CheckpointLoader cL;
     MeshRenderer mr;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
         mr = GetComponent<MeshRenderer>();
         SetInactive();
     }
@@ -33,8 +31,6 @@ public class CheckpointSystem : MonoBehaviour
     {
         return transform.position;
     }
-
-
 
     private void OnCollisionEnter(Collision other)
     {

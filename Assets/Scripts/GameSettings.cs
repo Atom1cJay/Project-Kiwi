@@ -9,8 +9,8 @@ public class GameSettings : MonoBehaviour
 {
     [SerializeField] private int targetFPS;
 
-    private void Awake()
+    private void LateUpdate()
     {
-        Application.targetFrameRate = targetFPS;
+        Application.targetFrameRate = 120;
     }
 }

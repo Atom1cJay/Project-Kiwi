@@ -12,6 +12,7 @@ public class MoveExecuter : MonoBehaviour
     RotationMovement rotator;
     [SerializeField] CameraControl cameraControl;
     [SerializeField] CameraTarget camTarget;
+    Vector3 vertMovement;
 
     private void Start()
     {
@@ -40,7 +41,7 @@ public class MoveExecuter : MonoBehaviour
             Vector2 horizMovement = moveThisFrame.GetHorizSpeedThisFrame();
             Vector3 dir = DirectionOfMovement(horizMovement);
             Vector3 horizMovementAdjusted = dir * horizMovement.magnitude;
-            Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
+            vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
             charCont.Move((horizMovementAdjusted + vertMovement) * Time.deltaTime);
             camTarget.Adjust();
             IMove next = moveThisFrame.GetNextMove();

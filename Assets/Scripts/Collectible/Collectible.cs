@@ -9,8 +9,6 @@ public class Collectible : ScriptableObject
 
     [SerializeField] CollectibleType type;
 
-    [SerializeField] Mesh mesh;
-
     [SerializeField] string name;
 
     [SerializeField] int num = 0;
@@ -18,15 +16,8 @@ public class Collectible : ScriptableObject
     public Collectible(Collectible c)
     {
         this.type = c.GetType();
-        this.mesh = c.mesh;
         this.name = c.GetName() + " copy";
         this.num = c.GetNum();
-    }
-
-    //returns the mesh
-    public Mesh GetMesh()
-    {
-        return mesh;
     }
 
     //returns the type of the collectible

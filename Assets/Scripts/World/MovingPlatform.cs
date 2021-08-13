@@ -8,43 +8,65 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] Vector3 rotSpeed;
     [SerializeField] float timeOffset;
-    [SerializeField] bool movementIsRelative, tempFix;
+    [SerializeField] bool movementIsRelative;
     [SerializeField] Transform relativeTransform; // Relative movement is relative
-    // to the rotation of this object
-    Vector3 mvmtThisFrame;
-    Vector3 rotThisFrame;
+    // to the rotation
+    float waveValue;
+    Vector3 midpoint;
+    Vector3 initRot;
+    //Vector3 mvmtThisFrame;
+    //Vector3 rotThisFrame;
 
-    private void Start()
+    private void Awake()
     {
-        //transform.position += distanceToMove / 2f;
+        midpoint = transform.position + (distanceToMove / 2);
+        initRot = transform.rotation.eulerAngles;
+    }
+
+    private void OnEnable()
+    {
         if (relativeTransform == null)
         {
             relativeTransform = transform;
         }
-        transform.Rotate(rotSpeed * timeOffset);
-        Vector3 midpoint = transform.position + (distanceToMove / 2);
-        transform.position = midpoint + (-Mathf.Cos(speed * timeOffset) * speed * GetDistanceToMove() / 2);
+        transform.rotation = Quaternion.Euler(initRot);
+        transform.Rotate(rotSpeed * (Time.time + timeOffset));
+        transform.position = midpoint + (-Mathf.Cos(speed * (Time.time + timeOffset)) * speed * GetDistanceToMove() / 2);
     }
 
     void Update()
     {
-        float waveValue = speed * (Mathf.Sin(speed * (Time.time + timeOffset)) / 2);
+        waveValue = speed * (Mathf.Sin(speed * (Time.time + timeOffset)) / 2);
 
+        /*
         mvmtThisFrame =
             new Vector3(
                 waveValue * GetDistanceToMove().x,
                 waveValue * GetDistanceToMove().y,
-                waveValue * GetDistanceToMove().z)* Time.fixedDeltaTime;
+                waveValue * GetDistanceToMove().z) * Time.fixedDeltaTime;
 
         rotThisFrame =
             new Vector3(
                 rotSpeed.x,
                 rotSpeed.y,
                 rotSpeed.z) * Time.fixedDeltaTime;
+        */
     }
 
     void FixedUpdate()
     {
+        Vector3 mvmtThisFrame =
+            new Vector3(
+                waveValue * GetDistanceToMove().x,
+                waveValue * GetDistanceToMove().y,
+                waveValue * GetDistanceToMove().z) * Time.fixedDeltaTime;
+
+        Vector3 rotThisFrame =
+            new Vector3(
+                rotSpeed.x,
+                rotSpeed.y,
+                rotSpeed.z) * Time.fixedDeltaTime;
+
         transform.Translate(mvmtThisFrame);
         transform.Rotate(rotThisFrame);
     }

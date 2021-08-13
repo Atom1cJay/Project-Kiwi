@@ -33,7 +33,7 @@ public class DistanceDeactivatorHandler : MonoBehaviour
     IEnumerator ManageDeactivation()
     {
         yield return new WaitForSeconds(1f); // To allow registration time
-        print(deactivators.Count);
+        print(deactivators.Count + " Distance Deactivators Registered.");
         int objsCheckedThisFrame = 0;
 
         while (true)

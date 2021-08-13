@@ -16,7 +16,7 @@ public class CameraTarget : MonoBehaviour
     [SerializeField] float minViewportY;
     [SerializeField] float maxViewportY;
 
-    private void Start()
+    private void Awake()
     {
         transform.position = player.position;
     }
