@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Glidev3 : AMove
 {
+    bool jumpOver;
     float vertVel;
     Vector2 horizVector;
     bool objectHitPending;
     bool glideReleasePending;
     bool groundPoundPending;
     bool swimPending;
+    float maxSpeed;
 
     public Glidev3(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
         this.horizVector = horizVector;
+        maxSpeed = movementSettings.GlideMaxHorizontalSpeed;
+        horizVector = horizVector.normalized * maxSpeed;
         if (this.horizVector.magnitude > movementSettings.GlideMaxHorizontalSpeed)
         {
             this.horizVector = this.horizVector.normalized * movementSettings.GlideMaxHorizontalSpeed;
@@ -27,16 +31,51 @@ public class Glidev3 : AMove
 
     public override void AdvanceTime()
     {
-        horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.GlideXSensitivity * Time.deltaTime;
-        if (horizVector.magnitude > movementSettings.GlideMaxHorizontalSpeed)
+        if (mii.PressingBoost())
         {
-            horizVector = horizVector.normalized * movementSettings.GlideMaxHorizontalSpeed;
+            maxSpeed = movementSettings.GlideMaxHorizontalSpeedBoosted;
+            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.GlideXSensitivityBoosting * Time.deltaTime;
         }
+        else
+        {
+            if (horizVector.magnitude < movementSettings.GlideMaxHorizontalSpeed)
+            {
+                maxSpeed = movementSettings.GlideMaxHorizontalSpeed;
+            }
+            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.GlideXSensitivity * Time.deltaTime;
+        }
+
         if (mii.GetRelativeHorizontalInputToCamera().magnitude < 0.1f)
         {
             float magn = horizVector.magnitude;
-            magn -= movementSettings.GlideXGravity * Time.deltaTime;
+            if (magn > movementSettings.GlideMaxHorizontalSpeed)
+            {
+                magn -= movementSettings.GlideXGravityOutOfBoost * Time.deltaTime;
+                maxSpeed = magn;
+            }
+            else
+            {
+                magn -= movementSettings.GlideXGravity * Time.deltaTime;
+            }
             horizVector = horizVector.normalized * magn;
+        }
+
+        if (!mii.PressingBoost() && maxSpeed > movementSettings.GlideMaxHorizontalSpeed)
+        {
+            maxSpeed -= movementSettings.GlideXGravityOutOfBoost * Time.deltaTime;
+        }
+
+        maxSpeed = Mathf.Clamp(maxSpeed, movementSettings.GlideMaxHorizontalSpeed, movementSettings.GlideMaxHorizontalSpeedBoosted);
+
+        if (horizVector.magnitude > maxSpeed)
+        {
+            horizVector = horizVector.normalized * maxSpeed;
+        }
+
+        if (jumpOver)
+        {
+            // Goes down faster the faster you are horizontally
+            vertVel = -movementSettings.GlideAirLoss * (maxSpeed / movementSettings.GlideMaxHorizontalSpeed);
         }
     }
 
@@ -59,7 +98,7 @@ public class Glidev3 : AMove
             yield return new WaitForEndOfFrame();
         }
 
-        vertVel = -movementSettings.GlideAirLoss;
+        jumpOver = true;
     }
 
     public override Vector2 GetHorizSpeedThisFrame()

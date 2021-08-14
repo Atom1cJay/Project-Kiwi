@@ -141,11 +141,14 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float glideRotationSpeed;
     [SerializeField] float glideAirLoss;
     [SerializeField] float glideMaxHorizontalSpeed;
+    [SerializeField] float glideMaxHorizontalSpeedBoosted;
     [SerializeField] float glideNonControlTime;
     [SerializeField] float glideJumpSpeed;
     [SerializeField] float glideJumpTime;
     [SerializeField] float glideXSensitivity;
     [SerializeField] float glideXGravity;
+    [SerializeField] float glideXSensitivityBoosting;
+    [SerializeField] float glideXGravityOutOfBoost;
 
     [Header("Swim Settings")]
     [SerializeField] float swimRotationSpeed;
@@ -154,6 +157,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float swimSensitivityNormal;
     [SerializeField] float swimSensitivityBoosted;
     [SerializeField] float swimGravity;
+    [SerializeField] float swimOutOfBoostGravity;
 
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
@@ -267,11 +271,14 @@ public class MovementSettingsSO : ScriptableObject
     public float GlideRotationSpeed { get { return glideRotationSpeed; } }
     public float GlideAirLoss { get { return glideAirLoss; } }
     public float GlideMaxHorizontalSpeed { get { return glideMaxHorizontalSpeed; } }
+    public float GlideMaxHorizontalSpeedBoosted { get { return glideMaxHorizontalSpeedBoosted; } }
     public float GlideNonControlTime { get { return glideNonControlTime; } }
     public float GlideJumpSpeed { get { return glideJumpSpeed; } }
     public float GlideJumpTime { get { return glideJumpTime; } }
     public float GlideXSensitivity { get { return glideXSensitivity; } }
     public float GlideXGravity { get { return glideXGravity; } }
+    public float GlideXSensitivityBoosting { get { return glideXSensitivityBoosting; } }
+    public float GlideXGravityOutOfBoost { get { return glideXGravityOutOfBoost; } }
 
     public float SwimRotationSpeed { get { return swimRotationSpeed; } }
     public float SwimMaxSpeedNormal { get { return swimMaxSpeedNormal; } }
@@ -279,6 +286,7 @@ public class MovementSettingsSO : ScriptableObject
     public float SwimSensitivityNormal { get { return swimSensitivityNormal; } }
     public float SwimSensitivityBoosted { get { return swimSensitivityBoosted; } }
     public float SwimGravity { get { return swimGravity; } }
+    public float SwimOutOfBoostGravity { get { return swimOutOfBoostGravity; } }
 
     static MovementSettingsSO _instance;
     public static MovementSettingsSO Instance

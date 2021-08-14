@@ -32,9 +32,11 @@ public class PlayerHealth : MonoBehaviour
         switch (damageType)
         {
             case DamageType.BasicHit:
+                print("BASIC HIT TAKEN");
                 hp--;
                 break;
             case DamageType.Instakill:
+                print("INSTAKILL HIT TAKEN");
                 hp = 0;
                 break;
             default:
