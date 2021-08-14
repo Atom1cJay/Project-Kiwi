@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
+//[RequireComponent(typeof(Collider))]
 public class CollectibleReader : MonoBehaviour
 {
     public Collectible collectible;
@@ -13,7 +13,7 @@ public class CollectibleReader : MonoBehaviour
 
     Collider collectibleCollider;
 
-    MeshRenderer collectibleRenderer;
+    [SerializeField] GameObject collectibleVisual;
 
     // Start is called before the first frame update
     void Start()
@@ -25,14 +25,14 @@ public class CollectibleReader : MonoBehaviour
             collected = false;
 
         collectibleCollider.enabled = !collected;
-        collectibleRenderer.enabled = !collected;
+        collectibleVisual.SetActive(!collected);
     }
 
     //Update the Collectible Reader
     public void UpdateCollectibleReader()
     {
         collectibleCollider.enabled = !collected;
-        collectibleRenderer.enabled = !collected;
+        collectibleVisual.SetActive(!collected);
     }
 
     //Returns the collectible
