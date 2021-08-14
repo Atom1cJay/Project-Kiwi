@@ -16,7 +16,7 @@ public class MovementInfo : MonoBehaviour
     MoveExecuter me;
     private Vector3 prevPosXZ;
     private float effectiveSpeedXZ;
-    private float prevDeltaTime;
+    //private float prevDeltaTime;
     private CharacterController charCont;
 
     [HideInInspector] public UnityEvent OnCharContTouchSomething;
@@ -28,7 +28,7 @@ public class MovementInfo : MonoBehaviour
             print("Multiple instances of MovementInfo exist. Use one.");
         }
         instance = this;
-        prevDeltaTime = 0.01f;
+        //prevDeltaTime = 0.01f;
         prevPosXZ = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
         effectiveSpeedXZ = 0;
         me = GetComponent<MoveExecuter>();
@@ -51,12 +51,20 @@ public class MovementInfo : MonoBehaviour
         return antiBoostDetector.Colliding();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
+        UpdateEffectiveSpeed();
         UpdateTripleJumpStatus();
+    }
+
+    private void UpdateEffectiveSpeed()
+    {
         if (Time.timeScale != 0) // To avoid weird bugs
         {
-            UpdateEffectiveSpeed();
+            Vector3 currentXZ = new Vector3(transform.position.x, 0, transform.position.z);
+            effectiveSpeedXZ = (currentXZ - prevPosXZ).magnitude / Time.deltaTime;
+            prevPosXZ = currentXZ;
+            //prevDeltaTime = Time.deltaTime;
         }
     }
 
@@ -112,14 +120,6 @@ public class MovementInfo : MonoBehaviour
     public WaterDetector GetWaterDetector()
     {
         return waterDetector;
-    }
-
-    private void UpdateEffectiveSpeed()
-    {
-        Vector3 currentXZ = new Vector3(transform.position.x, 0, transform.position.z);
-        effectiveSpeedXZ = (currentXZ - prevPosXZ).magnitude / prevDeltaTime;
-        prevPosXZ = currentXZ;
-        prevDeltaTime = Time.deltaTime;
     }
 
     public float GetEffectiveSpeed()

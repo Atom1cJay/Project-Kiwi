@@ -33,7 +33,7 @@ public class VertAirBoost : AMove
         // Vertical
         vertVel -= movementSettings.VertBoostGravity * Time.deltaTime;
         // Horizontal
-        //horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
+        horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed());
         if (mii.AirReverseInput())
         {
             horizVel = InputUtils.SmoothedInput(

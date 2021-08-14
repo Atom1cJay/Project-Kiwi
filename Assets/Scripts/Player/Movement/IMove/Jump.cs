@@ -67,8 +67,8 @@ public class Jump : AMove
             vertVel = movementSettings.JumpMinVel;
         }
         // Horizontal
-        //float startingMagn = mi.GetEffectiveSpeed();
-        //horizVector = horizVector.normalized * startingMagn;
+        float startingMagn = mi.GetEffectiveSpeed();
+        horizVector = horizVector.normalized * startingMagn;
         // Choose which type of sensitivity to employ
         if (horizVector.magnitude < movementSettings.MaxSpeed)
         {

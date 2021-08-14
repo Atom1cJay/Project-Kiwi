@@ -149,7 +149,7 @@ public class Run : AMove
         return mii.GetHorizDissonance() > movementSettings.TjMaxDissonance
             || mii.GetHorizontalInput().magnitude < movementSettings.TjMinHorizInputMagnitude
             || timeBetweenJumpsBreaksTJ
-            /*|| Mathf.Min(horizVel, mi.GetEffectiveSpeed()) < movementSettings.TjMaxBreakSpeed*/;
+            || Mathf.Min(horizVel, mi.GetEffectiveSpeed()) < movementSettings.TjMaxBreakSpeed;
     }
 
     public override bool AdjustToSlope()
