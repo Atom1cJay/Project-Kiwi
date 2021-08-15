@@ -6,12 +6,15 @@ public class CheckpointSystem : MonoBehaviour
 {
     [SerializeField] Material currentCheckpointMat,inactiveCheckpointMat;
     [SerializeField] CheckpointLoader cL;
+    [SerializeField] bool makeFirst;
     MeshRenderer mr;
 
     void Awake()
     {
         mr = GetComponent<MeshRenderer>();
         SetInactive();
+        if(makeFirst)
+            cL.SetCheckpoint(this);
     }
 
     //Set checkpoint to inactive
