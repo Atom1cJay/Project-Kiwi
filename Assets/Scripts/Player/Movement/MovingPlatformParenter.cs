@@ -33,7 +33,6 @@ public class MovingPlatformParenter : MonoBehaviour
         
         if (!onBall)
         {
-            Debug.Log("off ball!!!");
             if (!mi.TouchingGround())
             {
                 transform.SetParent(null, true);
@@ -44,21 +43,11 @@ public class MovingPlatformParenter : MonoBehaviour
                 Transform parent;
                 if (ground.CompareTag("Moving Platform (Has Wrapper)"))
                     parent = ground.transform.parent;
-                else if (ground.CompareTag("Bouncing Platform"))
-                {
-
-                    parent = ground.transform;
-                    Debug.Log("boomshakalaka");
-                }
                 else
                     parent = null;
                 transform.SetParent(parent);
             }
         }
-        else
-        {
-            Debug.Log("on ball!!!");
-        }   
         
     }
 }

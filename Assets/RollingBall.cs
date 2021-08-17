@@ -33,11 +33,9 @@ public class RollingBall : MonoBehaviour
             if(onBall)
             {
                 canDisengage = false;
-                Debug.Log("AAA fuck");
             }
             else
             {
-                Debug.Log("AAA waiting");
 
             }
         }
@@ -47,7 +45,6 @@ public class RollingBall : MonoBehaviour
             {
                 justOff = false;
                 Disengage();
-                Debug.Log("AAA disengage");
             }
         }
     }
@@ -66,13 +63,11 @@ public class RollingBall : MonoBehaviour
             {
                 force = new Vector3(force.x, 0, force.z);
                 player.transform.parent = null;
-                Debug.Log("AAA pushing");
 
             }
             else
             {
                 force = new Vector3(-force.x * topForceMult, 0, -force.z * topForceMult);
-                Debug.Log("AAA hop on");
                 onBall = true;
                 disengaged = false;
                 canDisengage = true;
