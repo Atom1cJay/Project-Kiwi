@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430745081747843}
-  - component: {fileID: 1367430745081747842}
   m_Layer: 0
   m_Name: Pipe Holder (1)
   m_TagString: Untagged
@@ -32,24 +31,6 @@ Transform:
   m_Father: {fileID: 1367430747037030751}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &1367430745081747842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430745081747840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -25, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &1367430745141708243
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430745141708242}
-  - component: {fileID: 1367430745141708237}
   m_Layer: 0
   m_Name: Pipe Holder (14)
   m_TagString: Untagged
@@ -82,24 +62,6 @@ Transform:
   m_Father: {fileID: 1367430746841165889}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &1367430745141708237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430745141708243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -50, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &1367430745156302765
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +71,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430745156302764}
-  - component: {fileID: 1367430745156302767}
   m_Layer: 0
   m_Name: Pipe Holder (12)
   m_TagString: Untagged
@@ -132,24 +93,6 @@ Transform:
   m_Father: {fileID: 1367430745432790390}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!114 &1367430745156302767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430745156302765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -40, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &1367430745210072078
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,7 +449,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430745268249562}
-  - component: {fileID: 1367430745268249557}
   m_Layer: 0
   m_Name: Pipe Holder (5)
   m_TagString: Untagged
@@ -529,24 +471,6 @@ Transform:
   m_Father: {fileID: 1367430746841165889}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1367430745268249557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430745268249563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -50, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &1367430745312697259
 GameObject:
   m_ObjectHideFlags: 0
@@ -1250,7 +1174,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430745401101016}
-  - component: {fileID: 1367430745401101019}
   m_Layer: 0
   m_Name: Pipe Holder (4)
   m_TagString: Untagged
@@ -1273,24 +1196,6 @@ Transform:
   m_Father: {fileID: 1367430745432790390}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1367430745401101019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430745401101017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -40, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &1367430745418545056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1647,6 +1552,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430745432790390}
+  - component: {fileID: 3018527492603371575}
+  - component: {fileID: 1489469474601586286}
   m_Layer: 0
   m_Name: 3
   m_TagString: Untagged
@@ -1672,6 +1579,38 @@ Transform:
   m_Father: {fileID: 1367430746840413993}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3018527492603371575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367430745432790391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceToMove: {x: 0, y: 0, z: 0}
+  speed: 0
+  rotSpeed: {x: 0, y: -40, z: 0}
+  timeOffset: 0
+  movementIsRelative: 0
+  relativeTransform: {fileID: 0}
+--- !u!114 &1489469474601586286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367430745432790391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59dee6fd401164e29b1060c93777b1a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toDeactivate: {fileID: 3018527492603371575}
+  deactivateDistance: 150
 --- !u!1 &1367430745501355232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1681,7 +1620,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430745501355235}
-  - component: {fileID: 1367430745501355234}
   m_Layer: 0
   m_Name: Pipe Holder (11)
   m_TagString: Untagged
@@ -1704,24 +1642,6 @@ Transform:
   m_Father: {fileID: 1367430745432790390}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &1367430745501355234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430745501355232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -40, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &1367430745563571861
 GameObject:
   m_ObjectHideFlags: 0
@@ -1731,7 +1651,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430745563571860}
-  - component: {fileID: 1367430745563571863}
   m_Layer: 0
   m_Name: Pipe Holder (10)
   m_TagString: Untagged
@@ -1754,24 +1673,6 @@ Transform:
   m_Father: {fileID: 1367430747037030751}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!114 &1367430745563571863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430745563571861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -25, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &1367430745677941438
 GameObject:
   m_ObjectHideFlags: 0
@@ -3516,7 +3417,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430746141385270}
-  - component: {fileID: 1367430746141385265}
   m_Layer: 0
   m_Name: Pipe Holder (13)
   m_TagString: Untagged
@@ -3539,24 +3439,6 @@ Transform:
   m_Father: {fileID: 1367430746841165889}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!114 &1367430746141385265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430746141385271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -50, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &1367430746172147406
 GameObject:
   m_ObjectHideFlags: 0
@@ -3913,7 +3795,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430746325013006}
-  - component: {fileID: 1367430746325013001}
   m_Layer: 0
   m_Name: Pipe Holder (2)
   m_TagString: Untagged
@@ -3936,24 +3817,6 @@ Transform:
   m_Father: {fileID: 1367430747037030751}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1367430746325013001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430746325013007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -25, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &1367430746330605354
 GameObject:
   m_ObjectHideFlags: 0
@@ -4657,7 +4520,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430746772884861}
-  - component: {fileID: 1367430746772884860}
   m_Layer: 0
   m_Name: Pipe Holder (6)
   m_TagString: Untagged
@@ -4680,24 +4542,6 @@ Transform:
   m_Father: {fileID: 1367430746841165889}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &1367430746772884860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430746772884802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -50, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &1367430746840413998
 GameObject:
   m_ObjectHideFlags: 0
@@ -4742,6 +4586,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430746841165889}
+  - component: {fileID: 8062596461476252074}
+  - component: {fileID: 753118531698687381}
   m_Layer: 0
   m_Name: 4
   m_TagString: Untagged
@@ -4767,6 +4613,38 @@ Transform:
   m_Father: {fileID: 1367430746840413993}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8062596461476252074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367430746841165894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceToMove: {x: 0, y: 0, z: 0}
+  speed: 0
+  rotSpeed: {x: 0, y: -50, z: 0}
+  timeOffset: 0
+  movementIsRelative: 0
+  relativeTransform: {fileID: 0}
+--- !u!114 &753118531698687381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367430746841165894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59dee6fd401164e29b1060c93777b1a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toDeactivate: {fileID: 8062596461476252074}
+  deactivateDistance: 150
 --- !u!1 &1367430746903613829
 GameObject:
   m_ObjectHideFlags: 0
@@ -4776,7 +4654,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430746903613828}
-  - component: {fileID: 1367430746903613831}
   m_Layer: 0
   m_Name: Pipe Holder (9)
   m_TagString: Untagged
@@ -4799,24 +4676,6 @@ Transform:
   m_Father: {fileID: 1367430747037030751}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &1367430746903613831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430746903613829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -25, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &1367430747037030748
 GameObject:
   m_ObjectHideFlags: 0
@@ -4826,6 +4685,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430747037030751}
+  - component: {fileID: 7667775033404514986}
+  - component: {fileID: 7029491999198454624}
   m_Layer: 0
   m_Name: 2
   m_TagString: Untagged
@@ -4851,6 +4712,38 @@ Transform:
   m_Father: {fileID: 1367430746840413993}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7667775033404514986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367430747037030748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceToMove: {x: 0, y: 0, z: 0}
+  speed: 0
+  rotSpeed: {x: 0, y: -25, z: 0}
+  timeOffset: 0
+  movementIsRelative: 0
+  relativeTransform: {fileID: 0}
+--- !u!114 &7029491999198454624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367430747037030748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59dee6fd401164e29b1060c93777b1a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toDeactivate: {fileID: 7667775033404514986}
+  deactivateDistance: 150
 --- !u!1 &1367430747063259127
 GameObject:
   m_ObjectHideFlags: 0
@@ -4860,7 +4753,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367430747063259126}
-  - component: {fileID: 1367430747063259121}
   m_Layer: 0
   m_Name: Pipe Holder (3)
   m_TagString: Untagged
@@ -4883,24 +4775,6 @@ Transform:
   m_Father: {fileID: 1367430745432790390}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &1367430747063259121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367430747063259127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -40, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1001 &2924117628957749979
 PrefabInstance:
   m_ObjectHideFlags: 0

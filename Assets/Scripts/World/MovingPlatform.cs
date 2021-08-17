@@ -31,26 +31,12 @@ public class MovingPlatform : MonoBehaviour
         }
         transform.rotation = Quaternion.Euler(initRot);
         transform.Rotate(rotSpeed * (Time.time + timeOffset));
-        transform.position = midpoint + (-Mathf.Cos(speed * (Time.time + timeOffset)) * speed * GetDistanceToMove() / 2);
+        transform.position = midpoint + (-Mathf.Cos(speed * (Time.time + timeOffset)) * GetDistanceToMove() / 2);
     }
 
     void Update()
     {
         waveValue = speed * (Mathf.Sin(speed * (Time.time + timeOffset)) / 2);
-
-        /*
-        mvmtThisFrame =
-            new Vector3(
-                waveValue * GetDistanceToMove().x,
-                waveValue * GetDistanceToMove().y,
-                waveValue * GetDistanceToMove().z) * Time.fixedDeltaTime;
-
-        rotThisFrame =
-            new Vector3(
-                rotSpeed.x,
-                rotSpeed.y,
-                rotSpeed.z) * Time.fixedDeltaTime;
-        */
     }
 
     void FixedUpdate()

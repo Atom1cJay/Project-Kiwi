@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8422915666311187698}
-  - component: {fileID: 8422915666311187699}
   m_Layer: 0
   m_Name: Pipe Holder (7)
   m_TagString: Untagged
@@ -32,24 +31,6 @@ Transform:
   m_Father: {fileID: 8422915666826412334}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &8422915666311187699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8422915666311187697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -10, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &8422915666332724986
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8422915666332724987}
-  - component: {fileID: 8422915666332724980}
   m_Layer: 0
   m_Name: Pipe Holder (16)
   m_TagString: Untagged
@@ -82,24 +62,6 @@ Transform:
   m_Father: {fileID: 8422915666826412334}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!114 &8422915666332724980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8422915666332724986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -10, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &8422915666429404038
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +71,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8422915666429404039}
-  - component: {fileID: 8422915666429404032}
   m_Layer: 0
   m_Name: Pipe Holder (15)
   m_TagString: Untagged
@@ -132,24 +93,6 @@ Transform:
   m_Father: {fileID: 8422915666826412334}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &8422915666429404032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8422915666429404038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -10, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &8422915666826412333
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,6 +102,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8422915666826412334}
+  - component: {fileID: 4392676856943117096}
+  - component: {fileID: 1642577888895767312}
   m_Layer: 0
   m_Name: Rotating Quarters
   m_TagString: Untagged
@@ -184,6 +129,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4392676856943117096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8422915666826412333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceToMove: {x: 0, y: 0, z: 0}
+  speed: 0
+  rotSpeed: {x: 0, y: -10, z: 0}
+  timeOffset: 0
+  movementIsRelative: 0
+  relativeTransform: {fileID: 0}
+--- !u!114 &1642577888895767312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8422915666826412333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59dee6fd401164e29b1060c93777b1a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toDeactivate: {fileID: 4392676856943117096}
+  deactivateDistance: 150
 --- !u!1 &8422915666839092223
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,7 +864,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8422915667748496010}
-  - component: {fileID: 8422915667748496011}
   m_Layer: 0
   m_Name: Pipe Holder (8)
   m_TagString: Untagged
@@ -910,24 +886,6 @@ Transform:
   m_Father: {fileID: 8422915666826412334}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8422915667748496011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8422915667748496009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b76e842f4c234a3691f10d7699067f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToMove: {x: 0, y: 0, z: 0}
-  speed: 0
-  rotSpeed: {x: 0, y: -10, z: 0}
-  timeOffset: 0
-  movementIsRelative: 0
-  relativeTransform: {fileID: 0}
 --- !u!1 &8422915668174600205
 GameObject:
   m_ObjectHideFlags: 0
