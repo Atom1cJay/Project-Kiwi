@@ -96,7 +96,11 @@ Material:
     m_Floats:
     - Dot_Product_For_Shade_Border: 0
     - Metallic: 0
-    - Smoothness: 0.1
+    - RimEdgePower: 1
+    - RimExtraSize: 0
+    - RimShadowPower: 1
+    - RimStrength: 1
+    - Smoothness: 0.2
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -124,8 +128,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Albedo: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 0}
-    - Ambient_Light: {r: 0.7311321, g: 1, b: 0.9699323, a: 0}
+    - Albedo: {r: 0.42083484, g: 0.46226418, b: 0.46226418, a: 0}
+    - Ambient_Light: {r: 0.9575472, g: 0.99188995, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

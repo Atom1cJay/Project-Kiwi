@@ -92,13 +92,13 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DepthMaxDistance: 5
+    - _DepthMaxDistance: 10
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _FoamMaxDistance: 2
-    - _FoamMinDistance: 0.4
+    - _FoamMinDistance: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -112,19 +112,19 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _SurfaceDistortionAmount: 0.104
+    - _SurfaceDistortionAmount: 0.264
     - _SurfaceNoiseCutoff: 0.467
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DepthGradientDeep: {r: 0.30660376, g: 0.85120887, b: 1, a: 0.89411765}
-    - _DepthGradientShallow: {r: 0.6839622, g: 1, b: 0.9881713, a: 0.5686275}
+    - _DepthGradientDeep: {r: 0.3066037, g: 0.85120887, b: 1, a: 1}
+    - _DepthGradientShallow: {r: 0.68396217, g: 1, b: 0.9881713, a: 0.8784314}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FoamColor: {r: 0.8254717, g: 0.96871614, b: 1, a: 1}
+    - _FoamColor: {r: 0.7783019, g: 0.99320936, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SurfaceNoiseScroll: {r: 0.01, g: 0.01, b: 0, a: 0}
+    - _SurfaceNoiseScroll: {r: 0.03, g: 0.03, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3152834785975356678
 MonoBehaviour:

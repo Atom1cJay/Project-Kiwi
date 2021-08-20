@@ -81,13 +81,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Dot_Product_For_Shade_Border: 0.3
+    - Dot_Product_For_Shade_Border: 0
     - MAIN_LIGHT_CALCULATE_SHADOWS: 1
     - Metallic: 0
+    - RimEdgePower: 2.15
+    - RimExtraSize: 0
+    - RimShadowPower: 1
+    - RimStrength: 31.3
     - SHADOWS: 0
     - SHADOWS_CASCADE: 0
     - SHADOWS_SOFT: 0
-    - Smoothness: -5.88
+    - Smoothness: 0.1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
