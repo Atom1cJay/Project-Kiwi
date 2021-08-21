@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89a9c384f4044d949915fc3cf99a7e4, type: 3}
   m_Name: MovementSettings
   m_EditorClassIdentifier: 
-  maxSpeed: 7
-  runSensitivityX: 16
+  maxSpeed: 8
+  runSensitivityX: 14
   runGravityX: 23
   runGravityXOverTopSpeed: 10
   airSensitivityX: 6
   airGravityX: 7
   airGravityXOverTopSpeed: 2
   hardTurnGravityX: 30
-  diveSpeedX: 7.5
+  diveSpeedX: 8
   airReverseSensitivityX: 15
   airReverseGravityX: 15
   jumpGroundableTimer: 0.1
@@ -66,8 +66,8 @@ MonoBehaviour:
   horizBoostRotation: 75
   horizBoostAirReverseGravity: 12
   horizBoostNonAirReverseGravity: 9
-  horizBoostMinActivationX: 10
-  horizBoostMaxActivationX: 15
+  horizBoostMinActivationX: 10.5
+  horizBoostMaxActivationX: 15.5
   horizBoostSpeedX: 17
   horizBoostChargeGravityX: 6
   horizBoostToGroundBoostSensitivity: 1
@@ -79,8 +79,8 @@ MonoBehaviour:
   vertBoostMaxTime: 0.7
   vertBoostRotationSpeed: 200
   vertBoostMaxSpeedX: 5
-  groundBoostMaxSpeedX: 9.5
-  groundBoostSensitivityX: 5
+  groundBoostMaxSpeedX: 11.5
+  groundBoostSensitivityX: 2.5
   groundBoostGravityX: 4
   gpSuspensionTime: 0.6
   gpDownSpeed: 10
@@ -113,9 +113,9 @@ MonoBehaviour:
   glideXSensitivityBoosting: 12
   glideXGravityOutOfBoost: 7
   swimRotationSpeed: 600
-  swimMaxSpeedNormal: 4
+  swimMaxSpeedNormal: 5
   swimMaxSpeedBoosted: 13
-  swimSensitivityNormal: 10
-  swimSensitivityBoosted: 4
-  swimGravity: 1
+  swimSensitivityNormal: 11
+  swimSensitivityBoosted: 13
+  swimGravity: 6
   swimOutOfBoostGravity: 6
