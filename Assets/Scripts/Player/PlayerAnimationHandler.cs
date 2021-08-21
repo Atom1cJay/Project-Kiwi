@@ -35,6 +35,7 @@ public class PlayerAnimationHandler : MonoBehaviour
         animator.SetBool("JETPACKRUN", false);
         animator.SetBool("WALKING", false);
         animator.SetBool("STARTRUN", false);
+        animator.SetBool("SWIM", false);
 
         animator.SetBool(s, true);
     }
@@ -65,6 +66,7 @@ public class PlayerAnimationHandler : MonoBehaviour
         animator.SetBool("HARDTURN", false);
         animator.SetBool("JETPACKRUN", false);
         animator.SetBool("STARTRUN", false);
+        animator.SetBool("SWIM", false);
     }
 
     void FixedUpdate()
@@ -80,7 +82,7 @@ public class PlayerAnimationHandler : MonoBehaviour
             lM = cM;
             cM = temp;
         }
-        //Debug.Log(cM);
+        Debug.Log(cM);
 
         //Debug.Log(cM);
         //walking state not implemented yet
@@ -216,6 +218,12 @@ public class PlayerAnimationHandler : MonoBehaviour
 
             onGround = true;
             currentMove("SKID");
+        }
+        else if (cM == "swim")
+        {
+
+            onGround = true;
+            currentMove("SWIM");
         }
         else
         {
