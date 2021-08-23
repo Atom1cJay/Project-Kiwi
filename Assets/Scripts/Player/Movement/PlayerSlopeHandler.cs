@@ -12,10 +12,6 @@ public class PlayerSlopeHandler : MonoBehaviour
     public static bool GroundInProximity;
     private static readonly int layerMask = ~(1 << 9);
     /// <summary>
-    /// The largest angle the player is allowed to walk on normally
-    /// </summary>
-    private static readonly float maxSlopeAngle = 60;
-    /// <summary>
     /// The angle of the slope the player is currently colliding with.
     /// </summary>
     private static float AngleOfSlope;
@@ -38,6 +34,8 @@ public class PlayerSlopeHandler : MonoBehaviour
     public static Vector3 AngleContactPoint { get; private set; }
 
     [SerializeField] float maxHeightOfContactPoint;
+    [SerializeField] float maxSlopeAngle = 60;
+    [SerializeField] float maxAngleForProximity = 45;
 
     private void Update()
     {
@@ -46,7 +44,11 @@ public class PlayerSlopeHandler : MonoBehaviour
 
     private void DetectIfGroundInProximity()
     {
-        GroundInProximity = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1 + lengthOfNearestGroundRay, layerMask);
+        GroundInProximity = false;
+        RaycastHit hit;
+        bool couldTouchGround = Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 1 + lengthOfNearestGroundRay, layerMask);
+        GroundInProximity = couldTouchGround && GetAngleOfSlope(hit.normal) < maxAngleForProximity;
+        //GroundInProximity = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1 + lengthOfNearestGroundRay, layerMask);
     }
 
     // Obtains the normal of the platform the player is currently on

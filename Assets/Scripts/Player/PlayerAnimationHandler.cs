@@ -82,7 +82,6 @@ public class PlayerAnimationHandler : MonoBehaviour
             lM = cM;
             cM = temp;
         }
-        Debug.Log(cM);
 
         //Debug.Log(cM);
         //walking state not implemented yet

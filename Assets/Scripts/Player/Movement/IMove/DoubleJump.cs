@@ -62,8 +62,12 @@ public class DoubleJump : AMove
         else if (gravity > movementSettings.JumpMaxCancelledGravity && jumpCancelled)
             gravity = movementSettings.JumpMaxCancelledGravity;
         vertVel -= gravity * Time.deltaTime;
+        if (vertVel < movementSettings.JumpMinVel)
+        {
+            vertVel = movementSettings.JumpMinVel;
+        }
         // Horizontal
-        float startingMagn = Math.Min(horizVector.magnitude, mi.GetEffectiveSpeed());
+        float startingMagn = mi.GetEffectiveSpeed();
         horizVector = horizVector.normalized * startingMagn;
         // Choose which type of sensitivity to employ
         if (horizVector.magnitude < movementSettings.MaxSpeed)
@@ -108,6 +112,7 @@ public class DoubleJump : AMove
     public override Vector2 GetHorizSpeedThisFrame()
     {
         return horizVector;
+        //return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -136,7 +141,7 @@ public class DoubleJump : AMove
         }
         if (glidePending)
         {
-            return new Glidev3(mii, mi, movementSettings, /*horizVel*/ horizVector);
+            return new Glidev3(mii, mi, movementSettings, horizVector /*horizVel*/);
         }
         if (groundPoundPending)
         {
@@ -165,7 +170,7 @@ public class DoubleJump : AMove
 
     public override string AsString()
     {
-        return "doublejump";
+        return "jump";
     }
 
     public override bool IncrementsTJcounter()
