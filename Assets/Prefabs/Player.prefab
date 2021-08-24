@@ -109,7 +109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261989591}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.668, z: 0}
+  m_LocalPosition: {x: 0, y: -0.738, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 5116987452351034286}
@@ -263,6 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHeightOfContactPoint: 0.325
+  maxSlopeAngle: 60
+  maxAngleForProximity: 45
 --- !u!114 &5116987452351034281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,7 +385,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5116987452351034272}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93825722a531c485082118aa56e4ebb3, type: 3}
   m_Name: 
@@ -558,6 +560,7 @@ MonoBehaviour:
   - {fileID: 5116987452351034272}
   - {fileID: 8297694118939758205}
   - {fileID: 5116987453668295340}
+  - {fileID: 0}
   cs: {fileID: 0}
 --- !u!135 &1946804922
 SphereCollider:
@@ -874,6 +877,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: -1750197354950549132, guid: 39bd6788393e15949a75d15fd58350fe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d9dd0257687834c6e9e0b9a5a29ee12c, type: 2}
     - target: {fileID: -1550179256125108996, guid: 39bd6788393e15949a75d15fd58350fe, type: 3}
       propertyPath: m_Layer
       value: 6

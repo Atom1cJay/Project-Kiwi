@@ -122,9 +122,7 @@ public class CameraUtils : MonoBehaviour
     /// 
     private float GetActualRadius()
     {
-        // TODO come back to this stuff
         // TODO this might be a problem in the first frame where the player and camera are potentailly far away
-        /*
         RaycastHit hit;
         if (Physics.Raycast(target.position, (transform.position - target.position).normalized, out hit, radiusToTarget, layerMaskNoPlayer))
         {
@@ -132,9 +130,8 @@ public class CameraUtils : MonoBehaviour
         }
         else
         {
-        */
             return radiusToTarget; // Regular radius
-        //}
+        }
     }
 
     /// <summary>
