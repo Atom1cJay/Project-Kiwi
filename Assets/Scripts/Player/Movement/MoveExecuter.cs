@@ -49,6 +49,11 @@ public class MoveExecuter : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        camTarget.Adjust();
+    }
+
     /// <summary>
     /// Gives the direction of player movement based on the player's horizontal
     /// movement vector and the slope they're standing on.

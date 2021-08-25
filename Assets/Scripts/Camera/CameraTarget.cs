@@ -15,6 +15,8 @@ public class CameraTarget : MonoBehaviour
     [SerializeField] float sensitivity;
     [SerializeField] float minViewportY;
     [SerializeField] float maxViewportY;
+    [SerializeField] float maxPosDiffY;
+    [SerializeField] float minPosDiffY;
 
     private void Awake()
     {
@@ -28,10 +30,11 @@ public class CameraTarget : MonoBehaviour
 
     private void AdjustToCamTarget()
     {
-        float playerYPoint = mainCam.WorldToViewportPoint(player.position).y;
+        //float playerYPoint = mainCam.WorldToViewportPoint(player.position).y;
 
         float myYChange = 0;
 
+        /*
         if (playerYPoint > maxViewportY)
         {
             myYChange = Mathf.Pow(playerYPoint - maxViewportY, 2);
@@ -39,6 +42,18 @@ public class CameraTarget : MonoBehaviour
         else if (playerYPoint < minViewportY)
         {
             myYChange = -Mathf.Pow(playerYPoint - minViewportY, 2);
+        }
+        */
+
+        float yDiff = player.position.y - transform.position.y;
+
+        if (yDiff > maxPosDiffY) // If player too high
+        {
+            myYChange = Mathf.Pow(yDiff, 2);
+        }
+        else if (yDiff < minPosDiffY) // If player too low
+        {
+            myYChange = -Mathf.Pow(yDiff, 2);
         }
 
         transform.position =

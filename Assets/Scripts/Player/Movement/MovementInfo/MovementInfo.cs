@@ -75,7 +75,7 @@ public class MovementInfo : MonoBehaviour
         lastFiveMovesAccum -= lastFiveMoves[0];
         lastFiveMoves.RemoveAt(0);
         prevPosXZ = curXZ;
-        print(lastFiveMovesAccum / 5);
+        //print(lastFiveMovesAccum / 5);
 
         UpdateTripleJumpStatus();
     }
