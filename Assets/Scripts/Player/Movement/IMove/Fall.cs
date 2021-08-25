@@ -119,11 +119,11 @@ public class Fall : AMove
         {
             return new GroundPound(mii, mi, movementSettings);
         }
-        if (mi.TouchingGround() && horizVector.magnitude > 0)
+        if (mi.TouchingGround() && !PlayerSlopeHandler.BeyondGroundingAngle && horizVector.magnitude > 0)
         {
             return new Run(mii, mi, movementSettings, horizVector);
         }
-        if (mi.TouchingGround() && horizVector.magnitude == 0)
+        if (mi.TouchingGround() && !PlayerSlopeHandler.BeyondGroundingAngle && horizVector.magnitude == 0)
         {
             return new Idle(mii, mi, movementSettings);
         }

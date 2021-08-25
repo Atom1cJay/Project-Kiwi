@@ -28,7 +28,7 @@ public class Jump : AMove
     /// <param name="horizVel">The horizontal speed moving into this move</param>
     public Jump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
-        // TODO inertia?
+        // TODO inertia? (same for other jumps)
         horizVector = ForwardMovement(horizVel);
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", IncrementJumpTimer());
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForJumpGroundableTimer());

@@ -7,6 +7,9 @@ public class CameraUtils : MonoBehaviour
     [SerializeField] private Transform target; // Object to look at / surround
     [SerializeField] private Transform player; // For rotation reference
     [SerializeField] private float radiusToTarget; // Distance from target
+    [SerializeField] private float colliderRadius; // When something is between the player and the camera, the radius to determine the cam is touching it
+    [SerializeField] private float minRadiusToTarget = 0.1f;
+    [SerializeField] private float radiusDecreaseAtContact = 0.5f;
     [SerializeField] private float initHorizAngle = 0; // 0 = directly behind, 1.57 = to right. Initial value serialized.
     [SerializeField] private float initVertAngle = 0; // 0 = exactly aligned, 1.57 = on top. Initial value serialized.
     [SerializeField] private float vertAngleMin = 0f;
@@ -123,15 +126,40 @@ public class CameraUtils : MonoBehaviour
     private float GetActualRadius()
     {
         // TODO this might be a problem in the first frame where the player and camera are potentailly far away
-        RaycastHit hit;
-        if (Physics.Raycast(target.position, (transform.position - target.position).normalized, out hit, radiusToTarget, layerMaskNoPlayer))
+        RaycastHit[] hits = Physics.RaycastAll(target.position, (transform.position - target.position).normalized, radiusToTarget, layerMaskNoPlayer);
+        // Check that there's a hit between player and camera
+        if (hits.Length > 0)
         {
-            return hit.distance; // Inhibited radius
+            RaycastHit[] reverseHits = Physics.RaycastAll(transform.position, (target.position - transform.position).normalized, (target.position - transform.position).magnitude, layerMaskNoPlayer);
+
+            if (reverseHits.Length < hits.Length)
+            {
+                return Mathf.Max(GetShortestHitDistance(hits) - radiusDecreaseAtContact, minRadiusToTarget); // Inhibited radius
+            }
+            else
+            {
+                return radiusToTarget; // Regular radius
+            }
         }
         else
         {
             return radiusToTarget; // Regular radius
         }
+    }
+
+    float GetShortestHitDistance(RaycastHit[] hits)
+    {
+        RaycastHit shortest = hits[0];
+
+        for (int i = 1; i < hits.Length; i++)
+        {
+            if (hits[i].distance > shortest.distance)
+            {
+                shortest = hits[i];
+            }
+        }
+
+        return shortest.distance;
     }
 
     /// <summary>

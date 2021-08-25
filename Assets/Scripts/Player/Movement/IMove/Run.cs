@@ -120,7 +120,7 @@ public class Run : AMove
         {
             return new Jump(mii, mi, movementSettings, horizVel);
         }
-        if (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity)
+        if ((!mi.TouchingGround() || PlayerSlopeHandler.BeyondGroundingAngle) && !PlayerSlopeHandler.GroundInProximity)
         {
             return new Fall(mii, mi, movementSettings, ForwardMovement(horizVel), true);
         }

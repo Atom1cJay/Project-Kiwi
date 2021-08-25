@@ -8,7 +8,6 @@ using UnityEngine;
 [RequireComponent(typeof(MovementInfo))]
 public class PlayerSlopeHandler : MonoBehaviour
 {
-    private static readonly float lengthOfNearestGroundRay = 1f;
     public static bool GroundInProximity;
     private static readonly int layerMask = ~(1 << 9);
     /// <summary>
@@ -32,10 +31,16 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// reflected off of.
     /// </summary>
     public static Vector3 AngleContactPoint { get; private set; }
+    /// <summary>
+    /// Is the player on too steep an angle to be grounded?
+    /// </summary>
+    public static bool BeyondGroundingAngle;
 
     [SerializeField] float maxHeightOfContactPoint;
     [SerializeField] float maxSlopeAngle = 60;
     [SerializeField] float maxAngleForProximity = 45;
+    [SerializeField] float lengthOfNearestGroundRay;
+    [SerializeField] float maxGroundingAngle = 60;
 
     private void Update()
     {
@@ -48,7 +53,6 @@ public class PlayerSlopeHandler : MonoBehaviour
         RaycastHit hit;
         bool couldTouchGround = Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 1 + lengthOfNearestGroundRay, layerMask);
         GroundInProximity = couldTouchGround && GetAngleOfSlope(hit.normal) < maxAngleForProximity;
-        //GroundInProximity = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1 + lengthOfNearestGroundRay, layerMask);
     }
 
     // Obtains the normal of the platform the player is currently on
@@ -68,6 +72,7 @@ public class PlayerSlopeHandler : MonoBehaviour
             XDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.x));
             ZDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.z));
             AngleOfSlope = GetAngleOfSlope(rchit.normal);
+            BeyondGroundingAngle = AngleOfSlope > maxGroundingAngle;
             DetermineIfBeyondAngle();
             AngleContactPoint = rchit.point;
         }
