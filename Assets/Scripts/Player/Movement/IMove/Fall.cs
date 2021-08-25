@@ -51,7 +51,7 @@ public class Fall : AMove
     public override void AdvanceTime()
     {
         // Horizontal
-        float startingMagn = Math.Min(horizVector.magnitude, mi.GetEffectiveSpeed());
+        float startingMagn = Math.Min(horizVector.magnitude, mi.GetEffectiveSpeed().magnitude);
         horizVector = horizVector.normalized * startingMagn;
         // Choose which type of sensitivity to employ
         if (horizVector.magnitude < movementSettings.MaxSpeed)

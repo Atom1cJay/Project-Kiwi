@@ -67,7 +67,7 @@ public class DoubleJump : AMove
             vertVel = movementSettings.JumpMinVel;
         }
         // Horizontal
-        float startingMagn = mi.GetEffectiveSpeed();
+        float startingMagn = mi.GetEffectiveSpeed().magnitude;
         horizVector = horizVector.normalized * startingMagn;
         // Choose which type of sensitivity to employ
         if (horizVector.magnitude < movementSettings.MaxSpeed)

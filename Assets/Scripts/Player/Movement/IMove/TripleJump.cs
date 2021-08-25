@@ -58,7 +58,7 @@ public class TripleJump : AMove
             gravity = movementSettings.TjCancelledMaxGravity;
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
-        float startingMagn = Math.Min(horizVector.magnitude, mi.GetEffectiveSpeed());
+        float startingMagn = Math.Min(horizVector.magnitude, mi.GetEffectiveSpeed().magnitude);
         horizVector = horizVector.normalized * startingMagn;
         // Choose which type of sensitivity to employ
         if (horizVector.magnitude < movementSettings.MaxSpeed)

@@ -14,10 +14,15 @@ public class MovementInfo : MonoBehaviour
     private int tjJumpCount;
     IMoveImmutable storedMove; // The move from the last frame
     MoveExecuter me;
-    private Vector3 prevPosXZ;
-    private float effectiveSpeedXZ;
-    //private float prevDeltaTime;
+    private Vector2 effectiveSpeedXZ;
+    private Vector2 effectiveSpeedXZReturnable;
     private CharacterController charCont;
+
+    // Testing
+    private List<Vector2> lastFiveMoves = new List<Vector2>(
+        new []{ Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero });
+    private Vector2 lastFiveMovesAccum = Vector2.zero;
+    private Vector2 prevPosXZ;
 
     [HideInInspector] public UnityEvent OnCharContTouchSomething;
 
@@ -28,9 +33,9 @@ public class MovementInfo : MonoBehaviour
             print("Multiple instances of MovementInfo exist. Use one.");
         }
         instance = this;
-        //prevDeltaTime = 0.01f;
-        prevPosXZ = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
-        effectiveSpeedXZ = 0;
+        prevPosXZ = new Vector2(transform.position.x, transform.position.z);
+        effectiveSpeedXZ = Vector2.zero;
+        effectiveSpeedXZReturnable = Vector2.zero;
         me = GetComponent<MoveExecuter>();
         charCont = GetComponent<CharacterController>();
     }
@@ -51,22 +56,54 @@ public class MovementInfo : MonoBehaviour
         return antiBoostDetector.Colliding();
     }
 
+    private void FixedUpdate()
+    {
+        /*
+        fixedMoveThisIteration = new Vector2(transform.position.x, transform.position.z) - lastXZFixed - lateMoveAccum;
+        fixedMoveAccum += fixedMoveThisIteration;
+        lastXZFixed = new Vector2(transform.position.x, transform.position.z);
+        lateMoveAccum = Vector2.zero;
+        print("Fixed Speed This Iteration: " + fixedMoveThisIteration / Time.fixedDeltaTime);*/
+        //UpdateEffectiveSpeedFixed();
+    }
+
     private void LateUpdate()
     {
-        UpdateEffectiveSpeed();
+        Vector2 curXZ = new Vector2(transform.position.x, transform.position.z);
+        lastFiveMoves.Add((curXZ - prevPosXZ) / Time.deltaTime);
+        lastFiveMovesAccum += lastFiveMoves[5];
+        lastFiveMovesAccum -= lastFiveMoves[0];
+        lastFiveMoves.RemoveAt(0);
+        prevPosXZ = curXZ;
+        print(lastFiveMovesAccum / 5);
+
         UpdateTripleJumpStatus();
     }
 
-    private void UpdateEffectiveSpeed()
+    /*
+    private void UpdateEffectiveSpeedFixed()
     {
         if (Time.timeScale != 0) // To avoid weird bugs
         {
-            Vector3 currentXZ = new Vector3(transform.position.x, 0, transform.position.z);
-            effectiveSpeedXZ = (currentXZ - prevPosXZ).magnitude / Time.deltaTime;
+            Vector2 currentXZ = new Vector2(transform.position.x, transform.position.z);
+            effectiveSpeedXZ += (currentXZ - prevPosXZ);
+            effectiveSpeedXZReturnable = effectiveSpeedXZ / Time.deltaTime;
+            print(effectiveSpeedXZReturnable);
             prevPosXZ = currentXZ;
-            //prevDeltaTime = Time.deltaTime;
         }
     }
+
+    private void UpdateEffectiveSpeedLate()
+    {
+        if (Time.timeScale != 0) // To avoid weird bugs
+        {
+            Vector2 currentXZ = new Vector2(transform.position.x, transform.position.z);
+            effectiveSpeedXZ += (currentXZ - prevPosXZ);
+            effectiveSpeedXZ = Vector2.zero;
+            prevPosXZ = currentXZ;
+        }
+    }
+    */
 
     /// <summary>
     /// Decides what to do with the current triple jump count this frame
@@ -122,9 +159,14 @@ public class MovementInfo : MonoBehaviour
         return waterDetector;
     }
 
-    public float GetEffectiveSpeed()
+    public Vector2 GetEffectiveSpeed()
     {
-        return effectiveSpeedXZ;
+        return lastFiveMoves[4];
+    }
+
+    public Vector2 GetAvgSpeed5() // Average speed of the past 5 lateupdates
+    {
+        return lastFiveMovesAccum / 5;
     }
 
     public Transform GetPlayerTransform()
