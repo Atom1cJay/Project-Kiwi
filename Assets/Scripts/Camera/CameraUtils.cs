@@ -153,7 +153,7 @@ public class CameraUtils : MonoBehaviour
 
         for (int i = 1; i < hits.Length; i++)
         {
-            if (hits[i].distance > shortest.distance)
+            if (hits[i].distance < shortest.distance)
             {
                 shortest = hits[i];
             }
