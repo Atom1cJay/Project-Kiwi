@@ -78,10 +78,7 @@ public class Run : AMove
         {
             return -10;
         }
-        // To account for any very slight floating point errors in the
-        // angle, and to make it so the player doesn't go straight horizontally
-        // when running onto another angle
-        return -0.5f;
+        return -0.5f; // To prevent floating point imprecision taking you off ground
     }
 
     public override float GetRotationSpeed()
@@ -100,10 +97,6 @@ public class Run : AMove
         {
             return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
-        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
-        {
-            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
-        }
         else if (horizVel == 0)
         {
             return new Idle(mii, mi, movementSettings);
@@ -120,7 +113,7 @@ public class Run : AMove
         {
             return new Jump(mii, mi, movementSettings, horizVel);
         }
-        if ((!mi.TouchingGround() || PlayerSlopeHandler.BeyondGroundingAngle) && !PlayerSlopeHandler.GroundInProximity)
+        if ((!mi.TouchingGround() || PlayerSlopeHandler.BeyondMaxAngle) && !PlayerSlopeHandler.GroundInProximity)
         {
             return new Fall(mii, mi, movementSettings, ForwardMovement(horizVel), true);
         }

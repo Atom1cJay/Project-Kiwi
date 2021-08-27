@@ -51,7 +51,8 @@ public class Idle : AMove
         }
         if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
         {
-            return new Slide(mii, mi, movementSettings, Vector2.zero);
+            return new Fall(mii, mi, movementSettings, Vector2.zero, true);
+            //return new Slide(mii, mi, movementSettings, Vector2.zero);
         }
         if (mii.GetHorizontalInput().magnitude != 0)
         {

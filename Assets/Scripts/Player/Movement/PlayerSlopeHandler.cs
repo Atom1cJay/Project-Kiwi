@@ -31,16 +31,18 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// reflected off of.
     /// </summary>
     public static Vector3 AngleContactPoint { get; private set; }
-    /// <summary>
-    /// Is the player on too steep an angle to be grounded?
-    /// </summary>
-    public static bool BeyondGroundingAngle;
+
+    private MovementInfo mi;
 
     [SerializeField] float maxHeightOfContactPoint;
     [SerializeField] float maxSlopeAngle = 60;
     [SerializeField] float maxAngleForProximity = 45;
     [SerializeField] float lengthOfNearestGroundRay;
-    [SerializeField] float maxGroundingAngle = 60;
+
+    private void Start()
+    {
+        mi = GetComponent<MovementInfo>();
+    }
 
     private void Update()
     {
@@ -72,7 +74,6 @@ public class PlayerSlopeHandler : MonoBehaviour
             XDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.x));
             ZDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.z));
             AngleOfSlope = GetAngleOfSlope(rchit.normal);
-            BeyondGroundingAngle = AngleOfSlope > maxGroundingAngle;
             DetermineIfBeyondAngle();
             AngleContactPoint = rchit.point;
         }
