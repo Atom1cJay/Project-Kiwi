@@ -23,7 +23,10 @@ public class Dive : AMove
     {
         vertVel = movementSettings.DiveInitVel;
         horizVel = movementSettings.DiveSpeedX;
-        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        if (mi.GetWaterDetector() != null)
+        {
+            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        }
     }
 
     public override void AdvanceTime()

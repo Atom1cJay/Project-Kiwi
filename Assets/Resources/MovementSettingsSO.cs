@@ -27,10 +27,6 @@ public class MovementSettingsSO : ScriptableObject
     [Header("Dive Settings")]
     [SerializeField] float diveSpeedX;
 
-    [Header("Air Reverse Settings")]
-    [SerializeField] float airReverseSensitivityX;
-    [SerializeField] float airReverseGravityX;
-
     [Header("Jump Settings")]
     [SerializeField] float jumpGroundableTimer;
     [SerializeField] float jumpInitVel;
@@ -45,6 +41,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float jumpSensitivityX;
     [SerializeField] float jumpAdjustSensitivityX;
     [SerializeField] float jumpGravityX;
+    [SerializeField] float jumpSensitivityReverseX;
 
     [Header("Coyote Time Settings")]
     [SerializeField] float reverseCoyoteTime;
@@ -173,9 +170,6 @@ public class MovementSettingsSO : ScriptableObject
 
     public float DiveSpeedX { get { return diveSpeedX; } }
 
-    public float AirReverseSensitivityX { get { return airReverseSensitivityX; } }
-    public float AirReverseGravityX { get { return airReverseGravityX; } }
-
     public float JumpGroundableTimer { get { return jumpGroundableTimer; } }
     public float JumpInitVel { get { return jumpInitVel; } }
     public float JumpInitGravity { get { return jumpInitGravity; } }
@@ -188,6 +182,7 @@ public class MovementSettingsSO : ScriptableObject
     public float JumpMinVel { get { return jumpMinVel; } }
     public float JumpSensitivityX { get { return jumpSensitivityX; } }
     public float JumpAdjustSensitivityX { get { return jumpAdjustSensitivityX; } }
+    public float JumpSensitivityReverseX { get { return jumpSensitivityReverseX; } }
     public float JumpGravityX { get { return jumpGravityX; } }
 
     public float ReverseCoyoteTime { get { return reverseCoyoteTime; } }

@@ -24,7 +24,10 @@ public class Run : AMove
     {
         horizVel = GetSharedMagnitudeWithPlayerAngle(horizVector);
         mii.OnJump.AddListener(() => jumpPending = true);
-        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        if (mi.GetWaterDetector() != null)
+        {
+            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        }
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitToBreakTimeBetweenJumps());
     }
 

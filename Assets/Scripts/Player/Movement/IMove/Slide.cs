@@ -9,7 +9,10 @@ public class Slide : AMove
     public Slide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
         this.horizVector = horizVector;
-        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        if (mi.GetWaterDetector() != null)
+        {
+            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        }
     }
 
     public override bool AdjustToSlope()

@@ -36,7 +36,10 @@ public class Fall : AMove
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
         mii.OnJump.AddListener(() => jumpPending = true);
-        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        if (mi.GetWaterDetector() != null)
+        {
+            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        }
     }
 
     IEnumerator AllowCoyoteTime()

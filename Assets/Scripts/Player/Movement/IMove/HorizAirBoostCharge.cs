@@ -28,7 +28,10 @@ public class HorizAirBoostCharge : AMove
         timeCharging = 0;
         maxTimeToCharge = movementSettings.HorizBoostMaxChargeTime;
         mii.OnHorizBoostRelease.AddListener(() => boostReleasePending = true);
-        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        if (mi.GetWaterDetector() != null)
+        {
+            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        }
     }
 
     public override void AdvanceTime()

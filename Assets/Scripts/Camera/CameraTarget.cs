@@ -30,21 +30,7 @@ public class CameraTarget : MonoBehaviour
 
     private void AdjustToCamTarget()
     {
-        //float playerYPoint = mainCam.WorldToViewportPoint(player.position).y;
-
         float myYChange = 0;
-
-        /*
-        if (playerYPoint > maxViewportY)
-        {
-            myYChange = Mathf.Pow(playerYPoint - maxViewportY, 2);
-        }
-        else if (playerYPoint < minViewportY)
-        {
-            myYChange = -Mathf.Pow(playerYPoint - minViewportY, 2);
-        }
-        */
-
         float yDiff = player.position.y - transform.position.y;
 
         if (yDiff > maxPosDiffY) // If player too high

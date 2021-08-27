@@ -39,7 +39,10 @@ public class Jump : AMove
         mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
-        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        if (mi.GetWaterDetector() != null)
+        {
+            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        }
         mii.OnJumpCancelled.AddListener(() =>
         {
             if (vertVel > movementSettings.JumpVelocityOfNoReturn)
@@ -70,14 +73,21 @@ public class Jump : AMove
         // Horizontal
         float startingMagn = Mathf.Min(horizVector.magnitude, mi.GetEffectiveSpeed().magnitude);
         horizVector = horizVector.normalized * startingMagn;
+        bool inReverse = (horizVector + mii.GetRelativeHorizontalInputToCamera()).magnitude < horizVector.magnitude;
         // Choose which type of sensitivity to employ
         if (horizVector.magnitude < movementSettings.MaxSpeed)
         {
-            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityX * Time.deltaTime;
+            horizVector += inReverse ?
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
+                :
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityX * Time.deltaTime;
         }
         else if (horizVector.magnitude >= movementSettings.MaxSpeed)
         {
-            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
+            horizVector += inReverse ?
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
+                :
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
         }
         // Don't let above the magnitude limit
         if (!mii.PressingBoost() && horizVector.magnitude > movementSettings.MaxSpeed)
@@ -183,7 +193,6 @@ public class Jump : AMove
     public override bool TJshouldBreak()
     {
         return mii.GetHorizDissonance() > movementSettings.TjMaxDissonance
-            || mii.GetHorizontalInput().magnitude < movementSettings.TjMinHorizInputMagnitude
             || jumpTimeShouldBreakTJ;
     }
 

@@ -26,7 +26,10 @@ public class Glidev3 : AMove
         mii.OnGlide.AddListener(() => glideReleasePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
-        mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        if (mi.GetWaterDetector() != null)
+        {
+            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        }
     }
 
     public override void AdvanceTime()
