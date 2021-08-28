@@ -30,6 +30,7 @@ public class CameraInstruction : ACameraInstruction
 
     public override void RunInstructions(Transform c, Vector3 initPos)
     {
+        RunningInstructions = true;
         StartCoroutine(RunInstructionsSequence(c, initPos));
     }
 

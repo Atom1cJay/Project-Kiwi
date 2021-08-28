@@ -60,10 +60,11 @@ public class CameraInstructionLeaf : ACameraInstruction
 
         // At end
         TimescaleHandler.setPausedForCameraTransition(false);
+        RunningInstructions = false;
     }
 
     public override float GetTotalExecutionTime()
     {
-        return travelTime;
+        return travelTime + postTravelTime;
     }
 }

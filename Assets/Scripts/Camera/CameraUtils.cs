@@ -218,15 +218,7 @@ public class CameraUtils : MonoBehaviour
     /// <returns></returns>
     private IEnumerator WaitForInstructions(ACameraInstruction i)
     {
-        float timeElapsed = 0;
-        float totalTime = i.GetTotalExecutionTime();
-
-        while (timeElapsed < totalTime)
-        {
-            timeElapsed += IndependentTime.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-
+        yield return new WaitUntil(() => !ACameraInstruction.RunningInstructions);
         camMode = CameraMode.AroundPlayer;
     }
 }

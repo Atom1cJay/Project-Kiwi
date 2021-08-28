@@ -7,6 +7,13 @@ public class TimescaleHandler : MonoBehaviour
     static bool gamePausedForMenu = false;
     static bool gamePausedForCameraTransition = false;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void ResetDomain()
+    {
+        gamePausedForMenu = false;
+        gamePausedForCameraTransition = false;
+    }
+
     void Awake()
     {
         UpdateTimeScale();

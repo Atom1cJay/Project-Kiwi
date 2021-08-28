@@ -8,7 +8,13 @@ using UnityEngine;
 public class IndependentTime : MonoBehaviour
 {
     public static float deltaTime;
-    private float prevTime; // Time elapsed (ms) prev frame
+    private float prevTime; // Time elapsed (s) prev frame
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void ResetDomain()
+    {
+        deltaTime = 0;
+    }
 
     void LateUpdate()
     {

@@ -10,8 +10,15 @@ public abstract class ACameraInstruction : MonoBehaviour
 {
     [SerializeField] protected float travelTime;
     [SerializeField] protected float postTravelTime;
-    [SerializeField] protected bool isSmooth; // TODO make smoothness matter
+    [SerializeField] protected bool isSmooth;
     [SerializeField] protected bool timeStopped;
+    public static bool RunningInstructions { get; protected set; } // Static because for ALL instructions, either some are running or none are
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void ResetDomain()
+    {
+        RunningInstructions = false;
+    }
 
     /// <summary>
     /// Exeucte the instructions, on the given camera transform, and the

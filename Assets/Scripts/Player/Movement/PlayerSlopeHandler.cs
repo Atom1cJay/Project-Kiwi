@@ -39,6 +39,17 @@ public class PlayerSlopeHandler : MonoBehaviour
     [SerializeField] float maxAngleForProximity = 45;
     [SerializeField] float lengthOfNearestGroundRay;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void ResetDomain()
+    {
+        GroundInProximity = false;
+        AngleOfSlope = 0;
+        XDeriv = 0;
+        ZDeriv = 0;
+        BeyondMaxAngle = false;
+        AngleContactPoint = Vector3.zero;
+    }
+
     private void Start()
     {
         mi = GetComponent<MovementInfo>();
