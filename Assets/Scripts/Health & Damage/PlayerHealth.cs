@@ -39,6 +39,10 @@ public class PlayerHealth : MonoBehaviour
                 print("INSTAKILL HIT TAKEN");
                 hp = 0;
                 break;
+            case DamageType.FallKill:
+                print("FALL HIT TAKEN");
+                hp = 0;
+                break;
             default:
                 Debug.LogError("Cannot take damage; unrecognized dmg type.");
                 break;

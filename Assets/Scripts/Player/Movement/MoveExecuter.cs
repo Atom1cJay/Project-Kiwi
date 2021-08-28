@@ -25,7 +25,8 @@ public class MoveExecuter : MonoBehaviour
 
     void Update()
     {
-        if (Time.timeScale != 0) // Check for the sake of avoiding weird errors (more explicit state mention?)
+        print(Time.timeScale);
+        if (Time.timeScale > 0 && Time.deltaTime > 0) // Check for the sake of avoiding weird errors (more explicit state mention?)
         {
             moveThisFrame.AdvanceTime();
             if (moveThisFrame.CameraRotateTowardsRatio() == 0)

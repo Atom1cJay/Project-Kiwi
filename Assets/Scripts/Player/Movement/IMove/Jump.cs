@@ -192,8 +192,7 @@ public class Jump : AMove
 
     public override bool TJshouldBreak()
     {
-        return mii.GetHorizDissonance() > movementSettings.TjMaxDissonance
-            || jumpTimeShouldBreakTJ;
+        return jumpTimeShouldBreakTJ;
     }
 
     public override bool AdjustToSlope()

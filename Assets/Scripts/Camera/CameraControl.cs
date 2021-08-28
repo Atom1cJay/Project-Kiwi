@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Handles all camera movement and camera-related inputs
+/// The "control panel" through which orders related to camera movement are handled.
 /// </summary>
 [RequireComponent(typeof(CameraUtils))]
 public class CameraControl : MonoBehaviour
@@ -19,15 +19,14 @@ public class CameraControl : MonoBehaviour
     private float vertPivotSpeed = 0;
     private CameraUtils camUtils;
 
-    private void Start()
+    private void Awake()
     {
         camUtils = GetComponent<CameraUtils>();
-        iah.inputActions.Camera.AutoAdjust.performed += _ => AutoAdjustToBack();
     }
 
-    public void MoveTo(Vector3 pos, float enterTime, float stayTime, float exitTime)
+    private void Start()
     {
-        camUtils.MoveTo(pos, enterTime, stayTime, exitTime);
+        iah.inputActions.Camera.AutoAdjust.performed += _ => AutoAdjustToBack();
     }
 
     /// <summary>
@@ -72,5 +71,13 @@ public class CameraControl : MonoBehaviour
     public void AdjustVertical(float ratio, float angle)
     {
         camUtils.RotateToVertAngle(ratio, angle);
+    }
+
+    /// <summary>
+    /// Sends camera instructions for CameraUtils to execute.
+    /// </summary>
+    public void TakeInstructions(ACameraInstruction instructions)
+    {
+        camUtils.HandleInstructions(instructions);
     }
 }

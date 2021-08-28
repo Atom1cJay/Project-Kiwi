@@ -19,6 +19,14 @@ public class Damager : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (isActivated)
+        {
+            PlayerHealth.instance.HandleDamage(damageType);
+        }
+    }
+
     public void SetActivated(bool activated)
     {
         isActivated = activated;

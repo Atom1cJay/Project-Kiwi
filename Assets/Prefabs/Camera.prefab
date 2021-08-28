@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8144078665285448478}
   - component: {fileID: 8144078665285448473}
   - component: {fileID: 8144078665285448472}
-  - component: {fileID: 8144078665285448466}
   - component: {fileID: 8144078665285448479}
+  - component: {fileID: 8144078665285448466}
   - component: {fileID: 8144078665285448477}
   - component: {fileID: 8094448697800713020}
   - component: {fileID: 8144078665741107803}
@@ -88,6 +88,24 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8144078665285448475}
   m_Enabled: 1
+--- !u!114 &8144078665285448479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8144078665285448475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbf7f3c7164e4f46b612976baae80c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iah: {fileID: 0}
+  pivotSensitivity: 3
+  pivotGravity: 4
+  maxPivotSpeedHoriz: 2
+  maxPivotSpeedVert: 1
+  autoAdjustTime: 0.25
 --- !u!114 &8144078665285448466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,24 +128,6 @@ MonoBehaviour:
   initVertAngle: 0.3
   vertAngleMin: 0
   vertAngleMax: 1.57
---- !u!114 &8144078665285448479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8144078665285448475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecbf7f3c7164e4f46b612976baae80c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  iah: {fileID: 0}
-  pivotSensitivity: 3
-  pivotGravity: 4
-  maxPivotSpeedHoriz: 2
-  maxPivotSpeedVert: 1
-  autoAdjustTime: 0.25
 --- !u!114 &8144078665285448477
 MonoBehaviour:
   m_ObjectHideFlags: 0

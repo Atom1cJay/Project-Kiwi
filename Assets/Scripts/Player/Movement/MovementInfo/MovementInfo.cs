@@ -54,14 +54,21 @@ public class MovementInfo : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (Time.timeScale > 0 && Time.deltaTime > 0)
+        {
+            UpdateEffectiveSpeed();
+        }
+        UpdateTripleJumpStatus();
+    }
+
+    private void UpdateEffectiveSpeed()
+    {
         Vector2 curXZ = new Vector2(transform.position.x, transform.position.z);
         lastFiveMoves.Add((curXZ - prevPosXZ) / Time.deltaTime);
         lastFiveMovesAccum += lastFiveMoves[5];
         lastFiveMovesAccum -= lastFiveMoves[0];
         lastFiveMoves.RemoveAt(0);
         prevPosXZ = curXZ;
-
-        UpdateTripleJumpStatus();
     }
 
     /// <summary>

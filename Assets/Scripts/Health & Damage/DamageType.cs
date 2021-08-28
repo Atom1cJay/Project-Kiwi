@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum DamageType
 {
-    BasicHit,
-    Instakill
+    BasicHit, // Standard knockback
+    Instakill, // Standard knockback, results in death
+    FallKill // No knockback, results in death
 }

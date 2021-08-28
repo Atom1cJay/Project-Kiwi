@@ -18,11 +18,6 @@ public class CameraTarget : MonoBehaviour
     [SerializeField] float maxPosDiffY;
     [SerializeField] float minPosDiffY;
 
-    private void Awake()
-    {
-        transform.position = player.position;
-    }
-
     public void Adjust()
     {
         AdjustToCamTarget();

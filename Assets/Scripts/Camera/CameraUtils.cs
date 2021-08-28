@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles the specific details and intricacies of camera movement.
+/// </summary>
 public class CameraUtils : MonoBehaviour
 {
     [SerializeField] private Transform target; // Object to look at / surround
@@ -16,13 +19,11 @@ public class CameraUtils : MonoBehaviour
     [SerializeField] private float vertAngleMax = 1.57f;
     private float horizAngle;
     private float vertAngle;
-    private float independentDeltaTime; // Independent of time.timeScale
-    private float independentPrevTime; // Time elapsed (ms) prev frame
     const int layerMaskNoPlayer = ~(1 << 9);
     enum CameraMode
     {
-        AroundPlayer,
-        Free
+        AroundPlayer, // Will stay a certain (possibly inhibited) radius around the player
+        FollowingInstructions // Will not move relative to the player, can be ordered to move anywhere
     }
     CameraMode camMode = CameraMode.AroundPlayer;
 
@@ -51,7 +52,7 @@ public class CameraUtils : MonoBehaviour
     }
 
     /// <summary>
-    /// Takes the given amount of time to rotate to the given radian rotation.
+    /// Takes the given amount of time to rotate to the back of the player.
     /// </summary>
     public void RotateToTargetY(float time)
     {
@@ -63,6 +64,11 @@ public class CameraUtils : MonoBehaviour
         StartCoroutine("RotateTowardsY", time);
     }
 
+    /// <summary>
+    /// Coroutine for moving the rotation to the back of the player.
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
     IEnumerator RotateTowardsY(float time)
     {
         float initialY = -transform.eulerAngles.y * Mathf.Deg2Rad;
@@ -89,13 +95,6 @@ public class CameraUtils : MonoBehaviour
         {
             CenterAroundPlayer();
         }
-        GetNewIndependentDeltaTime();
-    }
-
-    private void GetNewIndependentDeltaTime()
-    {
-        independentDeltaTime = Time.realtimeSinceStartup - independentPrevTime;
-        independentPrevTime = Time.realtimeSinceStartup;
     }
 
     /// <summary>
@@ -194,48 +193,40 @@ public class CameraUtils : MonoBehaviour
         vertAngle = newRot.eulerAngles.x * Mathf.Deg2Rad;
     }
 
-    public void MoveTo(Vector3 pos, float enterTime, float stayTime, float exitTime)
+    /// <summary>
+    /// Unpacks and follows the given list of instructions, returning back to the initial
+    /// position if the instructions indicate a position exactly at the origin.
+    /// </summary>
+    /// <param name="instructions"></param>
+    public void HandleInstructions(ACameraInstruction instructions)
     {
-        StartCoroutine(MoveToProcess(pos, enterTime, stayTime, exitTime));
+        if (camMode == CameraMode.FollowingInstructions)
+        {
+            Debug.LogError("Cannot accept instructions; some are already running!");
+            return;
+        }
+        camMode = CameraMode.FollowingInstructions;
+        instructions.RunInstructions(transform, transform.position);
+        StartCoroutine(WaitForInstructions(instructions));
     }
 
-    IEnumerator MoveToProcess(Vector3 goalPos, float enterTime, float stayTime, float exitTime)
+    /// <summary>
+    /// Waits for some specific instructions to complete, and then goes back into AroundPlayer
+    /// mode.
+    /// </summary>
+    /// <param name="i"></param>
+    /// <returns></returns>
+    private IEnumerator WaitForInstructions(ACameraInstruction i)
     {
-        Time.timeScale = 0;
-        camMode = CameraMode.Free;
-
-        // Visit
-        Vector3 initPos = transform.position;
         float timeElapsed = 0;
+        float totalTime = i.GetTotalExecutionTime();
 
-        while (timeElapsed < enterTime)
+        while (timeElapsed < totalTime)
         {
-            timeElapsed += independentDeltaTime;
-            transform.position = Vector3.Lerp(initPos, goalPos, timeElapsed / enterTime);
-            yield return new WaitForEndOfFrame();
-        }
-
-        //Stay
-        transform.position = goalPos;
-        timeElapsed = 0;
-
-        while (timeElapsed < stayTime)
-        {
-            timeElapsed += independentDeltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-
-        // Exit
-        timeElapsed = 0;
-
-        while (timeElapsed < exitTime)
-        {
-            timeElapsed += independentDeltaTime;
-            transform.position = Vector3.Lerp(goalPos, initPos, timeElapsed / exitTime);
+            timeElapsed += IndependentTime.deltaTime;
             yield return new WaitForEndOfFrame();
         }
 
         camMode = CameraMode.AroundPlayer;
-        Time.timeScale = 1;
     }
 }
