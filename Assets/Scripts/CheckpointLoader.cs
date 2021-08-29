@@ -7,6 +7,16 @@ public class CheckpointLoader : MonoBehaviour
     [SerializeField] InputActionsHolder IAH;
     CheckpointSystem currentCheckpoint = null;
 
+    /// <summary>
+    /// Gives the current checkpoint activated by the player (null if none are).
+    /// </summary>
+    /// <returns></returns>
+    public CheckpointSystem GetCheckpoint()
+    {
+        return currentCheckpoint;
+    }
+
+    /*
     void FixedUpdate()
     {
         //if button is pressed set transform
@@ -16,6 +26,7 @@ public class CheckpointLoader : MonoBehaviour
             Debug.Log(currentCheckpoint.GetPosition() + Vector3.up);
         }
     }
+    */
 
     public void SetCheckpoint(CheckpointSystem cs)
     {

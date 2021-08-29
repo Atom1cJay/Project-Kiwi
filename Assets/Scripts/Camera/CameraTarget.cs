@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Controls the object which the camera is made to focus on
+/// Controls the object which the camera is made to focus on / follow.
 /// </summary>
 public class CameraTarget : MonoBehaviour
 {
@@ -18,11 +18,32 @@ public class CameraTarget : MonoBehaviour
     [SerializeField] float maxPosDiffY;
     [SerializeField] float minPosDiffY;
 
+    private void Awake()
+    {
+        ResetToPlayerCenter();
+    }
+
+    /// <summary>
+    /// Moves vertically by one frame according to the current position of the
+    /// player relative to the target.
+    /// </summary>
     public void Adjust()
     {
         AdjustToCamTarget();
     }
 
+    /// <summary>
+    /// Instantly places the camera target exactly at the player's position.
+    /// </summary>
+    public void ResetToPlayerCenter()
+    {
+        transform.position = player.position;
+    }
+
+    /// <summary>
+    /// Executes the details of vertically moving the target by one frame
+    /// according to the current position of the player relative to the target.
+    /// </summary>
     private void AdjustToCamTarget()
     {
         float myYChange = 0;

@@ -2,31 +2,62 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Decides how the player and camera should move, depending on the currently
+/// active IMove.
+/// </summary>
+[RequireComponent(typeof(MovementInfo))]
+[RequireComponent(typeof(MovementInputInfo))]
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(RotationMovement))]
+[RequireComponent(typeof(CheckpointLoader))]
 public class MoveExecuter : MonoBehaviour
 {
     IMove moveThisFrame;
     CharacterController charCont;
     MovementInfo mi;
+    MovementInputInfo mii;
     MovementSettingsSO movementSettings;
     RotationMovement rotator;
+    CheckpointLoader cl;
     [SerializeField] CameraControl cameraControl;
     [SerializeField] CameraTarget camTarget;
     Vector3 vertMovement;
 
+    private void Awake()
+    {
+        charCont = GetComponent<CharacterController>();
+        mi = GetComponent<MovementInfo>();
+        mii = GetComponent<MovementInputInfo>();
+        cl = GetComponent<CheckpointLoader>();
+        rotator = GetComponent<RotationMovement>();
+    }
+
     private void Start()
     {
         movementSettings = MovementSettingsSO.Instance;
-        charCont = GetComponent<CharacterController>();
-        mi = GetComponent<MovementInfo>();
-        moveThisFrame = new Fall(GetComponent<MovementInputInfo>(), mi, movementSettings, Vector2.zero, false);
-        rotator = GetComponent<RotationMovement>();
+        moveThisFrame = new Fall(mii, mi, movementSettings, Vector2.zero, false);
+        mii.OnRespawnToCheckpointInput.AddListener(() => RespawnPlayerToCheckpoint());
     }
 
     void Update()
     {
-        print(Time.timeScale);
-        if (Time.timeScale > 0 && Time.deltaTime > 0) // Check for the sake of avoiding weird errors (more explicit state mention?)
+        HandleBasicMovement();
+    }
+
+    private void LateUpdate()
+    {
+        camTarget.Adjust();
+    }
+
+    /// <summary>
+    /// Handles horizontal, vertical, and rotation-related movement for the player,
+    /// as well as the controls for the camera, depending
+    /// on the currently active IMove.
+    /// </summary>
+    private void HandleBasicMovement()
+    {
+        if (Time.timeScale > 0 && Time.deltaTime > 0) // Check for the sake of avoiding weird errors
         {
             moveThisFrame.AdvanceTime();
             if (moveThisFrame.CameraRotateTowardsRatio() == 0)
@@ -50,9 +81,24 @@ public class MoveExecuter : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
+    /// <summary>
+    /// If there is an active checkpoint, teleports the player and camera target
+    /// to it accordingly. Otherwise, does nothing.
+    /// </summary>
+    private void RespawnPlayerToCheckpoint()
     {
-        camTarget.Adjust();
+        CheckpointSystem cs = cl.GetCheckpoint();
+        if (cs != null)
+        {
+            Vector3 goalPos = cs.GetPosition() + (Vector3.up * 3f);
+            print(charCont.center);
+            charCont.Move(goalPos - transform.position);
+            camTarget.ResetToPlayerCenter();
+        }
+        else
+        {
+            Debug.LogError("No checkpoint active!");
+        }
     }
 
     /// <summary>

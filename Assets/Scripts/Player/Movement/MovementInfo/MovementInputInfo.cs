@@ -22,6 +22,7 @@ public class MovementInputInfo : MonoBehaviour
     [HideInInspector] public UnityEvent OnGroundPound;
     [HideInInspector] public UnityEvent OnGlide;
     [HideInInspector] public UnityEvent OnGlideRelease;
+    [HideInInspector] public UnityEvent OnRespawnToCheckpointInput;
 
     private MovementSettingsSO movementSettings;
 
@@ -41,6 +42,7 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Player.GroundPound.performed += _ => OnGroundPound.Invoke();
         inputActionsHolder.inputActions.Player.Glide.performed += _ => OnGlide.Invoke();
         inputActionsHolder.inputActions.Player.Glide.canceled += _ => OnGlideRelease.Invoke();
+        inputActionsHolder.inputActions.Checkpoint.Respawn.performed += _ => OnRespawnToCheckpointInput.Invoke();
         OnJump.AddListener(() => StartCoroutine(WaitReverseCoyoteTime()));
     }
 
