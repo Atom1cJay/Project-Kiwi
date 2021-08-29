@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class UIController : MonoBehaviour
 {
     [SerializeField] GameObject PlayingScreen, PauseScreen, MapScreen, OptionsScreen;
-    [SerializeField] Camera MapCamera;
+    [SerializeField] Camera MapCamera, PlayerCamera;
     [SerializeField] RawImage MapSpriteRenderer;
     [SerializeField] GameObject ResumeButton, PauseToOptionsButton, OptionsToPauseButton, PauseToMapButton, MapToPauseButton;
     [SerializeField] GameObject PlayerCompass;
@@ -103,8 +103,6 @@ public class UIController : MonoBehaviour
     public void SetPlayScreen()
     {
 
-        RenderSettings.fog = true;
-
         //resume time
         TimescaleHandler.setPausedForMenu(false);
 
@@ -126,7 +124,6 @@ public class UIController : MonoBehaviour
 
     public void SetOptionScreen()
     {
-        RenderSettings.fog = true;
 
         //set screens
         PlayingScreen.SetActive(false);
@@ -166,7 +163,11 @@ public class UIController : MonoBehaviour
         foreach (GameObject c in checkpoints)
             c.GetComponentInChildren<SpriteRenderer>().enabled = true;
 
+        //render fog off
         RenderSettings.fog = false;
+        MapCamera.Render();
+        RenderSettings.fog = true;
+        PlayerCamera.Render();
 
 
     }
