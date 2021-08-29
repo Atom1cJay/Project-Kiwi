@@ -2,21 +2,65 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class UIController : MonoBehaviour
 {
     [SerializeField] GameObject PlayingScreen, PauseScreen, MapScreen, OptionsScreen;
-    [SerializeField] Camera PlayerCamera, MapCamera;
+    [SerializeField] Camera MapCamera;
+    [SerializeField] RawImage MapSpriteRenderer;
     [SerializeField] GameObject ResumeButton, PauseToOptionsButton, OptionsToPauseButton, PauseToMapButton, MapToPauseButton;
+    [SerializeField] GameObject PlayerCompass;
     [SerializeField] InputActionsHolder IAH;
 
-    bool paused;
+    [SerializeField] GameObject[] checkpoints;
+
+    bool paused, takeScreenshotOnNextFrame;
+
+    int width, height;
 
     // Start is called before the first frame update
     void Start()
     {
         SetPlayScreen();
+    }
+
+    private void Awake()
+    {
+        width = MapCamera.pixelWidth;
+        height = MapCamera.pixelHeight;
+        if (takeScreenshotOnNextFrame && false)
+        {
+
+            MapCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
+            takeScreenshotOnNextFrame = false;
+            //disable fog
+            //RenderSettings.fog = false;
+
+            //RenderTexture renderTexture = MapCamera.targetTexture;
+            
+            Texture2D renderResult = new Texture2D(width, height, TextureFormat.ARGB32, false);
+            //MapCamera.Render();
+            //RenderTexture.active = MapCamera.targetTexture;
+            Rect rect = new Rect(0, 0, width, height);
+            renderResult.ReadPixels(rect, 0, 0);
+
+            MapSpriteRenderer.texture = renderResult;
+
+            RenderTexture.ReleaseTemporary(MapCamera.targetTexture);
+            MapCamera.targetTexture = null;
+            //RenderSettings.fog = true;
+            //re enable fog
+
+        }
+
+    }
+
+    void TakeScreenshot()
+    {
+        //takeScreenshotOnNextFrame = true;
+
     }
 
     // Update is called once per frame
@@ -28,6 +72,8 @@ public class UIController : MonoBehaviour
 
     public void SetPauseScreen()
     {
+        RenderSettings.fog = true;
+
         //set paused
         paused = true;
 
@@ -45,11 +91,20 @@ public class UIController : MonoBehaviour
         //new selected
         EventSystem.current.SetSelectedGameObject(ResumeButton);
 
+        //overhead
+        PlayerCompass.SetActive(false);
+
+        foreach (GameObject c in checkpoints)
+            c.GetComponentInChildren<SpriteRenderer>().enabled = false;
+
     }
 
 
     public void SetPlayScreen()
     {
+
+        RenderSettings.fog = true;
+
         //resume time
         TimescaleHandler.setPausedForMenu(false);
 
@@ -65,10 +120,13 @@ public class UIController : MonoBehaviour
         //clear selected
         EventSystem.current.SetSelectedGameObject(null);
 
+        PlayerCompass.SetActive(false);
+
     }
 
     public void SetOptionScreen()
     {
+        RenderSettings.fog = true;
 
         //set screens
         PlayingScreen.SetActive(false);
@@ -82,6 +140,8 @@ public class UIController : MonoBehaviour
         //new selected
         EventSystem.current.SetSelectedGameObject(OptionsToPauseButton);
 
+
+
     }
 
 
@@ -93,11 +153,20 @@ public class UIController : MonoBehaviour
         MapScreen.SetActive(true);
         PauseScreen.SetActive(false);
 
+        TakeScreenshot();
 
         //clear selected
         EventSystem.current.SetSelectedGameObject(null);
         //new selected
         EventSystem.current.SetSelectedGameObject(MapToPauseButton);
+
+        //set up fog and overhead
+        PlayerCompass.SetActive(true);
+
+        foreach (GameObject c in checkpoints)
+            c.GetComponentInChildren<SpriteRenderer>().enabled = true;
+
+        RenderSettings.fog = false;
 
 
     }
