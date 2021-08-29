@@ -40,7 +40,7 @@ public class UIController : MonoBehaviour
     {
         initialMapPos = MapCamera.transform.localPosition;
         player = MapCamera.transform.parent.gameObject;
-        MapCamera.transform.parent = null;
+        MapCamera.transform.SetParent(null);
         initialSize = MapCamera.orthographicSize;
     }
 

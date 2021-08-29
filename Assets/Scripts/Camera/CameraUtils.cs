@@ -10,7 +10,6 @@ public class CameraUtils : MonoBehaviour
     [SerializeField] private Transform target; // Object to look at / surround
     [SerializeField] private Transform player; // For rotation reference
     [SerializeField] private float radiusToTarget; // Distance from target
-    [SerializeField] private float colliderRadius; // When something is between the player and the camera, the radius to determine the cam is touching it
     [SerializeField] private float minRadiusToTarget = 0.1f;
     [SerializeField] private float radiusDecreaseAtContact = 0.5f;
     [SerializeField] private float initHorizAngle = 0; // 0 = directly behind, 1.57 = to right. Initial value serialized.

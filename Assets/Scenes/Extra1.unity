@@ -435,11 +435,27 @@ PrefabInstance:
     - target: {fileID: 4952749949799574117, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
       propertyPath: MapCamera
       value: 
-      objectReference: {fileID: 1128310399}
+      objectReference: {fileID: 2127999440}
+    - target: {fileID: 4952749949799574117, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
+      propertyPath: ZoomSpeed
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4952749949799574117, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
       propertyPath: PlayerCamera
       value: 
       objectReference: {fileID: 1128310399}
+    - target: {fileID: 4952749949799574117, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
+      propertyPath: PlayerCompass
+      value: 
+      objectReference: {fileID: 2127999441}
+    - target: {fileID: 4952749949799574117, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
+      propertyPath: MapMovementSpeed.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4952749949799574117, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
+      propertyPath: MapMovementSpeed.y
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6870303118324712725, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -1295,6 +1311,16 @@ PrefabInstance:
 --- !u!4 &2127999439 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5116987452351034286, guid: 70613cbda13764daea7160e7333018b7, type: 3}
+  m_PrefabInstance: {fileID: 2127999438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &2127999440 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6870351686182507045, guid: 70613cbda13764daea7160e7333018b7, type: 3}
+  m_PrefabInstance: {fileID: 2127999438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2127999441 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2077955666099779244, guid: 70613cbda13764daea7160e7333018b7, type: 3}
   m_PrefabInstance: {fileID: 2127999438}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5506548703593035031
