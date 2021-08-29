@@ -2447,7 +2447,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 8400000, guid: 812faffba832a8649a8fae5c7bf07269, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -3414,6 +3414,7 @@ MonoBehaviour:
   MapScreen: {fileID: 8098187602854306801}
   OptionsScreen: {fileID: 6097301448274114050}
   MapCamera: {fileID: 0}
+  PlayerCamera: {fileID: 0}
   MapSpriteRenderer: {fileID: 3223177352210053293}
   ResumeButton: {fileID: 381169433428918307}
   PauseToOptionsButton: {fileID: 1761944638842324423}
@@ -3422,6 +3423,7 @@ MonoBehaviour:
   MapToPauseButton: {fileID: 1337085747324926063}
   PlayerCompass: {fileID: 0}
   IAH: {fileID: 0}
+  MapMovementSpeed: {x: 0, y: 0}
   checkpoints: []
 --- !u!114 &5790734680604686699
 MonoBehaviour:

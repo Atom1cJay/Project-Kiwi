@@ -579,6 +579,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Zoom",
+                    "type": "Value",
+                    "id": "08b7d9e4-0023-4f2b-97f2-0c9fe3408d03",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Select",
                     "type": "Button",
                     "id": "84993e81-1e0d-4bd8-9c03-e5c41616ee49",
@@ -590,6 +598,14 @@
                     "name": "Pause",
                     "type": "Button",
                     "id": "4de7ad40-571f-49f4-852e-26b234678ab2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "bdb05aea-0abb-4b74-b55d-784154c155f5",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -703,6 +719,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b8997d61-3818-43c9-ad9f-838fd6637b42",
+                    "path": "<HID::Core (Plus) Wired Controller>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0e5bc17e-4130-488f-ba90-27dea410d42d",
+                    "path": "<HID::Core (Plus) Wired Controller>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -14,11 +14,21 @@ public class UIController : MonoBehaviour
     [SerializeField] GameObject PlayerCompass;
     [SerializeField] InputActionsHolder IAH;
 
+    [SerializeField] Vector2 MapMovementSpeed;
+
+    [SerializeField] float ZoomSpeed;
+
     [SerializeField] GameObject[] checkpoints;
 
-    bool paused, takeScreenshotOnNextFrame;
+    bool paused, onMap;
+
+    float initialSize;
+
+    GameObject player;
 
     int width, height;
+
+    Vector3 initialMapPos;
 
     // Start is called before the first frame update
     void Start()
@@ -28,50 +38,47 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        width = MapCamera.pixelWidth;
-        height = MapCamera.pixelHeight;
-        if (takeScreenshotOnNextFrame && false)
-        {
-
-            MapCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
-            takeScreenshotOnNextFrame = false;
-            //disable fog
-            //RenderSettings.fog = false;
-
-            //RenderTexture renderTexture = MapCamera.targetTexture;
-            
-            Texture2D renderResult = new Texture2D(width, height, TextureFormat.ARGB32, false);
-            //MapCamera.Render();
-            //RenderTexture.active = MapCamera.targetTexture;
-            Rect rect = new Rect(0, 0, width, height);
-            renderResult.ReadPixels(rect, 0, 0);
-
-            MapSpriteRenderer.texture = renderResult;
-
-            RenderTexture.ReleaseTemporary(MapCamera.targetTexture);
-            MapCamera.targetTexture = null;
-            //RenderSettings.fog = true;
-            //re enable fog
-
-        }
-
+        initialMapPos = MapCamera.transform.localPosition;
+        player = MapCamera.transform.parent.gameObject;
+        MapCamera.transform.parent = null;
+        initialSize = MapCamera.orthographicSize;
     }
 
-    void TakeScreenshot()
-    {
-        //takeScreenshotOnNextFrame = true;
-
-    }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        if (!paused && (Input.GetKeyDown(KeyCode.I) || IAH.inputActions.UI.Pause.ReadValue<float>() > 0))
+        if (!paused && IAH.inputActions.UI.Pause.ReadValue<float>() > 0)
             SetPauseScreen();
+
+        
+        if (onMap)
+        {
+
+            RenderSettings.fog = false;
+            MapCamera.Render();
+
+            if (IAH.inputActions.UI.Back.ReadValue<float>() > 0 || Input.GetKey(KeyCode.K))
+                SetPauseScreen();
+
+            
+            Vector2 mvt = IAH.inputActions.UI.Move.ReadValue<Vector2>();
+            float zoom = IAH.inputActions.UI.Zoom.ReadValue<float>();
+            Debug.Log("vect" + mvt + ",  other: " + zoom);
+            MapCamera.transform.position += new Vector3(mvt.x * MapMovementSpeed.x, 0f, mvt.y * MapMovementSpeed.y) * IndependentTime.deltaTime;
+            MapCamera.orthographicSize += zoom * ZoomSpeed * IndependentTime.deltaTime;
+        }
+        else
+        {
+            RenderSettings.fog = true;
+            MapCamera.transform.localPosition = initialMapPos;
+            MapCamera.orthographicSize = initialSize;
+        }
     }
 
     public void SetPauseScreen()
     {
+        //fog
         RenderSettings.fog = true;
 
         //set paused
@@ -97,6 +104,11 @@ public class UIController : MonoBehaviour
         foreach (GameObject c in checkpoints)
             c.GetComponentInChildren<SpriteRenderer>().enabled = false;
 
+
+        //disable cam and no map
+        MapCamera.enabled = false;
+        onMap = false;
+
     }
 
 
@@ -118,7 +130,14 @@ public class UIController : MonoBehaviour
         //clear selected
         EventSystem.current.SetSelectedGameObject(null);
 
+
+        //initialize
+        RenderSettings.fog = true;
+        onMap = false;
         PlayerCompass.SetActive(false);
+
+        MapCamera.enabled = false;
+
 
     }
 
@@ -144,13 +163,15 @@ public class UIController : MonoBehaviour
 
     public void SetMapScreen()
     {
+        //enable cam
+        MapCamera.enabled = false;
+
+        MapCamera.transform.position = player.transform.position + initialMapPos;
         //set screens
         PlayingScreen.SetActive(false);
         OptionsScreen.SetActive(false);
         MapScreen.SetActive(true);
         PauseScreen.SetActive(false);
-
-        TakeScreenshot();
 
         //clear selected
         EventSystem.current.SetSelectedGameObject(null);
@@ -169,6 +190,7 @@ public class UIController : MonoBehaviour
         RenderSettings.fog = true;
         PlayerCamera.Render();
 
+        onMap = true;
 
     }
 }
