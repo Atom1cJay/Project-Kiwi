@@ -124,4 +124,9 @@ public class VertAirBoost : AMove
     {
         return false;
     }
+
+    public override Attack GetAttack()
+    {
+        return movementSettings.VertBoostAttack;
+    }
 }

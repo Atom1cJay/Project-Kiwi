@@ -170,4 +170,9 @@ public class Glidev3 : AMove
     {
         return "glide";
     }
+
+    public override Attack GetAttack()
+    {
+        return movementSettings.JumpAttack;
+    }
 }

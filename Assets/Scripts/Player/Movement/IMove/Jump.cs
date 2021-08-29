@@ -199,5 +199,10 @@ public class Jump : AMove
     {
         return false;
     }
+
+    public override Attack GetAttack()
+    {
+        return movementSettings.JumpAttack;
+    }
 }
    

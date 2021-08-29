@@ -156,6 +156,13 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float swimGravity;
     [SerializeField] float swimOutOfBoostGravity;
 
+    [Header("Attack Settings")]
+    [SerializeField] Attack diveAttack;
+    [SerializeField] Attack jumpAttack;
+    [SerializeField] Attack horizBoostAttack;
+    [SerializeField] Attack vertBoostAttack;
+    [SerializeField] Attack groundPoundAttack;
+
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
     public float RunSensitivityX { get { return runSensitivityX; } }
@@ -282,6 +289,12 @@ public class MovementSettingsSO : ScriptableObject
     public float SwimSensitivityBoosted { get { return swimSensitivityBoosted; } }
     public float SwimGravity { get { return swimGravity; } }
     public float SwimOutOfBoostGravity { get { return swimOutOfBoostGravity; } }
+
+    public Attack DiveAttack { get { return diveAttack; } }
+    public Attack JumpAttack { get { return jumpAttack; } }
+    public Attack HorizBoostAttack { get { return horizBoostAttack; } }
+    public Attack VertBoostAttack { get { return vertBoostAttack; } }
+    public Attack GroundPoundAttack { get { return groundPoundAttack; } }
 
     static MovementSettingsSO _instance;
     public static MovementSettingsSO Instance

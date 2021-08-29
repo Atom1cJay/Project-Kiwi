@@ -100,4 +100,9 @@ public class Dive : AMove
     {
         return false;
     }
+
+    public override Attack GetAttack()
+    {
+        return movementSettings.DiveAttack;
+    }
 }

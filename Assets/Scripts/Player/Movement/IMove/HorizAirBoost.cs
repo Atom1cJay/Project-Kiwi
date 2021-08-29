@@ -113,4 +113,9 @@ public class HorizAirBoost : AMove
     {
         return false;
     }
+
+    public override Attack GetAttack()
+    {
+        return movementSettings.HorizBoostAttack;
+    }
 }

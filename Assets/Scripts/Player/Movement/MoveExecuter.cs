@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Decides how the player and camera should move, depending on the currently
@@ -13,6 +14,7 @@ using UnityEngine;
 [RequireComponent(typeof(CheckpointLoader))]
 public class MoveExecuter : MonoBehaviour
 {
+    IMove moveLastFrame = null;
     IMove moveThisFrame;
     CharacterController charCont;
     MovementInfo mi;
@@ -22,7 +24,8 @@ public class MoveExecuter : MonoBehaviour
     CheckpointLoader cl;
     [SerializeField] CameraControl cameraControl;
     [SerializeField] CameraTarget camTarget;
-    Vector3 vertMovement;
+
+    public UnityEvent OnMoveChanged;
 
     private void Awake()
     {
@@ -43,6 +46,7 @@ public class MoveExecuter : MonoBehaviour
     void Update()
     {
         HandleBasicMovement();
+        HandleMovementChangeEvent();
     }
 
     private void LateUpdate()
@@ -73,11 +77,24 @@ public class MoveExecuter : MonoBehaviour
             Vector2 horizMovement = moveThisFrame.GetHorizSpeedThisFrame();
             Vector3 dir = DirectionOfMovement(horizMovement);
             Vector3 horizMovementAdjusted = dir * horizMovement.magnitude;
-            vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
+            Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
             charCont.Move((horizMovementAdjusted + vertMovement) * Time.deltaTime);
             camTarget.Adjust();
             IMove next = moveThisFrame.GetNextMove();
             moveThisFrame = next;
+        }
+    }
+
+    /// <summary>
+    /// If the move this frame is different from what the move was previously,
+    /// signal that the move has changed.
+    /// </summary>
+    private void HandleMovementChangeEvent()
+    {
+        if (moveThisFrame != moveLastFrame)
+        {
+            moveLastFrame = moveThisFrame;
+            OnMoveChanged.Invoke();
         }
     }
 
@@ -91,7 +108,7 @@ public class MoveExecuter : MonoBehaviour
         if (cs != null)
         {
             Vector3 goalPos = cs.GetPosition() + (Vector3.up * 3f);
-            print(charCont.center);
+            moveThisFrame = new Fall(mii, mi, movementSettings, Vector2.zero, false);
             charCont.Move(goalPos - transform.position);
             camTarget.ResetToPlayerCenter();
         }

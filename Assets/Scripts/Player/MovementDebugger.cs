@@ -11,15 +11,13 @@ public class MovementDebugger : MonoBehaviour
     private void Start()
     {
         me = GetComponent<MoveExecuter>();
+        me.OnMoveChanged.AddListener(() => LogSwitch());
     }
 
-    void Update()
+    void LogSwitch()
     {
         string curMoveString = me.GetCurrentMove().AsString();
-        if (curMoveString != storedMoveString)
-        {
-            print("SWITCH: " + storedMoveString + " -> " + curMoveString);
-            storedMoveString = curMoveString;
-        }
+        print("SWITCH: " + storedMoveString + " -> " + curMoveString);
+        storedMoveString = curMoveString;
     }
 }

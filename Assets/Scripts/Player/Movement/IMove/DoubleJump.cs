@@ -181,7 +181,7 @@ public class DoubleJump : AMove
 
     public override string AsString()
     {
-        return "jump";
+        return "doublejump";
     }
 
     public override bool IncrementsTJcounter()
@@ -199,5 +199,10 @@ public class DoubleJump : AMove
     public override bool AdjustToSlope()
     {
         return false;
+    }
+
+    public override Attack GetAttack()
+    {
+        return movementSettings.JumpAttack;
     }
 }

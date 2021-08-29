@@ -78,4 +78,10 @@ public interface IMoveImmutable
     /// is not zero.
     /// </summary>
     float CameraVerticalAutoTarget();
+
+    /// <summary>
+    /// Gives the attack (if any) associated with the move. If there is none,
+    /// returns null.
+    /// </summary>
+    Attack GetAttack();
 }

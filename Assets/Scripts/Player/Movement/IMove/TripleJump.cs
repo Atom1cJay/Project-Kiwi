@@ -162,4 +162,9 @@ public class TripleJump : AMove
     {
         return false;
     }
+
+    public override Attack GetAttack()
+    {
+        return movementSettings.JumpAttack;
+    }
 }

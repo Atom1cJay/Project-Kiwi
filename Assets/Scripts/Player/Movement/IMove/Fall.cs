@@ -165,4 +165,9 @@ public class Fall : AMove
     {
         return true;
     }
+
+    public override Attack GetAttack()
+    {
+        return movementSettings.JumpAttack;
+    }
 }
