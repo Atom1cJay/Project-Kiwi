@@ -73,6 +73,8 @@ public class UIController : MonoBehaviour
             RenderSettings.fog = true;
             PlayerCamera.Render();
 
+            //fuck the world
+
             if (IAH.inputActions.UI.Back.ReadValue<float>() > 0 || Input.GetKey(KeyCode.K))
                 SetPauseScreen();
 
