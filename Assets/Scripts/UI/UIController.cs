@@ -67,11 +67,9 @@ public class UIController : MonoBehaviour
 
         if (onMap)
         {
-
             RenderSettings.fog = false;
             MapCamera.Render();
             RenderSettings.fog = true;
-            PlayerCamera.Render();
 
             //fuck the world
 
