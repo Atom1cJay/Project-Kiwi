@@ -70,6 +70,8 @@ public class UIController : MonoBehaviour
 
             RenderSettings.fog = false;
             MapCamera.Render();
+            RenderSettings.fog = true;
+            PlayerCamera.Render();
 
             if (IAH.inputActions.UI.Back.ReadValue<float>() > 0 || Input.GetKey(KeyCode.K))
                 SetPauseScreen();
@@ -161,7 +163,8 @@ public class UIController : MonoBehaviour
                 }
 
                 MapCamera.transform.position = tempPos;
-                MapCamera.orthographicSize = tempSize;
+                if(tempSize >= 75)
+                    MapCamera.orthographicSize = tempSize;
 
             }
 
