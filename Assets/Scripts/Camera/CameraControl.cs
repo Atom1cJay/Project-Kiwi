@@ -19,22 +19,6 @@ public class CameraControl : MonoBehaviour
     private float vertPivotSpeed = 0;
     private CameraUtils camUtils;
     float InvertX, InvertY;
-    public void ToggleX(bool b)
-    {
-        if (b)
-            InvertX = -1f;
-        else
-            InvertX = 1f;
-    }
-
-    public void ToggleY(bool b)
-    {
-
-        if (b)
-            InvertY = -1f;
-        else
-            InvertY = 1f;
-    }
 
     private void Awake()
     {
@@ -96,5 +80,21 @@ public class CameraControl : MonoBehaviour
     public void TakeInstructions(ACameraInstruction instructions)
     {
         camUtils.HandleInstructions(instructions);
+    }
+
+    /// <summary>
+    /// Sets the X inversion constant based on whether X should be inverted.
+    /// </summary>
+    public void SetXInverted(bool inverted)
+    {
+        InvertX = inverted ? -1 : 1;
+    }
+
+    /// <summary>
+    /// Sets the Y inversion constant based on whether Y should be inverted.
+    /// </summary>
+    public void SetYInverted(bool inverted)
+    {
+        InvertY = inverted ? -1 : 1;
     }
 }

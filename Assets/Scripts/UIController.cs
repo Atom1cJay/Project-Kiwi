@@ -40,6 +40,8 @@ public class UIController : MonoBehaviour
     void Start()
     {
         SetPlayScreen();
+        ToggleXFunction();
+        ToggleYFunction();
     }
 
     private void Awake()
@@ -48,8 +50,6 @@ public class UIController : MonoBehaviour
         player = MapCamera.transform.parent.gameObject;
         MapCamera.transform.SetParent(null);
         initialSize = MapCamera.orthographicSize;
-        ToggleXFunction();
-        ToggleYFunction();
         canToggleSpeedAgain = true;
         canToggleZoomAgain = true;
         speedMult = 1f;
@@ -293,12 +293,11 @@ public class UIController : MonoBehaviour
 
     public void ToggleXFunction()
     {
-        cc.ToggleX(ToggleX.isOn);
+        cc.SetXInverted(ToggleX.isOn);
     }
 
     public void ToggleYFunction()
     {
-        cc.ToggleY(ToggleY.isOn);
+        cc.SetYInverted(ToggleY.isOn);
     }
-
 }

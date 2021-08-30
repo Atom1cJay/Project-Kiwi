@@ -154,7 +154,7 @@ public class PlayerAnimationHandler : MonoBehaviour
         else if (cM == "doublejump")
         {
             onGround = false;
-            currentMove("SECONDJUMP");
+            currentMove("FIRSTJUMP"); // Temp, while animations are same
 
         }
         else if (cM == "triplejump")

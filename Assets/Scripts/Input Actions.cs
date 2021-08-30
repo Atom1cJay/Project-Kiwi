@@ -373,7 +373,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""13b41ae0-6b71-4dd1-a864-1d2715703cca"",
                     ""expectedControlType"": ""Axis"",
-                    ""processors"": ""Invert,AxisDeadzone(max=1)"",
+                    ""processors"": ""AxisDeadzone(max=1),Scale(factor=-1)"",
                     ""interactions"": """"
                 },
                 {
@@ -713,7 +713,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -746,7 +746,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -779,7 +779,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -801,7 +801,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -812,7 +812,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -845,7 +845,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -856,7 +856,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -878,7 +878,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -889,7 +889,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
