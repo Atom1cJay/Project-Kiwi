@@ -18,6 +18,23 @@ public class CameraControl : MonoBehaviour
     private float horizPivotSpeed = 0;
     private float vertPivotSpeed = 0;
     private CameraUtils camUtils;
+    float InvertX, InvertY;
+    public void ToggleX(bool b)
+    {
+        if (b)
+            InvertX = -1f;
+        else
+            InvertX = 1f;
+    }
+
+    public void ToggleY(bool b)
+    {
+
+        if (b)
+            InvertY = -1f;
+        else
+            InvertY = 1f;
+    }
 
     private void Awake()
     {
@@ -41,13 +58,13 @@ public class CameraControl : MonoBehaviour
         vertPivotSpeed = InputUtils.SmoothedInput(vertPivotSpeed, vertInput, pivotSensitivity, pivotGravity);
         float horizMove = horizPivotSpeed * maxPivotSpeedHoriz * Time.deltaTime;
         float vertMove = vertPivotSpeed * maxPivotSpeedVert * Time.deltaTime;
-        camUtils.RotateBy(horizMove, vertMove);
+        camUtils.RotateBy(horizMove * InvertX, vertMove * InvertY);
         // Keyboard
         float horizPivotSpeedMouse = iah.GetOldMouseInput().x; // THIS IS THE ONLY USE OF THE OLD INPUT SYSTEM IN THE GAME. IT'S BECAUSE THE
         float vertPivotSpeedMouse = iah.GetOldMouseInput().y; // NEW INPUT SYSTEM WON'T SMOOTH MOUSE MOVEMENT PROPERLY.
         horizMove = horizPivotSpeedMouse * maxPivotSpeedHoriz * Time.deltaTime;
         vertMove = vertPivotSpeedMouse * maxPivotSpeedVert * Time.deltaTime;
-        camUtils.RotateBy(horizMove, vertMove);
+        camUtils.RotateBy(horizMove * InvertX, vertMove * InvertY);
     }
 
     void AutoAdjustToBack()

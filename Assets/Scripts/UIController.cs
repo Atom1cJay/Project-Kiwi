@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour
 {
@@ -12,17 +13,22 @@ public class UIController : MonoBehaviour
     [SerializeField] RawImage MapSpriteRenderer;
     [SerializeField] GameObject ResumeButton, PauseToOptionsButton, OptionsToPauseButton, PauseToMapButton, MapToPauseButton;
     [SerializeField] GameObject PlayerCompass;
+
+    [SerializeField] Toggle ToggleX, ToggleY;
+
     [SerializeField] InputActionsHolder IAH;
 
     [SerializeField] Vector2 MapMovementSpeed;
 
-    [SerializeField] float ZoomSpeed;
+    [SerializeField] float ZoomSpeed, mapSizeSide, mapSizeSnappingBack, camSizeSnappingBack;
 
-    [SerializeField] GameObject[] checkpoints;
+    GameObject[] checkpoints;
 
-    bool paused, onMap;
+    [SerializeField] CameraControl cc;
 
-    float initialSize;
+    bool paused, onMap, canToggleSpeedAgain, canToggleZoomAgain;
+
+    float initialSize, speedMult, zoomMult;
 
     GameObject player;
 
@@ -42,6 +48,13 @@ public class UIController : MonoBehaviour
         player = MapCamera.transform.parent.gameObject;
         MapCamera.transform.SetParent(null);
         initialSize = MapCamera.orthographicSize;
+        ToggleXFunction();
+        ToggleYFunction();
+        canToggleSpeedAgain = true;
+        canToggleZoomAgain = true;
+        speedMult = 1f;
+        zoomMult = 1f;
+        checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
     }
 
 
@@ -51,7 +64,7 @@ public class UIController : MonoBehaviour
         if (!paused && IAH.inputActions.UI.Pause.ReadValue<float>() > 0)
             SetPauseScreen();
 
-        
+
         if (onMap)
         {
 
@@ -61,15 +74,102 @@ public class UIController : MonoBehaviour
             if (IAH.inputActions.UI.Back.ReadValue<float>() > 0 || Input.GetKey(KeyCode.K))
                 SetPauseScreen();
 
-            
+            if (IAH.inputActions.UI.ToggleSpeed.ReadValue<float>() > 0 && canToggleSpeedAgain)
+            {
+                if (speedMult != 4f)
+                    speedMult *= 2f;
+                else
+                    speedMult = 1f;
+
+                canToggleSpeedAgain = false;
+
+            }
+
+
+            if (IAH.inputActions.UI.ToggleSpeed.ReadValue<float>() == 0)
+                canToggleSpeedAgain = true;
+
+            if (IAH.inputActions.UI.ToggleZoom.ReadValue<float>() > 0 && canToggleZoomAgain)
+            {
+                if (zoomMult != 4f)
+                    zoomMult *= 2f;
+                else
+                    zoomMult = 1f;
+
+                canToggleZoomAgain = false;
+
+            }
+
+            if (IAH.inputActions.UI.ToggleZoom.ReadValue<float>() == 0)
+                canToggleZoomAgain = true;
+
+
             Vector2 mvt = IAH.inputActions.UI.Move.ReadValue<Vector2>();
             float zoom = IAH.inputActions.UI.Zoom.ReadValue<float>();
-            Debug.Log("vect" + mvt + ",  other: " + zoom);
-            MapCamera.transform.position += new Vector3(mvt.x * MapMovementSpeed.x, 0f, mvt.y * MapMovementSpeed.y) * IndependentTime.deltaTime;
-            MapCamera.orthographicSize += zoom * ZoomSpeed * IndependentTime.deltaTime;
+
+            Vector3 tempPos = MapCamera.transform.position + new Vector3(mvt.x * MapMovementSpeed.x, 0f, mvt.y * MapMovementSpeed.y) * IndependentTime.deltaTime * speedMult;
+            float tempSize = MapCamera.orthographicSize + zoom * ZoomSpeed * IndependentTime.deltaTime * zoomMult;
+
+            float halfCam = tempSize / 2f;
+
+            Debug.Log("vect" + (Mathf.Abs(tempPos.x) + halfCam) + ",  other: " + (Mathf.Abs(tempPos.z) + halfCam));
+            
+            if ((Mathf.Abs(tempPos.x) + halfCam) < mapSizeSide && (Mathf.Abs(tempPos.z) + halfCam) < mapSizeSide)
+            {
+                if ((Mathf.Abs(tempPos.x) + halfCam) > mapSizeSnappingBack || (Mathf.Abs(tempPos.z) + halfCam) > mapSizeSnappingBack)
+                {
+                    // x
+                    if (tempPos.x + halfCam > mapSizeSnappingBack)
+                        tempPos += new Vector3(-MapMovementSpeed.x * IndependentTime.deltaTime, 0f, 0f);
+
+                    //-x
+                    if (Mathf.Abs(tempPos.x - halfCam) > mapSizeSnappingBack)
+                        tempPos += new Vector3(MapMovementSpeed.x * IndependentTime.deltaTime, 0f, 0f);
+
+
+                    // y
+                    if (tempPos.z + halfCam > mapSizeSnappingBack)
+                        tempPos += new Vector3(0f, 0f, -MapMovementSpeed.y * IndependentTime.deltaTime);
+
+                    //-y
+                    if (Mathf.Abs(tempPos.z - halfCam) > mapSizeSnappingBack)
+                        tempPos += new Vector3(0f, 0f, MapMovementSpeed.y * IndependentTime.deltaTime);
+
+
+                }
+                //size
+                else if (tempSize > camSizeSnappingBack)
+                {
+                    // x
+                    if (tempPos.x > 0f)
+                        tempPos += new Vector3(-MapMovementSpeed.x * IndependentTime.deltaTime, 0f, 0f) * .5f;
+
+                    //-x
+                    if (tempPos.x < 0f)
+                        tempPos += new Vector3(MapMovementSpeed.x * IndependentTime.deltaTime, 0f, 0f) * .5f;
+
+
+                    // y
+                    if (tempPos.z > 0f)
+                        tempPos += new Vector3(0f, 0f, -MapMovementSpeed.y * IndependentTime.deltaTime) * .5f;
+
+                    //-y
+                    if (tempPos.z < 0f)
+                        tempPos += new Vector3(0f, 0f, MapMovementSpeed.y * IndependentTime.deltaTime) * .5f;
+
+                    tempSize -= ZoomSpeed * 2f * IndependentTime.deltaTime;
+                }
+
+                MapCamera.transform.position = tempPos;
+                MapCamera.orthographicSize = tempSize;
+
+            }
+
         }
         else
         {
+            speedMult = 1f;
+            zoomMult = 1f;
             RenderSettings.fog = true;
             MapCamera.transform.localPosition = initialMapPos;
             MapCamera.orthographicSize = initialSize;
@@ -143,7 +243,6 @@ public class UIController : MonoBehaviour
 
     public void SetOptionScreen()
     {
-
         //set screens
         PlayingScreen.SetActive(false);
         OptionsScreen.SetActive(true);
@@ -155,8 +254,6 @@ public class UIController : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         //new selected
         EventSystem.current.SetSelectedGameObject(OptionsToPauseButton);
-
-
 
     }
 
@@ -193,4 +290,15 @@ public class UIController : MonoBehaviour
         onMap = true;
 
     }
+
+    public void ToggleXFunction()
+    {
+        cc.ToggleX(ToggleX.isOn);
+    }
+
+    public void ToggleYFunction()
+    {
+        cc.ToggleY(ToggleY.isOn);
+    }
+
 }

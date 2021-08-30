@@ -368,7 +368,7 @@
                     "type": "Value",
                     "id": "0d182bfa-c72b-4099-8ae4-6c0204baefd0",
                     "expectedControlType": "Axis",
-                    "processors": "Invert,AxisDeadzone(max=1)",
+                    "processors": "AxisDeadzone(max=1)",
                     "interactions": ""
                 },
                 {
@@ -606,6 +606,22 @@
                     "name": "Back",
                     "type": "Button",
                     "id": "bdb05aea-0abb-4b74-b55d-784154c155f5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ToggleSpeed",
+                    "type": "Button",
+                    "id": "19ef5aac-6bb8-4b4e-93be-34d3a671312f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ToggleZoom",
+                    "type": "Button",
+                    "id": "2bdd7e7d-4ed4-427f-9f0d-e1e2be47bef6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -864,6 +880,28 @@
                     "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "973a48e9-a374-4bbc-811f-97881716074a",
+                    "path": "<HID::Core (Plus) Wired Controller>/button11",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "ToggleSpeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b57f0b8e-14d5-4d07-ba36-bd029abe3734",
+                    "path": "<HID::Core (Plus) Wired Controller>/button12",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "ToggleZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

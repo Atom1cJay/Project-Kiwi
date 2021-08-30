@@ -381,7 +381,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""0d182bfa-c72b-4099-8ae4-6c0204baefd0"",
                     ""expectedControlType"": ""Axis"",
-                    ""processors"": ""Invert,AxisDeadzone(max=1)"",
+                    ""processors"": ""AxisDeadzone(max=1)"",
                     ""interactions"": """"
                 },
                 {
@@ -619,6 +619,22 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""name"": ""Back"",
                     ""type"": ""Button"",
                     ""id"": ""bdb05aea-0abb-4b74-b55d-784154c155f5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ToggleSpeed"",
+                    ""type"": ""Button"",
+                    ""id"": ""19ef5aac-6bb8-4b4e-93be-34d3a671312f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ToggleZoom"",
+                    ""type"": ""Button"",
+                    ""id"": ""2bdd7e7d-4ed4-427f-9f0d-e1e2be47bef6"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -877,6 +893,28 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""973a48e9-a374-4bbc-811f-97881716074a"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/button11"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""ToggleSpeed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b57f0b8e-14d5-4d07-ba36-bd029abe3734"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/button12"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""ToggleZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -934,6 +972,8 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
+        m_UI_ToggleSpeed = m_UI.FindAction("ToggleSpeed", throwIfNotFound: true);
+        m_UI_ToggleZoom = m_UI.FindAction("ToggleZoom", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1192,6 +1232,8 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_Select;
     private readonly InputAction m_UI_Pause;
     private readonly InputAction m_UI_Back;
+    private readonly InputAction m_UI_ToggleSpeed;
+    private readonly InputAction m_UI_ToggleZoom;
     public struct UIActions
     {
         private @InputActions m_Wrapper;
@@ -1201,6 +1243,8 @@ public class @InputActions : IInputActionCollection, IDisposable
         public InputAction @Select => m_Wrapper.m_UI_Select;
         public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputAction @Back => m_Wrapper.m_UI_Back;
+        public InputAction @ToggleSpeed => m_Wrapper.m_UI_ToggleSpeed;
+        public InputAction @ToggleZoom => m_Wrapper.m_UI_ToggleZoom;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1225,6 +1269,12 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Back.started -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
                 @Back.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
                 @Back.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
+                @ToggleSpeed.started -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleSpeed;
+                @ToggleSpeed.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleSpeed;
+                @ToggleSpeed.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleSpeed;
+                @ToggleZoom.started -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleZoom;
+                @ToggleZoom.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleZoom;
+                @ToggleZoom.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleZoom;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -1244,6 +1294,12 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
+                @ToggleSpeed.started += instance.OnToggleSpeed;
+                @ToggleSpeed.performed += instance.OnToggleSpeed;
+                @ToggleSpeed.canceled += instance.OnToggleSpeed;
+                @ToggleZoom.started += instance.OnToggleZoom;
+                @ToggleZoom.performed += instance.OnToggleZoom;
+                @ToggleZoom.canceled += instance.OnToggleZoom;
             }
         }
     }
@@ -1298,5 +1354,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         void OnSelect(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnToggleSpeed(InputAction.CallbackContext context);
+        void OnToggleZoom(InputAction.CallbackContext context);
     }
 }
