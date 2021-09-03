@@ -22,6 +22,7 @@ public class UIMapController : MonoBehaviour, UIInterface
     GameObject player;
 
     Vector3 initialMapPos;
+    Quaternion initialRotation;
 
     bool paused, onMap, canToggleSpeedAgain, canToggleZoomAgain;
     // Start is called before the first frame update
@@ -42,6 +43,7 @@ public class UIMapController : MonoBehaviour, UIInterface
 
         //set up positions and parents
         initialMapPos = MapCamera.transform.localPosition;
+        initialRotation = MapCamera.transform.rotation;
         player = MapCamera.transform.parent.gameObject;
         MapCamera.transform.SetParent(null);
     }
@@ -50,6 +52,9 @@ public class UIMapController : MonoBehaviour, UIInterface
     {
         if (onMap)
         {
+            //Fix rotation
+            MapCamera.transform.rotation = initialRotation;
+
             //represents how far away from center the range of the cam is
             float x, y;
 
