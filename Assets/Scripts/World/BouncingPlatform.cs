@@ -46,7 +46,7 @@ public class BouncingPlatform : MonoBehaviour
             Vector3 normal = other.GetContact(0).normal;
             normal = new Vector3(normal.x, 0f, normal.z);
             Vector3 random = new Vector3(Random.Range(-randomRange, randomRange), 0f, Random.Range(-randomRange, randomRange));
-            Debug.Log("ookachaka");
+
             mvmtVector = (normal + random).normalized * speed;
             if (maintainAngle)
             {

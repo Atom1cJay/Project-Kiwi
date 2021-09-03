@@ -10,22 +10,22 @@ public class ChunklingAnimationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    public void Toggle(bool w)
+    {
+        waddle = w;
+
         if (waddle)
         {
             animator.SetBool("IDLE", false);
             animator.SetBool("RUNNING", true);
-            animator.speed = speed;
         }
         else
         {
             animator.SetBool("IDLE", true);
             animator.SetBool("RUNNING", false);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
