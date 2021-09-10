@@ -163,6 +163,11 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] Attack vertBoostAttack;
     [SerializeField] Attack groundPoundAttack;
 
+    [Header("Knockback Settings")]
+    [SerializeField] float knockbackYAngle; // Degrees (90 = max)
+    [SerializeField] float knockbackYGravity;
+    [SerializeField] float knockbackRecoveryTime;
+
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
     public float RunSensitivityX { get { return runSensitivityX; } }
@@ -295,6 +300,10 @@ public class MovementSettingsSO : ScriptableObject
     public Attack HorizBoostAttack { get { return horizBoostAttack; } }
     public Attack VertBoostAttack { get { return vertBoostAttack; } }
     public Attack GroundPoundAttack { get { return groundPoundAttack; } }
+
+    public float KnockbackYAngle { get { return knockbackYAngle; } } // Degrees (90 = max)
+    public float KnockbackYGravity { get { return knockbackYGravity; } }
+    public float KnockbackRecoveryTime { get { return knockbackRecoveryTime; } }
 
     static MovementSettingsSO _instance;
     public static MovementSettingsSO Instance

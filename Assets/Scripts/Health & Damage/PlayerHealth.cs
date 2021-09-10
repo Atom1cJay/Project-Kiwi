@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+/// <summary>
+/// Deals with hits to the player's health and responses to it.
+/// </summary>
 public class PlayerHealth : MonoBehaviour
 {
     public static PlayerHealth instance;
