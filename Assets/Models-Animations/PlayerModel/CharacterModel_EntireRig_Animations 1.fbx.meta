@@ -69,6 +69,9 @@ ModelImporter:
   - first:
       74: -5148868642975912141
     second: CharacterModel|Swim
+  - first:
+      74: -8326550664030702460
+    second: CharacterModel|SwimmingV2
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -78,7 +81,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 1
+    resampleCurves: 0
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
@@ -89,7 +92,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 0
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -218,7 +221,7 @@ ModelImporter:
       takeName: CharacterModel|JetbackVerticalCharge
       internalID: 0
       firstFrame: 0
-      lastFrame: 12
+      lastFrame: 32
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -304,7 +307,7 @@ ModelImporter:
       name: CharacterModel|RegularJump
       takeName: CharacterModel|RegularJump
       internalID: 0
-      firstFrame: 3
+      firstFrame: 0
       lastFrame: 24
       wrapMode: 0
       orientationOffsetY: 0
@@ -333,8 +336,8 @@ ModelImporter:
       name: CharacterModel|Running
       takeName: CharacterModel|Running
       internalID: 0
-      firstFrame: 2
-      lastFrame: 40
+      firstFrame: 3.6
+      lastFrame: 42.7
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -362,7 +365,7 @@ ModelImporter:
       name: CharacterModel|SecondJump
       takeName: CharacterModel|SecondJump
       internalID: 0
-      firstFrame: 2
+      firstFrame: 0
       lastFrame: 24
       wrapMode: 0
       orientationOffsetY: 0
@@ -391,7 +394,7 @@ ModelImporter:
       name: CharacterModel|ThirdJump
       takeName: CharacterModel|ThirdJump
       internalID: 0
-      firstFrame: 2
+      firstFrame: 0
       lastFrame: 24
       wrapMode: 0
       orientationOffsetY: 0
@@ -595,7 +598,7 @@ ModelImporter:
       takeName: CharacterModel|Acceleration
       internalID: 0
       firstFrame: 0
-      lastFrame: 18
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -649,11 +652,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: CharacterModel|Swim
-      takeName: CharacterModel|Swim
+      name: CharacterModel|SwimmingV2
+      takeName: CharacterModel|SwimmingV2
       internalID: 0
-      firstFrame: 0
-      lastFrame: 20
+      firstFrame: 1.8
+      lastFrame: 64.7
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -734,7 +737,7 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
