@@ -186,6 +186,26 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 1128310399}
+    - target: {fileID: 1876844658027874699, guid: 0698129894297488da2aeaafbdd39f07, type: 3}
+      propertyPath: maxPosDiffY
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876844658027874699, guid: 0698129894297488da2aeaafbdd39f07, type: 3}
+      propertyPath: maxPosDiffZ
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876844658027874699, guid: 0698129894297488da2aeaafbdd39f07, type: 3}
+      propertyPath: minPosDiffZ
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876844658027874699, guid: 0698129894297488da2aeaafbdd39f07, type: 3}
+      propertyPath: sensitivityY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876844658027874699, guid: 0698129894297488da2aeaafbdd39f07, type: 3}
+      propertyPath: sensitivityZ
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0698129894297488da2aeaafbdd39f07, type: 3}
 --- !u!114 &213980780 stripped
@@ -429,6 +449,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4952749949799574117, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
+      propertyPath: cc
+      value: 
+      objectReference: {fileID: 1128310398}
+    - target: {fileID: 4952749949799574117, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
       propertyPath: IAH
       value: 
       objectReference: {fileID: 2053246087}
@@ -459,6 +483,10 @@ PrefabInstance:
     - target: {fileID: 6870303118324712725, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7944660359503159917, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
+      propertyPath: m_IsOn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a4b8454d98554ecdabf217c0a35fd3f, type: 3}
@@ -1377,6 +1405,10 @@ PrefabInstance:
     - target: {fileID: 5506548701701257271, guid: 2e7a946de7ba24949a41731859c95ba3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088932797006903059, guid: 2e7a946de7ba24949a41731859c95ba3, type: 3}
+      propertyPath: targetFPS
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e7a946de7ba24949a41731859c95ba3, type: 3}

@@ -12,24 +12,20 @@ public class CameraTarget : MonoBehaviour
 
     // For transitioning
     [SerializeField] Camera mainCam;
-    [SerializeField] float sensitivity;
-    [SerializeField] float minViewportY;
-    [SerializeField] float maxViewportY;
+    // -1 for any of the sensitivities means just stick
+    [SerializeField] float sensitivityY;
+    [SerializeField] float sensitivityX;
+    [SerializeField] float sensitivityZ;
     [SerializeField] float maxPosDiffY;
     [SerializeField] float minPosDiffY;
+    [SerializeField] float maxPosDiffX;
+    [SerializeField] float minPosDiffX;
+    [SerializeField] float maxPosDiffZ;
+    [SerializeField] float minPosDiffZ;
 
     private void Awake()
     {
         ResetToPlayerCenter();
-    }
-
-    /// <summary>
-    /// Moves vertically by one frame according to the current position of the
-    /// player relative to the target.
-    /// </summary>
-    public void Adjust()
-    {
-        AdjustToCamTarget();
     }
 
     /// <summary>
@@ -41,27 +37,48 @@ public class CameraTarget : MonoBehaviour
     }
 
     /// <summary>
-    /// Executes the details of vertically moving the target by one frame
-    /// according to the current position of the player relative to the target.
+    /// Moves vertically by one frame according to the current position of the
+    /// player relative to the target.
     /// </summary>
-    private void AdjustToCamTarget()
+    public void Adjust()
     {
-        float myYChange = 0;
-        float yDiff = player.position.y - transform.position.y;
+        Vector3 mainCamTransformFwdXZ = mainCam.transform.forward;
+        mainCamTransformFwdXZ.y = 0;
+        Vector3 mainCamTransformRightXZ = mainCam.transform.right;
+        mainCamTransformRightXZ.y = 0;
+        // How far is player ahead of camera target
+        Vector3 distRawXZ = new Vector3(player.position.x - transform.position.x, 0, player.position.z - transform.position.z);
+        // X and Z player aheadness relative to cam.transform.forward.xz
+        float xDistanceRelative = Mathf.Cos(Vector3.Angle(distRawXZ, mainCamTransformRightXZ) * Mathf.Deg2Rad) * distRawXZ.magnitude;
+        float zDistanceRelative = Mathf.Cos(Vector3.Angle(distRawXZ, mainCamTransformFwdXZ) * Mathf.Deg2Rad) * distRawXZ.magnitude;
+        // How much should this pos change
+        float yChange = AdjustToCamTarget(minPosDiffY, maxPosDiffY, player.position.y - transform.position.y);
+        float xChange = AdjustToCamTarget(minPosDiffX, maxPosDiffX, xDistanceRelative);
+        float zChange = AdjustToCamTarget(minPosDiffZ, maxPosDiffZ, zDistanceRelative);
+        transform.position +=
+            (zChange * sensitivityZ * mainCamTransformFwdXZ * Time.deltaTime) +
+            (xChange * sensitivityX * mainCamTransformRightXZ * Time.deltaTime) +
+            (yChange * sensitivityY * Vector3.up * Time.deltaTime);
+    }
 
-        if (yDiff > maxPosDiffY) // If player too high
+    /// <summary>
+    /// Gives the amount that a certain axis should change, depending on how far
+    /// the player is ahead in that axis, and the minimum/maximum distance from
+    /// this object that the player should be
+    /// </summary>
+    private float AdjustToCamTarget(float minDiff, float maxDiff, float diff)
+    {
+        float axisChange = 0;
+
+        if (diff > maxDiff) // If player too high
         {
-            myYChange = Mathf.Pow(yDiff, 2);
+            axisChange = Mathf.Pow(diff - maxDiff, 2);
         }
-        else if (yDiff < minPosDiffY) // If player too low
+        else if (diff < minDiff) // If player too low
         {
-            myYChange = -Mathf.Pow(yDiff, 2);
+            axisChange = -Mathf.Pow(diff - minDiff, 2);
         }
 
-        transform.position =
-            new Vector3(
-                player.position.x,
-                transform.position.y + (myYChange * sensitivity * Time.deltaTime),
-                player.position.z);
+        return axisChange;
     }
 }

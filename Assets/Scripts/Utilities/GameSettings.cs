@@ -11,6 +11,6 @@ public class GameSettings : MonoBehaviour
 
     private void LateUpdate()
     {
-        Application.targetFrameRate = 120;
+        Application.targetFrameRate = targetFPS;
     }
 }
