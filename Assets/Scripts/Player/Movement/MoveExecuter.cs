@@ -124,7 +124,7 @@ public class MoveExecuter : MonoBehaviour
     /// </summary>
     private Vector3 DirectionOfMovement(Vector2 horizMovement)
     {
-        if (!moveThisFrame.AdjustToSlope() || PlayerSlopeHandler.BeyondMaxAngle) return new Vector3(horizMovement.x, 0, horizMovement.y).normalized;
+        if (!moveThisFrame.AdjustToSlope() || PlayerSlopeHandler.ShouldSlide) return new Vector3(horizMovement.x, 0, horizMovement.y).normalized;
 
         float horizAngleFaced = Mathf.Atan2(horizMovement.y, horizMovement.x);
 

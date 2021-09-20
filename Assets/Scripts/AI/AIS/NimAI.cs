@@ -108,7 +108,7 @@ public class NimAI : MonoBehaviour, IBehaviour
         //Check to see if should transition first
         if (Vector2.Distance(pos, playerPos) <= profile.AggroDistance)
         {
-            Debug.Log("chase");
+            //Debug.Log("chase");
             initialState = AIState.PATROL;
             nextState = AIState.CHASE;
             state = AIState.TRANSITION;
@@ -117,7 +117,7 @@ public class NimAI : MonoBehaviour, IBehaviour
         //check if you should be returning
         if (Vector2.Distance(pos, initialPos2D) > PatrolRadius)
         {
-            Debug.Log("Returning" + Vector2.Distance(pos, initialPos2D));
+            //Debug.Log("Returning" + Vector2.Distance(pos, initialPos2D));
             agent.SetDestination(initialPosition);
             returning = true;
         }
@@ -139,7 +139,7 @@ public class NimAI : MonoBehaviour, IBehaviour
                 //Check if waypoints should switch
                 if (Vector2.Distance(pos, currentDest) < DistanceToSwitchWaypoints || returning)
                 {
-                    Debug.Log("switching waypoints");
+                    //Debug.Log("switching waypoints");
                     returning = false;
                     bool foundWaypoint = false;
                     Vector3 result = Vector3.zero;
@@ -201,13 +201,13 @@ public class NimAI : MonoBehaviour, IBehaviour
         Vector2 pos = new Vector2(transform.position.x, transform.position.z);
         Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.z);
 
-        Debug.Log("aggro" + Vector2.Distance(pos, playerPos));
+        //Debug.Log("aggro" + Vector2.Distance(pos, playerPos));
 
         //Check to see if should transition first
         if (Vector2.Distance(pos, playerPos) > profile.AggroDistance)
         {
 
-            Debug.Log("no longer aggro");
+            //Debug.Log("no longer aggro");
             nextState = AIState.PATROL;
             initialState = AIState.CHASE;
             state = AIState.TRANSITION;

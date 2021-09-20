@@ -115,6 +115,10 @@ public class TripleJump : AMove
         {
             return new Swim(mii, mi, movementSettings, horizVector);
         }
+        if (PlayerSlopeHandler.ShouldSlide)
+        {
+            return new Slide(mii, mi, movementSettings, horizVector);
+        }
         if (mi.TouchingGround())
         {
             return new Run(mii, mi, movementSettings, horizVector);

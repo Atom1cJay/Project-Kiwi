@@ -52,10 +52,9 @@ public class Idle : AMove
         {
             return new Swim(mii, mi, movementSettings, Vector2.zero);
         }
-        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
+        if (PlayerSlopeHandler.ShouldSlide && mi.TouchingGround())
         {
-            return new Fall(mii, mi, movementSettings, Vector2.zero, true);
-            //return new Slide(mii, mi, movementSettings, Vector2.zero);
+            return new Slide(mii, mi, movementSettings, Vector2.zero);
         }
         if (mii.GetHorizontalInput().magnitude != 0)
         {

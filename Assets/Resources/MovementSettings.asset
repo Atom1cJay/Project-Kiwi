@@ -30,7 +30,7 @@ MonoBehaviour:
   jumpUncancelledGravityIncrease: 150
   jumpCancelledGravityIncrease: 120
   jumpVelocityOfNoReturn: 1.5
-  jumpMinVel: -30
+  jumpMinVel: -24
   jumpSensitivityX: 8
   jumpAdjustSensitivityX: 40
   jumpGravityX: 11
@@ -55,8 +55,8 @@ MonoBehaviour:
   tjMinJumpTime: 0.3
   tjMaxJumpTime: 1.5
   tjMaxDissonance: 0.5
-  horizBoostMinGravity: 10
-  horizBoostMaxGravity: 16
+  horizBoostMinGravity: 9
+  horizBoostMaxGravity: 14
   horizBoostChargeGravity: 0.5
   horizBoostChargeRotationSpeed: 60
   horizBoostEndGravity: 20
@@ -97,8 +97,9 @@ MonoBehaviour:
   boostAftermathRotationSpeed: 50
   diveRotationSpeed: 50
   groundBoostRotationSpeed: 400
-  slideForce: 0.25
-  slideMaxSpeed: 12
+  slideForceToZero: 0.5
+  slideForceNegative: 0.18
+  slideMaxSpeed: 15
   slideRecoveryPace: 2
   glideRotationSpeed: 700
   glideAirLoss: 1.5

@@ -65,10 +65,9 @@ public class Dive : AMove
         {
             return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
-        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
+        if (PlayerSlopeHandler.ShouldSlide && mi.TouchingGround())
         {
-            return this;
-            //return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
+            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
         else if (mi.TouchingGround() && mii.GetHorizontalInput().magnitude > 0)
         {

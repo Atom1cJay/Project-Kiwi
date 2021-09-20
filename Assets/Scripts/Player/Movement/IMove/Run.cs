@@ -100,6 +100,10 @@ public class Run : AMove
         {
             return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
+        if (PlayerSlopeHandler.ShouldSlide)
+        {
+            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
         else if (horizVel == 0)
         {
             return new Idle(mii, mi, movementSettings);
@@ -116,7 +120,7 @@ public class Run : AMove
         {
             return new Jump(mii, mi, movementSettings, horizVel);
         }
-        if ((!mi.TouchingGround() || PlayerSlopeHandler.BeyondMaxAngle) && !PlayerSlopeHandler.GroundInProximity)
+        if (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity)
         {
             return new Fall(mii, mi, movementSettings, ForwardMovement(horizVel), true);
         }

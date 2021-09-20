@@ -45,7 +45,7 @@ public class HelplessFall : AMove
         {
             return new Swim(mii, mi, movementSettings, horizVector);
         }
-        if (PlayerSlopeHandler.BeyondMaxAngle)
+        if (PlayerSlopeHandler.ShouldSlide)
         {
             return new Slide(mii, mi, movementSettings, horizVector);
         }

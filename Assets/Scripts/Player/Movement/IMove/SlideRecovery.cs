@@ -56,7 +56,7 @@ public class SlideRecovery : AMove
         {
             return new Idle(mii, mi, movementSettings);
         }
-        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
+        if (PlayerSlopeHandler.ShouldSlide && mi.TouchingGround())
         {
             return new Slide(mii, mi, movementSettings, horizVector);
         }

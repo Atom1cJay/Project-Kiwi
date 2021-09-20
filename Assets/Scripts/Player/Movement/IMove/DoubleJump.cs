@@ -145,10 +145,9 @@ public class DoubleJump : AMove
         {
             return new Swim(mii, mi, movementSettings, horizVector);
         }
-        if (PlayerSlopeHandler.BeyondMaxAngle && mi.TouchingGround())
+        if (PlayerSlopeHandler.ShouldSlide && mi.TouchingGround())
         {
-            return this;
-            //return new Slide(mii, mi, movementSettings, horizVector/*ForwardMovement(horizVel)*/);
+            return new Slide(mii, mi, movementSettings, horizVector/*ForwardMovement(horizVel)*/);
         }
         if (glidePending)
         {

@@ -9,10 +9,12 @@ public class ExperimentalObstacleHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-       if (physicsCollider.transform.localPosition != Vector3.zero)
-       {
-            transform.Translate(physicsCollider.transform.localPosition);
-            physicsCollider.transform.localPosition = Vector3.zero;
-       }
+        HandleBumperMoved();
+    }
+
+    public void HandleBumperMoved()
+    {
+        transform.Translate(physicsCollider.transform.localPosition);
+        physicsCollider.transform.localPosition = Vector3.zero;
     }
 }

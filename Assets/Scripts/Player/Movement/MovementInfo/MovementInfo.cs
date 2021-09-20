@@ -130,11 +130,6 @@ public class MovementInfo : MonoBehaviour
         return lastFiveMoves[4];
     }
 
-    public Vector2 GetAvgSpeed5() // Average speed of the past 5 lateupdates
-    {
-        return lastFiveMovesAccum / 5;
-    }
-
     public Transform GetPlayerTransform()
     {
         return transform;

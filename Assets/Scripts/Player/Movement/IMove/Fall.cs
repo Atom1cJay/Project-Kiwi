@@ -118,11 +118,15 @@ public class Fall : AMove
         {
             return new GroundPound(mii, mi, movementSettings);
         }
-        if (mi.TouchingGround() && !PlayerSlopeHandler.BeyondMaxAngle && horizVector.magnitude > 0)
+        if (PlayerSlopeHandler.ShouldSlide)
+        {
+            return new Slide(mii, mi, movementSettings, horizVector);
+        }
+        if (mi.TouchingGround() && !PlayerSlopeHandler.ShouldSlide && horizVector.magnitude > 0)
         {
             return new Run(mii, mi, movementSettings, horizVector);
         }
-        if (mi.TouchingGround() && !PlayerSlopeHandler.BeyondMaxAngle && horizVector.magnitude == 0)
+        if (mi.TouchingGround() && !PlayerSlopeHandler.ShouldSlide && horizVector.magnitude == 0)
         {
             return new Idle(mii, mi, movementSettings);
         }

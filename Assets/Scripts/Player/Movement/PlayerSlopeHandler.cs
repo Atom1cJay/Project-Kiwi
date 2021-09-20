@@ -23,19 +23,24 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// </summary>
     public static float ZDeriv { get; private set; }
     /// <summary>
-    /// Is the player on a slope steeper than it can handle?
+    /// Is the player on a slope steep enough that a slide should take place?
     /// </summary>
-    public static bool BeyondMaxAngle { get; private set; }
+    public static bool ShouldSlide { get; private set; }
     /// <summary>
     /// The contact point which the normal used in angle calculations is
     /// reflected off of.
     /// </summary>
     public static Vector3 AngleContactPoint { get; private set; }
 
-    private MovementInfo mi;
-
     [SerializeField] float maxHeightOfContactPoint;
+    /// <summary>
+    /// Slope considered too steep for regular movement
+    /// </summary>
     [SerializeField] float maxSlopeAngle = 60;
+    /// <summary>
+    /// After the player is on a max slope, what is the angle which gets the player back to regular movement
+    /// </summary>
+    [SerializeField] float recoveryAngle = 50;
     [SerializeField] float maxAngleForProximity = 45;
     [SerializeField] float lengthOfNearestGroundRay;
 
@@ -46,13 +51,8 @@ public class PlayerSlopeHandler : MonoBehaviour
         AngleOfSlope = 0;
         XDeriv = 0;
         ZDeriv = 0;
-        BeyondMaxAngle = false;
+        ShouldSlide = false;
         AngleContactPoint = Vector3.zero;
-    }
-
-    private void Start()
-    {
-        mi = GetComponent<MovementInfo>();
     }
 
     private void Update()
@@ -85,7 +85,7 @@ public class PlayerSlopeHandler : MonoBehaviour
             XDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.x));
             ZDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.z));
             AngleOfSlope = GetAngleOfSlope(rchit.normal);
-            DetermineIfBeyondAngle();
+            ShouldSlide = DetermineIfShouldSlide(hit.gameObject);
             AngleContactPoint = rchit.point;
         }
     }
@@ -95,15 +95,19 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// different standards depending on the current max angle because
     /// otherwise, a 45 degree angle would constantly go on and off.
     /// </summary>
-    private void DetermineIfBeyondAngle()
+    private bool DetermineIfShouldSlide(GameObject slopeObj)
     {
-        if (!BeyondMaxAngle)
+        if (!slopeObj.CompareTag("Slidable"))
         {
-            BeyondMaxAngle = maxSlopeAngle < AngleOfSlope;
+            return false;
+        }
+        if (!ShouldSlide)
+        {
+            return maxSlopeAngle < AngleOfSlope;
         }
         else
         {
-            BeyondMaxAngle = maxSlopeAngle < AngleOfSlope + 1;
+            return AngleOfSlope > recoveryAngle;
         }
     }
 
