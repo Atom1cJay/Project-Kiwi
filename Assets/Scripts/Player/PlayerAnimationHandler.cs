@@ -8,9 +8,13 @@ public class PlayerAnimationHandler : MonoBehaviour
     //[SerializeField] MovementMaster mm;
     [SerializeField] Animator animator;
     bool onGround = false;
-    bool diving, startRunning;
+    bool diving, startRunning, canTransitionToIdle, stopping;
+    int transitioningIdle = 0;
     float acceleration = 0f;
     float lastSpeed = 0f;
+    float extraStopTime = 0f;
+    bool resetSlowDown = true;
+    float vertSpeed, jetrunThreshold, fallThreshold;
     string lM, temp, cM;
     //Sets all bools to false except on ground
     void currentMove(string s)
@@ -36,14 +40,19 @@ public class PlayerAnimationHandler : MonoBehaviour
         animator.SetBool("WALKING", false);
         animator.SetBool("STARTRUN", false);
         animator.SetBool("SWIM", false);
+        animator.SetBool("STOPPING", false);
 
         animator.SetBool(s, true);
     }
     void Start()
     {
-        //initialize bools
+        //initialize vars
         diving = false;
+        canTransitionToIdle = true;
+        stopping = false;
         startRunning = false;
+        jetrunThreshold = MovementSettingsSO.Instance.MaxSpeed;
+        fallThreshold = (MovementSettingsSO.Instance.JumpInitVel - MovementSettingsSO.Instance.DefaultGravity * 0.3f);
 
         //Initialize all Animation variables as false
         animator.SetBool("IDLE", false);
@@ -51,7 +60,6 @@ public class PlayerAnimationHandler : MonoBehaviour
         animator.SetBool("WALKING", false);
         animator.SetBool("RUNNING", false);
         animator.SetBool("DIVE", false);
-        animator.SetBool("DIVELANDING", false);
         animator.SetBool("FIRSTJUMP", false);
         animator.SetBool("SECONDJUMP", false);
         animator.SetBool("THIRDJUMP", false);
@@ -67,14 +75,23 @@ public class PlayerAnimationHandler : MonoBehaviour
         animator.SetBool("JETPACKRUN", false);
         animator.SetBool("STARTRUN", false);
         animator.SetBool("SWIM", false);
+        animator.SetBool("STOPPING", false);
+
+
+        animator.SetBool("CANTRANSITIONTOIDLE", canTransitionToIdle);
     }
 
     void FixedUpdate()
     {
+        animator.SetBool("CANTRANSITIONTOIDLE", canTransitionToIdle);
 
         float speed = me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
         StartCoroutine(GetAcceleration(speed));
         temp = me.GetCurrentMove().AsString();
+        vertSpeed = me.GetCurrentMove().GetVertSpeedThisFrame();
+        Debug.Log("threshold " + fallThreshold + " sspeed:" + vertSpeed);
+
+
 
         //move changed
         if (temp != cM)
@@ -95,10 +112,16 @@ public class PlayerAnimationHandler : MonoBehaviour
         {
             startRunning = true;
             onGround = true;
+            resetSlowDown = true;
             if (lM == "dive" && diving)
             {
                 diving = false;
                 currentMove("DIVERECOVERY");
+            }
+            else if (stopping)
+            {
+                StartCoroutine(FinishedStopping(extraStopTime));
+                currentMove("STOPPING");
             }
             else
                 currentMove("IDLE");
@@ -110,33 +133,56 @@ public class PlayerAnimationHandler : MonoBehaviour
         }
         else if (cM == "run")
         {
+
+            //Debug.Log("speed:  " + speed + "bool" + animator.GetBool("STOPPING"));
             onGround = true;
-            if(lM == "idle" && startRunning)
-            {
-                currentMove("STARTRUN");
-                startRunning = false;
-            }
-            else if (lM == "dive" && diving)
+            if (lM == "dive" && diving)
             {
                 diving = false;
                 currentMove("DIVERECOVERY");
+                StartCoroutine(CanTransitionToIdleAgain(1f));
             }
-            else if(speed > 8f && !diving)
+            else if (acceleration <= -15f && speed >= jetrunThreshold * 0.75f)
             {
-                currentMove("JETPACKRUN");
+                //Slow stop
+                if(speed > jetrunThreshold)
+                {
+                    animator.SetFloat("SLOWDOWNTIME", 0.8f);
+                    extraStopTime = 1f;
+                }
+                else
+                {
+                    animator.SetFloat("SLOWDOWNTIME", 0.6f);
+                    extraStopTime = .05f;
+                }
+                currentMove("STOPPING");
+                stopping = true;
             }
-            else if (speed < 3.15f && !diving)
+            else if ((lM == "idle" || lM == "hardturn") && startRunning)
             {
-                if (Mathf.Abs(acceleration) <= 5f)
+
+                StartCoroutine(CanTransitionToIdleAgain(1f));
+                currentMove("STARTRUN");
+                startRunning = false;
+            }
+            else if (speed > jetrunThreshold && !diving)
+            {
+                if(acceleration >= -7.5f)
+                    currentMove("JETPACKRUN");
+            }
+            else if (speed < 4f && !diving && !stopping)
+            {
+                if (Mathf.Abs(acceleration) <= 3f)
                     currentMove("WALKING");
                 else
                     currentMove("RUNNING");
             }
             else
             {
-                currentMove("RUNNING");
-
+                if (acceleration >= -7.5f)
+                    currentMove("RUNNING");
             }
+            diving = false;
         }
         else if (cM == "dive")
         {
@@ -149,18 +195,26 @@ public class PlayerAnimationHandler : MonoBehaviour
         {
             onGround = false;
             currentMove("FIRSTJUMP");
+            if (vertSpeed <= fallThreshold)
+                currentMove("FALLING");
 
         }
         else if (cM == "doublejump")
         {
             onGround = false;
-            currentMove("FIRSTJUMP"); // Temp, while animations are same
+            currentMove("SECONDJUMP"); // Temp, while animations are same
+
+            if (vertSpeed <= fallThreshold)
+                currentMove("FALLING");
 
         }
         else if (cM == "triplejump")
         {
             onGround = false;
             currentMove("THIRDJUMP");
+
+            if (vertSpeed <= fallThreshold)
+                currentMove("FALLING");
 
         }
         else if (cM == "horizairboostcharge")
@@ -172,6 +226,7 @@ public class PlayerAnimationHandler : MonoBehaviour
         else if (cM == "horizairboost")
         {
             onGround = false;
+            StartCoroutine(CanTransitionToIdleAgain(1f));
             currentMove("HBOOST");
 
         }
@@ -196,8 +251,10 @@ public class PlayerAnimationHandler : MonoBehaviour
         else if (cM == "hardturn")
         {
 
+            startRunning = true;
             onGround = true;
             currentMove("HARDTURN");
+            StartCoroutine(CanTransitionToIdleAgain(1f));
         }
 
         else if (cM == "groundpound")
@@ -236,5 +293,25 @@ public class PlayerAnimationHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         acceleration = (me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude - t) / 0.1f;
+    }
+
+    IEnumerator FinishedStopping(float t)
+    {
+        yield return new WaitForSeconds(t);
+        stopping = false;
+    }
+
+    IEnumerator CanTransitionToIdleAgain(float t)
+    {
+        transitioningIdle++;
+        
+        canTransitionToIdle = false;
+        yield return new WaitForSeconds(t);
+        if(transitioningIdle == 1)
+            canTransitionToIdle = true;
+
+        transitioningIdle--;
+
+
     }
 }
