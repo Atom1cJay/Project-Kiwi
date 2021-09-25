@@ -123,7 +123,6 @@ public class Jump : AMove
     public override Vector2 GetHorizSpeedThisFrame()
     {
         return horizVector;
-        //return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()

@@ -89,7 +89,7 @@ public class PlayerAnimationHandler : MonoBehaviour
         StartCoroutine(GetAcceleration(speed));
         temp = me.GetCurrentMove().AsString();
         vertSpeed = me.GetCurrentMove().GetVertSpeedThisFrame();
-        Debug.Log("threshold " + fallThreshold + " sspeed:" + vertSpeed);
+        //Debug.Log("threshold " + fallThreshold + " sspeed:" + vertSpeed);
 
 
 
@@ -202,7 +202,7 @@ public class PlayerAnimationHandler : MonoBehaviour
         else if (cM == "doublejump")
         {
             onGround = false;
-            currentMove("SECONDJUMP"); // Temp, while animations are same
+            currentMove("FIRSTJUMP"); // Temp, while animations are same
 
             if (vertSpeed <= fallThreshold)
                 currentMove("FALLING");

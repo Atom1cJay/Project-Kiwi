@@ -44,8 +44,10 @@ public class CameraTarget : MonoBehaviour
     {
         Vector3 mainCamTransformFwdXZ = mainCam.transform.forward;
         mainCamTransformFwdXZ.y = 0;
+        mainCamTransformFwdXZ = mainCamTransformFwdXZ.normalized;
         Vector3 mainCamTransformRightXZ = mainCam.transform.right;
         mainCamTransformRightXZ.y = 0;
+        mainCamTransformRightXZ = mainCamTransformRightXZ.normalized;
         // How far is player ahead of camera target
         Vector3 distRawXZ = new Vector3(player.position.x - transform.position.x, 0, player.position.z - transform.position.z);
         // X and Z player aheadness relative to cam.transform.forward.xz

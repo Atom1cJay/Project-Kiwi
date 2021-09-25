@@ -93,6 +93,7 @@ public abstract class AMove : IMove
         float playerAngle = mi.GetPlayerTransform().eulerAngles.y * Mathf.Deg2Rad;
         float vectorAngle = (-Mathf.Atan2(horizVector.y, horizVector.x)) + (Mathf.PI / 2);
         float angleDifference = playerAngle - vectorAngle;
+        Debug.Log(angleDifference);
         return Mathf.Cos(angleDifference) * horizVector.magnitude;
     }
 }
