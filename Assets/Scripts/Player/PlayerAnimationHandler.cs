@@ -51,8 +51,8 @@ public class PlayerAnimationHandler : MonoBehaviour
         canTransitionToIdle = true;
         stopping = false;
         startRunning = false;
-        jetrunThreshold = MovementSettingsSO.Instance.MaxSpeed;
-        fallThreshold = (MovementSettingsSO.Instance.JumpInitVel - MovementSettingsSO.Instance.DefaultGravity * 0.3f);
+        jetrunThreshold = MovementSettingsSO.Instance.MaxSpeed + 1f;
+        fallThreshold = (MovementSettingsSO.Instance.JumpInitVel - MovementSettingsSO.Instance.DefaultGravity * 0.2f);
 
         //Initialize all Animation variables as false
         animator.SetBool("IDLE", false);
@@ -138,11 +138,11 @@ public class PlayerAnimationHandler : MonoBehaviour
             onGround = true;
             if (lM == "dive" && diving)
             {
-                diving = false;
+                StartCoroutine(FinishedDiving(0.12f));
                 currentMove("DIVERECOVERY");
-                StartCoroutine(CanTransitionToIdleAgain(1f));
+                StartCoroutine(CanTransitionToIdleAgain(.25f));
             }
-            else if (acceleration <= -15f && speed >= jetrunThreshold * 0.75f)
+            else if (acceleration <= -15f && speed >= jetrunThreshold * 0.6f && !diving)
             {
                 //Slow stop
                 if(speed > jetrunThreshold)
@@ -161,7 +161,7 @@ public class PlayerAnimationHandler : MonoBehaviour
             else if ((lM == "idle" || lM == "hardturn") && startRunning)
             {
 
-                StartCoroutine(CanTransitionToIdleAgain(1f));
+                StartCoroutine(CanTransitionToIdleAgain(.25f));
                 currentMove("STARTRUN");
                 startRunning = false;
             }
@@ -182,7 +182,6 @@ public class PlayerAnimationHandler : MonoBehaviour
                 if (acceleration >= -7.5f)
                     currentMove("RUNNING");
             }
-            diving = false;
         }
         else if (cM == "dive")
         {
@@ -299,6 +298,12 @@ public class PlayerAnimationHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(t);
         stopping = false;
+    }
+
+    IEnumerator FinishedDiving(float t)
+    {
+        yield return new WaitForSeconds(t);
+        diving = false;
     }
 
     IEnumerator CanTransitionToIdleAgain(float t)
