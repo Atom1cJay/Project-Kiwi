@@ -4,7 +4,7 @@ using System.Collections;
 
 public class HorizAirBoost : AMove
 {
-    readonly float gravity;
+    float gravity;
     float vertVel;
     float horizVel;
     bool divePending;
@@ -34,6 +34,9 @@ public class HorizAirBoost : AMove
     public override void AdvanceTime()
     {
         // Vertical
+        gravity += movementSettings.HorizBoostGravityIncRate * Time.deltaTime;
+        if (gravity > movementSettings.HorizBoostMaxGravity)
+            gravity = movementSettings.HorizBoostMaxGravity;
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
         if (mii.PressingBoost())
@@ -69,6 +72,10 @@ public class HorizAirBoost : AMove
 
     public override float GetRotationSpeed()
     {
+        if (divePending)
+        {
+            return float.MaxValue;
+        }
         return mii.AirReverseInput() ? 0 : movementSettings.HorizBoostRotation;
     }
 

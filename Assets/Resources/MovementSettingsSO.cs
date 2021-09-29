@@ -74,6 +74,7 @@ public class MovementSettingsSO : ScriptableObject
     [Header("Horiz Boost Settings")]
     [SerializeField] float horizBoostMinGravity;
     [SerializeField] float horizBoostMaxGravity;
+    [SerializeField] float horizBoostGravityIncRate;
     [SerializeField] float horizBoostChargeGravity;
     [SerializeField] float horizBoostChargeRotationSpeed;
     [SerializeField] float horizBoostEndGravity;
@@ -224,6 +225,7 @@ public class MovementSettingsSO : ScriptableObject
 
     public float HorizBoostMinGravity { get { return horizBoostMinGravity; } }
     public float HorizBoostMaxGravity { get { return horizBoostMaxGravity; } }
+    public float HorizBoostGravityIncRate { get { return horizBoostGravityIncRate; } }
     public float HorizBoostChargeGravity { get { return horizBoostChargeGravity; } }
     public float HorizBoostEndGravity { get { return horizBoostEndGravity; } }
     public float HorizBoostMaxChargeTime { get { return horizBoostMaxChargeTime; } }
