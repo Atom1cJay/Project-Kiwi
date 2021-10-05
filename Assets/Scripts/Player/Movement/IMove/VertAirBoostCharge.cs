@@ -38,7 +38,7 @@ public class VertAirBoostCharge : AMove
         timeActive += Time.deltaTime;
         // Vertical
         float gravityType = (vertVel > 0) ?
-            movementSettings.DefaultGravity : movementSettings.HorizBoostChargeGravity;
+            movementSettings.DefaultGravity : movementSettings.VertBoostChargeGravity;
         vertVel -= gravityType * Time.fixedDeltaTime;
         // Horizontal
         horizVel = InputUtils.SmoothedInput(

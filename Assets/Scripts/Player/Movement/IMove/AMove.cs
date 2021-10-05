@@ -6,6 +6,7 @@ public abstract class AMove : IMove
     protected readonly MovementSettingsSO movementSettings;
     protected readonly MovementInfo mi;
     protected readonly MovementInputInfo mii;
+    protected static float pushMaintainTimeLeft { get; private set; }
 
     protected AMove(MovementSettingsSO movementSettings, MovementInfo mi,
         MovementInputInfo mii)
@@ -93,7 +94,32 @@ public abstract class AMove : IMove
         float playerAngle = mi.GetPlayerTransform().eulerAngles.y * Mathf.Deg2Rad;
         float vectorAngle = (-Mathf.Atan2(horizVector.y, horizVector.x)) + (Mathf.PI / 2);
         float angleDifference = playerAngle - vectorAngle;
-        Debug.Log(angleDifference);
         return Mathf.Cos(angleDifference) * horizVector.magnitude;
+    }
+
+    // Starts the timer for push maintain time. The way this timer's state
+    // is handled depends on the move.
+    protected void StartPushMaintainTime()
+    {
+        pushMaintainTimeLeft = movementSettings.PushSpeedMaintainTime;
+        MonobehaviourUtils.Instance.EndCoroutine(WaitForPushMaintainEnd());
+        MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForPushMaintainEnd());
+    }
+
+    // Starts the timer for push maintain time. The way this timer's state
+    // is handled depends on the move.
+    protected void EndPushMaintainTime()
+    {
+        pushMaintainTimeLeft = 0;
+    }
+
+    IEnumerator WaitForPushMaintainEnd()
+    {
+        while (pushMaintainTimeLeft > 0)
+        {
+            pushMaintainTimeLeft -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        pushMaintainTimeLeft = 0;
     }
 }

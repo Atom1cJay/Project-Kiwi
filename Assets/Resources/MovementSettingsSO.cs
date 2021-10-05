@@ -12,9 +12,11 @@ public class MovementSettingsSO : ScriptableObject
     /// Serialized, private variables
     [Header("Run Settings")]
     [SerializeField] float maxSpeed;
+    [SerializeField] float maxSpeedAbsolute;
     [SerializeField] float runSensitivityX;
     [SerializeField] float runGravityX;
     [SerializeField] float runGravityXOverTopSpeed;
+    [SerializeField] float runGravityXOverTopSpeedNoInput;
 
     [Header("Air Settings")]
     [SerializeField] float airSensitivityX;
@@ -42,6 +44,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float jumpAdjustSensitivityX;
     [SerializeField] float jumpGravityX;
     [SerializeField] float jumpSensitivityReverseX;
+    [SerializeField] float jumpSpeedDecRateOverMaxSpeed;
 
     [Header("Coyote Time Settings")]
     [SerializeField] float reverseCoyoteTime;
@@ -65,7 +68,7 @@ public class MovementSettingsSO : ScriptableObject
 
     [Header("Triple Jump Activator Settings")]
     [SerializeField] float tjMaxBreakSpeed;
-    [SerializeField] float tjMinHorizInputMagnitude; 
+    [SerializeField] float tjMinHorizInputMagnitude;
     [SerializeField] float tjMaxTimeBtwnJumps;
     [SerializeField] float tjMinJumpTime;
     [SerializeField] float tjMaxJumpTime;
@@ -75,7 +78,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float horizBoostMinGravity;
     [SerializeField] float horizBoostMaxGravity;
     [SerializeField] float horizBoostGravityIncRate;
-    [SerializeField] float horizBoostChargeGravity;
+    [SerializeField] float horizBoostChargeVertNeutralizeTime;
     [SerializeField] float horizBoostChargeRotationSpeed;
     [SerializeField] float horizBoostEndGravity;
     [SerializeField] float horizBoostMaxChargeTime;
@@ -83,8 +86,10 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float horizBoostRotation;
     [SerializeField] float horizBoostAirReverseGravity;
     [SerializeField] float horizBoostNonAirReverseGravity;
-    [SerializeField] float horizBoostMinActivationX;
-    [SerializeField] float horizBoostMaxActivationX;
+    [SerializeField] float horizBoostMinActivationBoostX;
+    [SerializeField] float horizBoostMaxActivationBoostX;
+    [SerializeField] float horizBoostMinActivationBoostGroundX;
+    [SerializeField] float horizBoostMaxActivationBoostGroundX;
     [SerializeField] float horizBoostSpeedX;
     [SerializeField] float horizBoostChargeGravityX;
     [SerializeField] float horizBoostToGroundBoostSensitivity;
@@ -93,11 +98,20 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float vertBoostChargeGravityX;
     [SerializeField] float vertBoostMinVel;
     [SerializeField] float vertBoostMaxVel;
+    [SerializeField] float vertBoostChargeGravity;
     [SerializeField] float vertBoostGravity;
     [SerializeField] float vertBoostMaxChargeTime;
     [SerializeField] float vertBoostMaxTime;
     [SerializeField] float vertBoostRotationSpeed;
     [SerializeField] float vertBoostMaxSpeedX;
+
+    [Header("Push Boost Settings")]
+    [SerializeField] float pushSpeedDecRate;
+    [SerializeField] float pushIdealResetRate;
+    [SerializeField] float pushMaxHoldTime;
+    [SerializeField] float pushSpeedIncMin;
+    [SerializeField] float pushSpeedIncMax;
+    [SerializeField] float pushSpeedMaintainTime;
 
     [Header("Ground Boost Settings")]
     [SerializeField] float groundBoostMaxSpeedX;
@@ -125,6 +139,7 @@ public class MovementSettingsSO : ScriptableObject
     [Header("Rotation Settings")]
     [SerializeField] float instantRotationSpeed;
     [SerializeField] float groundRotationSpeed;
+    [SerializeField] float groundRotationSpeedMaxXSpeed;
     [SerializeField] float airRotationSpeed;
     [SerializeField] float boostAftermathRotationSpeed;
     [SerializeField] float diveRotationSpeed;
@@ -172,9 +187,11 @@ public class MovementSettingsSO : ScriptableObject
 
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
+    public float MaxSpeedAbsolute { get { return maxSpeedAbsolute; } }
     public float RunSensitivityX { get { return runSensitivityX; } }
     public float RunGravityX { get { return runGravityX; } }
     public float RunGravityXOverTopSpeed { get { return runGravityXOverTopSpeed; } }
+    public float RunGravityXOverTopSpeedNoInput { get { return runGravityXOverTopSpeedNoInput; } }
 
     public float AirSensitivityX { get { return airSensitivityX; } }
     public float AirGravityX { get { return airGravityX; } }
@@ -198,6 +215,7 @@ public class MovementSettingsSO : ScriptableObject
     public float JumpAdjustSensitivityX { get { return jumpAdjustSensitivityX; } }
     public float JumpSensitivityReverseX { get { return jumpSensitivityReverseX; } }
     public float JumpGravityX { get { return jumpGravityX; } }
+    public float JumpSpeedDecRateOverMaxSpeed { get { return jumpSpeedDecRateOverMaxSpeed; } }
 
     public float ReverseCoyoteTime { get { return reverseCoyoteTime; } }
     public float CoyoteTime { get { return coyoteTime; } }
@@ -226,7 +244,7 @@ public class MovementSettingsSO : ScriptableObject
     public float HorizBoostMinGravity { get { return horizBoostMinGravity; } }
     public float HorizBoostMaxGravity { get { return horizBoostMaxGravity; } }
     public float HorizBoostGravityIncRate { get { return horizBoostGravityIncRate; } }
-    public float HorizBoostChargeGravity { get { return horizBoostChargeGravity; } }
+    public float HorizBoostChargeVertNeutralizeTime { get { return horizBoostChargeVertNeutralizeTime; } }
     public float HorizBoostEndGravity { get { return horizBoostEndGravity; } }
     public float HorizBoostMaxChargeTime { get { return horizBoostMaxChargeTime; } }
     public float HorizBoostChargeRotationSpeed { get { return horizBoostChargeRotationSpeed; } }
@@ -234,8 +252,10 @@ public class MovementSettingsSO : ScriptableObject
     public float HorizBoostRotation { get { return horizBoostRotation; } }
     public float HorizBoostAirReverseGravity { get { return horizBoostAirReverseGravity; } }
     public float HorizBoostNonAirReverseGravity { get { return horizBoostNonAirReverseGravity; } }
-    public float HorizBoostMinActivationX { get { return horizBoostMinActivationX; } }
-    public float HorizBoostMaxActivationX { get { return horizBoostMaxActivationX; } }
+    public float HorizBoostMinActivationBoostX { get { return horizBoostMinActivationBoostX; } }
+    public float HorizBoostMaxActivationBoostX { get { return horizBoostMaxActivationBoostX; } }
+    public float HorizBoostMinActivationBoostGroundX { get { return horizBoostMinActivationBoostGroundX; } }
+    public float HorizBoostMaxActivationBoostGroundX { get { return horizBoostMaxActivationBoostGroundX; } }
     public float HorizBoostSpeedX { get { return horizBoostSpeedX; } }
     public float HorizBoostChargeGravityX { get { return horizBoostChargeGravityX; } }
     public float HorizBoostToGroundBoostSensitivity { get { return horizBoostToGroundBoostSensitivity; } }
@@ -243,11 +263,14 @@ public class MovementSettingsSO : ScriptableObject
     public float VertBoostMinVel { get { return vertBoostMinVel; } }
     public float VertBoostMaxVel { get { return vertBoostMaxVel; } }
     public float VertBoostGravity { get { return vertBoostGravity; } }
+    public float VertBoostChargeGravity { get { return vertBoostChargeGravity; } }
     public float VertBoostMaxChargeTime { get { return vertBoostMaxChargeTime; } }
     public float VertBoostMaxTime { get { return vertBoostMaxTime; } }
     public float VertBoostRotationSpeed { get { return vertBoostRotationSpeed; } }
     public float VertBoostMaxSpeedX { get { return vertBoostMaxSpeedX; } }
     public float VertBoostChargeGravityX { get { return vertBoostChargeGravityX; } }
+
+    public float PushSpeedMaintainTime { get { return pushSpeedMaintainTime; } }
 
     public float GroundBoostMaxSpeedX { get { return groundBoostMaxSpeedX; } }
     public float GroundBoostSensitivityX { get { return groundBoostSensitivityX; } }
@@ -269,6 +292,7 @@ public class MovementSettingsSO : ScriptableObject
 
     public float InstantRotationSpeed { get { return instantRotationSpeed; } }
     public float GroundRotationSpeed { get { return groundRotationSpeed; } }
+    public float GroundRotationSpeedMaxXSpeed { get { return groundRotationSpeedMaxXSpeed; } }
     public float AirRotationSpeed { get { return airRotationSpeed; } }
     public float BoostAftermathRotationSpeed { get { return boostAftermathRotationSpeed; } }
     public float DiveRotationSpeed { get { return diveRotationSpeed; } }

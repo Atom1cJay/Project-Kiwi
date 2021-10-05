@@ -16,6 +16,7 @@ public class Jump : AMove
     bool jumpTimeShouldBreakTJ;
     bool glidePending;
     bool swimPending;
+    bool pushPending;
     Vector2 horizVector;
 
     /// <summary>
@@ -36,7 +37,7 @@ public class Jump : AMove
         vertVel = movementSettings.JumpInitVel;
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
-        mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
+        mii.OnPushPress.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
         if (mi.GetWaterDetector() != null)
@@ -75,7 +76,11 @@ public class Jump : AMove
         horizVector = horizVector.normalized * startingMagn;
         bool inReverse = (horizVector + mii.GetRelativeHorizontalInputToCamera()).magnitude < horizVector.magnitude;
         // Choose which type of sensitivity to employ
-        if (horizVector.magnitude < movementSettings.MaxSpeed)
+        if (pushMaintainTimeLeft > 0)
+        {
+            // Do nothing, maintain speed
+        }
+        else if (horizVector.magnitude < movementSettings.MaxSpeed)
         {
             horizVector += inReverse ?
                 mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
@@ -84,12 +89,15 @@ public class Jump : AMove
         }
         else if (horizVector.magnitude >= movementSettings.MaxSpeed)
         {
+            float magn = horizVector.magnitude;
             horizVector += inReverse ?
                 mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
                 :
                 mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
+            horizVector = horizVector.normalized * (magn - (movementSettings.JumpSpeedDecRateOverMaxSpeed * Time.deltaTime));
         }
         // Don't let above the magnitude limit
+        /*
         if (!mii.PressingBoost() && horizVector.magnitude > movementSettings.MaxSpeed)
         {
             horizVector = horizVector.normalized * movementSettings.MaxSpeed;
@@ -98,12 +106,18 @@ public class Jump : AMove
         {
             horizVector = horizVector.normalized * movementSettings.GroundBoostMaxSpeedX;
         }
+        */
         // Come to a stop
         if (mii.GetRelativeHorizontalInputToCamera().magnitude < 0.1f)
         {
             float magn = horizVector.magnitude;
             magn -= movementSettings.JumpGravityX * Time.deltaTime;
             horizVector = horizVector.normalized * magn;
+        }
+        // Limit Speed
+        if (horizVector.magnitude > movementSettings.MaxSpeedAbsolute)
+        {
+            horizVector = horizVector.normalized * movementSettings.MaxSpeedAbsolute;
         }
     }
 
@@ -147,11 +161,11 @@ public class Jump : AMove
         }
         if (PlayerSlopeHandler.ShouldSlide && mi.TouchingGround())
         {
-            return new Slide(mii, mi, movementSettings, horizVector/*ForwardMovement(horizVel)*/);
+            return new Slide(mii, mi, movementSettings, horizVector);
         }
         if (glidePending)
         {
-            return new Glidev3(mii, mi, movementSettings, horizVector /*horizVel*/);
+            return new Glidev3(mii, mi, movementSettings, horizVector);
         }
         if (groundPoundPending)
         {
@@ -159,8 +173,8 @@ public class Jump : AMove
         }
         if (mi.TouchingGround() && jumpGroundableTimerComplete && vertVel < 0)
         {
-            if (horizVel < 0) horizVel = 0;
-            return new Run(mii, mi, movementSettings, /*horizVel*/ horizVector);
+            if (horizVel < 0) horizVel = 0; // todo outdated?
+            return new Run(mii, mi, movementSettings, horizVector);
         }
         if (divePending)
         {
@@ -168,11 +182,11 @@ public class Jump : AMove
         }
         if (horizBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
-            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, /*horizVel*/ horizVector);
+            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, horizVector);
         }
         if (vertBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
         {
-            return new VertAirBoostCharge(mii, mi, movementSettings, vertVel, /*horizVel*/ horizVector);
+            return new VertAirBoostCharge(mii, mi, movementSettings, vertVel, horizVector);
         }
 
         return this;

@@ -15,6 +15,8 @@ public class MovementInputInfo : MonoBehaviour
     [HideInInspector] public UnityEvent OnJump;
     [HideInInspector] public UnityEvent OnJumpCancelled;
     [HideInInspector] public UnityEvent OnDiveInput;
+    [HideInInspector] public UnityEvent OnPushPress;
+    [HideInInspector] public UnityEvent OnPushRelease;
     [HideInInspector] public UnityEvent OnHorizBoostCharge;
     [HideInInspector] public UnityEvent OnHorizBoostRelease;
     [HideInInspector] public UnityEvent OnVertBoostCharge;
@@ -33,8 +35,9 @@ public class MovementInputInfo : MonoBehaviour
     {
         movementSettings = MovementSettingsSO.Instance;
         inputActionsHolder.inputActions.Player.Jump.performed += _ => OnJump.Invoke();
+        OnJump.AddListener(() => StartCoroutine(WaitReverseCoyoteTime()));
         inputActionsHolder.inputActions.Player.Jump.canceled += _ => OnJumpCancelled.Invoke();
-        inputActionsHolder.inputActions.Player.Boost.started += _ => OnHorizBoostCharge.Invoke();
+        inputActionsHolder.inputActions.Player.Boost.started += _ => OnPushPress.Invoke();
         inputActionsHolder.inputActions.Player.VertBoost.started += _ => OnVertBoostCharge.Invoke();
         OnVertBoostCharge.AddListener(() => StartCoroutine("WaitForVertBoostRelease"));
         inputActionsHolder.inputActions.Player.Boost.canceled += _ => OnHorizBoostRelease.Invoke();
@@ -43,7 +46,7 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Player.Glide.performed += _ => OnGlide.Invoke();
         inputActionsHolder.inputActions.Player.Glide.canceled += _ => OnGlideRelease.Invoke();
         inputActionsHolder.inputActions.Checkpoint.Respawn.performed += _ => OnRespawnToCheckpointInput.Invoke();
-        OnJump.AddListener(() => StartCoroutine(WaitReverseCoyoteTime()));
+
     }
 
     IEnumerator WaitForVertBoostRelease()

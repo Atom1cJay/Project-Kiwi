@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: MovementSettings
   m_EditorClassIdentifier: 
   maxSpeed: 5.5
+  maxSpeedAbsolute: 11
   runSensitivityX: 8
-  runGravityX: 23
-  runGravityXOverTopSpeed: 10
+  runGravityX: 22
+  runGravityXOverTopSpeed: 1
+  runGravityXOverTopSpeedNoInput: 12
   airSensitivityX: 5
   airGravityX: 7
   airGravityXOverTopSpeed: 4
@@ -33,8 +35,9 @@ MonoBehaviour:
   jumpMinVel: -24
   jumpSensitivityX: 7.5
   jumpAdjustSensitivityX: 22
-  jumpGravityX: 8
+  jumpGravityX: 7
   jumpSensitivityReverseX: 14
+  jumpSpeedDecRateOverMaxSpeed: 1.5
   reverseCoyoteTime: 0.15
   coyoteTime: 0.12
   dissonanceForHardTurn: 1.8
@@ -55,30 +58,39 @@ MonoBehaviour:
   tjMinJumpTime: 0.3
   tjMaxJumpTime: 1.5
   tjMaxDissonance: 0.5
-  horizBoostMinGravity: 5
-  horizBoostMaxGravity: 20
+  horizBoostMinGravity: 4
+  horizBoostMaxGravity: 18
   horizBoostGravityIncRate: 15
-  horizBoostChargeGravity: 0.5
+  horizBoostChargeVertNeutralizeTime: 0.2
   horizBoostChargeRotationSpeed: 40
   horizBoostEndGravity: 25
-  horizBoostMaxChargeTime: 0.5
+  horizBoostMaxChargeTime: 0.35
   horizBoostMaxTime: 0.7
-  horizBoostRotation: 60
-  horizBoostAirReverseGravity: 12
+  horizBoostRotation: 80
+  horizBoostAirReverseGravity: 8
   horizBoostNonAirReverseGravity: 9
-  horizBoostMinActivationX: 9
-  horizBoostMaxActivationX: 13
+  horizBoostMinActivationBoostX: 1.5
+  horizBoostMaxActivationBoostX: 4.5
+  horizBoostMinActivationBoostGroundX: 3
+  horizBoostMaxActivationBoostGroundX: 8
   horizBoostSpeedX: 12
   horizBoostChargeGravityX: 6
   horizBoostToGroundBoostSensitivity: 1
   vertBoostChargeGravityX: 8
   vertBoostMinVel: 6
   vertBoostMaxVel: 11
+  vertBoostChargeGravity: 0.5
   vertBoostGravity: 20
   vertBoostMaxChargeTime: 0.6
   vertBoostMaxTime: 0.7
   vertBoostRotationSpeed: 150
   vertBoostMaxSpeedX: 7
+  pushSpeedDecRate: 0
+  pushIdealResetRate: 0
+  pushMaxHoldTime: 0.25
+  pushSpeedIncMin: 0
+  pushSpeedIncMax: 7
+  pushSpeedMaintainTime: 0.6
   groundBoostMaxSpeedX: 8.5
   groundBoostSensitivityX: 4
   groundBoostGravityX: 1
@@ -94,7 +106,8 @@ MonoBehaviour:
   airReverseMinActivationSpeed: 0
   instantRotationSpeed: 1
   groundRotationSpeed: 600
-  airRotationSpeed: 300
+  groundRotationSpeedMaxXSpeed: 200
+  airRotationSpeed: 700
   boostAftermathRotationSpeed: 50
   diveRotationSpeed: 50
   groundBoostRotationSpeed: 350

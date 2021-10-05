@@ -28,4 +28,9 @@ public class MonobehaviourUtils : MonoBehaviour
         while (cor.MoveNext())
             yield return cor.Current;
     }
+
+    public void EndCoroutine(IEnumerator cor)
+    {
+        StopCoroutine(cor);
+    }
 }

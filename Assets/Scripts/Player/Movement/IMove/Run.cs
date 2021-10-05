@@ -11,6 +11,7 @@ public class Run : AMove
     bool jumpPending;
     bool timeBetweenJumpsBreaksTJ;
     bool swimPending;
+    bool pushPending;
 
     /// <summary>
     /// Constructs a Run, initializing the objects that hold all the
@@ -29,28 +30,45 @@ public class Run : AMove
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitToBreakTimeBetweenJumps());
+        mii.OnPushPress.AddListener(() => pushPending = true);
     }
+
+    /*
+    // Push input received, now start push
+    private void BeginPushMode()
+    {
+        base.StartPushMaintainTime();
+        // Calculate speed as it would be if increased at standard rate
+        float horizVelIncreased = horizVel + movementSettings.PushSpeedIncMax;
+        horizVelIncreased = Mathf.Clamp(horizVelIncreased, 0, movementSettings.MaxSpeedPushed);
+        // Should we do that speed or just the max speed (if std inc speed is too low)
+        horizVel = Mathf.Max(movementSettings.MaxSpeed, horizVelIncreased);
+    }
+    */
 
     public override void AdvanceTime()
     {
-        // Horizontal
-        if (mii.PressingBoost() && horizVel >= movementSettings.MaxSpeed)
+        // Should the push maintain end early?
+        if (mii.GetHorizontalInput().magnitude < 1)
         {
-            horizVel =
-                InputUtils.SmoothedInput(
-                    horizVel,
-                    movementSettings.GroundBoostMaxSpeedX,
-                    movementSettings.GroundBoostSensitivityX,
-                    movementSettings.GroundBoostGravityX);
+            base.EndPushMaintainTime();
+        }
+        // Horizontal 
+        if (pushMaintainTimeLeft > 0) // If maintaining push speed
+        {
+            // Just wait, don't change horizVel
         }
         else if (horizVel > movementSettings.MaxSpeed)
         {
+            // TODO change?
+            float gravityToUse = (mii.GetHorizontalInput().magnitude == 0) ?
+                movementSettings.RunGravityXOverTopSpeedNoInput : movementSettings.RunGravityXOverTopSpeed;
             horizVel =
                 InputUtils.SmoothedInput(
                     horizVel,
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.RunSensitivityX,
-                    movementSettings.RunGravityX);
+                    gravityToUse);
         }
         else
         {
@@ -60,6 +78,10 @@ public class Run : AMove
                     mii.GetHorizontalInput().magnitude * movementSettings.MaxSpeed,
                     movementSettings.RunSensitivityX,
                     movementSettings.RunGravityX);
+        }
+        if (horizVel > movementSettings.MaxSpeedAbsolute)
+        {
+            horizVel = movementSettings.MaxSpeedAbsolute;
         }
     }
 
@@ -86,12 +108,27 @@ public class Run : AMove
 
     public override float GetRotationSpeed()
     {
+        if (horizVel < movementSettings.InstantRotationSpeed)
+        {
+            return float.MaxValue;
+        }
+        if (horizVel <= movementSettings.MaxSpeed)
+        {
+            return movementSettings.GroundRotationSpeed;
+        }
+        // How far is speed between max speed and abs max speed?
+        float propToAbsoluteMax = (horizVel - movementSettings.MaxSpeed) / (movementSettings.MaxSpeedAbsolute - movementSettings.MaxSpeed);
+        return Mathf.Lerp(movementSettings.GroundRotationSpeed, movementSettings.GroundRotationSpeedMaxXSpeed, propToAbsoluteMax);
+        /*
         if (mii.PressingBoost())
         {
             return movementSettings.GroundBoostRotationSpeed;
         }
+        */
+        /*
         return (horizVel < movementSettings.InstantRotationSpeed) ?
             float.MaxValue : movementSettings.GroundRotationSpeed;
+        */
     }
 
     public override IMove GetNextMove()
@@ -99,6 +136,10 @@ public class Run : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
+        if (pushPending)
+        {
+            return new HorizGroundBoostCharge(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
         if (PlayerSlopeHandler.ShouldSlide)
         {

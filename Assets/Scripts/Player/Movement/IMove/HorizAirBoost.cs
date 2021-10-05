@@ -18,11 +18,20 @@ public class HorizAirBoost : AMove
     /// <param name="mii">Information on the player's input</param>
     /// <param name="mi">Information on the state of the player</param>
     /// <param name="ms">Constants related to movement</param>
-    public HorizAirBoost(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float propCharged) : base(ms, mi, mii)
+    public HorizAirBoost(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float propCharged, float vertVel, float horizVel) : base(ms, mi, mii)
     {
         gravity = movementSettings.HorizBoostMinGravity;
-        horizVel = movementSettings.HorizBoostMinActivationX + (propCharged * (movementSettings.HorizBoostMaxActivationX - movementSettings.HorizBoostMinActivationX));
-        vertVel = 0;
+        this.horizVel = horizVel;
+        if (this.horizVel < 0)
+        {
+            this.horizVel = 0;
+        }
+        this.horizVel += movementSettings.HorizBoostMinActivationBoostX + (propCharged * (movementSettings.HorizBoostMaxActivationBoostX - movementSettings.HorizBoostMinActivationBoostX));
+        if (this.horizVel > movementSettings.MaxSpeedAbsolute)
+        {
+            this.horizVel = movementSettings.MaxSpeedAbsolute;
+        }
+        this.vertVel = vertVel;
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         if (mi.GetWaterDetector() != null)
@@ -39,6 +48,7 @@ public class HorizAirBoost : AMove
             gravity = movementSettings.HorizBoostMaxGravity;
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
+        /*
         if (mii.PressingBoost())
         {
             horizVel = InputUtils.SmoothedInput(
@@ -54,10 +64,11 @@ public class HorizAirBoost : AMove
                 0, movementSettings.HorizBoostNonAirReverseGravity);
         }
         else
-        {
-            horizVel = InputUtils.SmoothedInput(
-                horizVel, 0, 0, movementSettings.HorizBoostAirReverseGravity);   
-        }
+        */
+        //{
+        horizVel = InputUtils.SmoothedInput(
+            horizVel, horizVel * mii.GetHorizontalInput().magnitude, 0, movementSettings.HorizBoostAirReverseGravity);
+        //}
     }
 
     public override Vector2 GetHorizSpeedThisFrame()

@@ -22,6 +22,7 @@ public class CameraTarget : MonoBehaviour
     [SerializeField] float minPosDiffX;
     [SerializeField] float maxPosDiffZ;
     [SerializeField] float minPosDiffZ;
+    [SerializeField] float maxMovementEachDir;
 
     private void Awake()
     {
@@ -57,10 +58,20 @@ public class CameraTarget : MonoBehaviour
         float yChange = AdjustToCamTarget(minPosDiffY, maxPosDiffY, player.position.y - transform.position.y);
         float xChange = AdjustToCamTarget(minPosDiffX, maxPosDiffX, xDistanceRelative);
         float zChange = AdjustToCamTarget(minPosDiffZ, maxPosDiffZ, zDistanceRelative);
+        //yChange = Mathf.Clamp(yChange, -maxMovementEachDir, maxMovementEachDir);
+        xChange = Mathf.Clamp(xChange, -maxMovementEachDir, maxMovementEachDir);
+        zChange = Mathf.Clamp(zChange, -maxMovementEachDir, maxMovementEachDir);
+        /*
         transform.position +=
             (zChange * sensitivityZ * mainCamTransformFwdXZ * Time.deltaTime) +
             (xChange * sensitivityX * mainCamTransformRightXZ * Time.deltaTime) +
             (yChange * sensitivityY * Vector3.up * Time.deltaTime);
+        */
+        transform.position +=
+            new Vector3(
+                player.position.x - transform.position.x,
+                yChange * sensitivityY * Time.deltaTime,
+                player.position.z - transform.position.z);
     }
 
     /// <summary>

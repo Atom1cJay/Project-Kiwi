@@ -35,7 +35,7 @@ public class DoubleJump : AMove
         vertVel = movementSettings.JumpInitVel;
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
-        mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
+        mii.OnPushPress.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
         if (mi.GetWaterDetector() != null)
@@ -74,7 +74,11 @@ public class DoubleJump : AMove
         horizVector = horizVector.normalized * startingMagn;
         bool inReverse = (horizVector + mii.GetRelativeHorizontalInputToCamera()).magnitude < horizVector.magnitude;
         // Choose which type of sensitivity to employ
-        if (horizVector.magnitude < movementSettings.MaxSpeed)
+        if (pushMaintainTimeLeft > 0)
+        {
+            // Do nothing, maintain speed
+        }
+        else if (horizVector.magnitude < movementSettings.MaxSpeed)
         {
             horizVector += inReverse ?
                 mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
@@ -83,19 +87,12 @@ public class DoubleJump : AMove
         }
         else if (horizVector.magnitude >= movementSettings.MaxSpeed)
         {
+            float magn = horizVector.magnitude;
             horizVector += inReverse ?
                 mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
                 :
                 mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
-        }
-        // Don't let above the magnitude limit
-        if (!mii.PressingBoost() && horizVector.magnitude > movementSettings.MaxSpeed)
-        {
-            horizVector = horizVector.normalized * movementSettings.MaxSpeed;
-        }
-        if (mii.PressingBoost() && horizVector.magnitude > movementSettings.GroundBoostMaxSpeedX)
-        {
-            horizVector = horizVector.normalized * movementSettings.GroundBoostMaxSpeedX;
+            horizVector = horizVector.normalized * (magn - (movementSettings.JumpSpeedDecRateOverMaxSpeed * Time.deltaTime));
         }
         // Come to a stop
         if (mii.GetRelativeHorizontalInputToCamera().magnitude < 0.1f)
@@ -103,6 +100,11 @@ public class DoubleJump : AMove
             float magn = horizVector.magnitude;
             magn -= movementSettings.JumpGravityX * Time.deltaTime;
             horizVector = horizVector.normalized * magn;
+        }
+        // Limit Speed
+        if (horizVector.magnitude > movementSettings.MaxSpeedAbsolute)
+        {
+            horizVector = horizVector.normalized * movementSettings.MaxSpeedAbsolute;
         }
     }
 

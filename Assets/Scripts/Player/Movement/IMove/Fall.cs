@@ -32,7 +32,7 @@ public class Fall : AMove
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", AllowCoyoteTime());
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
-        mii.OnHorizBoostCharge.AddListener(() => horizBoostChargePending = true);
+        mii.OnPushPress.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
         mii.OnJump.AddListener(() => jumpPending = true);
@@ -57,7 +57,11 @@ public class Fall : AMove
         float startingMagn = Math.Min(horizVector.magnitude, mi.GetEffectiveSpeed().magnitude);
         horizVector = horizVector.normalized * startingMagn;
         // Choose which type of sensitivity to employ
-        if (horizVector.magnitude < movementSettings.MaxSpeed)
+        if (pushMaintainTimeLeft > 0)
+        {
+            // Just wait
+        }
+        else if (horizVector.magnitude < movementSettings.MaxSpeed)
         {
             horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityX * Time.deltaTime;
         }
@@ -66,6 +70,7 @@ public class Fall : AMove
             horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
         }
         // Don't let above the magnitude limit
+        /*
         if (!mii.PressingBoost() && horizVector.magnitude > movementSettings.MaxSpeed)
         {
             horizVector = horizVector.normalized * movementSettings.MaxSpeed;
@@ -74,12 +79,18 @@ public class Fall : AMove
         {
             horizVector = horizVector.normalized * movementSettings.GroundBoostMaxSpeedX;
         }
+        */
         // Come to a stop
         if (mii.GetRelativeHorizontalInputToCamera().magnitude < 0.1f)
         {
             float magn = horizVector.magnitude;
             magn -= movementSettings.JumpGravityX * Time.deltaTime;
             horizVector = horizVector.normalized * magn;
+        }
+        // Limit Speed
+        if (horizVector.magnitude > movementSettings.MaxSpeedAbsolute)
+        {
+            horizVector = horizVector.normalized * movementSettings.MaxSpeedAbsolute;
         }
         // Vertical
         vertVel -= movementSettings.DefaultGravity * Time.deltaTime;
