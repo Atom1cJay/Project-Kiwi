@@ -91,8 +91,6 @@ public class PlayerAnimationHandler : MonoBehaviour
         vertSpeed = me.GetCurrentMove().GetVertSpeedThisFrame();
         //Debug.Log("threshold " + fallThreshold + " sspeed:" + vertSpeed);
 
-
-
         //move changed
         if (temp != cM)
         {

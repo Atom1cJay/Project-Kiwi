@@ -21,7 +21,6 @@ public class MovementSettingsSO : ScriptableObject
     [Header("Air Settings")]
     [SerializeField] float airSensitivityX;
     [SerializeField] float airGravityX;
-    [SerializeField] float airGravityXOverTopSpeed;
 
     [Header("Hard Turn Settings")]
     [SerializeField] float hardTurnGravityX;
@@ -195,7 +194,6 @@ public class MovementSettingsSO : ScriptableObject
 
     public float AirSensitivityX { get { return airSensitivityX; } }
     public float AirGravityX { get { return airGravityX; } }
-    public float AirGravityXOverTopSpeed { get { return airGravityXOverTopSpeed; } }
 
     public float HardTurnGravityX { get { return hardTurnGravityX; } }
 

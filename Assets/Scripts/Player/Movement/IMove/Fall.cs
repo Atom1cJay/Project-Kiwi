@@ -56,18 +56,27 @@ public class Fall : AMove
         // Horizontal
         float startingMagn = Math.Min(horizVector.magnitude, mi.GetEffectiveSpeed().magnitude);
         horizVector = horizVector.normalized * startingMagn;
+        bool inReverse = (horizVector + mii.GetRelativeHorizontalInputToCamera()).magnitude < horizVector.magnitude;
         // Choose which type of sensitivity to employ
         if (pushMaintainTimeLeft > 0)
         {
-            // Just wait
+            // Do nothing, maintain speed
         }
         else if (horizVector.magnitude < movementSettings.MaxSpeed)
         {
-            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityX * Time.deltaTime;
+            horizVector += inReverse ?
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
+                :
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityX * Time.deltaTime;
         }
         else if (horizVector.magnitude >= movementSettings.MaxSpeed)
         {
-            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
+            float magn = horizVector.magnitude;
+            horizVector += inReverse ?
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
+                :
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
+            horizVector = horizVector.normalized * (magn - (movementSettings.JumpSpeedDecRateOverMaxSpeed * Time.deltaTime));
         }
         // Don't let above the magnitude limit
         /*
