@@ -40,6 +40,7 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Player.Boost.started += _ => OnPushPress.Invoke();
         inputActionsHolder.inputActions.Player.VertBoost.started += _ => OnVertBoostCharge.Invoke();
         OnVertBoostCharge.AddListener(() => StartCoroutine("WaitForVertBoostRelease"));
+        inputActionsHolder.inputActions.Player.Boost.performed += _ => OnHorizBoostCharge.Invoke();
         inputActionsHolder.inputActions.Player.Boost.canceled += _ => OnHorizBoostRelease.Invoke();
         inputActionsHolder.inputActions.Player.Dive.performed += _ => OnDiveInput.Invoke();
         inputActionsHolder.inputActions.Player.GroundPound.performed += _ => OnGroundPound.Invoke();

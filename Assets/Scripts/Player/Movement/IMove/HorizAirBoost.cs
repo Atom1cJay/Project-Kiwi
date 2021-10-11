@@ -20,18 +20,10 @@ public class HorizAirBoost : AMove
     /// <param name="ms">Constants related to movement</param>
     public HorizAirBoost(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float propCharged, float vertVel, float horizVel) : base(ms, mi, mii)
     {
+        this.vertVel = vertVel / 8;
         gravity = movementSettings.HorizBoostMinGravity;
-        this.horizVel = horizVel;
-        if (this.horizVel < 0)
-        {
-            this.horizVel = 0;
-        }
-        this.horizVel += movementSettings.HorizBoostMinActivationBoostX + (propCharged * (movementSettings.HorizBoostMaxActivationBoostX - movementSettings.HorizBoostMinActivationBoostX));
-        if (this.horizVel > movementSettings.MaxSpeedAbsolute)
-        {
-            this.horizVel = movementSettings.MaxSpeedAbsolute;
-        }
-        this.vertVel = vertVel;
+        this.horizVel = movementSettings.HorizBoostMinSpeedX + (propCharged * (movementSettings.HorizBoostMaxSpeedX - movementSettings.HorizBoostMinSpeedX));
+        //this.vertVel = vertVel;
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         if (mi.GetWaterDetector() != null)
@@ -56,19 +48,18 @@ public class HorizAirBoost : AMove
                 movementSettings.GroundBoostMaxSpeedX,
                 movementSettings.HorizBoostToGroundBoostSensitivity, 0);
         }
-        else if (!mii.AirReverseInput())
+        */
+        if (!mii.AirReverseInput())
         {
             horizVel = InputUtils.SmoothedInput(
                 horizVel,
                 movementSettings.MaxSpeed * mii.GetHorizontalInput().magnitude,
                 0, movementSettings.HorizBoostNonAirReverseGravity);
         }
-        else
-        */
-        //{
+        else {
         horizVel = InputUtils.SmoothedInput(
             horizVel, horizVel * mii.GetHorizontalInput().magnitude, 0, movementSettings.HorizBoostAirReverseGravity);
-        //}
+        }
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
@@ -98,16 +89,18 @@ public class HorizAirBoost : AMove
         }
         if (mi.TouchingGround())
         {
-            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
+            return new BoostSlide(mii, mi, movementSettings, horizVel);
         }
         if (groundPoundPending)
         {
             return new GroundPound(mii, mi, movementSettings);
         }
+        /*
         if (divePending)
         {
             return new Dive(mii, mi, movementSettings);
         }
+        */
 
         return this;
     }

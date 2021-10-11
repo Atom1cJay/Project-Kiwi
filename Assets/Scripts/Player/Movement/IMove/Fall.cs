@@ -58,11 +58,7 @@ public class Fall : AMove
         horizVector = horizVector.normalized * startingMagn;
         bool inReverse = (horizVector + mii.GetRelativeHorizontalInputToCamera()).magnitude < horizVector.magnitude;
         // Choose which type of sensitivity to employ
-        if (pushMaintainTimeLeft > 0)
-        {
-            // Do nothing, maintain speed
-        }
-        else if (horizVector.magnitude < movementSettings.MaxSpeed)
+        if (horizVector.magnitude < movementSettings.MaxSpeed)
         {
             horizVector += inReverse ?
                 mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime

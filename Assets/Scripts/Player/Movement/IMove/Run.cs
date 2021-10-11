@@ -33,32 +33,10 @@ public class Run : AMove
         mii.OnPushPress.AddListener(() => pushPending = true);
     }
 
-    /*
-    // Push input received, now start push
-    private void BeginPushMode()
-    {
-        base.StartPushMaintainTime();
-        // Calculate speed as it would be if increased at standard rate
-        float horizVelIncreased = horizVel + movementSettings.PushSpeedIncMax;
-        horizVelIncreased = Mathf.Clamp(horizVelIncreased, 0, movementSettings.MaxSpeedPushed);
-        // Should we do that speed or just the max speed (if std inc speed is too low)
-        horizVel = Mathf.Max(movementSettings.MaxSpeed, horizVelIncreased);
-    }
-    */
-
     public override void AdvanceTime()
     {
-        // Should the push maintain end early?
-        if (mii.GetHorizontalInput().magnitude < 1)
-        {
-            base.EndPushMaintainTime();
-        }
         // Horizontal 
-        if (pushMaintainTimeLeft > 0) // If maintaining push speed
-        {
-            // Just wait, don't change horizVel
-        }
-        else if (horizVel > movementSettings.MaxSpeed)
+        if (horizVel > movementSettings.MaxSpeed)
         {
             // TODO change?
             float gravityToUse = (mii.GetHorizontalInput().magnitude == 0) ?
@@ -116,19 +94,9 @@ public class Run : AMove
         {
             return movementSettings.GroundRotationSpeed;
         }
-        // How far is speed between max speed and abs max speed?
+        //return movementSettings.GroundRotationSpeed;
         float propToAbsoluteMax = (horizVel - movementSettings.MaxSpeed) / (movementSettings.MaxSpeedAbsolute - movementSettings.MaxSpeed);
         return Mathf.Lerp(movementSettings.GroundRotationSpeed, movementSettings.GroundRotationSpeedMaxXSpeed, propToAbsoluteMax);
-        /*
-        if (mii.PressingBoost())
-        {
-            return movementSettings.GroundBoostRotationSpeed;
-        }
-        */
-        /*
-        return (horizVel < movementSettings.InstantRotationSpeed) ?
-            float.MaxValue : movementSettings.GroundRotationSpeed;
-        */
     }
 
     public override IMove GetNextMove()
@@ -145,7 +113,7 @@ public class Run : AMove
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
-        else if (horizVel == 0)
+        else if (horizVel == 0 && mii.GetHorizontalInput().magnitude == 0)
         {
             return new Idle(mii, mi, movementSettings);
         }

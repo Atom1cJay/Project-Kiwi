@@ -16,7 +16,6 @@ public class Jump : AMove
     bool jumpTimeShouldBreakTJ;
     bool glidePending;
     bool swimPending;
-    bool pushPending;
     Vector2 horizVector;
 
     /// <summary>
@@ -76,11 +75,7 @@ public class Jump : AMove
         horizVector = horizVector.normalized * startingMagn;
         bool inReverse = (horizVector + mii.GetRelativeHorizontalInputToCamera()).magnitude < horizVector.magnitude;
         // Choose which type of sensitivity to employ
-        if (pushMaintainTimeLeft > 0)
-        {
-            // Do nothing, maintain speed
-        }
-        else if (horizVector.magnitude < movementSettings.MaxSpeed)
+        if (horizVector.magnitude < movementSettings.MaxSpeed)
         {
             horizVector += inReverse ?
                 mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
@@ -90,23 +85,15 @@ public class Jump : AMove
         else if (horizVector.magnitude >= movementSettings.MaxSpeed)
         {
             float magn = horizVector.magnitude;
+            float propToAbsoluteMax = (magn - movementSettings.MaxSpeed) / (movementSettings.MaxSpeedAbsolute - movementSettings.MaxSpeed);
+            // In case the jump is getting adjusted, make sure the sensitivity is appropriate to the speed
+            float jumpAdjustSensitivity = Mathf.Lerp(movementSettings.JumpAdjustSensitivityX, movementSettings.JumpAdjustSensitivityMaxSpeedX, propToAbsoluteMax);
             horizVector += inReverse ?
                 mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
                 :
-                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
+                mii.GetRelativeHorizontalInputToCamera() * jumpAdjustSensitivity * Time.deltaTime;
             horizVector = horizVector.normalized * (magn - (movementSettings.JumpSpeedDecRateOverMaxSpeed * Time.deltaTime));
         }
-        // Don't let above the magnitude limit
-        /*
-        if (!mii.PressingBoost() && horizVector.magnitude > movementSettings.MaxSpeed)
-        {
-            horizVector = horizVector.normalized * movementSettings.MaxSpeed;
-        }
-        if (mii.PressingBoost() && horizVector.magnitude > movementSettings.GroundBoostMaxSpeedX)
-        {
-            horizVector = horizVector.normalized * movementSettings.GroundBoostMaxSpeedX;
-        }
-        */
         // Come to a stop
         if (mii.GetRelativeHorizontalInputToCamera().magnitude < 0.1f)
         {

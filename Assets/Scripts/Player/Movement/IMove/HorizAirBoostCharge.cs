@@ -25,7 +25,8 @@ public class HorizAirBoostCharge : AMove
     public HorizAirBoostCharge(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float vertVel, Vector2 horizVector) : base(ms, mi, mii)
     {
         horizVel = GetSharedMagnitudeWithPlayerAngle(horizVector);
-        this.vertVel = /*(vertVel < 0) ? 0 :*/ vertVel;
+        //this.vertVel = (vertVel < 0) ? 0 : vertVel;
+        this.vertVel = vertVel;
         initVertVel = vertVel;
         timeCharging = 0;
         maxTimeToCharge = movementSettings.HorizBoostMaxChargeTime;
@@ -42,14 +43,36 @@ public class HorizAirBoostCharge : AMove
         // Horizontal
         horizVel = InputUtils.SmoothedInput(
             horizVel, 0, 0, movementSettings.HorizBoostChargeGravityX);
-        //float gravityType = /*(vertVel > 0) ? movementSettings.DefaultGravity :*/ movementSettings.HorizBoostChargeGravity;
-        // Vertical
+        /*
+        if (vertVel > 0)
+        {
+            vertVel -= movementSettings.HorizBoostChargeGravityY * Time.deltaTime;
+        }
+        if (vertVel < 0)
+        {
+            vertVel = 0;
+        }
+        */
+        if (vertVel > 0)
+        {
+            vertVel -= movementSettings.HorizBoostChargeGravityYGoingUp * Time.deltaTime;
+        }
+        else
+        {
+            vertVel -= movementSettings.HorizBoostChargeGravityY * Time.deltaTime;
+        }
+        if (vertVel < movementSettings.HorizBoostChargeMinVelY)
+        {
+            vertVel = movementSettings.HorizBoostChargeMinVelY;
+        }
+        /*
         float vertChange = (initVertVel * (Time.deltaTime / movementSettings.HorizBoostChargeVertNeutralizeTime));
         if (Mathf.Abs(vertChange) > Mathf.Abs(vertVel))
         {
             vertChange = vertVel;
         }
         vertVel -= vertChange;
+        */
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
@@ -77,7 +100,6 @@ public class HorizAirBoostCharge : AMove
         if (timeCharging > maxTimeToCharge || boostReleasePending)
         {
             float propCharged = timeCharging / maxTimeToCharge;
-            base.StartPushMaintainTime();
             return new HorizAirBoost(mii, mi, movementSettings, propCharged, vertVel, horizVel);
         }
         else

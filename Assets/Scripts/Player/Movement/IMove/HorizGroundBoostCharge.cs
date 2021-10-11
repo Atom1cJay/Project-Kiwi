@@ -51,7 +51,7 @@ public class HorizGroundBoostCharge : AMove
 
     public override float GetRotationSpeed()
     {
-        return movementSettings.GroundRotationSpeed;
+        return 0;
     }
 
     public override IMove GetNextMove()
@@ -62,10 +62,9 @@ public class HorizGroundBoostCharge : AMove
         }
         if (timeCharging > maxTimeToCharge || boostReleasePending)
         {
-            base.StartPushMaintainTime();
             float propCharged = timeCharging / maxTimeToCharge;
-            horizVel += movementSettings.HorizBoostMinActivationBoostGroundX + (propCharged * (movementSettings.HorizBoostMaxActivationBoostGroundX - movementSettings.HorizBoostMinActivationBoostGroundX));
-            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
+            float wantedVel = movementSettings.HorizBoostMinSpeedGroundX + (propCharged * (movementSettings.HorizBoostMaxSpeedGroundX - movementSettings.HorizBoostMinSpeedGroundX));
+            return new BoostSlide(mii, mi, movementSettings, wantedVel);
         }
         else
         {
@@ -75,7 +74,7 @@ public class HorizGroundBoostCharge : AMove
 
     public override string AsString()
     {
-        return "horizairboostcharge";
+        return "horizgroundboostcharge";
     }
 
     public override bool IncrementsTJcounter()

@@ -64,11 +64,7 @@ public class TripleJump : AMove
         float startingMagn = Math.Min(horizVector.magnitude, mi.GetEffectiveSpeed().magnitude);
         horizVector = horizVector.normalized * startingMagn;
         // Choose which type of sensitivity to employ
-        if (pushMaintainTimeLeft > 0)
-        {
-            // Do nothing, maintain speed
-        }
-        else if (horizVector.magnitude < movementSettings.MaxSpeed)
+        if (horizVector.magnitude < movementSettings.MaxSpeed)
         {
             horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityX * Time.deltaTime;
         }
