@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89a9c384f4044d949915fc3cf99a7e4, type: 3}
   m_Name: MovementSettings
   m_EditorClassIdentifier: 
-  maxSpeed: 5.5
+  maxSpeed: 5.8
   maxSpeedAbsolute: 11
   runSensitivityX: 8
   runGravityX: 22
@@ -37,7 +37,7 @@ MonoBehaviour:
   jumpAdjustSensitivityMaxSpeedX: 2
   jumpGravityX: 5
   jumpSensitivityReverseX: 14
-  jumpSpeedDecRateOverMaxSpeed: 1.5
+  jumpSpeedDecRateOverMaxSpeed: 0
   reverseCoyoteTime: 0.15
   coyoteTime: 0.12
   dissonanceForHardTurn: 1.8
@@ -64,10 +64,10 @@ MonoBehaviour:
   horizBoostRotation: 40
   horizBoostAirReverseGravity: 16
   horizBoostNonAirReverseGravity: 0
-  horizBoostMinSpeedX: 7
+  horizBoostMinSpeedX: 6
   horizBoostMaxSpeedX: 9.5
-  horizBoostMinSpeedGroundX: 7
-  horizBoostMaxSpeedGroundX: 9.5
+  horizBoostMinSpeedGroundX: 9
+  horizBoostMaxSpeedGroundX: 12
   horizBoostMinLengthGroundX: 0.65
   horizBoostMaxLengthGroundX: 0.65
   horizBoostChargeGravityX: 8
@@ -85,11 +85,11 @@ MonoBehaviour:
   boostSlideRotationSpeed: 10
   boostSlideMaxSpeed: 9
   boostSlideSpeedIncRateBoosting: 15
-  boostHopInitVelY: 7
-  boostHopInitVelXMoving: 8.5
+  boostHopInitVelY: 5.5
+  boostHopInitVelXMoving: 6.5
   boostHopInitVelXStopped: 1
   boostHopXVelForMoving: 3
-  boostHopGravity: 24
+  boostHopGravity: 23
   vertBoostChargeGravityX: 8
   vertBoostMinVel: 6
   vertBoostMaxVel: 11

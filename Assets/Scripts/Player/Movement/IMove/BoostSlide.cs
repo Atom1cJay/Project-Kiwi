@@ -6,11 +6,16 @@ public class BoostSlide : AMove
 {
     float horizVel;
     bool boostChargePending;
+    bool swimPending;
 
     public BoostSlide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
         this.horizVel = horizVel;
         mii.OnHorizBoostCharge.AddListener(() => boostChargePending = true);
+        if (mi.GetWaterDetector() != null)
+        {
+            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        }
     }
 
     public override void AdvanceTime()
@@ -39,7 +44,7 @@ public class BoostSlide : AMove
 
     public override float GetVertSpeedThisFrame()
     {
-        return 0;
+        return -0.5f;
     }
 
     public override float GetRotationSpeed()
@@ -49,6 +54,14 @@ public class BoostSlide : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
+        if (PlayerSlopeHandler.ShouldSlide)
+        {
+            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
         if (mii.GetInputActions().Player.Jump.ReadValue<float>() > 0)
         {
             return new BoostSlideHop(mii, mi, movementSettings, horizVel);
