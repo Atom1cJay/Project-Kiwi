@@ -6,11 +6,16 @@ public class BoostSlideFall : AMove
 {
     float vertVel;
     float horizVel;
+    bool swimPending;
 
     public BoostSlideFall(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
         vertVel = 0;
         this.horizVel = horizVel;
+        if (mi.GetWaterDetector() != null)
+        {
+            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
+        }
     }
 
     public override void AdvanceTime()
@@ -40,6 +45,14 @@ public class BoostSlideFall : AMove
 
     public override IMove GetNextMove()
     {
+        if (swimPending)
+        {
+            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
+        if (PlayerSlopeHandler.ShouldSlide)
+        {
+            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
         if (mi.TouchingGround())
         {
             return new BoostSlide(mii, mi, movementSettings, horizVel);
