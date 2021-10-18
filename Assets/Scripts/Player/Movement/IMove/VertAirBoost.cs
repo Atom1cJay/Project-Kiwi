@@ -6,7 +6,7 @@ using UnityEngine;
 public class VertAirBoost : AMove
 {
     float vertVel;
-    float horizVel;
+    Vector2 horizVector;
     bool divePending;
     bool groundPoundPending;
     bool swimPending;
@@ -21,8 +21,9 @@ public class VertAirBoost : AMove
     /// <param name="horizVel">The horizontal speed moving into this move</param>
     public VertAirBoost(MovementInputInfo mii, MovementInfo mi, float propCharged, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
-        this.horizVel = horizVel;
-        vertVel = movementSettings.VertBoostMinVel + (propCharged * (movementSettings.VertBoostMaxVel - movementSettings.VertBoostMinVel));
+        this.horizVector = ForwardMovement(horizVel);
+        //this.horizVel = horizVel;
+        vertVel = movementSettings.VertBoostMinLaunchVel + (propCharged * (movementSettings.VertBoostMaxLaunchVel - movementSettings.VertBoostMinLaunchVel));
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         if (mi.GetWaterDetector() != null)
@@ -35,7 +36,51 @@ public class VertAirBoost : AMove
     {
         // Vertical
         vertVel -= movementSettings.VertBoostGravity * Time.deltaTime;
+        if (vertVel < movementSettings.VertBoostMinGeneralVelY)
+        {
+            vertVel = movementSettings.VertBoostMinGeneralVelY;
+        }
         // Horizontal
+        float startingMagn = Mathf.Min(horizVector.magnitude, mi.GetEffectiveSpeed().magnitude);
+        horizVector = horizVector.normalized * startingMagn;
+        bool inReverse = (horizVector + mii.GetRelativeHorizontalInputToCamera()).magnitude < horizVector.magnitude;
+        // Choose which type of sensitivity to employ
+        if (horizVector.magnitude < movementSettings.MaxSpeed)
+        {
+            horizVector += inReverse ?
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
+                :
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityX * Time.deltaTime;
+        }
+        else if (horizVector.magnitude >= movementSettings.MaxSpeed)
+        {
+            float magn = horizVector.magnitude;
+            float propToAbsoluteMax = (magn - movementSettings.MaxSpeed) / (movementSettings.MaxSpeedAbsolute - movementSettings.MaxSpeed);
+            // In case the jump is getting adjusted, make sure the sensitivity is appropriate to the speed
+            //float jumpAdjustSensitivity = Mathf.Lerp(movementSettings.JumpAdjustSensitivityX, movementSettings.JumpAdjustSensitivityMaxSpeedX, propToAbsoluteMax);
+            horizVector += inReverse ?
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
+                :
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
+            if (horizVector.magnitude < magn)
+            {
+                magn = horizVector.magnitude;
+            }
+            horizVector = horizVector.normalized * (magn - (movementSettings.JumpSpeedDecRateOverMaxSpeed * Time.deltaTime));
+        }
+        // Come to a stop
+        if (mii.GetRelativeHorizontalInputToCamera().magnitude < 0.1f)
+        {
+            float magn = horizVector.magnitude;
+            magn -= movementSettings.JumpGravityX * Time.deltaTime;
+            horizVector = horizVector.normalized * magn;
+        }
+        // Limit Speed
+        if (horizVector.magnitude > movementSettings.MaxSpeedAbsolute)
+        {
+            horizVector = horizVector.normalized * movementSettings.MaxSpeedAbsolute;
+        }
+        /*
         horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed().magnitude);
         if (mii.AirReverseInput())
         {
@@ -53,11 +98,14 @@ public class VertAirBoost : AMove
                 movementSettings.AirSensitivityX,
                 movementSettings.AirGravityX);
         }
+        */
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
-        return ForwardMovement(horizVel);
+        return horizVector;
+        //return horizVector;
+        //return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -71,31 +119,36 @@ public class VertAirBoost : AMove
         {
             return float.MaxValue;
         }
+        return movementSettings.AirRotationSpeed;
+        /*
         if (mii.AirReverseInput())
         {
             return 0;
         }
         return horizVel < movementSettings.InstantRotationSpeed ?
             float.MaxValue : movementSettings.VertBoostRotationSpeed;
+        */
     }
 
     public override IMove GetNextMove()
     {
         if (swimPending)
         {
-            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+            return new Swim(mii, mi, movementSettings, /*ForwardMovement(horizVel)*/horizVector);
         }
         if (mi.TouchingGround() && vertVel < 0)
         {
+            /*
             if (horizVel < 0)
             {
                 horizVel = 0;
             }
-            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
+            */
+            return new Run(mii, mi, movementSettings, /*ForwardMovement(horizVel)*/horizVector);
         }
         if (groundPoundPending)
         {
-            return new GroundPound(mii, mi, movementSettings);
+            return new GroundPound(mii, mi, movementSettings, /*ForwardMovement(horizVel)*/horizVector.magnitude, false);
         }
         if (divePending)
         {

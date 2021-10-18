@@ -40,7 +40,8 @@ public class BoostSlideFall : AMove
 
     public override float GetRotationSpeed()
     {
-        return movementSettings.BoostSlideRotationSpeed;
+        float rotSpeedProp = horizVel / movementSettings.BoostSlideMaxSpeedForMinRotation;
+        return Mathf.Lerp(movementSettings.BoostSlideMaxRotationSpeed, movementSettings.BoostSlideMinRotationSpeed, rotSpeedProp);
     }
 
     public override IMove GetNextMove()

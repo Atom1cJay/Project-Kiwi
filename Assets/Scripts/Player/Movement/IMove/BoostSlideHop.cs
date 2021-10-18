@@ -12,6 +12,8 @@ public class BoostSlideHop : AMove
     public BoostSlideHop(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
         vertVel = movementSettings.BoostHopInitVelY;
+        this.horizVel = horizVel * movementSettings.BoostHopInitVelXMultiplier;
+        /*
         if (horizVel >= movementSettings.BoostHopXVelForMoving)
         {
             this.horizVel = movementSettings.BoostHopInitVelXMoving;
@@ -20,6 +22,7 @@ public class BoostSlideHop : AMove
         {
             this.horizVel = movementSettings.BoostHopInitVelXStopped;
         }
+        */
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", RunLandableTimer());
         if (mi.GetWaterDetector() != null)
         {
@@ -57,7 +60,7 @@ public class BoostSlideHop : AMove
 
     public override float GetRotationSpeed()
     {
-        return movementSettings.BoostSlideRotationSpeed;
+        return movementSettings.BoostSlideHopRotationSpeed;
     }
 
     public override IMove GetNextMove()

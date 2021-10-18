@@ -153,7 +153,7 @@ public class DoubleJump : AMove
         }
         if (groundPoundPending)
         {
-            return new GroundPound(mii, mi, movementSettings);
+            return new GroundPound(mii, mi, movementSettings, horizVector.magnitude, false);
         }
         if (mi.TouchingGround() && jumpGroundableTimerComplete && vertVel < 0)
         {

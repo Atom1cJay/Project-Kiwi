@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class VertAirBoostCharge : AMove
 {
+    bool inSpeedDec;
     float vertVel;
     float horizVel;
     float timeActive;
@@ -21,6 +22,7 @@ public class VertAirBoostCharge : AMove
     /// <param name="ms">Constants related to movement</param>
     public VertAirBoostCharge(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float vertVel, Vector2 horizVector) : base(ms, mi, mii)
     {
+        MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForSpeedDecMode());
         horizVel = GetSharedMagnitudeWithPlayerAngle(horizVector);
         this.vertVel = (vertVel < 0) ? 0 : vertVel;
         timeActive = 0;
@@ -32,6 +34,12 @@ public class VertAirBoostCharge : AMove
         }
     }
 
+    IEnumerator WaitForSpeedDecMode()
+    {
+        yield return new WaitForSeconds(movementSettings.VertBoostChargeWaitBeforeSpeedDec);
+        inSpeedDec = true;
+    }
+
     public override void AdvanceTime()
     {
         // Meta
@@ -41,8 +49,11 @@ public class VertAirBoostCharge : AMove
             movementSettings.DefaultGravity : movementSettings.VertBoostChargeGravity;
         vertVel -= gravityType * Time.fixedDeltaTime;
         // Horizontal
-        horizVel = InputUtils.SmoothedInput(
-            horizVel, 0, 0, movementSettings.VertBoostChargeGravityX);
+        if (inSpeedDec)
+        {
+            horizVel = InputUtils.SmoothedInput(
+                horizVel, 0, 0, movementSettings.VertBoostChargeGravityX);
+        }
     }
 
     public override Vector2 GetHorizSpeedThisFrame()

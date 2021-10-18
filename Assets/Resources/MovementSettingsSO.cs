@@ -18,6 +18,9 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float runGravityXOverTopSpeed;
     [SerializeField] float runGravityXOverTopSpeedNoInput;
 
+    [Header("Boost Run Settings (Experimental)")]
+    [SerializeField] float boostRunRotation;
+
     [Header("Air Settings")]
     [SerializeField] float airSensitivityX;
     [SerializeField] float airGravityX;
@@ -109,21 +112,28 @@ public class MovementSettingsSO : ScriptableObject
     [Header("Horiz Boost Slide Settings")]
     [SerializeField] float boostSlideSpeedDecRate;
     [SerializeField] float boostSlideSpeedDecRateNoInput;
-    [SerializeField] float boostSlideRotationSpeed;
-    [SerializeField] float boostSlideMaxSpeed;
+    [SerializeField] float boostSlideMaxRotationSpeed;
+    [SerializeField] float boostSlideMinRotationSpeed;
     [SerializeField] float boostSlideSpeedIncRateBoosting;
+    [SerializeField] float boostSlideEndSpeedHoldingFwd;
+    [SerializeField] float boostSlideMaxSpeedForMinRotation;
+    [SerializeField] float boostSlideMaxSpeed;
 
     [Header("Horiz Boost Hop Settings")]
     [SerializeField] float boostHopInitVelY;
+    [SerializeField] float boostHopInitVelXMultiplier;
     [SerializeField] float boostHopInitVelXMoving;
     [SerializeField] float boostHopInitVelXStopped;
     [SerializeField] float boostHopXVelForMoving;
     [SerializeField] float boostHopGravity;
+    [SerializeField] float boostSlideHopRotationSpeed;
 
     [Header("Vertical Boost Settings")]
+    [SerializeField] float vertBoostChargeWaitBeforeSpeedDec;
     [SerializeField] float vertBoostChargeGravityX;
-    [SerializeField] float vertBoostMinVel;
-    [SerializeField] float vertBoostMaxVel;
+    [SerializeField] float vertBoostMinLaunchVel;
+    [SerializeField] float vertBoostMaxLaunchVel;
+    [SerializeField] float vertBoostMinGeneralVelY;
     [SerializeField] float vertBoostChargeGravity;
     [SerializeField] float vertBoostGravity;
     [SerializeField] float vertBoostMaxChargeTime;
@@ -143,6 +153,10 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float groundBoostMaxSpeedX;
     [SerializeField] float groundBoostSensitivityX;
     [SerializeField] float groundBoostGravityX;
+
+    [Header("Dive Pound (Experimental) Settings")]
+    [SerializeField] float divePoundYVel;
+    [SerializeField] float divePoundGravity;
 
     [Header("Ground Pound Settings")]
     [SerializeField] float gpSuspensionTime;
@@ -218,6 +232,8 @@ public class MovementSettingsSO : ScriptableObject
     public float RunGravityXOverTopSpeed { get { return runGravityXOverTopSpeed; } }
     public float RunGravityXOverTopSpeedNoInput { get { return runGravityXOverTopSpeedNoInput; } }
 
+    public float BoostRunRotation { get { return boostRunRotation; } }
+
     public float AirSensitivityX { get { return airSensitivityX; } }
     public float AirGravityX { get { return airGravityX; } }
 
@@ -290,18 +306,22 @@ public class MovementSettingsSO : ScriptableObject
 
     public float BoostSlideSpeedDecRate { get { return boostSlideSpeedDecRate; } }
     public float BoostSlideSpeedDecRateNoInput { get { return boostSlideSpeedDecRateNoInput; } }
-    public float BoostSlideRotationSpeed { get { return boostSlideRotationSpeed; } }
+    public float BoostSlideMaxRotationSpeed { get { return boostSlideMaxRotationSpeed; } }
+    public float BoostSlideMinRotationSpeed { get { return boostSlideMinRotationSpeed; } }
     public float BoostSlideSpeedIncRateBoosting { get { return boostSlideSpeedIncRateBoosting; } }
+    public float BoostSlideMaxSpeedForMinRotation { get { return boostSlideMaxSpeedForMinRotation; } }
     public float BoostSlideMaxSpeed { get { return boostSlideMaxSpeed; } }
+    public float BoostSlideEndSpeedHoldingFwd { get { return boostSlideEndSpeedHoldingFwd; } }
 
     public float BoostHopInitVelY { get { return boostHopInitVelY; } }
-    public float BoostHopInitVelXMoving { get { return boostHopInitVelXMoving; } }
-    public float BoostHopInitVelXStopped { get { return boostHopInitVelXStopped; } }
-    public float BoostHopXVelForMoving { get { return boostHopXVelForMoving; } }
+    public float BoostHopInitVelXMultiplier { get { return boostHopInitVelXMultiplier; } }
     public float BoostHopGravity { get { return boostHopGravity; } }
+    public float BoostSlideHopRotationSpeed { get { return boostSlideHopRotationSpeed; } }
 
-    public float VertBoostMinVel { get { return vertBoostMinVel; } }
-    public float VertBoostMaxVel { get { return vertBoostMaxVel; } }
+    public float VertBoostChargeWaitBeforeSpeedDec { get { return vertBoostChargeWaitBeforeSpeedDec; } }
+    public float VertBoostMinLaunchVel { get { return vertBoostMinLaunchVel; } }
+    public float VertBoostMaxLaunchVel { get { return vertBoostMaxLaunchVel; } }
+    public float VertBoostMinGeneralVelY { get { return vertBoostMinGeneralVelY; } }
     public float VertBoostGravity { get { return vertBoostGravity; } }
     public float VertBoostChargeGravity { get { return vertBoostChargeGravity; } }
     public float VertBoostMaxChargeTime { get { return vertBoostMaxChargeTime; } }
@@ -315,6 +335,9 @@ public class MovementSettingsSO : ScriptableObject
     public float GroundBoostMaxSpeedX { get { return groundBoostMaxSpeedX; } }
     public float GroundBoostSensitivityX { get { return groundBoostSensitivityX; } }
     public float GroundBoostGravityX { get { return groundBoostGravityX; } }
+
+    public float DivePoundYVel { get { return divePoundYVel; } }
+    public float DivePoundGravity { get { return divePoundGravity; } }
 
     public float GpSuspensionTime { get { return gpSuspensionTime; } }
     public float GpDownSpeed { get { return gpDownSpeed; } }

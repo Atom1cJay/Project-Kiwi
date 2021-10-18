@@ -132,7 +132,7 @@ public class Fall : AMove
         }
         if (groundPoundPending)
         {
-            return new GroundPound(mii, mi, movementSettings);
+            return new GroundPound(mii, mi, movementSettings, horizVector.magnitude, false);
         }
         if (PlayerSlopeHandler.ShouldSlide)
         {

@@ -96,7 +96,10 @@ public class HorizAirBoostCharge : AMove
         {
             return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
-
+        if (mi.TouchingGround())
+        {
+            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
         if (timeCharging > maxTimeToCharge || boostReleasePending)
         {
             float propCharged = timeCharging / maxTimeToCharge;

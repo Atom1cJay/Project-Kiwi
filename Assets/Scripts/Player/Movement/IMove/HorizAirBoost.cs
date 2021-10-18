@@ -20,7 +20,7 @@ public class HorizAirBoost : AMove
     /// <param name="ms">Constants related to movement</param>
     public HorizAirBoost(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float propCharged, float vertVel, float horizVel) : base(ms, mi, mii)
     {
-        this.vertVel = vertVel / 8;
+        this.vertVel = vertVel / 4;
         gravity = movementSettings.HorizBoostMinGravity;
         this.horizVel = movementSettings.HorizBoostMinSpeedX + (propCharged * (movementSettings.HorizBoostMaxSpeedX - movementSettings.HorizBoostMinSpeedX));
         //this.vertVel = vertVel;
@@ -74,10 +74,12 @@ public class HorizAirBoost : AMove
 
     public override float GetRotationSpeed()
     {
+        /*
         if (divePending)
         {
             return float.MaxValue;
         }
+        */
         return mii.AirReverseInput() ? 0 : movementSettings.HorizBoostRotation;
     }
 
@@ -93,7 +95,7 @@ public class HorizAirBoost : AMove
         }
         if (groundPoundPending)
         {
-            return new GroundPound(mii, mi, movementSettings);
+            return new GroundPound(mii, mi, movementSettings, horizVel, true);
         }
         /*
         if (divePending)

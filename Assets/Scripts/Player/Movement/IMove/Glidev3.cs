@@ -127,7 +127,7 @@ public class Glidev3 : AMove
         }
         if (groundPoundPending)
         {
-            return new GroundPound(mii, mi, movementSettings);
+            return new GroundPound(mii, mi, movementSettings, horizVector.magnitude, false);
         }
         if (glideReleasePending)
         {

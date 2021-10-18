@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class GroundPound : AMove
 {
+    float horizVel;
+    float vertVel;
     float timePassed;
-    bool divePending;
+    //bool divePending;
     bool landingStarted;
     bool landingOver;
     bool swimPending;
 
-    public GroundPound(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
+    public GroundPound(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool inMotion) : base(ms, mi, mii)
     {
-        mii.OnDiveInput.AddListener(() => divePending = true);
+        Vector2 horizInput;
+        if (inMotion)
+        {
+            horizInput = mii.GetHorizontalInput();
+        }
+        else
+        {
+            horizInput = Vector2.zero;
+        }
+        bool fwdInput = horizInput.magnitude > 0 && Mathf.Sin(Mathf.Atan2(horizInput.y, horizInput.x)) > 0;
+        this.horizVel = fwdInput ? horizVel : 0;
+        vertVel = movementSettings.DivePoundYVel;
+        //mii.OnDiveInput.AddListener(() => divePending = true);
         if (mi.GetWaterDetector() != null)
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
@@ -21,7 +35,8 @@ public class GroundPound : AMove
 
     public override void AdvanceTime()
     {
-        timePassed += Time.deltaTime;
+        vertVel -= movementSettings.DivePoundGravity * Time.deltaTime;
+        /*
         if (mi.TouchingGround() && !landingStarted)
         {
             // Check if the ground-pounded object has a specific pound event
@@ -34,26 +49,33 @@ public class GroundPound : AMove
             landingStarted = true;
             MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForLandingEnd());
         }
+        */
     }
 
+    /*
     IEnumerator WaitForLandingEnd()
     {
         yield return new WaitForSeconds(movementSettings.GpLandTime);
         landingOver = true;
     }
+    */
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
-        return Vector2.zero;
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
     {
+        return vertVel;
+
+        /*
         if (timePassed < movementSettings.GpSuspensionTime)
         {
             return 0;
         }
         return -movementSettings.GpDownSpeed;
+        */
     }
 
     public override float GetRotationSpeed()
@@ -67,14 +89,22 @@ public class GroundPound : AMove
         {
             return new Swim(mii, mi, movementSettings, Vector2.zero);
         }
+        /*
         if (divePending && !landingStarted)
         {
             return new Dive(mii, mi, movementSettings);
         }
+        */
+        if (mi.TouchingGround())
+        {
+            return new BoostSlide(mii, mi, movementSettings, horizVel);
+        }
+        /*
         if (landingOver)
         {
             return new Idle(mii, mi, movementSettings);
         }
+        */
         return this;
     }
 

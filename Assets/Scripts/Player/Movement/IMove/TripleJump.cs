@@ -70,8 +70,19 @@ public class TripleJump : AMove
         }
         else if (horizVector.magnitude >= movementSettings.MaxSpeed)
         {
+            bool inReverse = (horizVector + mii.GetRelativeHorizontalInputToCamera()).magnitude < horizVector.magnitude;
             float magn = horizVector.magnitude;
-            horizVector += mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
+            //float propToAbsoluteMax = (magn - movementSettings.MaxSpeed) / (movementSettings.MaxSpeedAbsolute - movementSettings.MaxSpeed);
+            // In case the jump is getting adjusted, make sure the sensitivity is appropriate to the speed
+            //float jumpAdjustSensitivity = Mathf.Lerp(movementSettings.JumpAdjustSensitivityX, movementSettings.JumpAdjustSensitivityMaxSpeedX, propToAbsoluteMax);
+            horizVector += inReverse ?
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
+                :
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
+            if (horizVector.magnitude < magn)
+            {
+                magn = horizVector.magnitude;
+            }
             horizVector = horizVector.normalized * (magn - (movementSettings.JumpSpeedDecRateOverMaxSpeed * Time.deltaTime));
         }
         // Come to a stop
@@ -127,7 +138,7 @@ public class TripleJump : AMove
         }
         if (groundPoundPending)
         {
-            return new GroundPound(mii, mi, movementSettings);
+            return new GroundPound(mii, mi, movementSettings, horizVector.magnitude, false);
         }
         if (divePending)
         {
