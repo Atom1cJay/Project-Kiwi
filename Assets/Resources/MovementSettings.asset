@@ -65,7 +65,7 @@ MonoBehaviour:
   horizBoostRotation: 15
   horizBoostAirReverseGravity: 16
   horizBoostNonAirReverseGravity: 0
-  horizBoostMinSpeedX: 7.5
+  horizBoostMinSpeedX: 7
   horizBoostMaxSpeedX: 10
   horizBoostMinSpeedGroundX: 7
   horizBoostMaxSpeedGroundX: 12
@@ -73,14 +73,14 @@ MonoBehaviour:
   horizBoostMaxLengthGroundX: 0.65
   horizBoostChargeGravityXAir: 15
   horizBoostChargeGravityXGround: 7
-  horizBoostChargeGravityY: 4
+  horizBoostChargeGravityY: 0
   horizBoostChargeGravityYGoingUp: 20
   horizBoostChargeMinVelY: -5
   horizBoostToGroundBoostSensitivity: 1
   horizBoostChargeVertNeutralizeTime: 0
   groundBoostRotationSpeed: 50
-  horizBoostMinGravity: 7
-  horizBoostMaxGravity: 13
+  horizBoostMinGravity: 4
+  horizBoostMaxGravity: 10
   horizBoostGravityIncRate: 15
   boostSlideSpeedDecRate: 6
   boostSlideSpeedDecRateNoInput: 8
@@ -91,7 +91,7 @@ MonoBehaviour:
   boostSlideMaxSpeedForMinRotation: 6
   boostSlideMaxSpeed: 9
   boostSlideMaxDissonanceForHoldingFwd: 1
-  boostHopInitVelY: 4.5
+  boostHopInitVelY: 5
   boostHopInitVelXMultiplier: 1
   boostHopInitVelXMoving: 7.5
   boostHopInitVelXStopped: 1
@@ -101,14 +101,14 @@ MonoBehaviour:
   vertBoostChargeWaitBeforeSpeedDec: 0.1
   vertBoostChargeGravityX: 12
   vertBoostMinLaunchVel: 6
-  vertBoostMaxLaunchVel: 12
+  vertBoostMaxLaunchVel: 11
   vertBoostMinGeneralVelY: -10
   vertBoostChargeGravity: 1
   vertBoostGravity: 27
   vertBoostMaxChargeTime: 0.4
   vertBoostMaxTime: 0.7
   vertBoostRotationSpeed: 150
-  vertBoostMaxSpeedX: 4.5
+  vertBoostMaxSpeedX: 3.5
   pushSpeedDecRate: 0
   pushIdealResetRate: 0
   pushMaxHoldTime: 0.25
