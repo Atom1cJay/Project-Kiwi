@@ -25,8 +25,8 @@ public class HorizAirBoostCharge : AMove
     public HorizAirBoostCharge(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float vertVel, Vector2 horizVector) : base(ms, mi, mii)
     {
         horizVel = GetSharedMagnitudeWithPlayerAngle(horizVector);
-        //this.vertVel = (vertVel < 0) ? 0 : vertVel;
-        this.vertVel = vertVel;
+        this.vertVel = (vertVel < 0) ? 0 : vertVel;
+        //this.vertVel = vertVel;
         initVertVel = vertVel;
         timeCharging = 0;
         maxTimeToCharge = movementSettings.HorizBoostMaxChargeTime;
@@ -42,7 +42,7 @@ public class HorizAirBoostCharge : AMove
         timeCharging += Time.deltaTime;
         // Horizontal
         horizVel = InputUtils.SmoothedInput(
-            horizVel, 0, 0, movementSettings.HorizBoostChargeGravityX);
+            horizVel, 0, 0, movementSettings.HorizBoostChargeGravityXAir);
         /*
         if (vertVel > 0)
         {

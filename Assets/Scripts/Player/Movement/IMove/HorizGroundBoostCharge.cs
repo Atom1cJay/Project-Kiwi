@@ -36,7 +36,7 @@ public class HorizGroundBoostCharge : AMove
         timeCharging += Time.deltaTime;
         // Horizontal
         horizVel = InputUtils.SmoothedInput(
-            horizVel, 0, 0, movementSettings.HorizBoostChargeGravityX);
+            horizVel, 0, 0, movementSettings.HorizBoostChargeGravityXGround);
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
@@ -64,7 +64,7 @@ public class HorizGroundBoostCharge : AMove
         {
             float propCharged = timeCharging / maxTimeToCharge;
             float wantedVel = movementSettings.HorizBoostMinSpeedGroundX + (propCharged * (movementSettings.HorizBoostMaxSpeedGroundX - movementSettings.HorizBoostMinSpeedGroundX));
-            return new BoostSlide(mii, mi, movementSettings, wantedVel);
+            return new BoostSlide(mii, mi, movementSettings, wantedVel, true);
         }
         else
         {

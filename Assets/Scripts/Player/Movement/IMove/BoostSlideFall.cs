@@ -7,9 +7,11 @@ public class BoostSlideFall : AMove
     float vertVel;
     float horizVel;
     bool swimPending;
+    readonly bool allowRefresh;
 
-    public BoostSlideFall(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
+    public BoostSlideFall(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool allowRefresh) : base(ms, mi, mii)
     {
+        this.allowRefresh = allowRefresh;
         vertVel = 0;
         this.horizVel = horizVel;
         if (mi.GetWaterDetector() != null)
@@ -56,7 +58,7 @@ public class BoostSlideFall : AMove
         }
         if (mi.TouchingGround())
         {
-            return new BoostSlide(mii, mi, movementSettings, horizVel);
+            return new BoostSlide(mii, mi, movementSettings, horizVel, allowRefresh);
         }
         return this;
     }

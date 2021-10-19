@@ -90,7 +90,8 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float horizBoostMaxSpeedGroundX;
     [SerializeField] float horizBoostMinLengthGroundX;
     [SerializeField] float horizBoostMaxLengthGroundX;
-    [SerializeField] float horizBoostChargeGravityX;
+    [SerializeField] float horizBoostChargeGravityXAir;
+    [SerializeField] float horizBoostChargeGravityXGround;
     [SerializeField] float horizBoostChargeGravityY;
     [SerializeField] float horizBoostChargeGravityYGoingUp;
     [SerializeField] float horizBoostChargeMinVelY;
@@ -118,6 +119,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float boostSlideEndSpeedHoldingFwd;
     [SerializeField] float boostSlideMaxSpeedForMinRotation;
     [SerializeField] float boostSlideMaxSpeed;
+    [SerializeField] float boostSlideMaxDissonanceForHoldingFwd;
 
     [Header("Horiz Boost Hop Settings")]
     [SerializeField] float boostHopInitVelY;
@@ -298,7 +300,8 @@ public class MovementSettingsSO : ScriptableObject
     public float HorizBoostMaxSpeedGroundX { get { return horizBoostMaxSpeedGroundX; } }
     public float HorizBoostMinLengthGroundX { get { return horizBoostMinLengthGroundX; } }
     public float HorizBoostMaxLengthGroundX { get { return horizBoostMaxLengthGroundX; } }
-    public float HorizBoostChargeGravityX { get { return horizBoostChargeGravityX; } }
+    public float HorizBoostChargeGravityXAir { get { return horizBoostChargeGravityXAir; } }
+    public float HorizBoostChargeGravityXGround { get { return horizBoostChargeGravityXGround; } }
     public float HorizBoostChargeGravityYGoingUp { get { return horizBoostChargeGravityYGoingUp; } }
     public float HorizBoostChargeGravityY { get { return horizBoostChargeGravityY; } }
     public float HorizBoostChargeMinVelY { get { return horizBoostChargeMinVelY; } }
@@ -312,6 +315,7 @@ public class MovementSettingsSO : ScriptableObject
     public float BoostSlideMaxSpeedForMinRotation { get { return boostSlideMaxSpeedForMinRotation; } }
     public float BoostSlideMaxSpeed { get { return boostSlideMaxSpeed; } }
     public float BoostSlideEndSpeedHoldingFwd { get { return boostSlideEndSpeedHoldingFwd; } }
+    public float BoostSlideMaxDissonanceForHoldingFwd { get { return boostSlideMaxDissonanceForHoldingFwd; } }
 
     public float BoostHopInitVelY { get { return boostHopInitVelY; } }
     public float BoostHopInitVelXMultiplier { get { return boostHopInitVelXMultiplier; } }

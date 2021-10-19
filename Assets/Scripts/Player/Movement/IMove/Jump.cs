@@ -160,7 +160,7 @@ public class Jump : AMove
         }
         if (groundPoundPending)
         {
-            return new GroundPound(mii, mi, movementSettings, horizVector.magnitude, false);
+            return new GroundPound(mii, mi, movementSettings, horizVector.magnitude, true);
         }
         if (mi.TouchingGround() && jumpGroundableTimerComplete && vertVel < 0)
         {

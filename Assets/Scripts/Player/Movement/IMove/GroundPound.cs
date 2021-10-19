@@ -14,17 +14,7 @@ public class GroundPound : AMove
 
     public GroundPound(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool inMotion) : base(ms, mi, mii)
     {
-        Vector2 horizInput;
-        if (inMotion)
-        {
-            horizInput = mii.GetHorizontalInput();
-        }
-        else
-        {
-            horizInput = Vector2.zero;
-        }
-        bool fwdInput = horizInput.magnitude > 0 && Mathf.Sin(Mathf.Atan2(horizInput.y, horizInput.x)) > 0;
-        this.horizVel = fwdInput ? horizVel : 0;
+        this.horizVel = inMotion ? horizVel : 0;
         vertVel = movementSettings.DivePoundYVel;
         //mii.OnDiveInput.AddListener(() => divePending = true);
         if (mi.GetWaterDetector() != null)
@@ -97,7 +87,7 @@ public class GroundPound : AMove
         */
         if (mi.TouchingGround())
         {
-            return new BoostSlide(mii, mi, movementSettings, horizVel);
+            return new BoostSlide(mii, mi, movementSettings, horizVel, false);
         }
         /*
         if (landingOver)

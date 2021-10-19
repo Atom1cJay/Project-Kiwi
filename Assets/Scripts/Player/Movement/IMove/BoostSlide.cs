@@ -7,12 +7,16 @@ public class BoostSlide : AMove
     float horizVel;
     bool boostChargePending;
     bool swimPending;
+    bool hopPending;
     bool fwdInput;
+    readonly bool allowRefresh;
 
-    public BoostSlide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
+    public BoostSlide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool allowRefresh) : base(ms, mi, mii)
     {
+        this.allowRefresh = allowRefresh;
         this.horizVel = horizVel;
         mii.OnHorizBoostCharge.AddListener(() => boostChargePending = true);
+        mii.OnJump.AddListener(() => hopPending = true);
         if (mi.GetWaterDetector() != null)
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
@@ -22,7 +26,7 @@ public class BoostSlide : AMove
     public override void AdvanceTime()
     {
         Vector2 horizInput = mii.GetHorizontalInput();
-        fwdInput = horizInput.magnitude > 0 && Mathf.Sin(Mathf.Atan2(horizInput.y, horizInput.x)) > 0;
+        fwdInput = horizInput.magnitude > 0 && mii.GetHorizDissonance() < movementSettings.BoostSlideMaxDissonanceForHoldingFwd;
         // TODO proper charge system
         if (fwdInput)
         {
@@ -68,13 +72,13 @@ public class BoostSlide : AMove
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
-        if (mii.GetInputActions().Player.Jump.ReadValue<float>() > 0)
+        if (hopPending)
         {
             return new BoostSlideHop(mii, mi, movementSettings, horizVel);
         }
         if (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity)
         {
-            return new BoostSlideFall(mii, mi, movementSettings, horizVel);
+            return new BoostSlideFall(mii, mi, movementSettings, horizVel, allowRefresh);
         }
         if (horizVel <= movementSettings.BoostSlideEndSpeedHoldingFwd && fwdInput)
         {
@@ -84,12 +88,10 @@ public class BoostSlide : AMove
         {
             return new Idle(mii, mi, movementSettings);
         }
-        /*
-        if (boostChargePending)
+        if (boostChargePending && allowRefresh)
         {
             return new HorizGroundBoostCharge(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
-        */
         return this;
     }
 

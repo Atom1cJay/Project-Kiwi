@@ -91,12 +91,14 @@ public class HorizAirBoost : AMove
         }
         if (mi.TouchingGround())
         {
-            return new BoostSlide(mii, mi, movementSettings, horizVel);
+            return new BoostSlide(mii, mi, movementSettings, horizVel, false);
         }
+        /*
         if (groundPoundPending)
         {
             return new GroundPound(mii, mi, movementSettings, horizVel, true);
         }
+        */
         /*
         if (divePending)
         {

@@ -21,6 +21,7 @@ public class MovementInfo : MonoBehaviour
         new []{ Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero });
     private Vector2 lastFiveMovesAccum = Vector2.zero;
     private Vector2 prevPosXZ;
+    private Vector2 effectiveSpeedXZ;
 
     [HideInInspector] public UnityEvent OnCharContTouchSomething;
 

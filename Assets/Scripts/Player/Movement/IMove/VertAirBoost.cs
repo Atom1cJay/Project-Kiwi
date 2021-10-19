@@ -146,10 +146,12 @@ public class VertAirBoost : AMove
             */
             return new Run(mii, mi, movementSettings, /*ForwardMovement(horizVel)*/horizVector);
         }
+        /*
         if (groundPoundPending)
         {
-            return new GroundPound(mii, mi, movementSettings, /*ForwardMovement(horizVel)*/horizVector.magnitude, false);
+            return new GroundPound(mii, mi, movementSettings, horizVector.magnitude, false);
         }
+        */
         if (divePending)
         {
             return new Dive(mii, mi, movementSettings);

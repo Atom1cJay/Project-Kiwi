@@ -70,7 +70,7 @@ public class DoubleJump : AMove
             vertVel = movementSettings.JumpMinVel;
         }
         // Horizontal
-        float startingMagn = mi.GetEffectiveSpeed().magnitude;
+        float startingMagn = Mathf.Min(horizVector.magnitude, mi.GetEffectiveSpeed().magnitude);
         horizVector = horizVector.normalized * startingMagn;
         bool inReverse = (horizVector + mii.GetRelativeHorizontalInputToCamera()).magnitude < horizVector.magnitude;
         // Choose which type of sensitivity to employ
@@ -153,7 +153,7 @@ public class DoubleJump : AMove
         }
         if (groundPoundPending)
         {
-            return new GroundPound(mii, mi, movementSettings, horizVector.magnitude, false);
+            return new GroundPound(mii, mi, movementSettings, horizVector.magnitude, true);
         }
         if (mi.TouchingGround() && jumpGroundableTimerComplete && vertVel < 0)
         {
