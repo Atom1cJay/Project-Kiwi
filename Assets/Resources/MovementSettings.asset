@@ -22,7 +22,7 @@ MonoBehaviour:
   airSensitivityX: 5
   airGravityX: 7
   hardTurnGravityX: 50
-  diveSpeedX: 6
+  diveSpeedX: 5.5
   jumpGroundableTimer: 0.1
   jumpInitVel: 8
   jumpInitGravity: 0
@@ -38,13 +38,13 @@ MonoBehaviour:
   jumpAdjustSensitivityMaxSpeedX: 26
   jumpGravityX: 6.5
   jumpSensitivityReverseX: 17
-  jumpSpeedDecRateOverMaxSpeed: 6
+  jumpSpeedDecRateOverMaxSpeed: 4
   reverseCoyoteTime: 0.15
   coyoteTime: 0.12
   dissonanceForHardTurn: 1.8
   hardTurnMinSpeed: 1
-  hardTurnTime: 0.2
-  tjInitJumpVel: 9.25
+  hardTurnTime: 0.15
+  tjInitJumpVel: 9.05
   tjInitGravity: 0
   tjAirSensitivityX: 5
   tjInputGravityX: 14
@@ -60,13 +60,13 @@ MonoBehaviour:
   tjMaxJumpTime: 1.5
   tjMaxDissonance: 0.5
   horizBoostChargeRotationSpeed: 60
-  horizBoostMaxChargeTime: 0.5
+  horizBoostMaxChargeTime: 0.4
   horizBoostMaxTime: 0.7
   horizBoostRotation: 15
   horizBoostAirReverseGravity: 16
   horizBoostNonAirReverseGravity: 0
   horizBoostMinSpeedX: 7
-  horizBoostMaxSpeedX: 10
+  horizBoostMaxSpeedX: 9
   horizBoostMinSpeedGroundX: 7
   horizBoostMaxSpeedGroundX: 12
   horizBoostMinLengthGroundX: 0.65
@@ -80,7 +80,7 @@ MonoBehaviour:
   horizBoostChargeVertNeutralizeTime: 0
   groundBoostRotationSpeed: 50
   horizBoostMinGravity: 4
-  horizBoostMaxGravity: 10
+  horizBoostMaxGravity: 9.5
   horizBoostGravityIncRate: 15
   boostSlideSpeedDecRate: 6
   boostSlideSpeedDecRateNoInput: 8
@@ -101,14 +101,17 @@ MonoBehaviour:
   vertBoostChargeWaitBeforeSpeedDec: 0.1
   vertBoostChargeGravityX: 12
   vertBoostMinLaunchVel: 6
-  vertBoostMaxLaunchVel: 11
+  vertBoostMaxLaunchVel: 10.5
   vertBoostMinGeneralVelY: -10
   vertBoostChargeGravity: 1
   vertBoostGravity: 27
-  vertBoostMaxChargeTime: 0.4
+  vertBoostMaxChargeTime: 0.5
   vertBoostMaxTime: 0.7
   vertBoostRotationSpeed: 150
-  vertBoostMaxSpeedX: 3.5
+  vertBoostSensitivityX: 5
+  vertBoostAdjustSensitivityX: 10
+  vertBoostGravityX: 8
+  vertBoostMaxSpeedX: 5.5
   pushSpeedDecRate: 0
   pushIdealResetRate: 0
   pushMaxHoldTime: 0.25

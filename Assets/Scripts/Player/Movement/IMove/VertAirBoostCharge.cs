@@ -23,6 +23,10 @@ public class VertAirBoostCharge : AMove
     public VertAirBoostCharge(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float vertVel, Vector2 horizVector) : base(ms, mi, mii)
     {
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForSpeedDecMode());
+        if (horizVel < 0)
+        {
+            horizVel = 0;
+        }
         horizVel = GetSharedMagnitudeWithPlayerAngle(horizVector);
         this.vertVel = (vertVel < 0) ? 0 : vertVel;
         timeActive = 0;

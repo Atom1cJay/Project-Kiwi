@@ -21,6 +21,10 @@ public class VertAirBoost : AMove
     /// <param name="horizVel">The horizontal speed moving into this move</param>
     public VertAirBoost(MovementInputInfo mii, MovementInfo mi, float propCharged, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
+        if (horizVel < 0)
+        {
+            horizVel = 0;
+        }
         this.horizVector = ForwardMovement(horizVel);
         //this.horizVel = horizVel;
         vertVel = movementSettings.VertBoostMinLaunchVel + (propCharged * (movementSettings.VertBoostMaxLaunchVel - movementSettings.VertBoostMinLaunchVel));
@@ -45,23 +49,23 @@ public class VertAirBoost : AMove
         horizVector = horizVector.normalized * startingMagn;
         bool inReverse = (horizVector + mii.GetRelativeHorizontalInputToCamera()).magnitude < horizVector.magnitude;
         // Choose which type of sensitivity to employ
-        if (horizVector.magnitude < movementSettings.MaxSpeed)
+        if (horizVector.magnitude < movementSettings.VertBoostMaxSpeedX)
         {
             horizVector += inReverse ?
-                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.VertBoostGravityX * Time.deltaTime
                 :
-                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityX * Time.deltaTime;
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.VertBoostSensitivityX * Time.deltaTime;
         }
-        else if (horizVector.magnitude >= movementSettings.MaxSpeed)
+        else
         {
             float magn = horizVector.magnitude;
             float propToAbsoluteMax = (magn - movementSettings.MaxSpeed) / (movementSettings.MaxSpeedAbsolute - movementSettings.MaxSpeed);
             // In case the jump is getting adjusted, make sure the sensitivity is appropriate to the speed
             //float jumpAdjustSensitivity = Mathf.Lerp(movementSettings.JumpAdjustSensitivityX, movementSettings.JumpAdjustSensitivityMaxSpeedX, propToAbsoluteMax);
             horizVector += inReverse ?
-                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpSensitivityReverseX * Time.deltaTime
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.VertBoostGravityX * Time.deltaTime
                 :
-                mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
+                mii.GetRelativeHorizontalInputToCamera() * movementSettings.VertBoostAdjustSensitivityX * Time.deltaTime;
             if (horizVector.magnitude < magn)
             {
                 magn = horizVector.magnitude;
@@ -76,9 +80,9 @@ public class VertAirBoost : AMove
             horizVector = horizVector.normalized * magn;
         }
         // Limit Speed
-        if (horizVector.magnitude > movementSettings.MaxSpeedAbsolute)
+        if (horizVector.magnitude > movementSettings.VertBoostMaxSpeedX && vertVel > 0)
         {
-            horizVector = horizVector.normalized * movementSettings.MaxSpeedAbsolute;
+            horizVector = horizVector.normalized * movementSettings.VertBoostMaxSpeedX;
         }
         /*
         horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed().magnitude);

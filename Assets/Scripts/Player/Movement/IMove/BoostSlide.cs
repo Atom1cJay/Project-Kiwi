@@ -7,7 +7,6 @@ public class BoostSlide : AMove
     float horizVel;
     bool boostChargePending;
     bool swimPending;
-    bool hopPending;
     bool fwdInput;
     readonly bool allowRefresh;
 
@@ -16,7 +15,6 @@ public class BoostSlide : AMove
         this.allowRefresh = allowRefresh;
         this.horizVel = horizVel;
         mii.OnHorizBoostCharge.AddListener(() => boostChargePending = true);
-        mii.OnJump.AddListener(() => hopPending = true);
         if (mi.GetWaterDetector() != null)
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
@@ -72,7 +70,7 @@ public class BoostSlide : AMove
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
-        if (hopPending)
+        if (mii.GetInputActions().Player.Jump.ReadValue<float>() > 0)
         {
             return new BoostSlideHop(mii, mi, movementSettings, horizVel);
         }
