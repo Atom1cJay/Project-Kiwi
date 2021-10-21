@@ -127,7 +127,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             if (lM == "dive" && diving)
             {
                 anyStateTransition = false;
-                StartCoroutine(AnyStateAgain(1f));
+                StartCoroutine(AnyStateAgain(0.5f));
                 diving = false;
             }
             else if (stopping)
@@ -175,7 +175,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
                 
                 currentMove("STARTRUN");
                 anyStateTransition = false;
-                StartCoroutine(AnyStateAgain(1f));
+                StartCoroutine(AnyStateAgain(0.5f));
                 StartCoroutine(ExtendMove("STARTRUN", 0.4f));
                 startRunning = false;
             }
