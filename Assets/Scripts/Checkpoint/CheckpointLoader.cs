@@ -16,18 +16,6 @@ public class CheckpointLoader : MonoBehaviour
         return currentCheckpoint;
     }
 
-    /*
-    void FixedUpdate()
-    {
-        //if button is pressed set transform
-        if(IAH.inputActions.Checkpoint.Respawn.ReadValue<float>() > 0f && currentCheckpoint != null)
-        {
-            transform.position = currentCheckpoint.GetPosition() + (Vector3.up * 3f);
-            Debug.Log(currentCheckpoint.GetPosition() + Vector3.up);
-        }
-    }
-    */
-
     public void SetCheckpoint(CheckpointSystem cs)
     {
         if (currentCheckpoint != null)

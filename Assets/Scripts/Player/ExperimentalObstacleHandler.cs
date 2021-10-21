@@ -7,7 +7,17 @@ public class ExperimentalObstacleHandler : MonoBehaviour
 {
     [SerializeField] GameObject physicsCollider;
 
+    private void Update()
+    {
+        HandleBumperMoved();
+    }
+
     private void FixedUpdate()
+    {
+        HandleBumperMoved();
+    }
+
+    private void LateUpdate()
     {
         HandleBumperMoved();
     }

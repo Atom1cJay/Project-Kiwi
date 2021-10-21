@@ -18,13 +18,16 @@ public class DistanceDeactivator : MonoBehaviour
     /// </summary>
     public void HandleDistance(Vector3 ddhPos)
     {
-        if (toDeactivate.enabled && Vector3.Distance(ddhPos, transform.position) > deactivateDistance)
+        if (toDeactivate != null)
         {
-            toDeactivate.enabled = false;
-        }
-        else if (!toDeactivate.enabled && Vector3.Distance(ddhPos, transform.position) < deactivateDistance)
-        {
-            toDeactivate.enabled = true;
+            if (toDeactivate.enabled && Vector3.Distance(ddhPos, transform.position) > deactivateDistance)
+            {
+                toDeactivate.enabled = false;
+            }
+            else if (!toDeactivate.enabled && Vector3.Distance(ddhPos, transform.position) < deactivateDistance)
+            {
+                toDeactivate.enabled = true;
+            }
         }
     }
 }

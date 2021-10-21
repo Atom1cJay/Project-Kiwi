@@ -7,8 +7,9 @@ public class PopperPlatform : MonoBehaviour
     [SerializeField] PopperPlatformGroup group;
     [SerializeField] Vector3 popRotation;
     [SerializeField] float moveTime;
-    [SerializeField] bool startsAfterMove;
-    Quaternion initialRot; // The first rotation, assuming the start is before the move
+    [SerializeField] bool doInitialMove;
+    [SerializeField] bool poppedInEditor;
+    [SerializeField] Renderer matRenderer;
     bool isPopped;
 
     private void Awake()
@@ -25,12 +26,17 @@ public class PopperPlatform : MonoBehaviour
 
     void Start()
     {
-        initialRot = transform.rotation;
-        isPopped = startsAfterMove;
+        isPopped = poppedInEditor;
         // Simulate the first move having happened already
-        if (startsAfterMove)
+        if (doInitialMove)
         {
-            transform.Rotate(new Vector3(popRotation.x, popRotation.y, popRotation.z));
+            // Choose direction to go
+            Vector3 rotDest = !isPopped ?
+                new Vector3(popRotation.x, popRotation.y, popRotation.z)
+                :
+                new Vector3(-popRotation.x, -popRotation.y, -popRotation.z);
+            transform.Rotate(rotDest);
+            isPopped = !isPopped;
         }
     }
 
@@ -38,28 +44,29 @@ public class PopperPlatform : MonoBehaviour
     {
         StartCoroutine(SwitchStateMovement(!isPopped));
         isPopped = !isPopped;
+        // TODO test
+        if (isPopped)
+        {
+            matRenderer.material.SetColor("Albedo", Color.green);
+        }
+        else
+        {
+            matRenderer.material.SetColor("Albedo", Color.red);
+        }
     }
 
     IEnumerator SwitchStateMovement(bool toPop)
     {
-        Quaternion rot1 = transform.rotation;
-        Quaternion rot2 = toPop ?
+        Quaternion rotDest = toPop ?
             transform.rotation * Quaternion.Euler(popRotation.x, popRotation.y, popRotation.z)
             :
-            initialRot;
+            transform.rotation * Quaternion.Euler(-popRotation.x, -popRotation.y, -popRotation.z);
         float time = 0;
         while (time < moveTime)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot2, Time.deltaTime * 90 / moveTime);
-            /*
-            float x = Mathf.LerpAngle(rot1.x, rot2.x, time / moveTime);
-            float y = Mathf.LerpAngle(rot1.y, rot2.y, time / moveTime);
-            float z = Mathf.LerpAngle(rot1.z, rot2.z, time / moveTime);
-            transform.eulerAngles = new Vector3(x, y, z);
-            */
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotDest, Time.deltaTime * 90 / moveTime);
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        //transform.rotation = rot2;
     }
 }

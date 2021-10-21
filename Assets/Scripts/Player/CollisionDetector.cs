@@ -33,7 +33,7 @@ public class CollisionDetector : MonoBehaviour
     public bool Colliding()
     {
         UpdateCollisionStatus();
-        return colliding;
+        return colliding && PlayerSlopeHandler.OnSlopeThisFramePublic;
     }
 
     /// <summary>

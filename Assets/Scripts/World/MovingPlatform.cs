@@ -19,7 +19,7 @@ public class MovingPlatform : MonoBehaviour
 
     private void Awake()
     {
-        midpoint = transform.position + (distanceToMove / 2);
+        midpoint = transform.position + (GetDistanceToMove() / 2);
         initRot = transform.rotation.eulerAngles;
     }
 
@@ -53,7 +53,7 @@ public class MovingPlatform : MonoBehaviour
                 rotSpeed.y,
                 rotSpeed.z) * Time.fixedDeltaTime;
 
-        transform.Translate(mvmtThisFrame);
+        transform.Translate(mvmtThisFrame, Space.World);
         transform.Rotate(rotThisFrame);
     }
 
