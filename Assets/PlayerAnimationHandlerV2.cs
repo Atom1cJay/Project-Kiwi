@@ -46,6 +46,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         animator.SetBool("STARTRUN", false);
         animator.SetBool("SWIM", false);
         animator.SetBool("STOPPING", false);
+        animator.SetBool("BOOSTSLIDE", false);
 
         animator.SetBool(s, true);
     }
@@ -82,6 +83,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         animator.SetBool("STARTRUN", false);
         animator.SetBool("SWIM", false);
         animator.SetBool("STOPPING", false);
+        animator.SetBool("BOOSTSLIDE", false);
 
 
 
@@ -150,7 +152,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             if (lM == "dive" && diving)
             {
                 diving = false;
-                StartCoroutine(ExtendMove("DIVERECOVERY", 0.3f));
+                StartCoroutine(ExtendMove("DIVERECOVERY", 0.35f));
             }
             else if (acceleration <= -15f && speed >= jetrunThreshold * 0.6f && !diving)
             {
@@ -289,6 +291,11 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
 
             onGround = true;
             currentMove("SWIM");
+        }
+        else if (cM == "boostslide")
+        {
+            onGround = true;
+            currentMove("BOOSTSLIDE");
         }
         else
         {
