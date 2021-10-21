@@ -32,10 +32,6 @@ public class PlayerSlopeHandler : MonoBehaviour
     /// </summary>
     public static Vector3 AngleContactPoint { get; private set; }
 
-    // EXPERIMENTAL!!!
-    public static bool OnSlopeThisFramePublic { get; private set; }
-    private bool OnSlopeThisFramePrivate;
-
     [SerializeField] float maxHeightOfContactPoint;
     /// <summary>
     /// Slope considered too steep for regular movement
@@ -64,12 +60,6 @@ public class PlayerSlopeHandler : MonoBehaviour
         DetectIfGroundInProximity();
     }
 
-    private void LateUpdate()
-    {
-        OnSlopeThisFramePublic = OnSlopeThisFramePrivate;
-        OnSlopeThisFramePrivate = false;
-    }
-
     private void DetectIfGroundInProximity()
     {
         GroundInProximity = false;
@@ -92,7 +82,6 @@ public class PlayerSlopeHandler : MonoBehaviour
         if (Physics.Raycast(hit.point + Vector3.up, Vector3.down, out rchit, Mathf.Infinity, layerMask)) // layer mask?
         {
             // Register slope
-            OnSlopeThisFramePrivate = true;
             XDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.x));
             ZDeriv = -Mathf.Tan(Mathf.Asin(rchit.normal.z));
             AngleOfSlope = GetAngleOfSlope(rchit.normal);
