@@ -179,11 +179,6 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
                 StartCoroutine(ExtendMove("STARTRUN", 0.4f));
                 startRunning = false;
             }
-            else if (speed > jetrunThreshold && !diving)
-            {
-                if (acceleration >= -7.5f)
-                    currentMove("JETPACKRUN");
-            }
             else if (speed < 4f && !diving && !stopping)
             {
                 if (Mathf.Abs(acceleration) <= 3f)
@@ -241,6 +236,16 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             onGround = false;
             currentMove("HBOOST");
 
+        }
+        else if (cM == "horizgroundboostcharge")
+        {
+            onGround = true;
+            currentMove("HCHARGE");
+        }
+        else if (cM == "horizgroundboost")
+        {
+            onGround = true;
+            currentMove("JETPACKRUN");
         }
         else if (cM == "vertairboostcharge")
         {
