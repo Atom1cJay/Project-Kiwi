@@ -7,6 +7,7 @@ public class UIStart : MonoBehaviour, UIInterface
 {
 
     [SerializeField] InputActionsHolder IAH;
+    [SerializeField] MoveExecuter me;
     [SerializeField] UIControlSystem cs;
     [SerializeField] GameObject OptionsMenu;
     bool paused;
@@ -25,7 +26,8 @@ public class UIStart : MonoBehaviour, UIInterface
     // Update is called once per frame
     void Update()
     {
-        if (!paused && IAH.inputActions.UI.Pause.ReadValue<float>() > 0)
+        if (!paused && IAH.inputActions.UI.Pause.ReadValue<float>() > 0 && 
+            (me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude == 0f && me.GetCurrentMove().GetVertSpeedThisFrame() == 0))
             EnableThisObject();
 
     }
@@ -33,7 +35,7 @@ public class UIStart : MonoBehaviour, UIInterface
     public void EnableThisObject()
     {
         paused = true;
-        TimescaleHandler.setPausedForMenu(true);
+       MonobehaviourUtils.Instance.StartCoroutine(TimeScaleHandler(true));
         cs.OnClickFunction();
 
     }
@@ -41,8 +43,14 @@ public class UIStart : MonoBehaviour, UIInterface
     public void DisableThisObject()
     {
         paused = false;
-        TimescaleHandler.setPausedForMenu(false);
+        StartCoroutine(TimeScaleHandler(false));
 
+    }
+
+    IEnumerator TimeScaleHandler(bool b)
+    {
+        yield return new WaitForSecondsRealtime(0f);
+        TimescaleHandler.setPausedForMenu(b);
     }
 
 }
