@@ -33,25 +33,9 @@ public abstract class AMove : IMove
 
     public abstract string AsString();
 
-    public virtual bool RotationIsRelative()
-    {
-        return false;
-    }
+    public virtual Attack GetAttack() { return null; }
 
-    public virtual float CameraRotateTowardsRatio()
-    {
-        return 0;
-    }
-
-    public virtual float CameraVerticalAutoTarget()
-    {
-        return 0;
-    }
-
-    public virtual Attack GetAttack()
-    {
-        return null;
-    }
+    public virtual MovementParticleInfo.MovementParticles GetParticlesToSpawn() { return null; }
 
     /// <summary>
     /// Gives the vector of horizontal movement that the player should move,
@@ -94,5 +78,12 @@ public abstract class AMove : IMove
         float vectorAngle = (-Mathf.Atan2(horizVector.y, horizVector.x)) + (Mathf.PI / 2);
         float angleDifference = playerAngle - vectorAngle;
         return Mathf.Cos(angleDifference) * horizVector.magnitude;
+    }
+
+    public enum FromStatus
+    {
+        Null,
+        FromIdle,
+        FromAir,
     }
 }

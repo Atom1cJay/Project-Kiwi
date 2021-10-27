@@ -48,13 +48,6 @@ public interface IMoveImmutable
     bool AdjustToSlope();
 
     /// <summary>
-    /// Should the the player rotate relative to their current positioning
-    /// (true), or should they rotate TOWARDS the direction of the stick
-    /// (false)?
-    /// </summary>
-    bool RotationIsRelative();
-
-    /// <summary>
     /// Gives this move as a String with no spaces, all in lowercase.
     /// </summary>
     /// <returns></returns>
@@ -66,22 +59,16 @@ public interface IMoveImmutable
     IMove GetNextMove();
 
     /// <summary>
-    /// What ratio, between the current camera angle and its target
-    /// (at the back of the player, at a certain vertical angle),
-    /// should the camera move by every frame? If none at all, returns 0.
-    /// </summary>
-    float CameraRotateTowardsRatio();
-
-    /// <summary>
-    /// Gives the angle (degrees) on the X axis which the camera should target. This
-    /// method only applies to those moves whose CameraRotateTowardsRatio
-    /// is not zero.
-    /// </summary>
-    float CameraVerticalAutoTarget();
-
-    /// <summary>
     /// Gives the attack (if any) associated with the move. If there is none,
     /// returns null.
     /// </summary>
     Attack GetAttack();
+
+    /// <summary>
+    /// Returns the exact particle GameObject that should be spawned around
+    /// the player when this move takes place. Null for no particles. Particles
+    /// are only spawned at the beginning of a move (currently at least).
+    /// </summary>
+    /// <returns></returns>
+    MovementParticleInfo.MovementParticles GetParticlesToSpawn();
 }

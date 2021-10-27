@@ -5,6 +5,7 @@ public class Idle : AMove
 {
     bool jumpPending;
     bool swimPending;
+    FromStatus fromStatus;
 
     /// <summary>
     /// Constructs a Idle, initializing the objects that hold all the
@@ -20,6 +21,12 @@ public class Idle : AMove
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
+    }
+
+    // Override constructor to include fromStatus
+    public Idle(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, FromStatus fromStatus) : this(mii, mi, ms)
+    {
+        this.fromStatus = fromStatus;
     }
 
     public override void AdvanceTime()
@@ -58,7 +65,7 @@ public class Idle : AMove
         }
         if (mii.GetHorizontalInput().magnitude != 0)
         {
-            return new Run(mii, mi, movementSettings, Vector2.zero);
+            return new Run(mii, mi, movementSettings, Vector2.zero, FromStatus.FromIdle);
         }
         if (jumpPending || mii.InReverseCoyoteTime())
         {
@@ -90,5 +97,14 @@ public class Idle : AMove
     public override bool AdjustToSlope()
     {
         return true;
+    }
+
+    public override MovementParticleInfo.MovementParticles GetParticlesToSpawn()
+    {
+        if (fromStatus == FromStatus.FromAir)
+        {
+            return MovementParticleInfo.Instance.Landing;
+        }
+        return null;
     }
 }

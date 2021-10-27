@@ -158,7 +158,11 @@ public class DoubleJump : AMove
         if (mi.TouchingGround() && jumpGroundableTimerComplete && vertVel < 0)
         {
             if (horizVel < 0) horizVel = 0;
-            return new Run(mii, mi, movementSettings, /*horizVel*/ horizVector);
+            if (horizVector.magnitude == 0)
+            {
+                return new Idle(mii, mi, movementSettings, FromStatus.FromAir);
+            }
+            return new Run(mii, mi, movementSettings, horizVector, FromStatus.FromAir);
         }
         if (divePending)
         {

@@ -71,11 +71,11 @@ public class Dive : AMove
         }
         else if (mi.TouchingGround() && mii.GetHorizontalInput().magnitude > 0)
         {
-            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
+            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel), FromStatus.FromAir);
         }
         else if (mi.TouchingGround() && mii.GetHorizontalInput().magnitude == 0)
         {
-            return new Idle(mii, mi, movementSettings);
+            return new Idle(mii, mi, movementSettings, FromStatus.FromAir);
         }
         return this;
     }

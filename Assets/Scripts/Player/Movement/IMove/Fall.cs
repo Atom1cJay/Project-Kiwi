@@ -140,7 +140,7 @@ public class Fall : AMove
         }
         if (mi.TouchingGround() && !PlayerSlopeHandler.ShouldSlide && horizVector.magnitude > 0)
         {
-            return new Run(mii, mi, movementSettings, horizVector);
+            return new Run(mii, mi, movementSettings, horizVector, FromStatus.FromAir);
         }
         if (mi.TouchingGround() && !PlayerSlopeHandler.ShouldSlide && horizVector.magnitude == 0)
         {
@@ -148,7 +148,11 @@ public class Fall : AMove
         }
         if (jumpPending && coyoteTime > 0)
         {
-            return new Jump(mii, mi, movementSettings, horizVector.magnitude);
+            if (horizVector.magnitude == 0)
+            {
+                return new Idle(mii, mi, movementSettings, FromStatus.FromAir);
+            }
+            return new Run(mii, mi, movementSettings, horizVector, FromStatus.FromAir);
         }
         if (divePending)
         {

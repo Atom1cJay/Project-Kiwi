@@ -165,7 +165,11 @@ public class Jump : AMove
         if (mi.TouchingGround() && jumpGroundableTimerComplete && vertVel < 0)
         {
             if (horizVel < 0) horizVel = 0; // todo outdated?
-            return new Run(mii, mi, movementSettings, horizVector);
+            if (horizVector.magnitude == 0)
+            {
+                return new Idle(mii, mi, movementSettings, FromStatus.FromAir);
+            }
+            return new Run(mii, mi, movementSettings, horizVector, FromStatus.FromAir);
         }
         if (divePending)
         {

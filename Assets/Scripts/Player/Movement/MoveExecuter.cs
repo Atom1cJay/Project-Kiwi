@@ -12,6 +12,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(RotationMovement))]
 [RequireComponent(typeof(CheckpointLoader))]
+[RequireComponent(typeof(BumperHandler))]
 public class MoveExecuter : MonoBehaviour
 {
     IMove moveLastFrame = null;
@@ -22,6 +23,7 @@ public class MoveExecuter : MonoBehaviour
     MovementSettingsSO movementSettings;
     RotationMovement rotator;
     CheckpointLoader cl;
+    BumperHandler bh;
     [SerializeField] CameraControl cameraControl;
     [SerializeField] CameraTarget camTarget;
 
@@ -34,6 +36,7 @@ public class MoveExecuter : MonoBehaviour
         mii = GetComponent<MovementInputInfo>();
         cl = GetComponent<CheckpointLoader>();
         rotator = GetComponent<RotationMovement>();
+        bh = GetComponent<BumperHandler>();
     }
 
     private void Start()
@@ -64,21 +67,14 @@ public class MoveExecuter : MonoBehaviour
         if (Time.timeScale > 0 && Time.deltaTime > 0) // Check for the sake of avoiding weird errors
         {
             moveThisFrame.AdvanceTime();
-            if (moveThisFrame.CameraRotateTowardsRatio() == 0)
-            {
-                cameraControl.HandleManualControl();
-            }
-            else
-            {
-                cameraControl.AdjustToBack(moveThisFrame.CameraRotateTowardsRatio());
-                cameraControl.AdjustVertical(moveThisFrame.CameraRotateTowardsRatio(), moveThisFrame.CameraVerticalAutoTarget());
-            }
+            cameraControl.HandleManualControl();
             rotator.DetermineRotation();
             Vector2 horizMovement = moveThisFrame.GetHorizSpeedThisFrame();
             Vector3 dir = DirectionOfMovement(horizMovement);
             Vector3 horizMovementAdjusted = dir * horizMovement.magnitude;
             Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
             charCont.Move((horizMovementAdjusted + vertMovement) * Time.deltaTime);
+            bh.HandleBumperMoved();
             camTarget.Adjust();
             IMove next = moveThisFrame.GetNextMove();
             moveThisFrame = next;

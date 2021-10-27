@@ -8,7 +8,6 @@ public class VertAirBoost : AMove
     float vertVel;
     Vector2 horizVector;
     bool divePending;
-    bool groundPoundPending;
     bool swimPending;
 
     /// <summary>
@@ -26,10 +25,8 @@ public class VertAirBoost : AMove
             horizVel = 0;
         }
         this.horizVector = ForwardMovement(horizVel);
-        //this.horizVel = horizVel;
         vertVel = movementSettings.VertBoostMinLaunchVel + (propCharged * (movementSettings.VertBoostMaxLaunchVel - movementSettings.VertBoostMinLaunchVel));
         mii.OnDiveInput.AddListener(() => divePending = true);
-        mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         if (mi.GetWaterDetector() != null)
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
@@ -61,7 +58,6 @@ public class VertAirBoost : AMove
             float magn = horizVector.magnitude;
             float propToAbsoluteMax = (magn - movementSettings.MaxSpeed) / (movementSettings.MaxSpeedAbsolute - movementSettings.MaxSpeed);
             // In case the jump is getting adjusted, make sure the sensitivity is appropriate to the speed
-            //float jumpAdjustSensitivity = Mathf.Lerp(movementSettings.JumpAdjustSensitivityX, movementSettings.JumpAdjustSensitivityMaxSpeedX, propToAbsoluteMax);
             horizVector += inReverse ?
                 mii.GetRelativeHorizontalInputToCamera() * movementSettings.VertBoostGravityX * Time.deltaTime
                 :
@@ -84,32 +80,11 @@ public class VertAirBoost : AMove
         {
             horizVector = horizVector.normalized * movementSettings.VertBoostMaxSpeedX;
         }
-        /*
-        horizVel = Math.Min(horizVel, mi.GetEffectiveSpeed().magnitude);
-        if (mii.AirReverseInput())
-        {
-            horizVel = InputUtils.SmoothedInput(
-                horizVel,
-                -mii.GetHorizontalInput().magnitude * movementSettings.VertBoostMaxSpeedX,
-                movementSettings.AirSensitivityX,
-                movementSettings.AirGravityX);
-        }
-        else
-        {
-            horizVel = InputUtils.SmoothedInput(
-                horizVel,
-                mii.GetHorizontalInput().magnitude * movementSettings.VertBoostMaxSpeedX,
-                movementSettings.AirSensitivityX,
-                movementSettings.AirGravityX);
-        }
-        */
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
         return horizVector;
-        //return horizVector;
-        //return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -124,38 +99,22 @@ public class VertAirBoost : AMove
             return float.MaxValue;
         }
         return movementSettings.AirRotationSpeed;
-        /*
-        if (mii.AirReverseInput())
-        {
-            return 0;
-        }
-        return horizVel < movementSettings.InstantRotationSpeed ?
-            float.MaxValue : movementSettings.VertBoostRotationSpeed;
-        */
     }
 
     public override IMove GetNextMove()
     {
         if (swimPending)
         {
-            return new Swim(mii, mi, movementSettings, /*ForwardMovement(horizVel)*/horizVector);
+            return new Swim(mii, mi, movementSettings, horizVector);
         }
         if (mi.TouchingGround() && vertVel < 0)
         {
-            /*
-            if (horizVel < 0)
+            if (horizVector.magnitude == 0)
             {
-                horizVel = 0;
+                return new Idle(mii, mi, movementSettings, FromStatus.FromAir);
             }
-            */
-            return new Run(mii, mi, movementSettings, /*ForwardMovement(horizVel)*/horizVector);
+            return new Run(mii, mi, movementSettings, horizVector, FromStatus.FromAir);
         }
-        /*
-        if (groundPoundPending)
-        {
-            return new GroundPound(mii, mi, movementSettings, horizVector.magnitude, false);
-        }
-        */
         if (divePending)
         {
             return new Dive(mii, mi, movementSettings);
@@ -187,5 +146,10 @@ public class VertAirBoost : AMove
     public override Attack GetAttack()
     {
         return movementSettings.VertBoostAttack;
+    }
+
+    public override MovementParticleInfo.MovementParticles GetParticlesToSpawn()
+    {
+        return MovementParticleInfo.Instance.VertBoost;
     }
 }

@@ -1617,6 +1617,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688621305}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &699744175 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5116987452351034272, guid: 70613cbda13764daea7160e7333018b7, type: 3}
+  m_PrefabInstance: {fileID: 2127999438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &699744176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699744175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e245dde0f9c924a60971f4134aa5bebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &789423057
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5164,7 +5181,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1704877077, guid: 70613cbda13764daea7160e7333018b7, type: 3}
   m_PrefabInstance: {fileID: 2127999438}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 699744175}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b3e5af48915d4dc5a2e7a260357eb62, type: 3}
@@ -5175,7 +5192,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1704877078, guid: 70613cbda13764daea7160e7333018b7, type: 3}
   m_PrefabInstance: {fileID: 2127999438}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 699744175}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 396240b35bfbb4891bdc67d85a298db9, type: 3}
@@ -7129,33 +7146,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 149705595}
   m_VersionIndex: 647
   m_IsSelectable: 1
-  m_SelectedFaces: 160000000e00000006000000
-  m_SelectedEdges:
-  - a: 88
-    b: 89
-  - a: 90
-    b: 88
-  - a: 89
-    b: 91
-  - a: 91
-    b: 90
-  - a: 56
-    b: 57
-  - a: 58
-    b: 56
-  - a: 57
-    b: 59
-  - a: 59
-    b: 58
-  - a: 24
-    b: 25
-  - a: 26
-    b: 24
-  - a: 25
-    b: 27
-  - a: 27
-    b: 26
-  m_SelectedVertices: 58000000590000005a0000005b00000038000000390000003a0000003b00000018000000190000001a0000001b000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!1001 &1659016772
 PrefabInstance:
   m_ObjectHideFlags: 0

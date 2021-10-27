@@ -7,8 +7,6 @@ public class HorizAirBoost : AMove
     float gravity;
     float vertVel;
     float horizVel;
-    bool divePending;
-    bool groundPoundPending;
     bool swimPending;
 
     /// <summary>
@@ -23,9 +21,6 @@ public class HorizAirBoost : AMove
         this.vertVel = vertVel / 4;
         gravity = movementSettings.HorizBoostMinGravity;
         this.horizVel = movementSettings.HorizBoostMinSpeedX + (propCharged * (movementSettings.HorizBoostMaxSpeedX - movementSettings.HorizBoostMinSpeedX));
-        //this.vertVel = vertVel;
-        mii.OnDiveInput.AddListener(() => divePending = true);
-        mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         if (mi.GetWaterDetector() != null)
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
@@ -40,15 +35,6 @@ public class HorizAirBoost : AMove
             gravity = movementSettings.HorizBoostMaxGravity;
         vertVel -= gravity * Time.deltaTime;
         // Horizontal
-        /*
-        if (mii.PressingBoost())
-        {
-            horizVel = InputUtils.SmoothedInput(
-                horizVel,
-                movementSettings.GroundBoostMaxSpeedX,
-                movementSettings.HorizBoostToGroundBoostSensitivity, 0);
-        }
-        */
         if (!mii.AirReverseInput())
         {
             horizVel = InputUtils.SmoothedInput(
@@ -74,12 +60,6 @@ public class HorizAirBoost : AMove
 
     public override float GetRotationSpeed()
     {
-        /*
-        if (divePending)
-        {
-            return float.MaxValue;
-        }
-        */
         return mii.AirReverseInput() ? 0 : movementSettings.HorizBoostRotation;
     }
 
@@ -93,18 +73,6 @@ public class HorizAirBoost : AMove
         {
             return new BoostSlide(mii, mi, movementSettings, horizVel, false);
         }
-        /*
-        if (groundPoundPending)
-        {
-            return new GroundPound(mii, mi, movementSettings, horizVel, true);
-        }
-        */
-        /*
-        if (divePending)
-        {
-            return new Dive(mii, mi, movementSettings);
-        }
-        */
 
         return this;
     }
@@ -132,5 +100,10 @@ public class HorizAirBoost : AMove
     public override Attack GetAttack()
     {
         return movementSettings.HorizBoostAttack;
+    }
+
+    public override MovementParticleInfo.MovementParticles GetParticlesToSpawn()
+    {
+        return MovementParticleInfo.Instance.HorizBoost;
     }
 }

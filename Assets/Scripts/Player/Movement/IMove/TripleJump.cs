@@ -130,7 +130,11 @@ public class TripleJump : AMove
         }
         if (mi.TouchingGround())
         {
-            return new Run(mii, mi, movementSettings, horizVector);
+            if (horizVector.magnitude == 0)
+            {
+                return new Idle(mii, mi, movementSettings, FromStatus.FromAir);
+            }
+            return new Run(mii, mi, movementSettings, horizVector, FromStatus.FromAir);
         }
         if (glidePending)
         {

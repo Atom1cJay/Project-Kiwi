@@ -24,16 +24,8 @@ public class RotationMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         IMoveImmutable curMove = me.GetCurrentMove();
         float rotationSpeed = curMove.GetRotationSpeed();
-
-        if (curMove.RotationIsRelative())
-        {
-            transform.Rotate(new Vector3(0, rotationSpeed, 0) * Time.deltaTime);
-        }
-        else
-        {
-            if (mii.GetHorizontalInput().magnitude == 0) return; // Otherwise would trend forward
-            Quaternion targetRotation = Quaternion.Euler(0, mii.GetInputDirection() * Mathf.Rad2Deg, 0);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        }
+        if (mii.GetHorizontalInput().magnitude == 0) return; // Otherwise would trend forward
+        Quaternion targetRotation = Quaternion.Euler(0, mii.GetInputDirection() * Mathf.Rad2Deg, 0);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 }

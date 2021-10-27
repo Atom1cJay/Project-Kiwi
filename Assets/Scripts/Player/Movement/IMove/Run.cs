@@ -12,10 +12,12 @@ public class Run : AMove
     bool timeBetweenJumpsBreaksTJ;
     bool swimPending;
     bool pushPending;
+    readonly FromStatus fromStatus;
 
     /// <summary>
     /// Constructs a Run, initializing the objects that hold all the
-    /// information it needs to function.
+    /// information it needs to function. FromIdle will be false by
+    /// default.
     /// </summary>
     /// <param name="mii">Information on the player's input</param>
     /// <param name="mi">Information on the state of the player</param>
@@ -31,6 +33,13 @@ public class Run : AMove
         }
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitToBreakTimeBetweenJumps());
         mii.OnPushPress.AddListener(() => pushPending = true);
+    }
+
+    // Overload constructor for explicitly giving information about where this
+    // move is coming from
+    public Run(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector, FromStatus fromStatus) : this(mii, mi, ms, horizVector)
+    {
+        this.fromStatus = fromStatus;
     }
 
     public override void AdvanceTime()
@@ -164,5 +173,18 @@ public class Run : AMove
     public override bool AdjustToSlope()
     {
         return true;
+    }
+
+    public override MovementParticleInfo.MovementParticles GetParticlesToSpawn()
+    {
+        switch (fromStatus)
+        {
+            case FromStatus.FromIdle:
+                return MovementParticleInfo.Instance.Accel;
+            case FromStatus.FromAir:
+                return MovementParticleInfo.Instance.Landing;
+            default:
+                return null;
+        }
     }
 }

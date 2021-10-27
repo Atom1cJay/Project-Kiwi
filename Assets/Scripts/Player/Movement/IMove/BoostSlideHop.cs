@@ -13,16 +13,6 @@ public class BoostSlideHop : AMove
     {
         vertVel = movementSettings.BoostHopInitVelY;
         this.horizVel = horizVel * movementSettings.BoostHopInitVelXMultiplier;
-        /*
-        if (horizVel >= movementSettings.BoostHopXVelForMoving)
-        {
-            this.horizVel = movementSettings.BoostHopInitVelXMoving;
-        }
-        else
-        {
-            this.horizVel = movementSettings.BoostHopInitVelXStopped;
-        }
-        */
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", RunLandableTimer());
         if (mi.GetWaterDetector() != null)
         {
@@ -39,13 +29,6 @@ public class BoostSlideHop : AMove
     public override void AdvanceTime()
     {
         vertVel -= movementSettings.BoostHopGravity * Time.deltaTime;
-        /*
-        horizVel -= movementSettings.BoostSlideSpeedDecRate * Time.deltaTime;
-        if (horizVel < 0)
-        {
-            horizVel = 0;
-        }
-        */
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
@@ -75,7 +58,7 @@ public class BoostSlideHop : AMove
         }
         if (mi.TouchingGround() && landableTimerPassed)
         {
-            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
+            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel), FromStatus.FromAir);
         }
         return this;
     }
