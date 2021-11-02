@@ -16,7 +16,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
     float lastSpeed = 0f;
     float extraStopTime = 0f;
     bool resetSlowDown = true;
-    bool extending, anyStateTransition;
+    bool extending, anyStateTransition, boostSliding;
     float vertSpeed, jetrunThreshold, fallThreshold;
     string lM, temp, cM;
 
@@ -47,6 +47,9 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         animator.SetBool("SWIM", false);
         animator.SetBool("STOPPING", false);
         animator.SetBool("BOOSTSLIDE", false);
+        animator.SetBool("SLIDETORUN", false);
+        animator.SetBool("SLIDEJUMP", false);
+        animator.SetBool("GROUNDHBOOST", false);
 
         animator.SetBool(s, true);
     }
@@ -57,6 +60,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         stopping = false;
         extending = false;
         startRunning = false;
+        boostSliding = false;
         jetrunThreshold = MovementSettingsSO.Instance.MaxSpeed + 1f;
         fallThreshold = (MovementSettingsSO.Instance.JumpInitVel - MovementSettingsSO.Instance.DefaultGravity * 0.2f);
         anyStateTransition = true;
@@ -84,6 +88,9 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         animator.SetBool("SWIM", false);
         animator.SetBool("STOPPING", false);
         animator.SetBool("BOOSTSLIDE", false);
+        animator.SetBool("SLIDETORUN", false);
+        animator.SetBool("SLIDEJUMP", false);
+        animator.SetBool("GROUNDHBOOST", false);
 
 
 
@@ -121,6 +128,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         }
         else if (cM == "idle")
         {
+            boostSliding = false;
             startRunning = true;
             onGround = true;
             resetSlowDown = true;
@@ -154,6 +162,13 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
                 diving = false;
                 StartCoroutine(ExtendMove("DIVERECOVERY", 0.35f));
             }
+            else if (boostSliding)
+            {
+                boostSliding = false;
+                anyStateTransition = false;
+                StartCoroutine(AnyStateAgain(0.4f));
+                StartCoroutine(ExtendMove("SLIDETORUN", 0.35f));
+            }
             else if (acceleration <= -15f && speed >= jetrunThreshold * 0.6f && !diving)
             {
                 //Slow stop
@@ -175,7 +190,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
                 
                 currentMove("STARTRUN");
                 anyStateTransition = false;
-                StartCoroutine(AnyStateAgain(0.5f));
+                StartCoroutine(AnyStateAgain(0.7f));
                 StartCoroutine(ExtendMove("STARTRUN", 0.4f));
                 startRunning = false;
             }
@@ -194,21 +209,36 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         }
         else if (cM == "dive")
         {
+            boostSliding = false;
             onGround = false;
             diving = true;
             currentMove("DIVE");
 
         }
+        else if (cM == "boostslidehop")
+        {
+            onGround = false;
+            boostSliding = false;
+            anyStateTransition = false;
+            StartCoroutine(AnyStateAgain(0.25f));
+            StartCoroutine(ExtendMove("SLIDEJUMP", 0.3f));
+
+        }
         else if (cM == "jump")
         {
             onGround = false;
-            currentMove("FIRSTJUMP");
+            boostSliding = false;
             if (vertSpeed <= fallThreshold)
                 currentMove("FALLING");
+            else
+            {
+                currentMove("FIRSTJUMP");
+            }
 
         }
         else if (cM == "doublejump")
         {
+            boostSliding = false;
             onGround = false;
             currentMove("FIRSTJUMP"); // Temp, while animations are same
 
@@ -218,6 +248,8 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         }
         else if (cM == "triplejump")
         {
+
+            boostSliding = false;
             onGround = false;
             currentMove("THIRDJUMP");
 
@@ -227,34 +259,43 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         }
         else if (cM == "horizairboostcharge")
         {
+            boostSliding = false;
             onGround = false;
             currentMove("HCHARGE");
 
         }
         else if (cM == "horizairboost")
         {
+            boostSliding = false;
             onGround = false;
             currentMove("HBOOST");
 
         }
         else if (cM == "horizgroundboostcharge")
         {
+            boostSliding = false;
             onGround = true;
-            currentMove("HCHARGE");
+            currentMove("GROUNDHBOOST");
+            anyStateTransition = false;
+            StartCoroutine(AnyStateAgain(0.25f));
+            StartCoroutine(ExtendMove("GROUNDHBOOST", 0.1f));
         }
         else if (cM == "horizgroundboost")
         {
+            boostSliding = false;
             onGround = true;
             currentMove("JETPACKRUN");
         }
         else if (cM == "vertairboostcharge")
         {
+            boostSliding = false;
             onGround = false;
             currentMove("VCHARGE");
 
         }
         else if (cM == "vertairboost")
         {
+            boostSliding = false;
             onGround = false;
             currentMove("VBOOST");
 
@@ -262,19 +303,24 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         else if (cM == "idle")
         {
 
+            boostSliding = false;
             onGround = true;
             currentMove("IDLE");
         }
         else if (cM == "hardturn")
         {
-
+            extending = false;
+            boostSliding = false;
             startRunning = true;
             onGround = true;
             currentMove("HARDTURN");
+            anyStateTransition = false;
+            StartCoroutine(AnyStateAgain(0.4f));
         }
 
         else if (cM == "groundpound")
         {
+            boostSliding = false;
 
             onGround = false;
             currentMove("GROUNDPOUND");
@@ -282,29 +328,34 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         else if (cM == "slide")
         {
 
+            boostSliding = false;
             onGround = true;
             currentMove("SKID");
         }
         else if (cM == "sliderecovery")
         {
 
+            boostSliding = false;
             onGround = true;
             currentMove("SKID");
         }
         else if (cM == "swim")
         {
 
+            boostSliding = false;
             onGround = true;
             currentMove("SWIM");
         }
         else if (cM == "boostslide")
         {
             onGround = true;
+            boostSliding = true;
             currentMove("BOOSTSLIDE");
         }
         else
         {
 
+            boostSliding = false;
             onGround = true;
             currentMove("IDLE");
         }
