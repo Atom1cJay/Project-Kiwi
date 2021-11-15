@@ -15,8 +15,9 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
     float acceleration = 0f;
     float lastSpeed = 0f;
     float extraStopTime = 0f;
+    float timeToDance, startIdleTime;
     bool resetSlowDown = true;
-    bool extending, anyStateTransition, boostSliding;
+    bool extending, anyStateTransition, boostSliding, startingIdle;
     float vertSpeed, jetrunThreshold, fallThreshold;
     string lM, temp, cM;
 
@@ -92,7 +93,17 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         animator.SetBool("SLIDEJUMP", false);
         animator.SetBool("GROUNDHBOOST", false);
 
+        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
 
+        foreach (AnimationClip clip in clips)
+        {
+            if (clip.name == "Idle")
+            {
+                startIdleTime = clip.length;
+            }
+        }
+
+        startingIdle = true;
 
     }
 
@@ -117,8 +128,21 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
 
         //Debug.Log(cM);
         //walking state not implemented yet
+
+        //just for idle dance animation
+        if (cM != "idle")
+        {
+            timeToDance = Time.time + 100f;
+        }
+
+
         if (extending)
         {
+            if(extendedMove == "STARTRUN" && cM == "jump")
+            {
+                anyStateTransition = true;
+                extending = false;
+            }
             currentMove(extendedMove);
         }
         else if (cM == "walking")
@@ -128,7 +152,6 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         }
         else if (cM == "idle")
         {
-            boostSliding = false;
             startRunning = true;
             onGround = true;
             resetSlowDown = true;
@@ -138,6 +161,11 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
                 StartCoroutine(AnyStateAgain(0.5f));
                 diving = false;
             }
+            else if (boostSliding)
+            {
+                StartCoroutine(ExtendMove("BOOSTSLIDE", 0.05f));
+                currentMove("BOOSTSLIDE");
+            }
             else if (stopping)
             {
                 stopping = false;
@@ -145,7 +173,27 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
                 currentMove("STOPPING");
             }
             else
+            {
+
                 currentMove("IDLE");
+                /*
+                if (Time.time > timeToDance - .25f)
+                {
+                    animator.SetBool("IDLE", false);
+                    startingIdle = true;
+                    
+                }
+                else if (startingIdle)
+                {
+                    currentMove("IDLE");
+                    startingIdle = false;
+                    timeToDance = Time.time + startIdleTime;
+                }*/
+
+            }
+
+
+            boostSliding = false;
         }
         else if (cM == "fall")
         {
