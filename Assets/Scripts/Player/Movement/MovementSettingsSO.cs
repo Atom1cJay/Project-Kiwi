@@ -166,6 +166,7 @@ public class MovementSettingsSO : ScriptableObject
     [Header("Ground Pound Settings")]
     [SerializeField] float gpSuspensionTime;
     [SerializeField] float gpDownSpeed;
+    [SerializeField] float gpDownGravity;
     [SerializeField] float gpLandTime;
 
     [Header("Dive Settings")]
@@ -353,6 +354,7 @@ public class MovementSettingsSO : ScriptableObject
 
     public float GpSuspensionTime { get { return gpSuspensionTime; } }
     public float GpDownSpeed { get { return gpDownSpeed; } }
+    public float GpDownGravity { get { return gpDownGravity; } }
     public float GpLandTime { get { return gpLandTime; } }
 
     public float DiveInitVel { get { return diveInitVel; } }

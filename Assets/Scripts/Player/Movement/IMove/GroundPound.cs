@@ -4,32 +4,41 @@ using UnityEngine;
 
 public class GroundPound : AMove
 {
-    float horizVel;
-    float vertVel;
     float timePassed;
-    //bool divePending;
+    bool suspended = true;
+    float vertVel;
+    bool divePending;
     bool landingStarted;
     bool landingOver;
     bool swimPending;
     private bool receivedBasicHit;
     private Vector3 basicHitNormal;
 
-    public GroundPound(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool inMotion) : base(ms, mi, mii)
+    public GroundPound(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
     {
-        this.horizVel = inMotion ? horizVel : 0;
-        vertVel = movementSettings.DivePoundYVel;
-        //mii.OnDiveInput.AddListener(() => divePending = true);
+        mii.OnDiveInput.AddListener(() => divePending = true);
         if (mi.GetWaterDetector() != null)
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
         mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
+        vertVel = 0;
     }
 
     public override void AdvanceTime()
     {
-        vertVel -= movementSettings.DivePoundGravity * Time.deltaTime;
-        /*
+        // Pass time
+        timePassed += Time.deltaTime;
+        // Decide how to handle vertVel based on time passed
+        if (suspended && timePassed > movementSettings.GpSuspensionTime)
+        {
+            vertVel = -movementSettings.GpDownSpeed;
+            suspended = false;
+        }
+        if (!suspended)
+        {
+            vertVel -= movementSettings.GpDownGravity * Time.deltaTime;
+        }
         if (mi.TouchingGround() && !landingStarted)
         {
             // Check if the ground-pounded object has a specific pound event
@@ -42,33 +51,22 @@ public class GroundPound : AMove
             landingStarted = true;
             MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForLandingEnd());
         }
-        */
     }
 
-    /*
     IEnumerator WaitForLandingEnd()
     {
         yield return new WaitForSeconds(movementSettings.GpLandTime);
         landingOver = true;
     }
-    */
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
-        return ForwardMovement(horizVel);
+        return Vector2.zero;
     }
 
     public override float GetVertSpeedThisFrame()
     {
         return vertVel;
-
-        /*
-        if (timePassed < movementSettings.GpSuspensionTime)
-        {
-            return 0;
-        }
-        return -movementSettings.GpDownSpeed;
-        */
     }
 
     public override float GetRotationSpeed()
@@ -84,24 +82,20 @@ public class GroundPound : AMove
         }
         if (receivedBasicHit)
         {
-            return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, Vector2.zero);
         }
-        /*
         if (divePending && !landingStarted)
         {
             return new Dive(mii, mi, movementSettings);
         }
-        */
         if (mi.TouchingGround())
         {
-            return new BoostSlide(mii, mi, movementSettings, horizVel, false);
+            return new BoostSlide(mii, mi, movementSettings, 0, false);
         }
-        /*
         if (landingOver)
         {
             return new Idle(mii, mi, movementSettings);
         }
-        */
         return this;
     }
 
