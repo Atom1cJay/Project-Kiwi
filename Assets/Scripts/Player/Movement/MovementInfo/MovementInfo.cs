@@ -5,12 +5,14 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(MoveExecuter))]
+[RequireComponent(typeof(PlayerHealth))]
 public class MovementInfo : MonoBehaviour
 {
     public static MovementInfo instance;
     [SerializeField] CollisionDetector groundDetector;
     [SerializeField] CollisionDetector antiBoostDetector;
     [SerializeField] WaterDetector waterDetector;
+    public PlayerHealth ph { get; private set; }
     private int tjJumpCount;
     IMoveImmutable storedMove; // The move from the last frame
     MoveExecuter me;
@@ -19,9 +21,7 @@ public class MovementInfo : MonoBehaviour
     // Testing
     private List<Vector2> lastFiveMoves = new List<Vector2>(
         new []{ Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero });
-    private Vector2 lastFiveMovesAccum = Vector2.zero;
     private Vector2 prevPosXZ;
-    private Vector2 effectiveSpeedXZ;
 
     [HideInInspector] public UnityEvent OnCharContTouchSomething;
 
@@ -35,6 +35,7 @@ public class MovementInfo : MonoBehaviour
         prevPosXZ = new Vector2(transform.position.x, transform.position.z);
         me = GetComponent<MoveExecuter>();
         charCont = GetComponent<CharacterController>();
+        ph = GetComponent<PlayerHealth>();
     }
 
     /// <summary>
@@ -66,8 +67,6 @@ public class MovementInfo : MonoBehaviour
     {
         Vector2 curXZ = new Vector2(transform.position.x, transform.position.z);
         lastFiveMoves.Add((curXZ - prevPosXZ) / Time.deltaTime);
-        lastFiveMovesAccum += lastFiveMoves[5];
-        lastFiveMovesAccum -= lastFiveMoves[0];
         lastFiveMoves.RemoveAt(0);
         prevPosXZ = curXZ;
     }

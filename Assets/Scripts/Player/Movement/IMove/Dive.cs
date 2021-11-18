@@ -11,6 +11,8 @@ public class Dive : AMove
     float horizVel;
     float vertVel;
     bool swimPending;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a Dive, initializing the objects that hold all the
@@ -27,6 +29,7 @@ public class Dive : AMove
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -64,6 +67,10 @@ public class Dive : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
         }
         if (PlayerSlopeHandler.ShouldSlide && mi.TouchingGround())
         {

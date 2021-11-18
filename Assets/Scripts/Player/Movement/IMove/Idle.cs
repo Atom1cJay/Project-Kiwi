@@ -6,6 +6,8 @@ public class Idle : AMove
     bool jumpPending;
     bool swimPending;
     FromStatus fromStatus;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a Idle, initializing the objects that hold all the
@@ -21,6 +23,7 @@ public class Idle : AMove
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     // Override constructor to include fromStatus
@@ -58,6 +61,10 @@ public class Idle : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, Vector2.zero);
+        }
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, Vector2.zero);
         }
         if (PlayerSlopeHandler.ShouldSlide && mi.TouchingGround())
         {

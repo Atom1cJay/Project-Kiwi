@@ -225,8 +225,10 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] Attack groundPoundAttack;
 
     [Header("Knockback Settings")]
-    [SerializeField] float knockbackYAngle; // Degrees (90 = max)
+    [SerializeField] float knockbackInitYVel;
+    [SerializeField] float knockbackInitXVel;
     [SerializeField] float knockbackYGravity;
+    [SerializeField] float knockbackXTimeToZero;
     [SerializeField] float knockbackRecoveryTime;
 
     /// public, readonly variables
@@ -402,8 +404,10 @@ public class MovementSettingsSO : ScriptableObject
     public Attack VertBoostAttack { get { return vertBoostAttack; } }
     public Attack GroundPoundAttack { get { return groundPoundAttack; } }
 
-    public float KnockbackYAngle { get { return knockbackYAngle; } } // Degrees (90 = max)
+    public float KnockbackInitYVel { get { return knockbackInitYVel; } }
+    public float KnockbackInitXVel { get { return knockbackInitXVel; } }
     public float KnockbackYGravity { get { return knockbackYGravity; } }
+    public float KnockbackXTimeToZero { get { return knockbackXTimeToZero; } }
     public float KnockbackRecoveryTime { get { return knockbackRecoveryTime; } }
 
     static MovementSettingsSO _instance;

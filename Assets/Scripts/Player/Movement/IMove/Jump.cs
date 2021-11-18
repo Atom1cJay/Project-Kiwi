@@ -17,6 +17,8 @@ public class Jump : AMove
     bool glidePending;
     bool swimPending;
     Vector2 horizVector;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a Jump, initializing the objects that hold all the
@@ -39,6 +41,7 @@ public class Jump : AMove
         mii.OnPushPress.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
         if (mi.GetWaterDetector() != null)
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
@@ -149,6 +152,10 @@ public class Jump : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, horizVector);
+        }
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);
         }
         if (PlayerSlopeHandler.ShouldSlide && mi.TouchingGround())
         {

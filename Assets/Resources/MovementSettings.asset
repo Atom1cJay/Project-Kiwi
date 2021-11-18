@@ -65,7 +65,7 @@ MonoBehaviour:
   horizBoostRotation: 15
   horizBoostAirReverseGravity: 16
   horizBoostNonAirReverseGravity: 0
-  horizBoostMinSpeedX: 7
+  horizBoostMinSpeedX: 6.5
   horizBoostMaxSpeedX: 9
   horizBoostMinSpeedGroundX: 7
   horizBoostMaxSpeedGroundX: 11
@@ -79,7 +79,7 @@ MonoBehaviour:
   horizBoostToGroundBoostSensitivity: 1
   horizBoostChargeVertNeutralizeTime: 0
   groundBoostRotationSpeed: 50
-  horizBoostMinGravity: 4
+  horizBoostMinGravity: 4.5
   horizBoostMaxGravity: 9.5
   horizBoostGravityIncRate: 15
   boostSlideSpeedDecRate: 6
@@ -166,6 +166,8 @@ MonoBehaviour:
   horizBoostAttack: {fileID: 11400000, guid: 057b9d2781d5f4b7e97272b311233238, type: 2}
   vertBoostAttack: {fileID: 11400000, guid: bfc43803b61d94a31959b5c26bf47a02, type: 2}
   groundPoundAttack: {fileID: 11400000, guid: a8f699fa686c6448e90e6e646a783a6b, type: 2}
-  knockbackYAngle: 0.8
-  knockbackYGravity: 25
+  knockbackInitYVel: 6
+  knockbackInitXVel: 6
+  knockbackYGravity: 20
+  knockbackXTimeToZero: 1
   knockbackRecoveryTime: 0.5

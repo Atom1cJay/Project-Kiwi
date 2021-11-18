@@ -12,6 +12,8 @@ public class Glidev3 : AMove
     bool groundPoundPending;
     bool swimPending;
     float maxSpeed;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     public Glidev3(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
@@ -30,6 +32,7 @@ public class Glidev3 : AMove
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -124,6 +127,10 @@ public class Glidev3 : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, horizVector);
+        }
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);
         }
         if (groundPoundPending)
         {

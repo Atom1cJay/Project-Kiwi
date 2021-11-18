@@ -11,6 +11,8 @@ public class GroundPound : AMove
     bool landingStarted;
     bool landingOver;
     bool swimPending;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     public GroundPound(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool inMotion) : base(ms, mi, mii)
     {
@@ -21,6 +23,7 @@ public class GroundPound : AMove
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -78,6 +81,10 @@ public class GroundPound : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, Vector2.zero);
+        }
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
         }
         /*
         if (divePending && !landingStarted)

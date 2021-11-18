@@ -8,6 +8,8 @@ public class SlideRecovery : AMove
     Vector2 horizVector;
     bool recovered;
     bool swimPending;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     public SlideRecovery(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
@@ -18,6 +20,7 @@ public class SlideRecovery : AMove
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     IEnumerator WaitForRecoveryTimeEnd()
@@ -51,6 +54,10 @@ public class SlideRecovery : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, horizVector);
+        }
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);
         }
         if (recovered)
         {

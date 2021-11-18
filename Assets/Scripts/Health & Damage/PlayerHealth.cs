@@ -9,8 +9,11 @@ using UnityEngine.Events;
 public class PlayerHealth : MonoBehaviour
 {
     public static PlayerHealth instance;
-    [SerializeField] int hp;
+    public int hp { get; private set; }
+    [SerializeField] int startingHP;
     [SerializeField] float iFrameDuration;
+    public UnityEvent onHealthChanged { get; private set; }
+    public Vector3Event onBasicHit { get; private set; }
     bool isInvulnerable;
 
     private void Awake()
@@ -20,13 +23,16 @@ public class PlayerHealth : MonoBehaviour
             Debug.LogError("Multiple instances of PlayerHealth exist. Only have one.");
         }
         instance = this;
+        hp = startingHP;
+        onHealthChanged = new UnityEvent();
+        onBasicHit = new Vector3Event();
     }
 
     /// <summary>
     /// Takes damage of the specified type to the player, unless invulnerable.
     /// </summary>
     /// <param name="damageType"></param>
-    public void HandleDamage(DamageType damageType)
+    public void HandleDamage(DamageType damageType, Vector3 normalOfContact)
     {
         if (isInvulnerable || hp <= 0)
         {
@@ -36,6 +42,7 @@ public class PlayerHealth : MonoBehaviour
         switch (damageType)
         {
             case DamageType.BasicHit:
+                onBasicHit.Invoke(normalOfContact);
                 print("BASIC HIT TAKEN");
                 hp--;
                 break;
@@ -51,6 +58,8 @@ public class PlayerHealth : MonoBehaviour
                 Debug.LogError("Cannot take damage; unrecognized dmg type.");
                 break;
         }
+
+        onHealthChanged.Invoke();
 
         if (hp <= 0)
         {

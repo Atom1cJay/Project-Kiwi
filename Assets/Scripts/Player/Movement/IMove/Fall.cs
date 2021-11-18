@@ -15,6 +15,8 @@ public class Fall : AMove
     bool glidePending;
     bool swimPending;
     float coyoteTime;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a Fall, initializing the objects that hold all the
@@ -40,6 +42,7 @@ public class Fall : AMove
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     IEnumerator AllowCoyoteTime()
@@ -125,6 +128,10 @@ public class Fall : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, horizVector);
+        }
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);
         }
         if (glidePending)
         {

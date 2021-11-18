@@ -77,7 +77,7 @@ public class MoveExecuter : MonoBehaviour
             charCont.Move((horizMovementAdjusted + vertMovement) * Time.deltaTime);
             bh.HandleBumperMoved();
             camTarget.Adjust();
-            shadowCaster.UpdateShadowCaster(charCont.transform.position);
+            shadowCaster.UpdatePosition(charCont.transform.position);
             IMove next = moveThisFrame.GetNextMove();
             moveThisFrame = next;
         }
@@ -143,15 +143,5 @@ public class MoveExecuter : MonoBehaviour
     public IMoveImmutable GetCurrentMove()
     {
         return moveThisFrame;
-    }
-
-    /// <summary>
-    /// Makes the current move the knockback move.
-    /// </summary>
-    /// <param name="normal">The normal of the collision from the object the player hit</param>
-    /// <param name="strength">The force of the knockback</param>
-    public void ForceKnockback(Vector3 normal, float strength)
-    {
-        moveThisFrame = new Knockback(mii, mi, movementSettings, Vector3.right, 10);
     }
 }

@@ -12,6 +12,8 @@ public class HorizAirBoostCharge : AMove
     readonly float maxTimeToCharge;
     bool boostReleasePending;
     bool swimPending;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a HorizAirBoostCharge, initializing the objects that hold all
@@ -35,6 +37,7 @@ public class HorizAirBoostCharge : AMove
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -95,6 +98,10 @@ public class HorizAirBoostCharge : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
         }
         if (mi.TouchingGround())
         {

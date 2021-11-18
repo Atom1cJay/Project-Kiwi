@@ -17,6 +17,8 @@ public class DoubleJump : AMove
     bool glidePending;
     bool swimPending;
     Vector2 horizVector;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a Jump, initializing the objects that hold all the
@@ -50,6 +52,7 @@ public class DoubleJump : AMove
                 vertVel *= movementSettings.JumpVelMultiplierAtCancel;
             }
         });
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -142,6 +145,10 @@ public class DoubleJump : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, horizVector);
+        }
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);
         }
         if (PlayerSlopeHandler.ShouldSlide && mi.TouchingGround())
         {

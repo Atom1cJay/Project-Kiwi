@@ -5,6 +5,8 @@ public class Slide : AMove
 {
     Vector2 horizVector;
     bool swimPending;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     public Slide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
@@ -34,6 +36,7 @@ public class Slide : AMove
             horizVector.x = totalMovement.normalized.x * movementSettings.SlideMaxSpeed;
             horizVector.y = totalMovement.normalized.z * movementSettings.SlideMaxSpeed;
         }
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override string AsString()
@@ -52,12 +55,10 @@ public class Slide : AMove
         {
             return new Swim(mii, mi, movementSettings, horizVector);
         }
-        /*
-        if (!mi.TouchingGround())
+        if (receivedBasicHit)
         {
-            return new Fall(mii, mi, movementSettings, horizVector, false);
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);
         }
-        */
         if (mi.TouchingGround() && !PlayerSlopeHandler.ShouldSlide)
         {
             return new SlideRecovery(mii, mi, movementSettings, horizVector);

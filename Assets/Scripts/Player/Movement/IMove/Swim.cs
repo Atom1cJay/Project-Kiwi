@@ -10,6 +10,8 @@ public class Swim : AMove
     Vector2 horizVector;
     bool jumpPending;
     float maxSpeed;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a Swim, initializing the objects that hold all the
@@ -28,10 +30,13 @@ public class Swim : AMove
         {
             horizVector = horizVector.normalized * maxSpeed;
         }
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
     {
+        float startingMagn = Mathf.Min(horizVector.magnitude, mi.GetEffectiveSpeed().magnitude);
+        horizVector = horizVector.normalized * startingMagn;
         if (mii.PressingBoost())
         {
             maxSpeed = movementSettings.SwimMaxSpeedBoosted;
@@ -91,6 +96,10 @@ public class Swim : AMove
 
     public override IMove GetNextMove()
     {
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);
+        }
         if (jumpPending)
         {
             return new Jump(mii, mi, movementSettings, horizVector.magnitude);

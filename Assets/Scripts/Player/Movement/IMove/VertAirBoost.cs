@@ -9,6 +9,8 @@ public class VertAirBoost : AMove
     Vector2 horizVector;
     bool divePending;
     bool swimPending;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a VertAirBoost, initializing the objects that hold all the
@@ -31,6 +33,7 @@ public class VertAirBoost : AMove
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -106,6 +109,10 @@ public class VertAirBoost : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, horizVector);
+        }
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);
         }
         if (mi.TouchingGround() && vertVel < 0)
         {

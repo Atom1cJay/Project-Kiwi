@@ -8,13 +8,13 @@ public class StickToGround : MonoBehaviour
     [SerializeField] float offsetAboveRaycastHitPoint; // Distance above ground to float
     [SerializeField] float raycastLength;
 
-    public void UpdateShadowCaster(Vector3 playerPos)
+    // Based on the given position, stick to the nearest "floor" below that position.
+    public void UpdatePosition(Vector3 pos)
     {
         RaycastHit hit;
-        if (Physics.Raycast(playerPos, Vector3.down, out hit, raycastLength, validGround))
+        if (Physics.Raycast(pos, Vector3.down, out hit, raycastLength, validGround))
         {
-            print(hit.collider.gameObject);
-            transform.position = new Vector3(playerPos.x, hit.point.y + offsetAboveRaycastHitPoint, playerPos.z);
+            transform.position = new Vector3(pos.x, hit.point.y + offsetAboveRaycastHitPoint, pos.z);
         }
     }
 }

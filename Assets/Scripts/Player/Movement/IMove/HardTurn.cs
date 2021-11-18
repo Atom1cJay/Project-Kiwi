@@ -7,6 +7,8 @@ public class HardTurn : AMove
     float timeLeft;
     bool jumpInputPending;
     bool swimPending;
+    private bool receivedBasicHit;
+    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a HardTurn, initializing the objects that hold all the
@@ -25,6 +27,7 @@ public class HardTurn : AMove
         {
             mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
         }
+        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -56,6 +59,10 @@ public class HardTurn : AMove
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
+        }
+        if (receivedBasicHit)
+        {
+            return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
         }
         if (timeLeft < 0)
         {
