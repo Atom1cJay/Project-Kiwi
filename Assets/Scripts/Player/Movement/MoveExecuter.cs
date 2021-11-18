@@ -26,6 +26,7 @@ public class MoveExecuter : MonoBehaviour
     BumperHandler bh;
     [SerializeField] CameraControl cameraControl;
     [SerializeField] CameraTarget camTarget;
+    [SerializeField] StickToGround shadowCaster;
 
     public UnityEvent OnMoveChanged;
 
@@ -76,6 +77,7 @@ public class MoveExecuter : MonoBehaviour
             charCont.Move((horizMovementAdjusted + vertMovement) * Time.deltaTime);
             bh.HandleBumperMoved();
             camTarget.Adjust();
+            shadowCaster.UpdateShadowCaster(charCont.transform.position);
             IMove next = moveThisFrame.GetNextMove();
             moveThisFrame = next;
         }
