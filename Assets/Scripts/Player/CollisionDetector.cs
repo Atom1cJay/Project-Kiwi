@@ -8,11 +8,11 @@ public class CollisionDetector : MonoBehaviour
     private bool colliding;
     private GameObject collidingWith = null;
     [SerializeField] private List<GameObject> gameObjectsToIgnore;
-    [SerializeField] CollectibleSystem cs;
+    [SerializeField] LayerMask layersToInclude;
 
     private void UpdateCollisionStatus()
     {
-        foreach (Collider c in Physics.OverlapSphere(transform.position, (transform.localScale.magnitude / 2) / 1.3f)) // TODO FIX BAD GENERALIZE
+        foreach (Collider c in Physics.OverlapSphere(transform.position, (transform.localScale.magnitude / 2) / 1.3f, layersToInclude)) // TODO FIX BAD GENERALIZE
         {
             if (!c.isTrigger && !gameObjectsToIgnore.Contains(c.gameObject))
             {

@@ -149,6 +149,13 @@ public class Jump : AMove
 
     public override IMove GetNextMove()
     {
+        // Handle Feedback Moves
+        IMove feedbackMove = GetFeedbackMove(horizVector);
+        if (feedbackMove != null)
+        {
+            return feedbackMove;
+        }
+        // Handle All Other Types of Moves
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, horizVector);

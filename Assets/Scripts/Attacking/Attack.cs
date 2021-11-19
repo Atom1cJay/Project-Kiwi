@@ -17,7 +17,6 @@ public class Attack : ScriptableObject
     public void EnableAttack(Transform parent)
     {
         activeHitbox = Instantiate(hitbox, parent);
-        Instantiate(hitbox);
         if (duration != -1)
         {
             MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForDurationEnd());

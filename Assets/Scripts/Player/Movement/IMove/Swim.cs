@@ -96,6 +96,13 @@ public class Swim : AMove
 
     public override IMove GetNextMove()
     {
+        // Handle Feedback Moves
+        IMove feedbackMove = GetFeedbackMove(horizVector);
+        if (feedbackMove != null)
+        {
+            return feedbackMove;
+        }
+        // Handle Everything Else
         if (receivedBasicHit)
         {
             return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);

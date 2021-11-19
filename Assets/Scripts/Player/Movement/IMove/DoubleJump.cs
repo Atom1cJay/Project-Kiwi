@@ -142,6 +142,13 @@ public class DoubleJump : AMove
 
     public override IMove GetNextMove()
     {
+        // Handle Feedback Moves
+        IMove feedbackMove = GetFeedbackMove(ForwardMovement(horizVel));
+        if (feedbackMove != null)
+        {
+            return feedbackMove;
+        }
+        // Handle Everything Else
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, horizVector);

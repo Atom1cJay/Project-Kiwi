@@ -24,6 +24,7 @@ public class MovementInfo : MonoBehaviour
     private Vector2 prevPosXZ;
 
     [HideInInspector] public UnityEvent OnCharContTouchSomething;
+    [HideInInspector] public UnityEvent onJumpAttackFeedbackReceived = new UnityEvent();
 
     private void Awake()
     {
@@ -141,5 +142,13 @@ public class MovementInfo : MonoBehaviour
         {
             OnCharContTouchSomething.Invoke();
         }
+    }
+
+    // The player has just hit an enemy using a jump attack. The player should jump
+    // in response. Fire off the proper event to do so.
+    public void TakeJumpAttackFeedback()
+    {
+        print("Jump attack feedback");
+        onJumpAttackFeedbackReceived.Invoke();
     }
 }

@@ -6,6 +6,10 @@ public abstract class AMove : IMove
     protected readonly MovementSettingsSO movementSettings;
     protected readonly MovementInfo mi;
     protected readonly MovementInputInfo mii;
+    // Bools representing causes for "feedback" moves,
+    // moves which should take place, no matter what the current move is,
+    // if the player encounters something.
+    private bool receivedJumpFeedback;
 
     protected AMove(MovementSettingsSO movementSettings, MovementInfo mi,
         MovementInputInfo mii)
@@ -13,6 +17,8 @@ public abstract class AMove : IMove
         this.movementSettings = Utilities.RequireNonNull(movementSettings);
         this.mi = Utilities.RequireNonNull(mi);
         this.mii = Utilities.RequireNonNull(mii);
+        // Feedback Move Events
+        mi.onJumpAttackFeedbackReceived.AddListener(() => receivedJumpFeedback = true);
     }
 
     public abstract void AdvanceTime();
@@ -85,5 +91,19 @@ public abstract class AMove : IMove
         Null,
         FromIdle,
         FromAir,
+    }
+
+    /// <summary>
+    /// Gives the feedback move that should be transitioned to this frame,
+    /// if there is one.
+    /// </summary>
+    /// <returns></returns>
+    protected IMove GetFeedbackMove(Vector2 horizVector)
+    {
+        if (receivedJumpFeedback)
+        {
+            return new Jump(mii, mi, movementSettings, horizVector.magnitude);
+        }
+        return null;
     }
 }

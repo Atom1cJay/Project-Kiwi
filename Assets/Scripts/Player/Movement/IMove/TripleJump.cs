@@ -123,6 +123,13 @@ public class TripleJump : AMove
 
     public override IMove GetNextMove()
     {
+        // Handle Feedback Moves
+        IMove feedbackMove = GetFeedbackMove(horizVector);
+        if (feedbackMove != null)
+        {
+            return feedbackMove;
+        }
+        // Handle Everything Else
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, horizVector);

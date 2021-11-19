@@ -58,6 +58,13 @@ public class Idle : AMove
 
     public override IMove GetNextMove()
     {
+        // Handle Feedback Moves
+        IMove feedbackMove = GetFeedbackMove(Vector2.zero);
+        if (feedbackMove != null)
+        {
+            return feedbackMove;
+        }
+        // Handle Everything Else
         if (swimPending)
         {
             return new Swim(mii, mi, movementSettings, Vector2.zero);

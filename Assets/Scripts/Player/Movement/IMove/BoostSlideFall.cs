@@ -51,6 +51,13 @@ public class BoostSlideFall : AMove
 
     public override IMove GetNextMove()
     {
+        // Handle Feedback Moves
+        IMove feedbackMove = GetFeedbackMove(ForwardMovement(horizVel));
+        if (feedbackMove != null)
+        {
+            return feedbackMove;
+        }
+        // Handle Everything Else
         if (receivedBasicHit)
         {
             return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
