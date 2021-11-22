@@ -6,14 +6,10 @@ using UnityEngine;
 public class HorizAirBoostCharge : AMove
 {
     float horizVel;
-    float initVertVel;
     float vertVel;
     float timeCharging;
     readonly float maxTimeToCharge;
     bool boostReleasePending;
-    bool swimPending;
-    private bool receivedBasicHit;
-    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a HorizAirBoostCharge, initializing the objects that hold all
@@ -28,16 +24,9 @@ public class HorizAirBoostCharge : AMove
     {
         horizVel = GetSharedMagnitudeWithPlayerAngle(horizVector);
         this.vertVel = (vertVel < 0) ? 0 : vertVel;
-        //this.vertVel = vertVel;
-        initVertVel = vertVel;
         timeCharging = 0;
         maxTimeToCharge = movementSettings.HorizBoostMaxChargeTime;
         mii.OnHorizBoostRelease.AddListener(() => boostReleasePending = true);
-        if (mi.GetWaterDetector() != null)
-        {
-            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
-        }
-        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -46,16 +35,7 @@ public class HorizAirBoostCharge : AMove
         // Horizontal
         horizVel = InputUtils.SmoothedInput(
             horizVel, 0, 0, movementSettings.HorizBoostChargeGravityXAir);
-        /*
-        if (vertVel > 0)
-        {
-            vertVel -= movementSettings.HorizBoostChargeGravityY * Time.deltaTime;
-        }
-        if (vertVel < 0)
-        {
-            vertVel = 0;
-        }
-        */
+        // Vertical
         if (vertVel > 0)
         {
             vertVel -= movementSettings.HorizBoostChargeGravityYGoingUp * Time.deltaTime;
@@ -68,14 +48,6 @@ public class HorizAirBoostCharge : AMove
         {
             vertVel = movementSettings.HorizBoostChargeMinVelY;
         }
-        /*
-        float vertChange = (initVertVel * (Time.deltaTime / movementSettings.HorizBoostChargeVertNeutralizeTime));
-        if (Mathf.Abs(vertChange) > Mathf.Abs(vertVel))
-        {
-            vertChange = vertVel;
-        }
-        vertVel -= vertChange;
-        */
     }
 
     public override Vector2 GetHorizSpeedThisFrame()
@@ -102,14 +74,6 @@ public class HorizAirBoostCharge : AMove
             return feedbackMove;
         }
         // Handle Everything Else
-        if (swimPending)
-        {
-            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
-        }
-        if (receivedBasicHit)
-        {
-            return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
-        }
         if (mi.TouchingGround())
         {
             return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));

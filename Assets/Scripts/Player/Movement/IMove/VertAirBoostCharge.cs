@@ -11,9 +11,6 @@ public class VertAirBoostCharge : AMove
     float timeActive;
     readonly float maxTimeActive;
     bool boostReleasePending;
-    bool swimPending;
-    private bool receivedBasicHit;
-    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a VertAirBoostCharge, initializing the objects that hold all
@@ -34,11 +31,6 @@ public class VertAirBoostCharge : AMove
         timeActive = 0;
         maxTimeActive = movementSettings.VertBoostMaxChargeTime;
         mii.OnVertBoostRelease.AddListener(() => boostReleasePending = true);
-        if (mi.GetWaterDetector() != null)
-        {
-            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
-        }
-        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     IEnumerator WaitForSpeedDecMode()
@@ -87,14 +79,6 @@ public class VertAirBoostCharge : AMove
             return feedbackMove;
         }
         // Handle Everything Else
-        if (swimPending)
-        {
-            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
-        }
-        if (receivedBasicHit)
-        {
-            return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
-        }
         if (timeActive > maxTimeActive || boostReleasePending)
         {
             float propCharged = Mathf.Clamp01(timeActive / maxTimeActive);

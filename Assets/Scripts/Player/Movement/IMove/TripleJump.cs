@@ -13,9 +13,6 @@ public class TripleJump : AMove
     bool jumpCancelled;
     bool groundPoundPending;
     bool glidePending;
-    bool swimPending;
-    private bool receivedBasicHit;
-    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a TripleJump, initializing the objects that hold all the
@@ -35,10 +32,6 @@ public class TripleJump : AMove
         mii.OnPushPress.AddListener(() => horizBoostChargePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
-        if (mi.GetWaterDetector() != null)
-        {
-            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
-        }
         mii.OnJumpCancelled.AddListener(() =>
         {
             if (vertVel > movementSettings.JumpVelocityOfNoReturn)
@@ -47,7 +40,6 @@ public class TripleJump : AMove
                 vertVel *= movementSettings.JumpVelMultiplierAtCancel;
             }
         });
-        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -130,14 +122,6 @@ public class TripleJump : AMove
             return feedbackMove;
         }
         // Handle Everything Else
-        if (swimPending)
-        {
-            return new Swim(mii, mi, movementSettings, horizVector);
-        }
-        if (receivedBasicHit)
-        {
-            return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);
-        }
         if (PlayerSlopeHandler.ShouldSlide)
         {
             return new Slide(mii, mi, movementSettings, horizVector);

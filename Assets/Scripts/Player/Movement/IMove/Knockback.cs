@@ -13,7 +13,6 @@ public class Knockback : AMove
     Vector2 horizVel;
     float timePassed = 0;
     float yVel;
-    bool swimPending;
 
     public Knockback(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector3 normal, Vector2 horizVectorHeadingIn) : base(ms, mi, mii)
     {
@@ -37,10 +36,6 @@ public class Knockback : AMove
         }
         horizVel = ms.KnockbackInitXVel * horizNormal.normalized;
         initHorizVel = horizVel;
-        if (mi.GetWaterDetector() != null)
-        {
-            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
-        }
     }
 
     public override void AdvanceTime()
@@ -84,10 +79,6 @@ public class Knockback : AMove
             return feedbackMove;
         }
         // Handle Everything Else
-        if (swimPending)
-        {
-            return new Swim(mii, mi, movementSettings, horizVel);
-        }
         if (timeElapsedRecovery > movementSettings.KnockbackRecoveryTime)
         {
             return new Idle(mii, mi, movementSettings);

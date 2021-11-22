@@ -7,9 +7,6 @@ public class HorizAirBoost : AMove
     float gravity;
     float vertVel;
     float horizVel;
-    bool swimPending;
-    private bool receivedBasicHit;
-    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a HorizAirBoost, initializing the objects that hold all the
@@ -23,11 +20,6 @@ public class HorizAirBoost : AMove
         this.vertVel = vertVel / 4;
         gravity = movementSettings.HorizBoostMinGravity;
         this.horizVel = movementSettings.HorizBoostMinSpeedX + (propCharged * (movementSettings.HorizBoostMaxSpeedX - movementSettings.HorizBoostMinSpeedX));
-        if (mi.GetWaterDetector() != null)
-        {
-            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
-        }
-        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -75,14 +67,6 @@ public class HorizAirBoost : AMove
             return feedbackMove;
         }
         // Handle Everything Else
-        if (swimPending)
-        {
-            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
-        }
-        if (receivedBasicHit)
-        {
-            return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
-        }
         if (mi.TouchingGround())
         {
             return new BoostSlide(mii, mi, movementSettings, horizVel, false);

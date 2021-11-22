@@ -13,10 +13,7 @@ public class Fall : AMove
     bool jumpPending;
     bool groundPoundPending;
     bool glidePending;
-    bool swimPending;
     float coyoteTime;
-    private bool receivedBasicHit;
-    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a Fall, initializing the objects that hold all the
@@ -38,11 +35,6 @@ public class Fall : AMove
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
         mii.OnGlide.AddListener(() => glidePending = true);
         mii.OnJump.AddListener(() => jumpPending = true);
-        if (mi.GetWaterDetector() != null)
-        {
-            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
-        }
-        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     IEnumerator AllowCoyoteTime()
@@ -77,17 +69,6 @@ public class Fall : AMove
                 mii.GetRelativeHorizontalInputToCamera() * movementSettings.JumpAdjustSensitivityX * Time.deltaTime;
             horizVector = horizVector.normalized * (magn - (movementSettings.JumpSpeedDecRateOverMaxSpeed * Time.deltaTime));
         }
-        // Don't let above the magnitude limit
-        /*
-        if (!mii.PressingBoost() && horizVector.magnitude > movementSettings.MaxSpeed)
-        {
-            horizVector = horizVector.normalized * movementSettings.MaxSpeed;
-        }
-        if (mii.PressingBoost() && horizVector.magnitude > movementSettings.GroundBoostMaxSpeedX)
-        {
-            horizVector = horizVector.normalized * movementSettings.GroundBoostMaxSpeedX;
-        }
-        */
         // Come to a stop
         if (mii.GetRelativeHorizontalInputToCamera().magnitude < 0.1f)
         {
@@ -132,14 +113,6 @@ public class Fall : AMove
             return feedbackMove;
         }
         // Handle Everything Else
-        if (swimPending)
-        {
-            return new Swim(mii, mi, movementSettings, horizVector);
-        }
-        if (receivedBasicHit)
-        {
-            return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);
-        }
         if (glidePending)
         {
             return new Glidev3(mii, mi, movementSettings, horizVector);

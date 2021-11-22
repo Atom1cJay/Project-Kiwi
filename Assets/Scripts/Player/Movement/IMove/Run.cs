@@ -10,11 +10,8 @@ public class Run : AMove
     float horizVel;
     bool jumpPending;
     bool timeBetweenJumpsBreaksTJ;
-    bool swimPending;
     bool pushPending;
     readonly FromStatus fromStatus;
-    private bool receivedBasicHit;
-    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a Run, initializing the objects that hold all the
@@ -29,13 +26,8 @@ public class Run : AMove
     {
         horizVel = GetSharedMagnitudeWithPlayerAngle(horizVector);
         mii.OnJump.AddListener(() => jumpPending = true);
-        if (mi.GetWaterDetector() != null)
-        {
-            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
-        }
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitToBreakTimeBetweenJumps());
         mii.OnPushPress.AddListener(() => pushPending = true);
-        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     // Overload constructor for explicitly giving information about where this
@@ -120,14 +112,6 @@ public class Run : AMove
             return feedbackMove;
         }
         // Handle Everything Else
-        if (swimPending)
-        {
-            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
-        }
-        if (receivedBasicHit)
-        {
-            return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
-        }
         if (pushPending)
         {
             return new HorizGroundBoostCharge(mii, mi, movementSettings, ForwardMovement(horizVel));

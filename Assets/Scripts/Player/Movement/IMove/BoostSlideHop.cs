@@ -7,20 +7,12 @@ public class BoostSlideHop : AMove
     bool landableTimerPassed;
     float vertVel;
     float horizVel;
-    bool swimPending;
-    private bool receivedBasicHit;
-    private Vector3 basicHitNormal;
 
     public BoostSlideHop(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
         vertVel = movementSettings.BoostHopInitVelY;
         this.horizVel = horizVel * movementSettings.BoostHopInitVelXMultiplier;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", RunLandableTimer());
-        if (mi.GetWaterDetector() != null)
-        {
-            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
-        }
-        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     IEnumerator RunLandableTimer()
@@ -58,14 +50,6 @@ public class BoostSlideHop : AMove
             return feedbackMove;
         }
         // Handle Everything Else
-        if (swimPending)
-        {
-            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
-        }
-        if (receivedBasicHit)
-        {
-            return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
-        }
         if (PlayerSlopeHandler.ShouldSlide)
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));

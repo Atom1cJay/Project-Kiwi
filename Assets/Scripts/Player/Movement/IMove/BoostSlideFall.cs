@@ -6,21 +6,13 @@ public class BoostSlideFall : AMove
 {
     float vertVel;
     float horizVel;
-    bool swimPending;
     readonly bool allowRefresh;
-    private bool receivedBasicHit;
-    private Vector3 basicHitNormal;
 
     public BoostSlideFall(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool allowRefresh) : base(ms, mi, mii)
     {
         this.allowRefresh = allowRefresh;
         vertVel = 0;
         this.horizVel = horizVel;
-        if (mi.GetWaterDetector() != null)
-        {
-            mi.GetWaterDetector().OnHitWater.AddListener(() => swimPending = true);
-        }
-        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -58,14 +50,6 @@ public class BoostSlideFall : AMove
             return feedbackMove;
         }
         // Handle Everything Else
-        if (receivedBasicHit)
-        {
-            return new Knockback(mii, mi, movementSettings, basicHitNormal, ForwardMovement(horizVel));
-        }
-        if (swimPending)
-        {
-            return new Swim(mii, mi, movementSettings, ForwardMovement(horizVel));
-        }
         if (PlayerSlopeHandler.ShouldSlide)
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));

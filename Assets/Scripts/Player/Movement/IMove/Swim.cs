@@ -8,10 +8,7 @@ using UnityEngine;
 public class Swim : AMove
 {
     Vector2 horizVector;
-    bool jumpPending;
     float maxSpeed;
-    private bool receivedBasicHit;
-    private Vector3 basicHitNormal;
 
     /// <summary>
     /// Constructs a Swim, initializing the objects that hold all the
@@ -24,13 +21,11 @@ public class Swim : AMove
     public Swim(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
         this.horizVector = horizVector;
-        mii.OnJump.AddListener(() => jumpPending = true);
         maxSpeed = movementSettings.SwimMaxSpeedNormal;
         if (horizVector.magnitude > maxSpeed)
         {
             horizVector = horizVector.normalized * maxSpeed;
         }
-        mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedBasicHit = true; this.basicHitNormal = basicHitNormal; });
     }
 
     public override void AdvanceTime()
@@ -103,14 +98,6 @@ public class Swim : AMove
             return feedbackMove;
         }
         // Handle Everything Else
-        if (receivedBasicHit)
-        {
-            return new Knockback(mii, mi, movementSettings, basicHitNormal, horizVector);
-        }
-        if (jumpPending)
-        {
-            return new Jump(mii, mi, movementSettings, horizVector.magnitude);
-        }
         if (mi.TouchingGround())
         {
             if (horizVector.magnitude > 0)
