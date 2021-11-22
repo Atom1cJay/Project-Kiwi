@@ -10,7 +10,6 @@ public abstract class AMove : IMove
     // moves which should take place, no matter what the current move is,
     // if the player encounters something.
     private bool receivedJumpFeedback;
-    private bool receivedSwimFeedback;
     private bool receivedKnockbackFeedback;
     private Vector3 knockbackFeedbackNormal; // Only to be accessed if received knockback feedback
 
@@ -22,10 +21,6 @@ public abstract class AMove : IMove
         this.mii = Utilities.RequireNonNull(mii);
         // Feedback Move Events
         mi.onJumpAttackFeedbackReceived.AddListener(() => receivedJumpFeedback = true);
-        if (mi.GetWaterDetector() != null)
-        {
-            mi.GetWaterDetector().OnHitWater.AddListener(() => receivedSwimFeedback = true);
-        }
         mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedKnockbackFeedback = true; knockbackFeedbackNormal = basicHitNormal; });
     }
 
@@ -112,7 +107,7 @@ public abstract class AMove : IMove
         {
             return new Jump(mii, mi, movementSettings, horizVector.magnitude);
         }
-        if (receivedSwimFeedback)
+        if (mi.TouchingWater())
         {
             return new Swim(mii, mi, movementSettings, horizVector);
         }
