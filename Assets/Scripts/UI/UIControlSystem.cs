@@ -11,22 +11,18 @@ public class UIControlSystem : MonoBehaviour, UIInterface
     [SerializeField] List<GameObject> ObjectsToDisable;
     [SerializeField] GameObject ObjectToSetFirst;
 
-
     public void EnableThisObject()
     {
         gameObject.SetActive(true);
-
-
     }
 
     public void DisableThisObject()
     {
         gameObject.SetActive(false);
-
-        //clear selected
+        // Clear selected
         EventSystem.current.SetSelectedGameObject(null);
-
     }
+
     public void OnClickFunction()
     {
         foreach (GameObject g in ObjectsToDisable)

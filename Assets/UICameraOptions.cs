@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class UICameraOptions : MonoBehaviour
 {
-
     [SerializeField] CameraControl cc;
     [SerializeField] bool X, Y;
 
@@ -14,6 +13,7 @@ public class UICameraOptions : MonoBehaviour
         //set up camera
         Toggle();
     }
+
     public void Toggle()
     {
         if (X)

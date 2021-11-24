@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] float iFrameDuration;
     public UnityEvent onHealthChanged { get; private set; }
     public Vector3Event onBasicHit { get; private set; }
+    public UnityEvent onDeath { get; private set; }
     bool isInvulnerable;
 
     private void Awake()
@@ -26,12 +27,14 @@ public class PlayerHealth : MonoBehaviour
         hp = startingHP;
         onHealthChanged = new UnityEvent();
         onBasicHit = new Vector3Event();
+        onDeath = new UnityEvent();
     }
 
     /// <summary>
-    /// Takes damage of the specified type to the player, unless invulnerable.
+    /// Takes damage of the specified type to the player, if the conditions are
+    /// right for damage to take place.
     /// </summary>
-    /// <param name="damageType"></param>
+    /// <param name="damageType">The type of damage relevant to the hit being (potentially) taken</param>
     public void HandleDamage(DamageType damageType, Vector3 normalOfContact)
     {
         if (isInvulnerable || hp <= 0)
@@ -63,6 +66,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (hp <= 0)
         {
+            onDeath.Invoke();
             print("YOU DIED."); // TODO actual death sequence
         }
         else

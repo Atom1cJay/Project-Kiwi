@@ -12,6 +12,7 @@ public abstract class AMove : IMove
     private bool receivedJumpFeedback;
     private bool receivedKnockbackFeedback;
     private Vector3 knockbackFeedbackNormal; // Only to be accessed if received knockback feedback
+    private bool receivedDeathFeedback;
 
     protected AMove(MovementSettingsSO movementSettings, MovementInfo mi,
         MovementInputInfo mii)
@@ -22,6 +23,7 @@ public abstract class AMove : IMove
         // Feedback Move Events
         mi.onJumpAttackFeedbackReceived.AddListener(() => receivedJumpFeedback = true);
         mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedKnockbackFeedback = true; knockbackFeedbackNormal = basicHitNormal; });
+        mi.ph.onDeath.AddListener(() => receivedDeathFeedback = true);
     }
 
     public abstract void AdvanceTime();
@@ -103,6 +105,10 @@ public abstract class AMove : IMove
     /// <returns></returns>
     protected IMove GetFeedbackMove(Vector2 horizVector)
     {
+        if (receivedDeathFeedback)
+        {
+            return new Death(mii, mi, movementSettings);
+        }
         if (receivedJumpFeedback)
         {
             return new Jump(mii, mi, movementSettings, horizVector.magnitude);

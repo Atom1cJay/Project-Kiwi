@@ -6,7 +6,7 @@ public class Death : AMove
 {
     public Death(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
     {
-        Debug.Log("Hello");
+        // Nothing
     }
 
     public override void AdvanceTime()
