@@ -97,11 +97,11 @@ public class Idle : AMove
         return true;
     }
 
-    public override MovementParticleInfo.MovementParticles GetParticlesToSpawn()
+    public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
         if (fromStatus == FromStatus.FromAir)
         {
-            return MovementParticleInfo.Instance.Landing;
+            return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Landing, MovementParticleInfo.Instance.LandingImpact };
         }
         return null;
     }

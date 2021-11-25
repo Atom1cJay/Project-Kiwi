@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -70,5 +72,5 @@ public interface IMoveImmutable
     /// are only spawned at the beginning of a move (currently at least).
     /// </summary>
     /// <returns></returns>
-    MovementParticleInfo.MovementParticles GetParticlesToSpawn();
+    MovementParticleInfo.MovementParticles[] GetParticlesToSpawn();
 }

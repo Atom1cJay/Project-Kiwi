@@ -102,4 +102,9 @@ public class Dive : AMove
     {
         return movementSettings.DiveAttack;
     }
+
+    public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
+    {
+        return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Stars };
+    }
 }

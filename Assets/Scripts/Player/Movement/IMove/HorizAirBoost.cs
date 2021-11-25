@@ -100,8 +100,8 @@ public class HorizAirBoost : AMove
         return movementSettings.HorizBoostAttack;
     }
 
-    public override MovementParticleInfo.MovementParticles GetParticlesToSpawn()
+    public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
-        return MovementParticleInfo.Instance.HorizBoost;
+        return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.HorizBoost };
     }
 }

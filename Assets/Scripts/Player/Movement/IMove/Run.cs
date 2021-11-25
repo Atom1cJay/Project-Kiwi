@@ -173,14 +173,16 @@ public class Run : AMove
         return true;
     }
 
-    public override MovementParticleInfo.MovementParticles GetParticlesToSpawn()
+    public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
         switch (fromStatus)
         {
             case FromStatus.FromIdle:
-                return MovementParticleInfo.Instance.Accel;
+                return new MovementParticleInfo.MovementParticles[]
+                { MovementParticleInfo.Instance.Accel, MovementParticleInfo.Instance.Walking };
             case FromStatus.FromAir:
-                return MovementParticleInfo.Instance.Landing;
+                return new MovementParticleInfo.MovementParticles[]
+                { MovementParticleInfo.Instance.Landing, MovementParticleInfo.Instance.LandingImpact, MovementParticleInfo.Instance.Walking };
             default:
                 return null;
         }

@@ -146,8 +146,8 @@ public class Swim : AMove
         return false;
     }
 
-    public override MovementParticleInfo.MovementParticles GetParticlesToSpawn()
+    public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
-        return MovementParticleInfo.Instance.Splash;
+        return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Splash };
     }
 }

@@ -12,39 +12,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e713f158b6a84c149159216a1a0ca4d, type: 3}
   m_Name: MovementParticleInfo
   m_EditorClassIdentifier: 
+  walking:
+    particles: {fileID: 3805978567241431449, guid: 1cd4ce437c10048a8975c3d4cfd93158, type: 3}
+    staysWithPlayer: 1
+    maxTimeBeforeDestroy: -1
+    haltedByNewMove: 1
+    timeAfterHaltToDestroy: 3
   vertBoost:
     particles: {fileID: 3805978567241431449, guid: 4304003f596624529a2103699da02232, type: 3}
     staysWithPlayer: 1
     maxTimeBeforeDestroy: 1.5
-    destroyedByNewMove: 0
     haltedByNewMove: 1
+    timeAfterHaltToDestroy: -1
   horizBoost:
     particles: {fileID: 3805978567241431449, guid: fdf8457ad53a5444188cdfb2d6e22bcb, type: 3}
     staysWithPlayer: 1
     maxTimeBeforeDestroy: 1.5
-    destroyedByNewMove: 0
     haltedByNewMove: 1
+    timeAfterHaltToDestroy: -1
   landing:
     particles: {fileID: 3805978567241431449, guid: 033f954e102af4fa08ec29e923cdc6ba, type: 3}
     staysWithPlayer: 0
     maxTimeBeforeDestroy: 0.5
-    destroyedByNewMove: 0
     haltedByNewMove: 0
+    timeAfterHaltToDestroy: -1
+  landingImpact:
+    particles: {fileID: 3805978567241431449, guid: b92ac6e29c1bc4b5888230d6c96192a1, type: 3}
+    staysWithPlayer: 0
+    maxTimeBeforeDestroy: 3
+    haltedByNewMove: 0
+    timeAfterHaltToDestroy: 0
   accel:
     particles: {fileID: 3805978567241431449, guid: 2682d33ae9f504205a82ab41301d8e3e, type: 3}
     staysWithPlayer: 0
-    maxTimeBeforeDestroy: 0.7
-    destroyedByNewMove: 0
+    maxTimeBeforeDestroy: 1
     haltedByNewMove: 0
+    timeAfterHaltToDestroy: -1
   sliding:
     particles: {fileID: 3805978567241431449, guid: debf7cfba649a42c0931707d466360f1, type: 3}
     staysWithPlayer: 1
     maxTimeBeforeDestroy: 2
-    destroyedByNewMove: 0
     haltedByNewMove: 1
+    timeAfterHaltToDestroy: -1
+  slidingTracks:
+    particles: {fileID: 3805978567241431449, guid: c579aafeda8d54f11b6912b7e041fdad, type: 3}
+    staysWithPlayer: 1
+    maxTimeBeforeDestroy: 0
+    haltedByNewMove: 1
+    timeAfterHaltToDestroy: 3
   splash:
     particles: {fileID: 3805978567241431449, guid: 40e97d2305dd24f11a67b5e1dc771505, type: 3}
     staysWithPlayer: 0
     maxTimeBeforeDestroy: 1
-    destroyedByNewMove: 0
     haltedByNewMove: 0
+    timeAfterHaltToDestroy: -1
+  stars:
+    particles: {fileID: 3805978567241431449, guid: 00cedfb103e71443784b653babb27bd8, type: 3}
+    staysWithPlayer: 0
+    maxTimeBeforeDestroy: 1
+    haltedByNewMove: 0
+    timeAfterHaltToDestroy: 0

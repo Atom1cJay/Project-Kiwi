@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public abstract class AMove : IMove
 {
@@ -46,7 +47,7 @@ public abstract class AMove : IMove
 
     public virtual Attack GetAttack() { return null; }
 
-    public virtual MovementParticleInfo.MovementParticles GetParticlesToSpawn() { return null; }
+    public virtual MovementParticleInfo.MovementParticles[] GetParticlesToSpawn() { return null; }
 
     /// <summary>
     /// Gives the vector of horizontal movement that the player should move,

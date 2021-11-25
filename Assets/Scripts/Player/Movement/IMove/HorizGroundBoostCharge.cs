@@ -90,8 +90,8 @@ public class HorizGroundBoostCharge : AMove
         return true;
     }
 
-    public override MovementParticleInfo.MovementParticles GetParticlesToSpawn()
+    public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
-        return MovementParticleInfo.Instance.Sliding;
+        return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Sliding, MovementParticleInfo.Instance.SlidingTracks };
     }
 }
