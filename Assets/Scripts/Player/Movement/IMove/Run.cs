@@ -11,7 +11,7 @@ public class Run : AMove
     bool jumpPending;
     bool timeBetweenJumpsBreaksTJ;
     bool pushPending;
-    readonly FromStatus fromStatus;
+    readonly FromStatus fromStatus = FromStatus.Null;
 
     /// <summary>
     /// Constructs a Run, initializing the objects that hold all the
@@ -177,6 +177,9 @@ public class Run : AMove
     {
         switch (fromStatus)
         {
+            case FromStatus.FromSlide:
+                return new MovementParticleInfo.MovementParticles[]
+                { MovementParticleInfo.Instance.Walking };
             case FromStatus.FromIdle:
                 return new MovementParticleInfo.MovementParticles[]
                 { MovementParticleInfo.Instance.Accel, MovementParticleInfo.Instance.Walking };

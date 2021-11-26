@@ -28,6 +28,8 @@ public class CameraControl : MonoBehaviour
     private void Start()
     {
         iah.inputActions.Camera.AutoAdjust.performed += _ => AutoAdjustToBack();
+        PlayerPrefsWhisperer.OnCameraInversionToggled.AddListener(() => ReadInversionValues());
+        ReadInversionValues();
     }
 
     /// <summary>
@@ -83,18 +85,11 @@ public class CameraControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets the X inversion constant based on whether X should be inverted.
+    /// Based on PlayerPrefs, decides whether to invert the camera on the X axis.
     /// </summary>
-    public void SetXInverted(bool inverted)
+    void ReadInversionValues()
     {
-        InvertX = inverted ? -1 : 1;
-    }
-
-    /// <summary>
-    /// Sets the Y inversion constant based on whether Y should be inverted.
-    /// </summary>
-    public void SetYInverted(bool inverted)
-    {
-        InvertY = inverted ? -1 : 1;
+        InvertX = PlayerPrefsWhisperer.GetCameraXInverted() ? -1 : 1;
+        InvertY = PlayerPrefsWhisperer.GetCameraYInverted() ? -1 : 1;
     }
 }

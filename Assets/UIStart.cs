@@ -14,13 +14,13 @@ public class UIStart : MonoBehaviour, UIInterface
 
     void Start()
     {
-        OptionsMenu.SetActive(true);
+        //OptionsMenu.SetActive(true);
 
         //setup camera at start
-        foreach (UICameraOptions c in GetComponentsInChildren<UICameraOptions>())
-            c.Toggle();
+        //foreach (UICameraOptions c in GetComponentsInChildren<UICameraOptions>())
+            //c.Toggle();
 
-        OptionsMenu.SetActive(false);
+        //OptionsMenu.SetActive(false);
     }
 
     // Update is called once per frame

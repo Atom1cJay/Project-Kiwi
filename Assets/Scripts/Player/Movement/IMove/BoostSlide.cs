@@ -78,7 +78,7 @@ public class BoostSlide : AMove
         }
         if (horizVel <= movementSettings.BoostSlideEndSpeedHoldingFwd && fwdInput)
         {
-            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
+            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel), FromStatus.FromSlide);
         }
         if (horizVel <= 0)
         {

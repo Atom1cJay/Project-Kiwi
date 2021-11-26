@@ -40,8 +40,8 @@ public class UIController : MonoBehaviour
     void Start()
     {
         SetPlayScreen();
-        ToggleXFunction();
-        ToggleYFunction();
+        //ToggleXFunction();
+        //ToggleYFunction();
     }
 
     private void Awake()
@@ -294,6 +294,7 @@ public class UIController : MonoBehaviour
 
     }
 
+    /*
     public void ToggleXFunction()
     {
         cc.SetXInverted(ToggleX.isOn);
@@ -303,4 +304,5 @@ public class UIController : MonoBehaviour
     {
         cc.SetYInverted(ToggleY.isOn);
     }
+    */
 }
