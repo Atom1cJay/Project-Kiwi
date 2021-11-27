@@ -65,9 +65,12 @@ public class MovementParticleExecuter : MonoBehaviour
         {
             if (newMove && newMoveHalts && !moveHalted)
             {
-                HaltAllParticlesFoundInGameObj(particles, timeAfterHaltToDestroy);
-                timeLeftToLive = timeAfterHaltToDestroy;
                 moveHalted = true;
+                HaltAllParticlesFoundInGameObj(particles, timeAfterHaltToDestroy);
+                if (timeAfterHaltToDestroy >= 0)
+                {
+                    timeLeftToLive = timeAfterHaltToDestroy;
+                }
             }
             timeLeftToLive -= Time.deltaTime;
             yield return new WaitForEndOfFrame();

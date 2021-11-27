@@ -51,6 +51,6 @@ public class MovementParticleInfo : ScriptableObject
         public float maxTimeBeforeDestroy; // 0 (or negative) if no timer for destruction
         [Header("Use Sparingly (Is Slow)")]
         public bool haltedByNewMove; // Particles stop spawning on new move
-        public float timeAfterHaltToDestroy; // If halt takes place, how long after should destroy happen.
+        public float timeAfterHaltToDestroy; // If halt takes place, how long after should destroy happen (negative = never).
     }
 }
