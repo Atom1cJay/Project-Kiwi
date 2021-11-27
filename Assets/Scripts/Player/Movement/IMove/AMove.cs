@@ -99,7 +99,8 @@ public abstract class AMove : IMove
         Null,
         FromIdle,
         FromAir,
-        FromSlide
+        FromSlide,
+        FromBoostCharge
     }
 
     /// <summary>

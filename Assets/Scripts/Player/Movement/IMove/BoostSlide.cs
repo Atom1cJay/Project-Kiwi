@@ -8,12 +8,18 @@ public class BoostSlide : AMove
     bool boostChargePending;
     bool fwdInput;
     readonly bool allowRefresh;
+    FromStatus fromStatus;
 
     public BoostSlide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool allowRefresh) : base(ms, mi, mii)
     {
         this.allowRefresh = allowRefresh;
         this.horizVel = horizVel;
         mii.OnHorizBoostCharge.AddListener(() => boostChargePending = true);
+    }
+
+    public BoostSlide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool allowRefresh, FromStatus fromStatus) : this(mii, mi, ms, horizVel, allowRefresh)
+    {
+        this.fromStatus = fromStatus;
     }
 
     public override void AdvanceTime()
@@ -113,7 +119,14 @@ public class BoostSlide : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
-        return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Sliding, MovementParticleInfo.Instance.SlidingTracks };
+        if (fromStatus == FromStatus.FromBoostCharge)
+        {
+            return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.SlidingBoost, MovementParticleInfo.Instance.SlidingTracks };
+        }
+        else
+        {
+            return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Sliding, MovementParticleInfo.Instance.SlidingTracks };
+        }
     }
 
     public override bool Pausable()

@@ -57,15 +57,17 @@ public class MovementParticleExecuter : MonoBehaviour
     // This includes destroying it when necessary, and halting it when necessary.
     IEnumerator HandleParticleLifetime(float lifetime, bool newMoveHalts, GameObject particles, float timeAfterHaltToDestroy)
     {
+        bool moveHalted = false;
         bool newMove = false;
         me.OnMoveChanged.AddListener(() => { newMove = true; });
         float timeLeftToLive = lifetime;
         while (timeLeftToLive > 0)
         {
-            if (newMove && newMoveHalts)
+            if (newMove && newMoveHalts && !moveHalted)
             {
                 HaltAllParticlesFoundInGameObj(particles, timeAfterHaltToDestroy);
-                lifetime = timeAfterHaltToDestroy;
+                timeLeftToLive = timeAfterHaltToDestroy;
+                moveHalted = true;
             }
             timeLeftToLive -= Time.deltaTime;
             yield return new WaitForEndOfFrame();

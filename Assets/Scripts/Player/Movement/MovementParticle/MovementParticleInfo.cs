@@ -12,6 +12,7 @@ public class MovementParticleInfo : ScriptableObject
     [SerializeField] MovementParticles landingImpact;
     [SerializeField] MovementParticles accel;
     [SerializeField] MovementParticles sliding;
+    [SerializeField] MovementParticles slidingBoost;
     [SerializeField] MovementParticles slidingTracks;
     [SerializeField] MovementParticles splash;
     [SerializeField] MovementParticles stars;
@@ -23,6 +24,7 @@ public class MovementParticleInfo : ScriptableObject
     public MovementParticles LandingImpact { get { return landingImpact; } }
     public MovementParticles Accel { get { return accel; } }
     public MovementParticles Sliding { get { return sliding; } }
+    public MovementParticles SlidingBoost { get { return slidingBoost; } }
     public MovementParticles SlidingTracks { get { return slidingTracks; } }
     public MovementParticles Splash { get { return splash; } }
     public MovementParticles Stars { get { return stars; } }

@@ -62,7 +62,7 @@ public class HorizGroundBoostCharge : AMove
         {
             float propCharged = timeCharging / maxTimeToCharge;
             float wantedVel = movementSettings.HorizBoostMinSpeedGroundX + (propCharged * (movementSettings.HorizBoostMaxSpeedGroundX - movementSettings.HorizBoostMinSpeedGroundX));
-            return new BoostSlide(mii, mi, movementSettings, wantedVel, true);
+            return new BoostSlide(mii, mi, movementSettings, wantedVel, true, FromStatus.FromBoostCharge);
         }
         else
         {
