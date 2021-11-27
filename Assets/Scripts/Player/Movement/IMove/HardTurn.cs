@@ -89,4 +89,9 @@ public class HardTurn : AMove
     {
         return true;
     }
+
+    public override bool Pausable()
+    {
+        return true;
+    }
 }

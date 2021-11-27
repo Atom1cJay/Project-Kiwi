@@ -190,4 +190,9 @@ public class Run : AMove
                 return null;
         }
     }
+
+    public override bool Pausable()
+    {
+        return true;
+    }
 }

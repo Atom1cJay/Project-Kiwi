@@ -173,4 +173,9 @@ public class Glidev3 : AMove
     {
         return movementSettings.JumpAttack;
     }
+
+    public override bool Pausable()
+    {
+        return true;
+    }
 }

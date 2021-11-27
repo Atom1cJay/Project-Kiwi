@@ -105,4 +105,9 @@ public class Idle : AMove
         }
         return null;
     }
+
+    public override bool Pausable()
+    {
+        return true;
+    }
 }

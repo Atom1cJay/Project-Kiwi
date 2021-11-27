@@ -73,4 +73,9 @@ public interface IMoveImmutable
     /// </summary>
     /// <returns></returns>
     MovementParticleInfo.MovementParticles[] GetParticlesToSpawn();
+
+    /// <summary>
+    /// Should a pause be allowed to occur if a pause input is made by the player?
+    /// </summary>
+    bool Pausable();
 }

@@ -115,4 +115,9 @@ public class BoostSlide : AMove
     {
         return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Sliding, MovementParticleInfo.Instance.SlidingTracks };
     }
+
+    public override bool Pausable()
+    {
+        return true;
+    }
 }

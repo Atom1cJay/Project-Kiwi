@@ -150,4 +150,9 @@ public class Swim : AMove
     {
         return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Splash };
     }
+
+    public override bool Pausable()
+    {
+        return true;
+    }
 }

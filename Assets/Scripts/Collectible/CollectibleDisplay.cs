@@ -16,6 +16,9 @@ public class CollectibleDisplay : MonoBehaviour
     // Update is called once per frame
     public void UpdateDisplay(int i)
     {
-        tm.SetText(i.ToString());
+        if (tm != null)
+        {
+            tm.SetText(i.ToString());
+        }
     }
 }
