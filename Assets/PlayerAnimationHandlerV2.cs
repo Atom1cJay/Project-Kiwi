@@ -17,7 +17,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
     float extraStopTime = 0f;
     float timeToDance, startIdleTime;
     bool resetSlowDown = true;
-    bool extending, anyStateTransition, boostSliding, startingIdle;
+    bool extending, anyStateTransition, boostSliding, startingIdle, notIdle;
     float vertSpeed, jetrunThreshold, fallThreshold;
     string lM, temp, cM;
 
@@ -62,6 +62,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         extending = false;
         startRunning = false;
         boostSliding = false;
+        notIdle = true;
         jetrunThreshold = MovementSettingsSO.Instance.MaxSpeed + 1f;
         fallThreshold = (MovementSettingsSO.Instance.JumpInitVel - MovementSettingsSO.Instance.DefaultGravity * 0.2f);
         anyStateTransition = true;
@@ -126,7 +127,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         }
 
 
-        //Debug.Log(cM);
+        Debug.Log("Cm: " +cM);
         //walking state not implemented yet
 
         //just for idle dance animation
@@ -169,7 +170,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             else if (stopping)
             {
                 stopping = false;
-                StartCoroutine(ExtendMove("STOPPING", 0.1f));
+                StartCoroutine(ExtendMove("STOPPING", 0.2f));
                 currentMove("STOPPING");
             }
             else
@@ -217,10 +218,11 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
                 StartCoroutine(AnyStateAgain(0.4f));
                 StartCoroutine(ExtendMove("SLIDETORUN", 0.35f));
             }
-            else if (acceleration <= -15f && speed >= jetrunThreshold * 0.3f && !diving)
+            else if (acceleration <= -10f && !diving)
             {
                 
                 currentMove("STOPPING");
+                StartCoroutine(AnyStateAgain(0.01f));
                 stopping = true;
             }
             else if ((lM == "idle" || lM == "hardturn") && startRunning)
@@ -228,9 +230,8 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
                 
                 currentMove("STARTRUN");
                 anyStateTransition = false;
-                StartCoroutine(AnyStateAgain(0.7f));
-                StartCoroutine(ExtendMove("STARTRUN", 0.4f));
-                startRunning = false;
+                StartCoroutine(AnyStateAgain(0.3f));
+                Invoke("doneStartRunning", 0.4f);
             }
             else if (speed < 4f && !diving && !stopping)
             {
@@ -400,6 +401,11 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
 
 
         animator.SetBool("ANYSTATETRANSITION", anyStateTransition);
+    }
+
+    void doneStartRunning()
+    {
+        startRunning = false;
     }
 
     IEnumerator GetAcceleration(float t)
