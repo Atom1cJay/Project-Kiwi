@@ -169,7 +169,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             else if (stopping)
             {
                 stopping = false;
-                StartCoroutine(ExtendMove("STOPPING", 0.25f));
+                StartCoroutine(ExtendMove("STOPPING", 0.1f));
                 currentMove("STOPPING");
             }
             else
