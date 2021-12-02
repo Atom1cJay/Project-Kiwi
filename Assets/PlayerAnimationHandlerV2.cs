@@ -51,6 +51,8 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         animator.SetBool("SLIDETORUN", false);
         animator.SetBool("SLIDEJUMP", false);
         animator.SetBool("GROUNDHBOOST", false);
+        animator.SetBool("GLIDING", false);
+        animator.SetBool("KNOCKBACK", false);
 
         animator.SetBool(s, true);
     }
@@ -92,6 +94,8 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         animator.SetBool("SLIDETORUN", false);
         animator.SetBool("SLIDEJUMP", false);
         animator.SetBool("GROUNDHBOOST", false);
+        animator.SetBool("GLIDING", false);
+        animator.SetBool("KNOCKBACK", false);
 
         AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
 
@@ -136,6 +140,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         }
 
 
+       
         if (extending)
         {
             if(extendedMove == "STARTRUN" && cM == "jump")
@@ -144,6 +149,13 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
                 extending = false;
             }
             currentMove(extendedMove);
+        }
+        else if (startRunning && speed < 0.5f && me.GetCurrentMove().GetVertSpeedThisFrame() == 0f)
+        {
+
+            boostSliding = false;
+            onGround = true;
+            currentMove("IDLE");
         }
         else if (cM == "walking")
         {
@@ -228,8 +240,8 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
                 
                 currentMove("STARTRUN");
                 anyStateTransition = false;
-                StartCoroutine(AnyStateAgain(0.7f));
-                StartCoroutine(ExtendMove("STARTRUN", 0.4f));
+                StartCoroutine(AnyStateAgain(0.3f));
+                StartCoroutine(ExtendMove("STARTRUN", 0.2f));
                 startRunning = false;
             }
             else if (speed < 4f && !diving && !stopping)
@@ -389,6 +401,18 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             onGround = true;
             boostSliding = true;
             currentMove("BOOSTSLIDE");
+        }
+        else if (cM == "knockback")
+        {
+            onGround = false;
+            boostSliding = false;
+            currentMove("KNOCKBACK");
+        }
+        else if (cM == "glide")
+        {
+            onGround = false;
+            boostSliding = false;
+            currentMove("GLIDING");
         }
         else
         {

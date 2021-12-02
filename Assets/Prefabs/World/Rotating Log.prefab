@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1651893204391042300}
   - component: {fileID: 1651893204391042301}
   - component: {fileID: 1651893204391042290}
+  - component: {fileID: 7334222292092668379}
   m_Layer: 0
   m_Name: Pipe
   m_TagString: Moving Platform (Has Wrapper)
@@ -3001,7 +3002,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8c7173227eeff48a99e0e622b59d135b, type: 2}
+  - {fileID: 2100000, guid: 9e2e27ab16198de4fb1a9a73c722bf33, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3045,6 +3046,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &7334222292092668379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651893204391042288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa8d0310364f87241b312ec39519efd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 8c7173227eeff48a99e0e622b59d135b, type: 2}
+  multiplier: {x: 0.9999, y: 1.0001, z: 0.9999}
 --- !u!1 &1651893205640516200
 GameObject:
   m_ObjectHideFlags: 0
