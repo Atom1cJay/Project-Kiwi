@@ -148,7 +148,7 @@ public class Swim : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
-        return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Splash };
+        return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Splash, MovementParticleInfo.Instance.SwimCircles, MovementParticleInfo.Instance.SwimCirclesEdges };
     }
 
     public override bool Pausable()

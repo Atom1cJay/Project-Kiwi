@@ -15,6 +15,8 @@ public class MovementParticleInfo : ScriptableObject
     [SerializeField] MovementParticles slidingBoost;
     [SerializeField] MovementParticles slidingTracks;
     [SerializeField] MovementParticles splash;
+    [SerializeField] MovementParticles swimCircles;
+    [SerializeField] MovementParticles swimCirclesEdges;
     [SerializeField] MovementParticles stars;
 
     public MovementParticles Walking { get { return walking; } }
@@ -27,6 +29,8 @@ public class MovementParticleInfo : ScriptableObject
     public MovementParticles SlidingBoost { get { return slidingBoost; } }
     public MovementParticles SlidingTracks { get { return slidingTracks; } }
     public MovementParticles Splash { get { return splash; } }
+    public MovementParticles SwimCircles { get { return swimCircles; } }
+    public MovementParticles SwimCirclesEdges { get { return swimCirclesEdges; } }
     public MovementParticles Stars { get { return stars; } }
 
     // Singleton Handling
