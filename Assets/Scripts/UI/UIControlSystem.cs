@@ -10,6 +10,7 @@ public class UIControlSystem : MonoBehaviour, UIInterface
     [SerializeField] List<GameObject> ObjectsToEnable;
     [SerializeField] List<GameObject> ObjectsToDisable;
     [SerializeField] GameObject ObjectToSetFirst;
+    [SerializeField] EventSystem eventSystem;
 
     public void EnableThisObject()
     {
@@ -44,10 +45,10 @@ public class UIControlSystem : MonoBehaviour, UIInterface
         }
 
         //clear selected
-        EventSystem.current.SetSelectedGameObject(null);
+        eventSystem.SetSelectedGameObject(null);
 
         //new selected
         if (ObjectToSetFirst != null)
-            EventSystem.current.SetSelectedGameObject(ObjectToSetFirst);
+            eventSystem.SetSelectedGameObject(ObjectToSetFirst);
     }
 }

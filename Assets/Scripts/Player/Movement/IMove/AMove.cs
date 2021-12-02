@@ -100,7 +100,9 @@ public abstract class AMove : IMove
         FromIdle,
         FromAir,
         FromSlide,
-        FromBoostCharge
+        FromBoostCharge,
+        FromHardTurn,
+        FromSwim
     }
 
     /// <summary>

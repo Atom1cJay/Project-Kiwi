@@ -180,6 +180,8 @@ public class Run : AMove
             case FromStatus.FromSlide:
                 return new MovementParticleInfo.MovementParticles[]
                 { MovementParticleInfo.Instance.Walking };
+            case FromStatus.FromSwim:
+            case FromStatus.FromHardTurn:
             case FromStatus.FromIdle:
                 return new MovementParticleInfo.MovementParticles[]
                 { MovementParticleInfo.Instance.Accel, MovementParticleInfo.Instance.Walking };

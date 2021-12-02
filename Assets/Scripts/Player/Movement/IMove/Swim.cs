@@ -116,7 +116,7 @@ public class Swim : AMove
         {
             if (horizVector.magnitude > 0)
             {
-                return new Run(mii, mi, movementSettings, horizVector);
+                return new Run(mii, mi, movementSettings, horizVector, FromStatus.FromSwim);
             }
             else
             {
