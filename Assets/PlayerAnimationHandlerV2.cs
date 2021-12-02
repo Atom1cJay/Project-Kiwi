@@ -169,7 +169,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             else if (stopping)
             {
                 stopping = false;
-                StartCoroutine(ExtendMove("STOPPING", 0.25f));
+                StartCoroutine(ExtendMove("STOPPING", 0.1f));
                 currentMove("STOPPING");
             }
             else
@@ -217,19 +217,9 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
                 StartCoroutine(AnyStateAgain(0.4f));
                 StartCoroutine(ExtendMove("SLIDETORUN", 0.35f));
             }
-            else if (acceleration <= -15f && speed >= jetrunThreshold * 0.6f && !diving)
+            else if (acceleration <= -15f && speed >= jetrunThreshold * 0.3f && !diving)
             {
-                //Slow stop
-                if (speed > jetrunThreshold)
-                {
-                    animator.SetFloat("SLOWDOWNTIME", 0.8f);
-                    extraStopTime = 1f;
-                }
-                else
-                {
-                    animator.SetFloat("SLOWDOWNTIME", 0.6f);
-                    extraStopTime = .05f;
-                }
+                
                 currentMove("STOPPING");
                 stopping = true;
             }
