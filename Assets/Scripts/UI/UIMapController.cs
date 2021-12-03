@@ -43,7 +43,7 @@ public class UIMapController : MonoBehaviour, UIInterface
 
         //set up positions and parents
         initialMapPos = MapCamera.transform.localPosition;
-        initialRotation = MapCamera.transform.rotation;
+        initialRotation = MapCamera.transform.localRotation;
         player = MapCamera.transform.parent.gameObject;
         MapCamera.transform.SetParent(null);
     }

@@ -150,7 +150,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             }
             currentMove(extendedMove);
         }
-        else if (startRunning && speed < 0.5f && me.GetCurrentMove().GetVertSpeedThisFrame() == 0f)
+        else if (startRunning && speed < 0.5f && me.GetCurrentMove().GetVertSpeedThisFrame() == 0f && onGround)
         {
 
             boostSliding = false;

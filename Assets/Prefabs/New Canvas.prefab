@@ -1,5 +1,204 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &88624147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 88624148}
+  - component: {fileID: 88624150}
+  - component: {fileID: 88624149}
+  - component: {fileID: 88624151}
+  m_Layer: 5
+  m_Name: Controls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &88624148
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88624147}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2337782078507955294}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &88624150
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88624147}
+  m_CullTransparentMesh: 1
+--- !u!114 &88624149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88624147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 7df487206f1784f16881107166e53cf2, type: 3}
+    m_FontSize: 24
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 245
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 'TRY THE TOP MOVES FIRST!
+
+    ----
+
+    Move - Left Stick / WASD
+
+    Jump
+    - Bottom Button / Space
+
+    ----
+
+    Horizontal Boost - Right Trigger / E (on
+    ground or in air)
+
+    Vertical Boost - Jump Button (in air)
+
+    Dive - Left
+    Button / Q
+
+    Ground Pound (Animation WIP) - Left Trigger / Left Shift
+
+    Glide
+    (Animation WIP) - Top Button / Click
+
+'
+--- !u!114 &88624151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88624147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2019be766a34457a97f9c078af2bbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &229669388
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 229669389}
+  - component: {fileID: 229669391}
+  - component: {fileID: 229669390}
+  m_Layer: 5
+  m_Name: Game Over Screen Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &229669389
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229669388}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2337782078507955294}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &229669391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229669388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5735df6bfd465403087e5814320af491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pe: {fileID: 0}
+  OnDeathScreenSpawnCalled:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 229669390}
+        m_TargetAssemblyTypeName: UIControlSystem, Assembly-CSharp
+        m_MethodName: OnClickFunction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &229669390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229669388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5baa99a998fa3e4438d69a55edb05481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectsToEnable:
+  - {fileID: 947629478}
+  ObjectsToDisable:
+  - {fileID: 3890493147090144472}
+  ObjectToSetFirst: {fileID: 0}
+  eventSystem: {fileID: 4997942583240547230}
 --- !u!1 &400038742
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +421,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 3000, y: 3000}
+  m_SizeDelta: {x: 1000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &596764838
 CanvasRenderer:
@@ -252,7 +451,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: d4c7de963a10e46bd9f4a11a2fe24c81, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -284,6 +483,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 947629479}
+  - component: {fileID: 1990298506}
   m_Layer: 5
   m_Name: DeathScreen
   m_TagString: Untagged
@@ -311,6 +511,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1990298506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947629478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa09fba6071d64cb198736aae698183f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leaf: {fileID: 596764835}
+  leafStartingDimension: 4000
+  leafSizeDecreaseSpeed: 4000
 --- !u!1 &1669998831
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,7 +1172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 5479671321875953699}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!114 &1809683020843647339
@@ -2464,7 +2679,6 @@ GameObject:
   - component: {fileID: 4359062581422445061}
   - component: {fileID: 5506231368963300186}
   - component: {fileID: 2201601848945768597}
-  - component: {fileID: 6687447531996880330}
   m_Layer: 5
   m_Name: PlayingScreen
   m_TagString: Untagged
@@ -2488,6 +2702,8 @@ RectTransform:
   - {fileID: 2669132705442965830}
   - {fileID: 400038743}
   - {fileID: 57446862642267894}
+  - {fileID: 229669389}
+  - {fileID: 88624148}
   m_Father: {fileID: 8102299546059221503}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2557,23 +2773,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6687447531996880330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3890493147090144472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5baa99a998fa3e4438d69a55edb05481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectsToEnable:
-  - {fileID: 3674973788375753470}
-  ObjectsToDisable:
-  - {fileID: 3890493147090144472}
-  ObjectToSetFirst: {fileID: 5479671321875953699}
 --- !u!1 &4117153332342119409
 GameObject:
   m_ObjectHideFlags: 0
@@ -2764,8 +2963,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4114904616753691434}
         m_TargetAssemblyTypeName: UICameraOptions, Assembly-CSharp
-        m_MethodName: Toggle
-        m_Mode: 1
+        m_MethodName: OnXInversionToggled
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2787,7 +2986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d456aefb507f40944a42f2c5e104fa43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlsXInversion: 0
+  controlsXInversion: 1
   controlsYInversion: 0
 --- !u!1 &4170935452714726604
 GameObject:
@@ -3614,6 +3813,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 4459556887499786911}
+        m_TargetAssemblyTypeName: UIPauseHandler, Assembly-CSharp
+        m_MethodName: ForceUnpause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 246085837202707020}
         m_TargetAssemblyTypeName: UIControlSystem, Assembly-CSharp
         m_MethodName: OnClickFunction
@@ -3642,8 +3853,8 @@ MonoBehaviour:
   - {fileID: 3890493147090144472}
   ObjectsToDisable:
   - {fileID: 3674973788375753470}
-  - {fileID: 1592484079675899157}
   ObjectToSetFirst: {fileID: 0}
+  eventSystem: {fileID: 4997942583240547230}
 --- !u!1 &5571906188758704910
 GameObject:
   m_ObjectHideFlags: 0
@@ -3968,6 +4179,7 @@ MonoBehaviour:
   ObjectsToDisable:
   - {fileID: 3674973788375753470}
   ObjectToSetFirst: {fileID: 9198769935502994063}
+  eventSystem: {fileID: 4997942583240547230}
 --- !u!1 &5954121943037652988
 GameObject:
   m_ObjectHideFlags: 0
@@ -4254,6 +4466,7 @@ MonoBehaviour:
   ObjectsToDisable:
   - {fileID: 3674973788375753470}
   ObjectToSetFirst: {fileID: 6615739453946265711}
+  eventSystem: {fileID: 4997942583240547230}
 --- !u!1 &6159974738220555026
 GameObject:
   m_ObjectHideFlags: 0
@@ -4342,8 +4555,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2611809829163749621}
         m_TargetAssemblyTypeName: UICameraOptions, Assembly-CSharp
-        m_MethodName: Toggle
-        m_Mode: 1
+        m_MethodName: OnYInversionToggled
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4655,6 +4868,7 @@ MonoBehaviour:
   - {fileID: 4117153332342119409}
   - {fileID: 557040964178117222}
   ObjectToSetFirst: {fileID: 5479671321875953699}
+  eventSystem: {fileID: 4997942583240547230}
 --- !u!1 &6638461562435072730
 GameObject:
   m_ObjectHideFlags: 0
@@ -5308,7 +5522,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IAH: {fileID: 0}
   me: {fileID: 0}
-  cs: {fileID: 7458749351569047668}
+  onPaused:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7458749351569047668}
+        m_TargetAssemblyTypeName: UIControlSystem, Assembly-CSharp
+        m_MethodName: OnClickFunction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7458749351569047668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5326,6 +5554,7 @@ MonoBehaviour:
   ObjectsToDisable:
   - {fileID: 3890493147090144472}
   ObjectToSetFirst: {fileID: 5479671321875953699}
+  eventSystem: {fileID: 4997942583240547230}
 --- !u!1 &8598863360305312350
 GameObject:
   m_ObjectHideFlags: 0
@@ -5588,3 +5817,4 @@ MonoBehaviour:
   ObjectsToDisable:
   - {fileID: 2151714296622566914}
   ObjectToSetFirst: {fileID: 5479671321875953699}
+  eventSystem: {fileID: 4997942583240547230}
