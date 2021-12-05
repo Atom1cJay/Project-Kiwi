@@ -34,6 +34,8 @@ public class UIPauseHandler : MonoBehaviour
     /// </summary>
     public void ForcePause()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         paused = true;
         TimescaleHandler.setPausedForMenu(true);
         onPaused.Invoke();
@@ -44,6 +46,8 @@ public class UIPauseHandler : MonoBehaviour
     /// </summary>
     public void ForceUnpause()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         paused = false;
         TimescaleHandler.setPausedForMenu(false);
     }
