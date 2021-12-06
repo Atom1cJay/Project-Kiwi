@@ -57,7 +57,7 @@ public class HardTurn : AMove
         // Handle Everything Else
         if (timeLeft < 0)
         {
-            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
+            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel), FromStatus.FromHardTurn);
         }
         if (jumpInputPending || mii.InReverseCoyoteTime())
         {

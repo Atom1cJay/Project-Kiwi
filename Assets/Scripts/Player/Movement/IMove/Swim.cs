@@ -116,7 +116,7 @@ public class Swim : AMove
         {
             if (horizVector.magnitude > 0)
             {
-                return new Run(mii, mi, movementSettings, horizVector);
+                return new Run(mii, mi, movementSettings, horizVector, FromStatus.FromSwim);
             }
             else
             {
@@ -148,7 +148,7 @@ public class Swim : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
-        return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Splash };
+        return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Splash, MovementParticleInfo.Instance.SwimCircles, MovementParticleInfo.Instance.SwimCirclesEdges };
     }
 
     public override bool Pausable()

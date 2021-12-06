@@ -72,6 +72,18 @@ MonoBehaviour:
     maxTimeBeforeDestroy: 1
     haltedByNewMove: 0
     timeAfterHaltToDestroy: -1
+  swimCircles:
+    particles: {fileID: 3805978567241431449, guid: 23dfe305249634ee1a63a43a91032f72, type: 3}
+    staysWithPlayer: 1
+    maxTimeBeforeDestroy: -1
+    haltedByNewMove: 1
+    timeAfterHaltToDestroy: 2
+  swimCirclesEdges:
+    particles: {fileID: 3805978567241431449, guid: 0bc9d489c38f84913a2f2126c89ab85a, type: 3}
+    staysWithPlayer: 1
+    maxTimeBeforeDestroy: -1
+    haltedByNewMove: 1
+    timeAfterHaltToDestroy: 7
   stars:
     particles: {fileID: 3805978567241431449, guid: 00cedfb103e71443784b653babb27bd8, type: 3}
     staysWithPlayer: 0
