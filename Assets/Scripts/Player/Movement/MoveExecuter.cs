@@ -107,7 +107,9 @@ public class MoveExecuter : MonoBehaviour
         {
             Vector3 goalPos = cs.GetPosition() + (Vector3.up * 3f);
             moveThisFrame = new Fall(mii, mi, movementSettings, Vector2.zero, false);
-            charCont.Move(goalPos - transform.position);
+            charCont.enabled = false;
+            transform.position = goalPos;
+            charCont.enabled = true;
             camTarget.ResetToPlayerCenter();
         }
         else
