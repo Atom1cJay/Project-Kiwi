@@ -2,16 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Decides whether time passage in the game should be stopped or not,
+/// based on whether certain game states are actvie.
+/// </summary>
 public class TimescaleHandler : MonoBehaviour
 {
     static bool gamePausedForMenu = false;
     static bool gamePausedForCameraTransition = false;
+    static bool gamePausedForDialogue = false;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void ResetDomain()
     {
         gamePausedForMenu = false;
         gamePausedForCameraTransition = false;
+        gamePausedForDialogue = false;
     }
 
     void Awake()
@@ -38,11 +44,17 @@ public class TimescaleHandler : MonoBehaviour
         UpdateTimeScale();
     }
 
+    public static void setPausedForDialogue(bool state)
+    {
+        gamePausedForDialogue = state;
+        UpdateTimeScale();
+    }
+
     /// <summary>
     /// According to what is paused in the game state, determines the time scale.
     /// </summary>
     private static void UpdateTimeScale()
     {
-        Time.timeScale = (gamePausedForMenu || gamePausedForCameraTransition) ? 0 : 1;
+        Time.timeScale = (gamePausedForMenu || gamePausedForCameraTransition || gamePausedForDialogue) ? 0 : 1;
     }
 }

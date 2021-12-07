@@ -52,7 +52,7 @@ public class BoostSlide : AMove
         {
             return -10;
         }
-        return -0.5f;
+        return -1f;
     }
 
     public override float GetRotationSpeed()

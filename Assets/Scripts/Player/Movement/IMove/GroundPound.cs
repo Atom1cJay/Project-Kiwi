@@ -79,10 +79,6 @@ public class GroundPound : AMove
         {
             return new Dive(mii, mi, movementSettings);
         }
-        if (mi.TouchingGround())
-        {
-            return new BoostSlide(mii, mi, movementSettings, 0, false);
-        }
         if (landingOver)
         {
             return new Idle(mii, mi, movementSettings);

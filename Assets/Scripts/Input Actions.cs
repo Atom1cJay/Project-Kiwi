@@ -73,6 +73,14 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Dialogue"",
+                    ""type"": ""Button"",
+                    ""id"": ""914e4939-b527-42d3-b58d-ebb9e30accc2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -359,6 +367,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""GamePad"",
                     ""action"": ""Glide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66fae956-3aa9-452a-aa13-517399ec3aa8"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dialogue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1008,6 +1027,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_Player_Dive = m_Player.FindAction("Dive", throwIfNotFound: true);
         m_Player_GroundPound = m_Player.FindAction("GroundPound", throwIfNotFound: true);
         m_Player_Glide = m_Player.FindAction("Glide", throwIfNotFound: true);
+        m_Player_Dialogue = m_Player.FindAction("Dialogue", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_HorizontalRotate = m_Camera.FindAction("HorizontalRotate", throwIfNotFound: true);
@@ -1085,6 +1105,7 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Dive;
     private readonly InputAction m_Player_GroundPound;
     private readonly InputAction m_Player_Glide;
+    private readonly InputAction m_Player_Dialogue;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -1096,6 +1117,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         public InputAction @Dive => m_Wrapper.m_Player_Dive;
         public InputAction @GroundPound => m_Wrapper.m_Player_GroundPound;
         public InputAction @Glide => m_Wrapper.m_Player_Glide;
+        public InputAction @Dialogue => m_Wrapper.m_Player_Dialogue;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1126,6 +1148,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Glide.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGlide;
                 @Glide.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGlide;
                 @Glide.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGlide;
+                @Dialogue.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogue;
+                @Dialogue.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogue;
+                @Dialogue.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogue;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1151,6 +1176,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Glide.started += instance.OnGlide;
                 @Glide.performed += instance.OnGlide;
                 @Glide.canceled += instance.OnGlide;
+                @Dialogue.started += instance.OnDialogue;
+                @Dialogue.performed += instance.OnDialogue;
+                @Dialogue.canceled += instance.OnDialogue;
             }
         }
     }
@@ -1386,6 +1414,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         void OnDive(InputAction.CallbackContext context);
         void OnGroundPound(InputAction.CallbackContext context);
         void OnGlide(InputAction.CallbackContext context);
+        void OnDialogue(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {
