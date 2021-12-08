@@ -179,15 +179,15 @@ public class Run : AMove
         {
             case FromStatus.FromSlide:
                 return new MovementParticleInfo.MovementParticles[]
-                { MovementParticleInfo.Instance.Walking };
+                { MovementParticleInfo.Instance.Walking, MovementParticleInfo.Instance.WalkingSmoke };
             case FromStatus.FromSwim:
             case FromStatus.FromHardTurn:
             case FromStatus.FromIdle:
                 return new MovementParticleInfo.MovementParticles[]
-                { MovementParticleInfo.Instance.Accel, MovementParticleInfo.Instance.Walking };
+                { MovementParticleInfo.Instance.Accel, MovementParticleInfo.Instance.Walking, MovementParticleInfo.Instance.WalkingSmoke };
             case FromStatus.FromAir:
                 return new MovementParticleInfo.MovementParticles[]
-                { MovementParticleInfo.Instance.Landing, MovementParticleInfo.Instance.LandingImpact, MovementParticleInfo.Instance.Walking };
+                { MovementParticleInfo.Instance.Landing, MovementParticleInfo.Instance.LandingImpact, MovementParticleInfo.Instance.Walking, MovementParticleInfo.Instance.WalkingSmoke };
             default:
                 return null;
         }
