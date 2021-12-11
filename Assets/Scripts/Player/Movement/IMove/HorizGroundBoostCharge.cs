@@ -41,7 +41,11 @@ public class HorizGroundBoostCharge : AMove
 
     public override float GetVertSpeedThisFrame()
     {
-        return -0.5f;
+        if (!mi.TouchingGround() && PlayerSlopeHandler.GroundInProximity)
+        {
+            return -10;
+        }
+        return -0.5f; // To prevent floating point imprecision taking you off ground
     }
 
     public override float GetRotationSpeed()
@@ -58,6 +62,10 @@ public class HorizGroundBoostCharge : AMove
             return feedbackMove;
         }
         // Handle Everything Else
+        if (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity)
+        {
+            return new HorizAirBoostCharge(mii, mi, movementSettings, 0, ForwardMovement(horizVel));
+        }
         if (timeCharging > maxTimeToCharge || boostReleasePending)
         {
             float propCharged = timeCharging / maxTimeToCharge;

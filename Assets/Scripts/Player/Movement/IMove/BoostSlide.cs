@@ -5,10 +5,11 @@ using UnityEngine;
 public class BoostSlide : AMove
 {
     float horizVel;
-    bool boostChargePending;
     bool fwdInput;
     readonly bool allowRefresh;
     FromStatus fromStatus;
+
+    bool boostChargePending;
 
     public BoostSlide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool allowRefresh) : base(ms, mi, mii)
     {

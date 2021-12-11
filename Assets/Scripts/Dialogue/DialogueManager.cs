@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// Manages which dialogue instance is "active" / being interacted with. Requests that
+/// Manages which dialogue instance is "active" / being interacted with by the player. Requests that
 /// the dialogue be played at the player's command.
 /// </summary>
 public class DialogueManager : MonoBehaviour

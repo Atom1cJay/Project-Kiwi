@@ -4,6 +4,7 @@ using UnityEngine;
 public class Idle : AMove
 {
     bool jumpPending;
+    bool boostChargePending;
     FromStatus fromStatus;
 
     /// <summary>
@@ -16,6 +17,7 @@ public class Idle : AMove
     public Idle(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
     {
         mii.OnJump.AddListener(() => jumpPending = true);
+        mii.OnHorizBoostCharge.AddListener(() => boostChargePending = true);
     }
 
     // Override constructor to include fromStatus
@@ -72,6 +74,10 @@ public class Idle : AMove
         if (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity)
         {
             return new Fall(mii, mi, movementSettings, Vector2.zero, true);
+        }
+        if (boostChargePending)
+        {
+            return new HorizGroundBoostCharge(mii, mi, movementSettings, Vector2.zero);
         }
 
         return this;

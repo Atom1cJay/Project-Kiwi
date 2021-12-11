@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
-/// Handles the overall dialogue sequence, including making the dialogue screen
-/// appear and making its dialogue play.
+/// Makes the dialogue sequence happen, either when requested by the
+/// player's DialogueManager or when StartDialogueSequence is called
+/// from some other script. Handles the overall dialogue sequence,
+/// including making the dialogue screen appear and making its dialogue play.
 /// </summary>
 public class DialogueScreenHandler : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class DialogueScreenHandler : MonoBehaviour
         dp.onDialogueEnd.AddListener(() => EndDialogueSequence());
     }
 
-    void StartDialogueSequence(Dialogue d)
+    public void StartDialogueSequence(Dialogue d)
     {
         if (!inDialogueSequence)
         {

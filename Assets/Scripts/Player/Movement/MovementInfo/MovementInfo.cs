@@ -12,7 +12,6 @@ public class MovementInfo : MonoBehaviour
     [SerializeField] CollisionDetector groundDetector;
     [SerializeField] CollisionDetector waterDetector;
     [SerializeField] CollisionDetector antiBoostDetector;
-    //[SerializeField] WaterDetector waterDetector;
     public PlayerHealth ph { get; private set; }
     private int tjJumpCount;
     IMoveImmutable storedMove; // The move from the last frame
@@ -118,16 +117,6 @@ public class MovementInfo : MonoBehaviour
     {
         return groundDetector;
     }
-
-    /// <summary>
-    /// Gives the water detector being used for movement calculations.
-    /// </summary>
-    /*
-    public WaterDetector GetWaterDetector()
-    {
-        return waterDetector;
-    }
-    */
 
     // Is the water detector colliding with anything?
     public bool TouchingWater()
