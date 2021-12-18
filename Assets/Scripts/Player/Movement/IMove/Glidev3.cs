@@ -24,7 +24,7 @@ public class Glidev3 : AMove
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", GiveControl());
         mii.OnGlide.AddListener(() => glideReleasePending = true);
         mii.OnGroundPound.AddListener(() => groundPoundPending = true);
-        mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
+        //mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
     }
 
     public override void AdvanceTime()
@@ -142,7 +142,7 @@ public class Glidev3 : AMove
                 return new Run(mii, mi, movementSettings, horizVector);
             }
         }
-        else if (objectHitPending)
+        else if (/*objectHitPending*/mi.BonkDetectorTouching())
         {
             return new Fall(mii, mi, movementSettings, horizVector, false);
         }

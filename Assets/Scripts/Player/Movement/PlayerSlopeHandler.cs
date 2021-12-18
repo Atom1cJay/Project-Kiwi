@@ -9,6 +9,7 @@ using UnityEngine;
 public class PlayerSlopeHandler : MonoBehaviour
 {
     public static bool GroundInProximity;
+    public static float DistanceOfGroundInProximity;
     private static readonly int layerMask = ~(1 << 9);
     /// <summary>
     /// The angle of the slope the player is currently colliding with.
@@ -43,6 +44,7 @@ public class PlayerSlopeHandler : MonoBehaviour
     [SerializeField] float recoveryAngle = 50;
     [SerializeField] float maxAngleForProximity = 45;
     [SerializeField] float lengthOfNearestGroundRay;
+    [SerializeField] CharacterController charCont;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void ResetDomain()
@@ -55,7 +57,17 @@ public class PlayerSlopeHandler : MonoBehaviour
         AngleContactPoint = Vector3.zero;
     }
 
-    private void Update()
+    private void LateUpdate()
+    {
+        UpdateGroundProximityInfo();
+    }
+
+    /// <summary>
+    /// Update the information about whether the ground is in proximity
+    /// and, if so, how far it is from the player. Can be good to call right
+    /// before checking whether the ground is in proximity.
+    /// </summary>
+    public void UpdateGroundProximityInfo()
     {
         DetectIfGroundInProximity();
     }
@@ -64,8 +76,12 @@ public class PlayerSlopeHandler : MonoBehaviour
     {
         GroundInProximity = false;
         RaycastHit hit;
+        Debug.DrawRay(transform.position + Vector3.up, Vector3.down);
         bool couldTouchGround = Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 1 + lengthOfNearestGroundRay, layerMask);
+        //bool couldTouchGround = Physics.Raycast(charCont.bounds.min, Vector3.down, out hit, 1 + lengthOfNearestGroundRay, layerMask);
         GroundInProximity = couldTouchGround && GetAngleOfSlope(hit.normal) < maxAngleForProximity;
+        DistanceOfGroundInProximity = GroundInProximity ? hit.distance - 1 : -1;
+        //print(DistanceOfGroundInProximity);
     }
 
     // Obtains the normal of the platform the player is currently on

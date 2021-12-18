@@ -11,6 +11,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(MovementInputInfo))]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(RotationMovement))]
+[RequireComponent(typeof(PlayerSlopeHandler))]
 [RequireComponent(typeof(CheckpointLoader))]
 [RequireComponent(typeof(BumperHandler))]
 public class MoveExecuter : MonoBehaviour
@@ -22,13 +23,18 @@ public class MoveExecuter : MonoBehaviour
     MovementInputInfo mii;
     MovementSettingsSO movementSettings;
     RotationMovement rotator;
+    PlayerSlopeHandler psh;
     CheckpointLoader cl;
     BumperHandler bh;
     [SerializeField] CameraControl cameraControl;
     [SerializeField] CameraTarget camTarget;
     [SerializeField] StickToGround shadowCaster;
+    [SerializeField] float multi;
+    SmoothMovingPlatform smp = null;
 
     public UnityEvent OnMoveChanged;
+
+    Vector3 smpStoredPos = Vector3.zero;
 
     private void Awake()
     {
@@ -38,6 +44,7 @@ public class MoveExecuter : MonoBehaviour
         cl = GetComponent<CheckpointLoader>();
         rotator = GetComponent<RotationMovement>();
         bh = GetComponent<BumperHandler>();
+        psh = GetComponent<PlayerSlopeHandler>();
     }
 
     private void Start()
@@ -49,13 +56,35 @@ public class MoveExecuter : MonoBehaviour
 
     void Update()
     {
+        UpdateMovingPlatformStatus();
+        if (smp == null)
+        {
+            Move();
+        }
+    }
+
+    private void Move()
+    {
         HandleBasicMovement();
         HandleMovementChangeEvent();
     }
 
-    private void LateUpdate()
+    void UpdateMovingPlatformStatus()
     {
-        camTarget.Adjust();
+        if (smp == null && mi.GetGroundDetector().Colliding() && mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)"))
+        {
+            smp = mi.GetGroundDetector().CollidingWith().GetComponent<SmoothMovingPlatform>();
+            smpStoredPos = smp.transform.position;
+            smp.onMove.AddListener(() => Move());
+        }
+        if (!moveThisFrame.AdjustToSlope() || (!mi.GetGroundDetector().Colliding() && !PlayerSlopeHandler.GroundInProximity))
+        {
+            if (smp != null)
+            {
+                smp.onMove.RemoveAllListeners(); // todo bad
+                smp = null;
+            }
+        }
     }
 
     /// <summary>
@@ -72,9 +101,35 @@ public class MoveExecuter : MonoBehaviour
             rotator.DetermineRotation();
             Vector2 horizMovement = moveThisFrame.GetHorizSpeedThisFrame();
             Vector3 dir = DirectionOfMovement(horizMovement);
-            Vector3 horizMovementAdjusted = dir * horizMovement.magnitude;
-            Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame();
-            charCont.Move((horizMovementAdjusted + vertMovement) * Time.deltaTime);
+            Vector3 horizMovementAdjusted = dir * horizMovement.magnitude * Time.deltaTime;
+            Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame() * Time.deltaTime;
+            Vector3 extraMovement = Vector3.zero;
+            if (smp != null)
+            {
+                extraMovement = (smp.transform.position - smpStoredPos);
+                if (extraMovement.y < 0)
+                {
+                    extraMovement.y *= multi;
+                }
+                smpStoredPos = smp.transform.position;
+                //extraMovement = smp.MvmtThisFrame() * multi;
+            }
+            Vector3 mvmtTotal = horizMovementAdjusted + vertMovement + extraMovement;
+            /*
+            psh.UpdateGroundProximityInfo();
+            if (smp != null)
+            {
+                if (extraMovement.y < 0)
+                {
+                    mvmtTotal.y = -PlayerSlopeHandler.DistanceOfGroundInProximity + 0.7f;
+                }
+            }
+            */
+            charCont.Move(mvmtTotal);
+            if (smp != null)
+            {
+                print(Vector3.Distance(transform.position, smp.transform.position));
+            }
             bh.HandleBumperMoved();
             camTarget.Adjust();
             shadowCaster.UpdatePosition(charCont.transform.position);

@@ -209,10 +209,5 @@ public class Jump : AMove
     {
         return movementSettings.JumpAttack;
     }
-
-    public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
-    {
-        return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Landing };
-    }
 }
    

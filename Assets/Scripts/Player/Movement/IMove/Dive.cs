@@ -67,13 +67,17 @@ public class Dive : AMove
         {
             return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
-        else if (mi.TouchingGround() && mii.GetHorizontalInput().magnitude > 0)
+        if (mi.TouchingGround() && mii.GetHorizontalInput().magnitude > 0)
         {
             return new Run(mii, mi, movementSettings, ForwardMovement(horizVel), FromStatus.FromAir);
         }
-        else if (mi.TouchingGround() && mii.GetHorizontalInput().magnitude == 0)
+        if (mi.TouchingGround() && mii.GetHorizontalInput().magnitude == 0)
         {
             return new Idle(mii, mi, movementSettings, FromStatus.FromAir);
+        }
+        if (mi.BonkDetectorTouching())
+        {
+            return new Knockback(mii, mi, movementSettings, Vector3.zero, ForwardMovement(horizVel));
         }
         return this;
     }

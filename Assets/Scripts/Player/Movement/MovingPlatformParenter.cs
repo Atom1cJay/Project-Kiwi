@@ -30,7 +30,6 @@ public class MovingPlatformParenter : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
         if (!onBall)
         {
             if (!mi.TouchingGround())

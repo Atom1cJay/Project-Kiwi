@@ -7,14 +7,14 @@ public class BoostSlideHop : AMove
     bool landableTimerPassed;
     float vertVel;
     float horizVel;
-    bool objectHitPending;
+    //bool objectHitPending;
 
     public BoostSlideHop(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
         vertVel = movementSettings.BoostHopInitVelY;
         this.horizVel = horizVel * movementSettings.BoostHopInitVelXMultiplier;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", RunLandableTimer());
-        mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
+        //mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
     }
 
     IEnumerator RunLandableTimer()
@@ -60,10 +60,10 @@ public class BoostSlideHop : AMove
         {
             return new Run(mii, mi, movementSettings, ForwardMovement(horizVel), FromStatus.FromAir);
         }
-        if (objectHitPending)
+        if (mi.BonkDetectorTouching())
         {
-            Vector3 kbVector = new Vector3(-ForwardMovement(horizVel).x, 0, -ForwardMovement(horizVel).y);
-            return new Knockback(mii, mi, movementSettings, kbVector, ForwardMovement(horizVel));
+            //Vector3 kbVector = new Vector3(-ForwardMovement(horizVel).x, 0, -ForwardMovement(horizVel).y);
+            return new Knockback(mii, mi, movementSettings, Vector3.zero, ForwardMovement(horizVel));
         }
         return this;
     }

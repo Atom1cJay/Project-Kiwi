@@ -9,13 +9,11 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] Vector3 rotSpeed;
     [SerializeField] float timeOffset;
     [SerializeField] bool movementIsRelative;
-    [SerializeField] Transform relativeTransform; // Relative movement is relative
-    // to the rotation
+    [SerializeField] Transform relativeTransform; // Relative movement is relative to the rotation
+    [SerializeField] CameraTarget ct;
     float waveValue;
     Vector3 midpoint;
     Vector3 initRot;
-    //Vector3 mvmtThisFrame;
-    //Vector3 rotThisFrame;
 
     private void Awake()
     {
@@ -34,13 +32,16 @@ public class MovingPlatform : MonoBehaviour
         transform.position = midpoint + (-Mathf.Cos(speed * (Time.time + timeOffset)) * GetDistanceToMove() / 2);
     }
 
+    /*
     void Update()
     {
         waveValue = speed * (Mathf.Sin(speed * (Time.time + timeOffset)) / 2);
     }
+    */
 
-    void FixedUpdate()
+    void Update()
     {
+        waveValue = speed * (Mathf.Sin(speed * (Time.time + timeOffset)) / 2);
         Vector3 mvmtThisFrame =
             new Vector3(
                 waveValue * GetDistanceToMove().x,

@@ -112,10 +112,12 @@ public abstract class AMove : IMove
     /// <returns></returns>
     protected IMove GetFeedbackMove(Vector2 horizVector)
     {
+        /*
         if (receivedDeathFeedback)
         {
             return new Death(mii, mi, movementSettings);
         }
+        */
         if (receivedJumpFeedback)
         {
             return new Jump(mii, mi, movementSettings, horizVector.magnitude);
@@ -124,7 +126,7 @@ public abstract class AMove : IMove
         {
             return new Swim(mii, mi, movementSettings, horizVector);
         }
-        if (receivedKnockbackFeedback)
+        if (receivedKnockbackFeedback || receivedDeathFeedback)
         {
             return new Knockback(mii, mi, movementSettings, knockbackFeedbackNormal, horizVector);
         }

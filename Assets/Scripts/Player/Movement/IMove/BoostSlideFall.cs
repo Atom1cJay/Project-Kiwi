@@ -7,14 +7,14 @@ public class BoostSlideFall : AMove
     float vertVel;
     float horizVel;
     readonly bool allowRefresh;
-    bool objectHitPending;
+    //bool objectHitPending;
 
     public BoostSlideFall(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool allowRefresh) : base(ms, mi, mii)
     {
         this.allowRefresh = allowRefresh;
         vertVel = 0;
         this.horizVel = horizVel;
-        mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
+        //mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
     }
 
     public override void AdvanceTime()
@@ -60,7 +60,7 @@ public class BoostSlideFall : AMove
         {
             return new BoostSlide(mii, mi, movementSettings, horizVel, allowRefresh);
         }
-        if (objectHitPending)
+        if (mi.BonkDetectorTouching())
         {
             Vector3 kbVector = new Vector3(-ForwardMovement(horizVel).x, 0, -ForwardMovement(horizVel).y);
             return new Knockback(mii, mi, movementSettings, kbVector, ForwardMovement(horizVel));

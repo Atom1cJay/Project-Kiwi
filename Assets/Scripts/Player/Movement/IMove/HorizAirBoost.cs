@@ -8,7 +8,7 @@ public class HorizAirBoost : AMove
     float vertVel;
     float horizVel;
 
-    bool objectHitPending;
+    //bool objectHitPending;
 
     /// <summary>
     /// Constructs a HorizAirBoost, initializing the objects that hold all the
@@ -22,7 +22,7 @@ public class HorizAirBoost : AMove
         this.vertVel = vertVel / 4;
         gravity = movementSettings.HorizBoostMinGravity;
         this.horizVel = movementSettings.HorizBoostMinSpeedX + (propCharged * (movementSettings.HorizBoostMaxSpeedX - movementSettings.HorizBoostMinSpeedX));
-        mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
+        //mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
     }
 
     public override void AdvanceTime()
@@ -74,7 +74,7 @@ public class HorizAirBoost : AMove
         {
             return new BoostSlide(mii, mi, movementSettings, horizVel, false);
         }
-        if (objectHitPending)
+        if (/*objectHitPending*/mi.BonkDetectorTouching())
         {
             Vector3 knockbackDir = new Vector3(-ForwardMovement(horizVel).x, 0, -ForwardMovement(horizVel).y);
             return new Knockback(mii, mi, movementSettings, knockbackDir, ForwardMovement(horizVel));

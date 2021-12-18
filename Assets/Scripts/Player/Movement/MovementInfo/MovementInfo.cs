@@ -10,20 +10,19 @@ public class MovementInfo : MonoBehaviour
 {
     public static MovementInfo instance;
     [SerializeField] CollisionDetector groundDetector;
+    [SerializeField] CollisionDetector bonkDetector;
     [SerializeField] CollisionDetector waterDetector;
     [SerializeField] CollisionDetector antiBoostDetector;
     public PlayerHealth ph { get; private set; }
     private int tjJumpCount;
     IMoveImmutable storedMove; // The move from the last frame
     MoveExecuter me;
-    private CharacterController charCont;
 
     // Testing
     private List<Vector2> lastFiveMoves = new List<Vector2>(
         new []{ Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero });
     private Vector2 prevPosXZ;
 
-    [HideInInspector] public UnityEvent OnCharContTouchSomething;
     [HideInInspector] public UnityEvent onJumpAttackFeedbackReceived = new UnityEvent();
 
     private void Awake()
@@ -35,7 +34,6 @@ public class MovementInfo : MonoBehaviour
         instance = this;
         prevPosXZ = new Vector2(transform.position.x, transform.position.z);
         me = GetComponent<MoveExecuter>();
-        charCont = GetComponent<CharacterController>();
         ph = GetComponent<PlayerHealth>();
     }
 
@@ -45,6 +43,14 @@ public class MovementInfo : MonoBehaviour
     public bool TouchingGround()
     {
         return groundDetector.Colliding();
+    }
+
+    /// <summary>
+    /// Determines whether the player's bonk detector is touching anything.
+    /// </summary>
+    public bool BonkDetectorTouching()
+    {
+        return bonkDetector.Colliding();
     }
 
     /// <summary>
@@ -132,14 +138,6 @@ public class MovementInfo : MonoBehaviour
     public Transform GetPlayerTransform()
     {
         return transform;
-    }
-
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (hit.controller == charCont)
-        {
-            OnCharContTouchSomething.Invoke();
-        }
     }
 
     // The player has just hit an enemy using a jump attack. The player should jump

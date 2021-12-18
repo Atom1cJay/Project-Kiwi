@@ -15,12 +15,9 @@ public class ShadowDamager : MonoBehaviour
     void Update()
     {
         Debug.DrawRay(player.position, -directionalLight.transform.forward);
-        if (mi.TouchingGround())
+        if (mi.TouchingGround() && Physics.Raycast(player.position, -directionalLight.transform.forward, 100, raycastLayerMask))
         {
-            if (Physics.Raycast(player.position, -directionalLight.transform.forward, 100, raycastLayerMask))
-            {
-                print("Hitting Shadow");
-            }
+            ph.HandleDamage(damageType, Vector3.zero);
         }
     }
 }

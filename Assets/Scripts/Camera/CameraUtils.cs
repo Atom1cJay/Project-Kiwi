@@ -42,7 +42,6 @@ public class CameraUtils : MonoBehaviour
     {
         if (camMode != CameraMode.AroundPlayer)
         {
-            //Debug.LogError("Can't rotate camera since it's not in AroundPlayer mode.");
             return;
         }
         horizAngle += horizAmount;
@@ -119,8 +118,6 @@ public class CameraUtils : MonoBehaviour
     /// What radius should I be around the player, taking into account any walls the camera might be
     /// behind (which I should not clip through)?
     /// </summary>
-    /// <returns></returns>
-    /// 
     private float GetActualRadius()
     {
         // TODO this might be a problem in the first frame where the player and camera are potentailly far away
@@ -167,7 +164,6 @@ public class CameraUtils : MonoBehaviour
     {
         if (camMode != CameraMode.AroundPlayer)
         {
-            //Debug.LogError("Can't rotate camera since it's not in AroundPlayer mode.");
             return;
         }
         Quaternion angle1 = Quaternion.Euler(0, horizAngle * Mathf.Rad2Deg, 0);
@@ -183,7 +179,6 @@ public class CameraUtils : MonoBehaviour
     {
         if (camMode != CameraMode.AroundPlayer)
         {
-            //Debug.LogError("Can't rotate camera since it's not in AroundPlayer mode.");
             return;
         }
         Quaternion angle1 = Quaternion.Euler(vertAngle * Mathf.Rad2Deg, 0, 0);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89a9c384f4044d949915fc3cf99a7e4, type: 3}
   m_Name: MovementSettings
   m_EditorClassIdentifier: 
-  maxSpeed: 5.8
+  maxSpeed: 5.9
   maxSpeedAbsolute: 11
   runSensitivityX: 8
   runGravityX: 22
@@ -66,7 +66,7 @@ MonoBehaviour:
   horizBoostAirReverseGravity: 16
   horizBoostNonAirReverseGravity: 0
   horizBoostMinSpeedX: 6.5
-  horizBoostMaxSpeedX: 8.5
+  horizBoostMaxSpeedX: 9
   horizBoostMinSpeedGroundX: 7
   horizBoostMaxSpeedGroundX: 10
   horizBoostMinLengthGroundX: 0.65
@@ -91,7 +91,7 @@ MonoBehaviour:
   boostSlideMaxSpeedForMinRotation: 6
   boostSlideMaxSpeed: 9
   boostSlideMaxDissonanceForHoldingFwd: 1
-  boostHopInitVelY: 6
+  boostHopInitVelY: 6.5
   boostHopInitVelXMultiplier: 1
   boostHopInitVelXMoving: 7.5
   boostHopInitVelXStopped: 1
@@ -169,6 +169,6 @@ MonoBehaviour:
   groundPoundAttack: {fileID: 11400000, guid: a8f699fa686c6448e90e6e646a783a6b, type: 2}
   knockbackInitYVel: 6
   knockbackInitXVel: 6
-  knockbackYGravity: 20
-  knockbackXTimeToZero: 1
-  knockbackRecoveryTime: 0.5
+  knockbackYGravity: 25
+  knockbackXTimeToZero: 0.7
+  knockbackRecoveryTime: 0.3
