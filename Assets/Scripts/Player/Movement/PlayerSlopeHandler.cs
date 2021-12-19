@@ -76,7 +76,6 @@ public class PlayerSlopeHandler : MonoBehaviour
     private void DetectIfGroundInProximity()
     {
         GroundInProximity = groundProximityDetector.Colliding();
-        print(GroundInProximity);
         /*
         GroundInProximity = false;
         RaycastHit hit;

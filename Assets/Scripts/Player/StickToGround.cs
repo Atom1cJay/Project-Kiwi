@@ -17,4 +17,12 @@ public class StickToGround : MonoBehaviour
             transform.position = new Vector3(pos.x, hit.point.y + offsetAboveRaycastHitPoint, pos.z);
         }
     }
+
+    // Based on the given position, stick to the nearest "floor" below that position.
+    // Then, offset this object's position by the offset variable.
+    public void UpdatePosition(Vector3 pos, Vector3 offset)
+    {
+        UpdatePosition(pos);
+        transform.position += offset;
+    }
 }

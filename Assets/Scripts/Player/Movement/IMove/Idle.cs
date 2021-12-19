@@ -45,7 +45,7 @@ public class Idle : AMove
     {
         if (!mi.TouchingGround() && PlayerSlopeHandler.GroundInProximity)
         {
-            return -1f/*-PlayerSlopeHandler.DistanceOfGroundInProximity / Time.deltaTime*/;
+            return -10f/*-PlayerSlopeHandler.DistanceOfGroundInProximity / Time.deltaTime*/;
         }
         return -1f;
     }

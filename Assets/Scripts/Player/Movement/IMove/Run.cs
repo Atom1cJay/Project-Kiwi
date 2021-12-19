@@ -83,7 +83,7 @@ public class Run : AMove
     {
         if (!mi.TouchingGround() && PlayerSlopeHandler.GroundInProximity)
         {
-            return -1f/*-PlayerSlopeHandler.DistanceOfGroundInProximity / Time.deltaTime*/;
+            return -10f/*-PlayerSlopeHandler.DistanceOfGroundInProximity / Time.deltaTime*/;
         }
         return -1f; // To prevent floating point imprecision taking you off ground
     }

@@ -11,7 +11,6 @@ using UnityEngine.Events;
 [RequireComponent(typeof(MovementInputInfo))]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(RotationMovement))]
-[RequireComponent(typeof(PlayerSlopeHandler))]
 [RequireComponent(typeof(CheckpointLoader))]
 [RequireComponent(typeof(BumperHandler))]
 public class MoveExecuter : MonoBehaviour
@@ -23,13 +22,11 @@ public class MoveExecuter : MonoBehaviour
     MovementInputInfo mii;
     MovementSettingsSO movementSettings;
     RotationMovement rotator;
-    PlayerSlopeHandler psh;
     CheckpointLoader cl;
     BumperHandler bh;
     [SerializeField] CameraControl cameraControl;
     [SerializeField] CameraTarget camTarget;
     [SerializeField] StickToGround shadowCaster;
-    [SerializeField] float multi;
     SmoothMovingPlatform smp = null;
 
     public UnityEvent OnMoveChanged;
@@ -44,7 +41,6 @@ public class MoveExecuter : MonoBehaviour
         cl = GetComponent<CheckpointLoader>();
         rotator = GetComponent<RotationMovement>();
         bh = GetComponent<BumperHandler>();
-        psh = GetComponent<PlayerSlopeHandler>();
     }
 
     private void Start()
@@ -68,6 +64,17 @@ public class MoveExecuter : MonoBehaviour
         HandleMovementChangeEvent();
 
         UpdateMovingPlatformStatus();
+
+        Vector3 extraMovement = Vector3.zero;
+        if (smp != null)
+        {
+            extraMovement = (smp.transform.position - smpStoredPos);
+            smpStoredPos = smp.transform.position;
+        }
+        if (extraMovement.y < 0)
+        {
+            transform.Translate(Vector3.up * extraMovement.y);
+        }
     }
 
     void UpdateMovingPlatformStatus()
@@ -77,14 +84,11 @@ public class MoveExecuter : MonoBehaviour
             smp = mi.GetGroundDetector().CollidingWith().GetComponent<SmoothMovingPlatform>();
             smpStoredPos = smp.transform.position;
             smp.onMove.AddListener(() => Move());
-            print("Joined platform");
-            //transform.Translate((0.7f - PlayerSlopeHandler.DistanceOfGroundInProximity) * Vector3.up, Space.World);
         }
         if (!moveThisFrame.AdjustToSlope() || (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity) ||(mi.TouchingGround() && !mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)")))
         {
             if (smp != null)
             {
-                print("Left platform");
                 smp.onMove.RemoveAllListeners(); // todo bad
                 smp = null;
             }
@@ -111,41 +115,18 @@ public class MoveExecuter : MonoBehaviour
             if (smp != null)
             {
                 extraMovement = (smp.transform.position - smpStoredPos);
-                /*
-                if (extraMovement.y < 0)
-                {
-                    extraMovement.y *= multi;
-                }
-                */
                 smpStoredPos = smp.transform.position;
-                //extraMovement = smp.MvmtThisFrame() * multi;
             }
             Vector3 mvmtTotal = horizMovementAdjusted + vertMovement + extraMovement;
-            /*
-            psh.UpdateGroundProximityInfo();
-            if (smp != null)
+            charCont.Move(mvmtTotal);
+            if (extraMovement.y < 0)
             {
-                if (extraMovement.y < 0)
-                {
-                    mvmtTotal.y = -PlayerSlopeHandler.DistanceOfGroundInProximity + 0.7f;
-                }
+                transform.Translate(Vector3.up * extraMovement.y);
             }
-            */
-            //charCont.Move(mvmtTotal);
-            /*
-            if (smp != null)
-            {
-                transform.Translate(mvmtTotal, Space.World);
-            }
-            else
-            {*/
-                charCont.Move(mvmtTotal);
-            //}
-            //transform.position += mvmtTotal;
-            //print(PlayerSlopeHandler.DistanceOfGroundInProximity);
+
             bh.HandleBumperMoved();
             camTarget.Adjust();
-            shadowCaster.UpdatePosition(charCont.transform.position);
+            shadowCaster.UpdatePosition(charCont.transform.position, extraMovement);
             IMove next = moveThisFrame.GetNextMove();
             moveThisFrame = next;
         }
