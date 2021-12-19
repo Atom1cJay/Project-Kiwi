@@ -44,6 +44,7 @@ public class PlayerSlopeHandler : MonoBehaviour
     [SerializeField] float recoveryAngle = 50;
     [SerializeField] float maxAngleForProximity = 45;
     [SerializeField] float lengthOfNearestGroundRay;
+    [SerializeField] CollisionDetector groundProximityDetector;
     [SerializeField] CharacterController charCont;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -74,6 +75,9 @@ public class PlayerSlopeHandler : MonoBehaviour
 
     private void DetectIfGroundInProximity()
     {
+        GroundInProximity = groundProximityDetector.Colliding();
+        print(GroundInProximity);
+        /*
         GroundInProximity = false;
         RaycastHit hit;
         Debug.DrawRay(transform.position + Vector3.up, Vector3.down);
@@ -82,6 +86,7 @@ public class PlayerSlopeHandler : MonoBehaviour
         GroundInProximity = couldTouchGround && GetAngleOfSlope(hit.normal) < maxAngleForProximity;
         DistanceOfGroundInProximity = GroundInProximity ? hit.distance - 1 : -1;
         //print(DistanceOfGroundInProximity);
+        */
     }
 
     // Obtains the normal of the platform the player is currently on

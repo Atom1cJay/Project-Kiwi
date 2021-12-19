@@ -56,7 +56,6 @@ public class MoveExecuter : MonoBehaviour
 
     void Update()
     {
-        UpdateMovingPlatformStatus();
         if (smp == null)
         {
             Move();
@@ -67,20 +66,25 @@ public class MoveExecuter : MonoBehaviour
     {
         HandleBasicMovement();
         HandleMovementChangeEvent();
+
+        UpdateMovingPlatformStatus();
     }
 
     void UpdateMovingPlatformStatus()
     {
-        if (smp == null && mi.GetGroundDetector().Colliding() && mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)"))
+        if (smp == null && mi.TouchingGround() && mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)"))
         {
             smp = mi.GetGroundDetector().CollidingWith().GetComponent<SmoothMovingPlatform>();
             smpStoredPos = smp.transform.position;
             smp.onMove.AddListener(() => Move());
+            print("Joined platform");
+            //transform.Translate((0.7f - PlayerSlopeHandler.DistanceOfGroundInProximity) * Vector3.up, Space.World);
         }
-        if (!moveThisFrame.AdjustToSlope() || (!mi.GetGroundDetector().Colliding() && !PlayerSlopeHandler.GroundInProximity))
+        if (!moveThisFrame.AdjustToSlope() || (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity) ||(mi.TouchingGround() && !mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)")))
         {
             if (smp != null)
             {
+                print("Left platform");
                 smp.onMove.RemoveAllListeners(); // todo bad
                 smp = null;
             }
@@ -107,10 +111,12 @@ public class MoveExecuter : MonoBehaviour
             if (smp != null)
             {
                 extraMovement = (smp.transform.position - smpStoredPos);
+                /*
                 if (extraMovement.y < 0)
                 {
                     extraMovement.y *= multi;
                 }
+                */
                 smpStoredPos = smp.transform.position;
                 //extraMovement = smp.MvmtThisFrame() * multi;
             }
@@ -125,11 +131,18 @@ public class MoveExecuter : MonoBehaviour
                 }
             }
             */
-            charCont.Move(mvmtTotal);
+            //charCont.Move(mvmtTotal);
+            /*
             if (smp != null)
             {
-                print(Vector3.Distance(transform.position, smp.transform.position));
+                transform.Translate(mvmtTotal, Space.World);
             }
+            else
+            {*/
+                charCont.Move(mvmtTotal);
+            //}
+            //transform.position += mvmtTotal;
+            //print(PlayerSlopeHandler.DistanceOfGroundInProximity);
             bh.HandleBumperMoved();
             camTarget.Adjust();
             shadowCaster.UpdatePosition(charCont.transform.position);

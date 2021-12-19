@@ -83,9 +83,9 @@ public class Run : AMove
     {
         if (!mi.TouchingGround() && PlayerSlopeHandler.GroundInProximity)
         {
-            return 0/*-PlayerSlopeHandler.DistanceOfGroundInProximity / Time.deltaTime*/;
+            return -1f/*-PlayerSlopeHandler.DistanceOfGroundInProximity / Time.deltaTime*/;
         }
-        return 0; // To prevent floating point imprecision taking you off ground
+        return -1f; // To prevent floating point imprecision taking you off ground
     }
 
     public override float GetRotationSpeed()

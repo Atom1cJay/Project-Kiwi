@@ -32,14 +32,12 @@ public class MovingPlatform : MonoBehaviour
         transform.position = midpoint + (-Mathf.Cos(speed * (Time.time + timeOffset)) * GetDistanceToMove() / 2);
     }
 
-    /*
     void Update()
     {
         waveValue = speed * (Mathf.Sin(speed * (Time.time + timeOffset)) / 2);
     }
-    */
 
-    void Update()
+    void FixedUpdate()
     {
         waveValue = speed * (Mathf.Sin(speed * (Time.time + timeOffset)) / 2);
         Vector3 mvmtThisFrame =

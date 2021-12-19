@@ -23,8 +23,11 @@ public class SmoothMovingPlatform : MonoBehaviour
     public UnityEvent onMove;
     float timeSpent;
 
+    Rigidbody rb;
+
     private void Awake()
     {
+        rb = GetComponent<Rigidbody>();
         midpoint = transform.position + (GetDistanceToMove() / 2);
         initRot = transform.rotation.eulerAngles;
     }
@@ -47,7 +50,10 @@ public class SmoothMovingPlatform : MonoBehaviour
     {
         timeSpent += Time.deltaTime;
         waveValue = speed * (Mathf.Sin(speed * (timeSpent + timeOffset)) / 2);
+    }
 
+    private void FixedUpdate()
+    {
         mvmtThisFrame =
             new Vector3(
                 waveValue * GetDistanceToMove().x,
@@ -60,8 +66,8 @@ public class SmoothMovingPlatform : MonoBehaviour
                 rotSpeed.y,
                 rotSpeed.z) * Time.deltaTime;
 
-        //transform.Translate(mvmtThisFrame, Space.World);
-        transform.position += mvmtThisFrame;
+        transform.Translate(mvmtThisFrame, Space.World);
+        //transform.position += mvmtThisFrame;
         //print(mvmtThisFrame);
         onMove.Invoke();
         transform.Rotate(rotThisFrame);
