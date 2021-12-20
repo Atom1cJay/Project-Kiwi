@@ -102,6 +102,11 @@ public class MoveExecuter : MonoBehaviour
                 smpStoredPos = smp.transform.position;
             }
             transform.Translate(extraMovement, Space.World);
+            if (smp != null)
+            {
+                transform.Translate(smp.posChangeFromRotationThisFrame(new Vector3(transform.position.x, charCont.bounds.min.y, transform.position.z)), Space.World);
+                //print(smp.posChangeFromRotationThisFrame(transform.position) * 100);
+            }
             bh.HandleBumperMoved();
             Physics.Simulate(Time.fixedDeltaTime);
             bh.HandleBumperMoved();

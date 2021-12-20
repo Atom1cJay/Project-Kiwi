@@ -17,6 +17,7 @@ public class MovingPlatform : MonoBehaviour
 
     private void Awake()
     {
+        Debug.LogError("Moving Platform is deprecated. Use Smooth Moving Platform instead.");
         midpoint = transform.position + (GetDistanceToMove() / 2);
         initRot = transform.rotation.eulerAngles;
     }

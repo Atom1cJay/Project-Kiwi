@@ -19,15 +19,13 @@ public class SmoothMovingPlatform : MonoBehaviour
     float waveValue;
     Vector3 midpoint;
     Vector3 initRot;
-    Vector3 mvmtThisFrame;
+    Vector3 mvmtThisFrame = Vector3.zero;
+    Vector3 rotThisFrame = Vector3.zero;
     public UnityEvent onMove;
     float timeSpent;
 
-    Rigidbody rb;
-
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
         midpoint = transform.position + (GetDistanceToMove() / 2);
         initRot = transform.rotation.eulerAngles;
     }
@@ -60,14 +58,14 @@ public class SmoothMovingPlatform : MonoBehaviour
                 waveValue * GetDistanceToMove().y,
                 waveValue * GetDistanceToMove().z) * Time.fixedDeltaTime;
 
-        Vector3 rotThisFrame =
+        rotThisFrame =
             new Vector3(
                 rotSpeed.x,
                 rotSpeed.y,
                 rotSpeed.z) * Time.fixedDeltaTime;
 
         transform.Translate(mvmtThisFrame, Space.World);
-        transform.Rotate(rotThisFrame);
+        transform.Rotate(rotThisFrame, Space.World);
         onMove.Invoke();
     }
 
@@ -84,5 +82,17 @@ public class SmoothMovingPlatform : MonoBehaviour
         return relativeTransform.right * distanceToMove.x
             + relativeTransform.up * distanceToMove.y
             + relativeTransform.forward * distanceToMove.z;
+    }
+
+    /// <summary>
+    /// Given the position of some object "childed" to this moving
+    /// platform, what should the CHANGE in the object's position be, specifically
+    /// from rotation, after this frame?
+    /// </summary>
+    public Vector3 posChangeFromRotationThisFrame(Vector3 origPos)
+    {
+        Vector3 origRelativePos = new Vector3(origPos.x - transform.position.x, origPos.y - transform.position.y, origPos.z - transform.position.z);
+        Vector3 newRelativePos = Quaternion.Euler(rotThisFrame.x, rotThisFrame.y, rotThisFrame.z) * origRelativePos;
+        return newRelativePos - origRelativePos;
     }
 }
