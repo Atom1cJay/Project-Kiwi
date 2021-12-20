@@ -27,6 +27,7 @@ public class MoveExecuter : MonoBehaviour
     [SerializeField] CameraControl cameraControl;
     [SerializeField] CameraTarget camTarget;
     [SerializeField] StickToGround shadowCaster;
+    [SerializeField] float barrierRadius;
     SmoothMovingPlatform smp = null;
 
     public UnityEvent OnMoveChanged;
@@ -41,6 +42,7 @@ public class MoveExecuter : MonoBehaviour
         cl = GetComponent<CheckpointLoader>();
         rotator = GetComponent<RotationMovement>();
         bh = GetComponent<BumperHandler>();
+        Physics.autoSimulation = false;
     }
 
     private void Start()
@@ -64,17 +66,6 @@ public class MoveExecuter : MonoBehaviour
         HandleMovementChangeEvent();
 
         UpdateMovingPlatformStatus();
-
-        Vector3 extraMovement = Vector3.zero;
-        if (smp != null)
-        {
-            extraMovement = (smp.transform.position - smpStoredPos);
-            smpStoredPos = smp.transform.position;
-        }
-        if (extraMovement.y < 0)
-        {
-            transform.Translate(Vector3.up * extraMovement.y);
-        }
     }
 
     void UpdateMovingPlatformStatus()
@@ -104,6 +95,25 @@ public class MoveExecuter : MonoBehaviour
     {
         if (Time.timeScale > 0 && Time.deltaTime > 0) // Check for the sake of avoiding weird errors
         {
+            Vector3 extraMovement = Vector3.zero; // Movement from moving platform, if applicable. Should not pay attention to physics
+            if (smp != null)
+            {
+                extraMovement = (smp.transform.position - smpStoredPos);
+                smpStoredPos = smp.transform.position;
+            }
+            transform.Translate(extraMovement, Space.World);
+            bh.HandleBumperMoved();
+            Physics.Simulate(Time.fixedDeltaTime);
+            bh.HandleBumperMoved();
+
+            // BARRIER
+            charCont.Move(Vector3.left * barrierRadius);
+            charCont.Move(Vector3.back * barrierRadius);
+            charCont.Move(Vector3.right * barrierRadius);
+            charCont.Move(Vector3.forward * barrierRadius);
+            //charCont.Move(Vector3.up * test * Time.deltaTime);
+            //charCont.Move(Vector3.down * test * Time.deltaTime);
+
             moveThisFrame.AdvanceTime();
             cameraControl.HandleManualControl();
             rotator.DetermineRotation();
@@ -111,22 +121,12 @@ public class MoveExecuter : MonoBehaviour
             Vector3 dir = DirectionOfMovement(horizMovement);
             Vector3 horizMovementAdjusted = dir * horizMovement.magnitude * Time.deltaTime;
             Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame() * Time.deltaTime;
-            Vector3 extraMovement = Vector3.zero;
-            if (smp != null)
-            {
-                extraMovement = (smp.transform.position - smpStoredPos);
-                smpStoredPos = smp.transform.position;
-            }
-            Vector3 mvmtTotal = horizMovementAdjusted + vertMovement + extraMovement;
+            Vector3 mvmtTotal = horizMovementAdjusted + vertMovement;
             charCont.Move(mvmtTotal);
-            if (extraMovement.y < 0)
-            {
-                transform.Translate(Vector3.up * extraMovement.y);
-            }
 
             bh.HandleBumperMoved();
             camTarget.Adjust();
-            shadowCaster.UpdatePosition(charCont.transform.position, extraMovement);
+            shadowCaster.UpdatePosition(charCont.transform.position);
             IMove next = moveThisFrame.GetNextMove();
             moveThisFrame = next;
         }

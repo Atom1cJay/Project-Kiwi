@@ -75,17 +75,11 @@ public class PlayerSlopeHandler : MonoBehaviour
 
     private void DetectIfGroundInProximity()
     {
-        GroundInProximity = groundProximityDetector.Colliding();
-        /*
         GroundInProximity = false;
         RaycastHit hit;
-        Debug.DrawRay(transform.position + Vector3.up, Vector3.down);
         bool couldTouchGround = Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 1 + lengthOfNearestGroundRay, layerMask);
-        //bool couldTouchGround = Physics.Raycast(charCont.bounds.min, Vector3.down, out hit, 1 + lengthOfNearestGroundRay, layerMask);
         GroundInProximity = couldTouchGround && GetAngleOfSlope(hit.normal) < maxAngleForProximity;
         DistanceOfGroundInProximity = GroundInProximity ? hit.distance - 1 : -1;
-        //print(DistanceOfGroundInProximity);
-        */
     }
 
     // Obtains the normal of the platform the player is currently on

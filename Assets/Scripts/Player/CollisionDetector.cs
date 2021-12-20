@@ -12,6 +12,7 @@ public class CollisionDetector : MonoBehaviour
 
     private void UpdateCollisionStatus()
     {
+        Debug.DrawLine(transform.position, transform.position + (Vector3.right * (transform.localScale.magnitude / 2) / 1.3f));
         foreach (Collider c in Physics.OverlapSphere(transform.position, (transform.localScale.magnitude / 2) / 1.3f, layersToInclude)) // TODO FIX BAD GENERALIZE
         {
             if (!c.isTrigger && !gameObjectsToIgnore.Contains(c.gameObject))

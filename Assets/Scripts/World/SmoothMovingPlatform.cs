@@ -67,23 +67,8 @@ public class SmoothMovingPlatform : MonoBehaviour
                 rotSpeed.z) * Time.fixedDeltaTime;
 
         transform.Translate(mvmtThisFrame, Space.World);
-        //transform.position += mvmtThisFrame;
-        //print(mvmtThisFrame);
-        onMove.Invoke();
         transform.Rotate(rotThisFrame);
-    }
-
-    /// <summary>
-    /// Approximates the movement the platform will make next frame.
-    /// </summary>
-    public Vector3 GetMovementNextFrame()
-    {
-        float timeSpentApproximated = timeSpent + Time.deltaTime;
-        float waveValueApproximated = speed * (Mathf.Sin(speed * (timeSpentApproximated + timeOffset)) / 2);
-        return new Vector3(
-            waveValueApproximated * GetDistanceToMove().x,
-            waveValueApproximated * GetDistanceToMove().y,
-            waveValueApproximated * GetDistanceToMove().z) * Time.fixedDeltaTime;
+        onMove.Invoke();
     }
 
     /// <summary>
@@ -99,10 +84,5 @@ public class SmoothMovingPlatform : MonoBehaviour
         return relativeTransform.right * distanceToMove.x
             + relativeTransform.up * distanceToMove.y
             + relativeTransform.forward * distanceToMove.z;
-    }
-
-    public Vector3 MvmtThisFrame()
-    {
-        return mvmtThisFrame;
     }
 }

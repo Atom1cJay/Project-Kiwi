@@ -124,6 +124,14 @@ public class MovementInfo : MonoBehaviour
         return groundDetector;
     }
 
+    /// <summary>
+    /// Gives the bonk detector being used for movement calculations.
+    /// </summary>
+    public CollisionDetector GetBonkDetector()
+    {
+        return bonkDetector;
+    }
+
     // Is the water detector colliding with anything?
     public bool TouchingWater()
     {
