@@ -28,4 +28,12 @@ public class RotationMovement : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0, mii.GetInputDirection() * Mathf.Rad2Deg, 0);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
+
+    /// <summary>
+    /// Rotates the player around the y axis by the given amount.
+    /// </summary>
+    public void RotateExtra(float amount)
+    {
+        transform.Rotate(0, amount, 0);
+    }
 }

@@ -95,4 +95,12 @@ public class SmoothMovingPlatform : MonoBehaviour
         Vector3 newRelativePos = Quaternion.Euler(rotThisFrame.x, rotThisFrame.y, rotThisFrame.z) * origRelativePos;
         return newRelativePos - origRelativePos;
     }
+
+    /// <summary>
+    /// How much did the platform rotate this frame?
+    /// </summary>
+    public Vector3 getRotThisFrame()
+    {
+        return rotThisFrame;
+    }
 }

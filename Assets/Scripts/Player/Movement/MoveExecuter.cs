@@ -106,6 +106,7 @@ public class MoveExecuter : MonoBehaviour
             if (smp != null)
             {
                 transform.Translate(smp.posChangeFromRotationThisFrame(new Vector3(transform.position.x, charCont.bounds.min.y, transform.position.z)), Space.World);
+                rotator.RotateExtra(smp.getRotThisFrame().y);
             }
             bh.HandleBumperMoved();
             Physics.Simulate(Time.fixedDeltaTime);
@@ -127,7 +128,6 @@ public class MoveExecuter : MonoBehaviour
             Vector3 mvmtTotal = horizMovementAdjusted + vertMovement;
             charCont.Move(mvmtTotal);
             mi.UpdateEffectiveSpeed((new Vector2(transform.position.x, transform.position.z) - origPosXZ) / Time.deltaTime);
-            print(mi.GetEffectiveSpeed());
 
             bh.HandleBumperMoved();
             camTarget.Adjust();
