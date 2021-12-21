@@ -17,11 +17,7 @@ public class MovementInfo : MonoBehaviour
     private int tjJumpCount;
     IMoveImmutable storedMove; // The move from the last frame
     MoveExecuter me;
-
-    // Testing
-    private List<Vector2> lastFiveMoves = new List<Vector2>(
-        new []{ Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero });
-    private Vector2 prevPosXZ;
+    Vector2 effectiveSpeed;
 
     [HideInInspector] public UnityEvent onJumpAttackFeedbackReceived = new UnityEvent();
 
@@ -32,7 +28,6 @@ public class MovementInfo : MonoBehaviour
             print("Multiple instances of MovementInfo exist. Use one.");
         }
         instance = this;
-        prevPosXZ = new Vector2(transform.position.x, transform.position.z);
         me = GetComponent<MoveExecuter>();
         ph = GetComponent<PlayerHealth>();
     }
@@ -63,19 +58,16 @@ public class MovementInfo : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Time.timeScale > 0 && Time.deltaTime > 0)
-        {
-            UpdateEffectiveSpeed();
-        }
         UpdateTripleJumpStatus();
     }
 
-    private void UpdateEffectiveSpeed()
+    /// <summary>
+    /// Set the Effective speed to the current value. This function
+    /// should probably only be called by MoveExecuter.
+    /// </summary>
+    public void UpdateEffectiveSpeed(Vector2 es)
     {
-        Vector2 curXZ = new Vector2(transform.position.x, transform.position.z);
-        lastFiveMoves.Add((curXZ - prevPosXZ) / Time.deltaTime);
-        lastFiveMoves.RemoveAt(0);
-        prevPosXZ = curXZ;
+        effectiveSpeed = es;
     }
 
     /// <summary>
@@ -140,7 +132,7 @@ public class MovementInfo : MonoBehaviour
 
     public Vector2 GetEffectiveSpeed()
     {
-        return lastFiveMoves[4];
+        return effectiveSpeed;
     }
 
     public Transform GetPlayerTransform()

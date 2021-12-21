@@ -95,6 +95,7 @@ public class MoveExecuter : MonoBehaviour
     {
         if (Time.timeScale > 0 && Time.deltaTime > 0) // Check for the sake of avoiding weird errors
         {
+            Vector2 origPosXZ = new Vector2(transform.position.x, transform.position.z);
             Vector3 extraMovement = Vector3.zero; // Movement from moving platform, if applicable. Should not pay attention to physics
             if (smp != null)
             {
@@ -105,7 +106,6 @@ public class MoveExecuter : MonoBehaviour
             if (smp != null)
             {
                 transform.Translate(smp.posChangeFromRotationThisFrame(new Vector3(transform.position.x, charCont.bounds.min.y, transform.position.z)), Space.World);
-                //print(smp.posChangeFromRotationThisFrame(transform.position) * 100);
             }
             bh.HandleBumperMoved();
             Physics.Simulate(Time.fixedDeltaTime);
@@ -116,8 +116,6 @@ public class MoveExecuter : MonoBehaviour
             charCont.Move(Vector3.back * barrierRadius);
             charCont.Move(Vector3.right * barrierRadius);
             charCont.Move(Vector3.forward * barrierRadius);
-            //charCont.Move(Vector3.up * test * Time.deltaTime);
-            //charCont.Move(Vector3.down * test * Time.deltaTime);
 
             moveThisFrame.AdvanceTime();
             cameraControl.HandleManualControl();
@@ -128,6 +126,8 @@ public class MoveExecuter : MonoBehaviour
             Vector3 vertMovement = Vector3.up * moveThisFrame.GetVertSpeedThisFrame() * Time.deltaTime;
             Vector3 mvmtTotal = horizMovementAdjusted + vertMovement;
             charCont.Move(mvmtTotal);
+            mi.UpdateEffectiveSpeed((new Vector2(transform.position.x, transform.position.z) - origPosXZ) / Time.deltaTime);
+            print(mi.GetEffectiveSpeed());
 
             bh.HandleBumperMoved();
             camTarget.Adjust();

@@ -27,7 +27,8 @@ public class DoubleJump : AMove
     /// <param name="horizVel">The horizontal speed moving into this move</param>
     public DoubleJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
-        this.horizVector = horizVector;
+        this.horizVector = mi.GetEffectiveSpeed();
+        //this.horizVector = horizVector;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", IncrementJumpTimer());
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForJumpGroundableTimer());
         gravity = movementSettings.JumpInitGravity;

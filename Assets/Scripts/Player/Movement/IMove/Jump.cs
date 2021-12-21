@@ -28,7 +28,8 @@ public class Jump : AMove
     public Jump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
         // TODO inertia? (same for other jumps)
-        horizVector = ForwardMovement(horizVel);
+        //horizVector = ForwardMovement(horizVel);
+        horizVector = mi.GetEffectiveSpeed();
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", IncrementJumpTimer());
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForJumpGroundableTimer());
         gravity = movementSettings.JumpInitGravity;

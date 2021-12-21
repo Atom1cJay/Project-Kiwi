@@ -24,7 +24,8 @@ public class TripleJump : AMove
     /// <param name="horizVel">The horizontal speed moving into this move</param>
     public TripleJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
-        this.horizVector = horizVector;
+        this.horizVector = mi.GetEffectiveSpeed();
+        //this.horizVector = horizVector;
         gravity = movementSettings.TjInitGravity;
         vertVel = movementSettings.TjInitJumpVel;
         mii.OnDiveInput.AddListener(() => divePending = true);
