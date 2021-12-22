@@ -109,7 +109,7 @@ public class MoveExecuter : MonoBehaviour
                 rotator.RotateExtra(smp.getRotThisFrame().y);
             }
             bh.HandleBumperMoved();
-            Physics.Simulate(Time.fixedDeltaTime);
+            Physics.Simulate(Time.deltaTime);
             bh.HandleBumperMoved();
 
             // BARRIER

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// (EXPERIMENTAL) For a moving platform which can rotate at a constant speed
+/// For a moving platform which can rotate at a constant speed
 /// and move in the pattern of a sine wave. Moves in the Update() method instead
 /// of the FixedUpdate() method.
 /// </summary>
@@ -48,21 +48,18 @@ public class SmoothMovingPlatform : MonoBehaviour
     {
         timeSpent += Time.deltaTime;
         waveValue = speed * (Mathf.Sin(speed * (timeSpent + timeOffset)) / 2);
-    }
 
-    private void FixedUpdate()
-    {
         mvmtThisFrame =
-            new Vector3(
-                waveValue * GetDistanceToMove().x,
-                waveValue * GetDistanceToMove().y,
-                waveValue * GetDistanceToMove().z) * Time.fixedDeltaTime;
+        new Vector3(
+            waveValue * GetDistanceToMove().x,
+            waveValue * GetDistanceToMove().y,
+            waveValue * GetDistanceToMove().z) * Time.deltaTime;
 
         rotThisFrame =
             new Vector3(
                 rotSpeed.x,
                 rotSpeed.y,
-                rotSpeed.z) * Time.fixedDeltaTime;
+                rotSpeed.z) * Time.deltaTime;
 
         transform.Translate(mvmtThisFrame, Space.World);
         transform.Rotate(rotThisFrame, Space.World);

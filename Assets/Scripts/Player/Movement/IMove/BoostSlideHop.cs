@@ -6,13 +6,14 @@ public class BoostSlideHop : AMove
 {
     bool landableTimerPassed;
     float vertVel;
-    float horizVel;
+    Vector2 horizVector;
     //bool objectHitPending;
 
     public BoostSlideHop(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
         vertVel = movementSettings.BoostHopInitVelY;
-        this.horizVel = horizVel * movementSettings.BoostHopInitVelXMultiplier;
+        horizVector = mi.GetEffectiveSpeed();
+        //this.horizVel = horizVel * movementSettings.BoostHopInitVelXMultiplier;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", RunLandableTimer());
         //mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
     }
@@ -30,7 +31,7 @@ public class BoostSlideHop : AMove
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
-        return ForwardMovement(horizVel);
+        return horizVector;
     }
 
     public override float GetVertSpeedThisFrame()
@@ -46,7 +47,7 @@ public class BoostSlideHop : AMove
     public override IMove GetNextMove()
     {
         // Handle Feedback Moves
-        IMove feedbackMove = GetFeedbackMove(ForwardMovement(horizVel));
+        IMove feedbackMove = GetFeedbackMove(horizVector);
         if (feedbackMove != null)
         {
             return feedbackMove;
@@ -54,16 +55,16 @@ public class BoostSlideHop : AMove
         // Handle Everything Else
         if (PlayerSlopeHandler.ShouldSlide)
         {
-            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
+            return new Slide(mii, mi, movementSettings, horizVector);
         }
         if (mi.TouchingGround() && landableTimerPassed)
         {
-            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel), FromStatus.FromAir);
+            return new Run(mii, mi, movementSettings, horizVector, FromStatus.FromAir);
         }
         if (mi.BonkDetectorTouching())
         {
             //Vector3 kbVector = new Vector3(-ForwardMovement(horizVel).x, 0, -ForwardMovement(horizVel).y);
-            return new Knockback(mii, mi, movementSettings, Vector3.zero, ForwardMovement(horizVel));
+            return new Knockback(mii, mi, movementSettings, Vector3.zero, horizVector);
         }
         return this;
     }
