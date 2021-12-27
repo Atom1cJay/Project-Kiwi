@@ -28,7 +28,7 @@ public class MoveExecuter : MonoBehaviour
     [SerializeField] CameraTarget camTarget;
     [SerializeField] StickToGround shadowCaster;
     [SerializeField] float barrierRadius;
-    SmoothMovingPlatform smp = null;
+    AMovingPlatform movingPlatform = null;
 
     public UnityEvent OnMoveChanged;
 
@@ -54,7 +54,7 @@ public class MoveExecuter : MonoBehaviour
 
     void Update()
     {
-        if (smp == null)
+        if (movingPlatform == null) // If not null, the moving platform's TransformChange event will call it instead
         {
             Move();
         }
@@ -64,24 +64,25 @@ public class MoveExecuter : MonoBehaviour
     {
         HandleBasicMovement();
         HandleMovementChangeEvent();
-
         UpdateMovingPlatformStatus();
     }
 
     void UpdateMovingPlatformStatus()
     {
-        if (smp == null && mi.TouchingGround() && mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)"))
+        if (movingPlatform == null && mi.TouchingGround() && mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)"))
         {
-            smp = mi.GetGroundDetector().CollidingWith().GetComponent<SmoothMovingPlatform>();
-            smpStoredPos = smp.transform.position;
-            smp.onMove.AddListener(() => Move());
+            movingPlatform = mi.GetGroundDetector().CollidingWith().GetComponent<AMovingPlatform>();
+            movingPlatform.Register();
+            smpStoredPos = movingPlatform.transform.position;
+            movingPlatform.onTransformChange.AddListener(() => Move());
         }
         if (!moveThisFrame.AdjustToSlope() || (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity) ||(mi.TouchingGround() && !mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)")))
         {
-            if (smp != null)
+            if (movingPlatform != null)
             {
-                smp.onMove.RemoveAllListeners(); // todo bad
-                smp = null;
+                movingPlatform.Deregister();
+                movingPlatform.onTransformChange.RemoveAllListeners(); // todo bad?
+                movingPlatform = null;
             }
         }
     }
@@ -90,6 +91,7 @@ public class MoveExecuter : MonoBehaviour
     /// Handles horizontal, vertical, and rotation-related movement for the player,
     /// as well as the controls for the camera, depending
     /// on the currently active IMove.
+    /// Also moves according to the current moving platform, if there is one.
     /// </summary>
     private void HandleBasicMovement()
     {
@@ -97,17 +99,20 @@ public class MoveExecuter : MonoBehaviour
         {
             Vector2 origPosXZ = new Vector2(transform.position.x, transform.position.z);
             Vector3 extraMovement = Vector3.zero; // Movement from moving platform, if applicable. Should not pay attention to physics
-            if (smp != null)
+            // Special Moving Platform Movement
+            if (movingPlatform != null)
             {
-                extraMovement = (smp.transform.position - smpStoredPos);
-                smpStoredPos = smp.transform.position;
+                extraMovement = movingPlatform.MvmtThisFrame();
+                //extraMovement = (movingPlatform.transform.position - smpStoredPos);
+                //smpStoredPos = movingPlatform.transform.position;
             }
             transform.Translate(extraMovement, Space.World);
-            if (smp != null)
+            if (movingPlatform != null)
             {
-                transform.Translate(smp.posChangeFromRotationThisFrame(new Vector3(transform.position.x, charCont.bounds.min.y, transform.position.z)), Space.World);
-                rotator.RotateExtra(smp.getRotThisFrame().y);
+                transform.Translate(movingPlatform.PosChangeFromRotThisFrame(new Vector3(transform.position.x, charCont.bounds.min.y, transform.position.z)), Space.World);
+                rotator.RotateExtra(movingPlatform.RotThisFrame().y);
             }
+            // End Special Moving Platform Movement
             bh.HandleBumperMoved();
             Physics.Simulate(Time.deltaTime);
             bh.HandleBumperMoved();

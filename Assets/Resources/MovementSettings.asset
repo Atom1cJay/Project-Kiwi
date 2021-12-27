@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89a9c384f4044d949915fc3cf99a7e4, type: 3}
   m_Name: MovementSettings
   m_EditorClassIdentifier: 
-  maxSpeed: 5.9
+  maxSpeed: 6
   maxSpeedAbsolute: 15
   runSensitivityX: 8
   runGravityX: 22
-  runGravityXOverTopSpeed: 20
+  runGravityXOverTopSpeed: 16
   runGravityXOverTopSpeedNoInput: 24
   boostRunRotation: 0
   airSensitivityX: 5
@@ -34,11 +34,11 @@ MonoBehaviour:
   jumpVelocityOfNoReturn: 1.5
   jumpMinVel: -20
   jumpSensitivityX: 6.5
-  jumpAdjustSensitivityX: 27
+  jumpAdjustSensitivityX: 25
   jumpAdjustSensitivityMaxSpeedX: 26
   jumpGravityX: 6.5
   jumpSensitivityReverseX: 14
-  jumpSpeedDecRateOverMaxSpeed: 2
+  jumpSpeedDecRateOverMaxSpeed: 1.5
   reverseCoyoteTime: 0.15
   coyoteTime: 0.12
   dissonanceForHardTurn: 1.8
@@ -60,13 +60,13 @@ MonoBehaviour:
   tjMaxJumpTime: 1.5
   tjMaxDissonance: 0.5
   horizBoostChargeRotationSpeed: 60
-  horizBoostMaxChargeTime: 0.4
+  horizBoostMaxChargeTime: 0.3
   horizBoostMaxTime: 0.7
   horizBoostRotation: 30
   horizBoostAirReverseGravity: 16
   horizBoostNonAirReverseGravity: 0
-  horizBoostMinSpeedX: 7
-  horizBoostMaxSpeedX: 9.5
+  horizBoostMinSpeedX: 6.75
+  horizBoostMaxSpeedX: 9.25
   horizBoostMinSpeedGroundX: 7
   horizBoostMaxSpeedGroundX: 10
   horizBoostMinLengthGroundX: 0.65
@@ -78,9 +78,9 @@ MonoBehaviour:
   horizBoostChargeMinVelY: -5
   horizBoostToGroundBoostSensitivity: 1
   horizBoostChargeVertNeutralizeTime: 0
-  groundBoostRotationSpeed: 50
+  groundBoostRotationSpeed: 80
   horizBoostMinGravity: 6.5
-  horizBoostMaxGravity: 10
+  horizBoostMaxGravity: 9.5
   horizBoostGravityIncRate: 15
   boostSlideSpeedDecRate: 7
   boostSlideSpeedDecRateNoInput: 8.5
@@ -91,13 +91,13 @@ MonoBehaviour:
   boostSlideMaxSpeedForMinRotation: 6
   boostSlideMaxSpeed: 9
   boostSlideMaxDissonanceForHoldingFwd: 1
-  boostHopInitVelY: 6.5
+  boostHopInitVelY: 6.75
   boostHopInitVelXMultiplier: 1
   boostHopInitVelXMoving: 7.5
   boostHopInitVelXStopped: 1
   boostHopXVelForMoving: 4
-  boostHopGravity: 22
-  boostSlideHopRotationSpeed: 40
+  boostHopGravity: 23
+  boostSlideHopRotationSpeed: 30
   vertBoostChargeWaitBeforeSpeedDec: 0.1
   vertBoostChargeGravityX: 9
   vertBoostMinLaunchVel: 6
@@ -135,7 +135,7 @@ MonoBehaviour:
   dissonanceForAirReverse: 1
   airReverseMinActivationSpeed: 0
   instantRotationSpeed: 1
-  groundRotationSpeed: 550
+  groundRotationSpeed: 600
   groundRotationSpeedMaxXSpeed: 10
   airRotationSpeed: 700
   boostAftermathRotationSpeed: 50

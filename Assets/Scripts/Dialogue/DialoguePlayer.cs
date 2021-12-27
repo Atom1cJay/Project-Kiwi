@@ -33,7 +33,6 @@ public class DialoguePlayer : MonoBehaviour
         inputActions.Player.Dialogue.started += _ => inputForNextSegment = true;
         while (dialogueTree.HasNextSegment())
         {
-            inputForNextSegment = false;
             dialogueTree.NextSegment();
             // Filling in a segment, char by char
             while (!dialogueTree.SegmentIsComplete())
@@ -43,6 +42,7 @@ public class DialoguePlayer : MonoBehaviour
                 text.text = dialogueTree.GetText();
             }
             // Wait for input for next segment
+            inputForNextSegment = false;
             yield return new WaitUntil(() => inputForNextSegment);
         }
         dialogueTree.Reset();

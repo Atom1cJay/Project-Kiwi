@@ -21,8 +21,7 @@ public class DialogueNode : ADialogueTree
     {
         if (inThisNode())
         {
-            // If there is more to be advanced in this segment
-            if (segmentLength < segments[idxOfSegment].Length)
+            if (segmentLength < segments[idxOfSegment].Length) // If there is more to be advanced in the current segment
             {
                 segmentLength++;
             }
@@ -64,8 +63,7 @@ public class DialogueNode : ADialogueTree
         {
             idxOfSegment++;
             segmentLength = 0;
-            // If this puts the segment index at the edge, go to index 0 in the next tree
-            if (idxOfSegment == segments.Length)
+            if (idxOfSegment == segments.Length) // If this puts the segment index at the edge, go to index 0 in the next tree
             {
                 next.NextSegment();
             }

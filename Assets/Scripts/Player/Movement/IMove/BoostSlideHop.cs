@@ -8,6 +8,7 @@ public class BoostSlideHop : AMove
     float vertVel;
     Vector2 horizVector;
     //bool objectHitPending;
+    bool boostChargePending;
 
     public BoostSlideHop(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
@@ -15,6 +16,7 @@ public class BoostSlideHop : AMove
         horizVector = mi.GetEffectiveSpeed();
         //this.horizVel = horizVel * movementSettings.BoostHopInitVelXMultiplier;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", RunLandableTimer());
+        mii.OnHorizBoostCharge.AddListener(() => boostChargePending = true);
         //mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
     }
 
@@ -65,6 +67,10 @@ public class BoostSlideHop : AMove
         {
             //Vector3 kbVector = new Vector3(-ForwardMovement(horizVel).x, 0, -ForwardMovement(horizVel).y);
             return new Knockback(mii, mi, movementSettings, Vector3.zero, horizVector);
+        }
+        if (boostChargePending)
+        {
+            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, horizVector);
         }
         return this;
     }

@@ -15,7 +15,17 @@ ModelImporter:
   - first:
       74: -7507965654591396328
     second: Shell|SnailMoving
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SnailBody
+    second: {fileID: 2100000, guid: 27fd2d47c34824823a1efac33314ae0c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SnailShellTex
+    second: {fileID: 2100000, guid: 1736d47cd78664f7bb82df02582d4ea9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
