@@ -44,6 +44,9 @@ public class TimescaleHandler : MonoBehaviour
         UpdateTimeScale();
     }
 
+    /// <summary>
+    /// Document whether or not the game is paused for dialogue.
+    /// </summary>
     public static void setPausedForDialogue(bool state)
     {
         gamePausedForDialogue = state;
