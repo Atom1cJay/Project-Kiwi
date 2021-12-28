@@ -392,6 +392,9 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         else if (cM == "swim")
         {
 
+            float mult = (speed / 4f);
+            if (mult < 0.35f) mult = .35f;
+            animator.SetFloat("SwimSpeed", mult);
             boostSliding = false;
             onGround = true;
             currentMove("SWIM");
@@ -412,6 +415,10 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         {
             onGround = false;
             boostSliding = false;
+
+            float mult = (speed / 6f);
+            if (mult < 0.6f) mult = .6f;
+            animator.SetFloat("GlideSpeed", mult);
             currentMove("GLIDING");
         }
         else
