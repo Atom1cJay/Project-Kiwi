@@ -136,7 +136,7 @@ public class UIMapController : MonoBehaviour, UIInterface
 
             tempPos = MapCamera.transform.position + new Vector3(mvt.x * MoveSpeed, 0f, mvt.y * MoveSpeed) * IndependentTime.deltaTime;
 
-            Debug.Log("vect" + (Mathf.Abs(tempPos.x) + halfCam) + ",  other: " + (Mathf.Abs(tempPos.z) + halfCam));
+            //Debug.Log("vect" + (Mathf.Abs(tempPos.x) + halfCam) + ",  other: " + (Mathf.Abs(tempPos.z) + halfCam));
             x = Mathf.Abs(tempPos.x) + halfCam;
             y = Mathf.Abs(tempPos.z) + halfCam;
 
@@ -166,7 +166,11 @@ public class UIMapController : MonoBehaviour, UIInterface
         PlayerCompass.SetActive(true);
 
         foreach (GameObject c in checkpoints)
-            c.GetComponentInChildren<SpriteRenderer>().enabled = true;
+        {
+            SpriteRenderer sr = c.GetComponentInChildren<SpriteRenderer>();
+            if (sr != null)
+                sr.enabled = true;
+        }
 
         //render fog off
         RenderSettings.fog = false;
@@ -183,9 +187,12 @@ public class UIMapController : MonoBehaviour, UIInterface
         //idisable overhead
 
         PlayerCompass.SetActive(false);
-
         foreach (GameObject c in checkpoints)
-            c.GetComponentInChildren<SpriteRenderer>().enabled = false;
+        {
+            SpriteRenderer sr = c.GetComponentInChildren<SpriteRenderer>();
+            if (sr != null)
+                sr.enabled = false;
+        }
 
         RenderSettings.fog = true;
 

@@ -16,6 +16,15 @@ public class MaterialFaceChanger : MonoBehaviour
         copy = Instantiate(gameObject);
 
         Destroy(copy.GetComponent<MaterialFaceChanger>());
+
+        foreach (var comp in copy.GetComponents<Component>())
+        {
+            if (!(comp is MeshFilter || comp is Collider || comp is MeshRenderer || comp is Transform))
+            {
+                Destroy(comp);
+            }
+        }
+
         copy.transform.SetParent(gameObject.transform);
         copy.transform.localPosition = Vector3.zero;
         Vector3 size = copy.transform.localScale;
