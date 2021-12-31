@@ -21,14 +21,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CelTerrainMAt
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: f9cfa50b4e76d86498b4582f440108e3, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -77,6 +76,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SteepStub_49e54a0f7a5244ea807a4ae7324c3590_SideTexture_2310384352:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SteepStub_49e54a0f7a5244ea807a4ae7324c3590_TopBottomTexture_1501587055:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_5061864902a34b4e9c6453962e98dba7_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -91,9 +102,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - Dot_Product_For_Shade_Border: 0
+    - Rim_Edge_Power: 0
+    - Rim_Shadow_Power: 0
+    - Rim_Strength: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
+    - _CheckboardSize: 0.5
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -108,6 +124,7 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -115,11 +132,17 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _TopSize: 1.96
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Ambient_Light: {r: 0.9254902, g: 0.9193892, b: 0.7882353, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _CheckerBoardColorA: {r: 0.554, g: 0.21103477, b: 0.01254338, a: 0}
+    - _CheckerboardColorB: {r: 0.8679245, g: 0.43942106, b: 0.28985396, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FractalColorMultiplier: {r: 0.19320178, g: 0.41509432, b: 0.13862582, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _TopColor: {r: 0.23173364, g: 0.5377358, b: 0.18465643, a: 0}
   m_BuildTextureStacks: []
