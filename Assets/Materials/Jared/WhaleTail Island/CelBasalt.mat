@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CelBasalt
-  m_Shader: {fileID: -6465566751694194690, guid: 9409ca2c9e79afd4698840f3001d5fb4, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0a7666f1d45592141ba3948bf7608586, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -83,12 +83,14 @@ Material:
     m_Floats:
     - Dot_Product_For_Shade_Border: 0
     - Metallic: 0
+    - ReplaceFuzziness: 0.09
+    - ReplaceRange: 0.03
     - RimEdgePower: 1
     - RimExtraSize: 0.01
-    - RimShadowPower: 1
+    - RimShadowPower: -0.09
     - RimStrength: 1
     - Smoothness: 0
-    - TransparencyOfTexture: 0.331
+    - TransparencyOfTexture: 0.16
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -106,6 +108,7 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -117,7 +120,10 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Albedo: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 0}
-    - Ambient_Light: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 0}
+    - Ambient_Light: {r: 0, g: 0, b: 0, a: 0}
+    - ColorReplacing: {r: 0.05838374, g: 0.35822657, b: 0.3773585, a: 1}
+    - ColorToMultiplyTexture: {r: 0.9811321, g: 0.06849407, b: 0.06849407, a: 0}
+    - ColorToReplace: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 0}
     - Tiling: {r: 0.05, g: 0.05, b: 0.05, a: 0.67}
     - _BaseColor: {r: 1, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
@@ -136,4 +142,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 4
+  version: 5
