@@ -42,12 +42,19 @@ public class AIBeeChase : AAIState
 
     public override bool ShouldBeginState()
     {
-        return true;
+        Vector3 playerPosLeveled = Player.position;
+        playerPosLeveled.y = transform.position.y;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, (Player.position - transform.position).normalized, out hit, (Player.position - transform.position).magnitude))
+        {
+            return hit.collider.gameObject.layer == 9 && !Physics.Raycast(transform.position, (playerPosLeveled - transform.position).normalized, (Player.position - transform.position).magnitude, ~(1 << 9));
+        }
+        return false;
     }
 
     public override bool ShouldFinishState()
     {
-        return timePassed > timeForState;
+        return timePassed > timeForState || transform.position == goalPos;
     }
 
     public override Vector2 GetRotation()

@@ -96,10 +96,10 @@ Material:
     m_Floats:
     - Dot_Product_For_Shade_Border: 0
     - Metallic: 0
-    - RimEdgePower: 1
+    - RimEdgePower: 10
     - RimExtraSize: 0.01
-    - RimShadowPower: 1
-    - RimStrength: 1
+    - RimShadowPower: 10
+    - RimStrength: 0
     - Smoothness: 0
     - _AlphaClip: 0
     - _Blend: 0
@@ -132,7 +132,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Albedo: {r: 1, g: 1, b: 1, a: 0}
-    - Ambient_Light: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
+    - Ambient_Light: {r: 1, g: 1, b: 1, a: 0}
     - Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

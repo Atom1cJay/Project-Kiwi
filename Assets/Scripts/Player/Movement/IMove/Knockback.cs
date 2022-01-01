@@ -106,6 +106,11 @@ public class Knockback : AMove
         return false;
     }
 
+    public override Attack[] GetAttack()
+    {
+        return new Attack[] { movementSettings.JumpAttack };
+    }
+
     public override string AsString()
     {
         return "knockback";

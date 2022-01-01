@@ -93,4 +93,9 @@ public class BoostSlideHop : AMove
     {
         return true;
     }
+
+    public override Attack[] GetAttack()
+    {
+        return new Attack[] { movementSettings.JumpAttack };
+    }
 }

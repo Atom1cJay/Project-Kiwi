@@ -45,7 +45,7 @@ public abstract class AMove : IMove
 
     public abstract string AsString();
 
-    public virtual Attack GetAttack() { return null; }
+    public virtual Attack[] GetAttack() { return null; }
 
     public virtual MovementParticleInfo.MovementParticles[] GetParticlesToSpawn() { return null; }
 

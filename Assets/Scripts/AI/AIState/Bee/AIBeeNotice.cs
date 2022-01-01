@@ -44,7 +44,14 @@ public class AIBeeNotice : AAIState
 
     public override bool ShouldBeginState()
     {
-        return Vector3.Distance(transform.position, Player.position) <= radiusForChaseTemp;
+        Vector3 playerPosLeveled = Player.position;
+        playerPosLeveled.y = transform.position.y;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, (Player.position - transform.position).normalized, out hit, radiusForChaseTemp))
+        {
+            return hit.collider.gameObject.layer == 9 && !Physics.Raycast(transform.position, (playerPosLeveled - transform.position).normalized, radiusForChaseTemp, ~(1 << 9));
+        }
+        return false;
     }
 
     public override bool ShouldFinishState()

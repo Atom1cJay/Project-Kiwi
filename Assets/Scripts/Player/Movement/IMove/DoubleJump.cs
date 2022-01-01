@@ -201,8 +201,8 @@ public class DoubleJump : AMove
         return false;
     }
 
-    public override Attack GetAttack()
+    public override Attack[] GetAttack()
     {
-        return movementSettings.JumpAttack;
+        return new Attack[] { movementSettings.JumpAttack };
     }
 }

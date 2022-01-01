@@ -102,9 +102,9 @@ public class Dive : AMove
         return false;
     }
 
-    public override Attack GetAttack()
+    public override Attack[] GetAttack()
     {
-        return movementSettings.DiveAttack;
+        return new Attack[] { movementSettings.DiveAttack, movementSettings.JumpAttack };
     }
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()

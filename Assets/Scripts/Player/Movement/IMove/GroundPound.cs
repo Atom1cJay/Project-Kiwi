@@ -106,8 +106,8 @@ public class GroundPound : AMove
         return "groundpound";
     }
 
-    public override Attack GetAttack()
+    public override Attack[] GetAttack()
     {
-        return movementSettings.GroundPoundAttack;
+        return new Attack[] { movementSettings.GroundPoundAttack };
     }
 }

@@ -10,14 +10,12 @@ public class BoostSlide : AMove
     FromStatus fromStatus;
 
     bool boostChargePending;
-    //bool bonkPending;
 
     public BoostSlide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool allowRefresh) : base(ms, mi, mii)
     {
         this.allowRefresh = allowRefresh;
         this.horizVel = horizVel;
         mii.OnHorizBoostCharge.AddListener(() => boostChargePending = true);
-        //mi.OnCharContTouchSomething.AddListener(() => bonkPending = true);
     }
 
     public BoostSlide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool allowRefresh, FromStatus fromStatus) : this(mii, mi, ms, horizVel, allowRefresh)
@@ -102,12 +100,6 @@ public class BoostSlide : AMove
         {
             return new Knockback(mii, mi, movementSettings, Vector3.zero, ForwardMovement(horizVel));
         }
-        /*
-        if (bonkPending)
-        {
-
-        }
-        */
         return this;
     }
 
@@ -140,6 +132,18 @@ public class BoostSlide : AMove
         else
         {
             return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Sliding, MovementParticleInfo.Instance.SlidingTracks };
+        }
+    }
+
+    public override Attack[] GetAttack()
+    {
+        if (allowRefresh) // Means boosting from ground (assumed)
+        {
+            return new Attack[] { movementSettings.HorizBoostAttack };
+        }
+        else
+        {
+            return null;
         }
     }
 

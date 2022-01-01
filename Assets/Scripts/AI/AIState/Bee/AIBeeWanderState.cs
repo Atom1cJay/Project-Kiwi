@@ -9,10 +9,20 @@ using UnityEngine;
 public class AIBeeWanderState : AAIState
 {
     [SerializeField] float radiusForWanderTemp;
+    [SerializeField] float maxLengthOfEachMove;
+    [SerializeField] float maxTimeForEachMove;
+    [SerializeField] float speed;
+    [SerializeField] float rotSpeed;
+    Vector3 goalPos;
+    float timeElapsedInMove;
 
     public override void AdvanceTime()
     {
-        // Nothing
+        timeElapsedInMove += Time.deltaTime;
+        if (timeElapsedInMove > maxTimeForEachMove || transform.position == goalPos)
+        {
+            StartMove();
+        }
     }
 
     public override string GetAnimationID()
@@ -22,17 +32,23 @@ public class AIBeeWanderState : AAIState
 
     public override Vector3 GetGoalPos()
     {
-        return transform.position;
+        return goalPos;
     }
 
     public override float GetSpeed()
     {
-        return 0;
+        return speed;
     }
 
     public override void RegisterAsState()
     {
-        // Nothing
+        StartMove();
+    }
+
+    void StartMove()
+    {
+        timeElapsedInMove = 0;
+        goalPos = transform.position + new Vector3(Random.Range(-maxLengthOfEachMove, maxLengthOfEachMove), 0, Random.Range(-maxLengthOfEachMove, maxLengthOfEachMove));
     }
 
     public override bool DestroysEnemy()
@@ -47,11 +63,20 @@ public class AIBeeWanderState : AAIState
 
     public override bool ShouldFinishState()
     {
-        return Vector3.Distance(transform.position, Player.position) <= radiusForWanderTemp;
+        Vector3 playerPosLeveled = Player.position;
+        playerPosLeveled.y = transform.position.y;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, (Player.position - transform.position).normalized, out hit, radiusForWanderTemp))
+        {
+            return hit.collider.gameObject.layer == 9 && !Physics.Raycast(transform.position, (playerPosLeveled - transform.position).normalized, radiusForWanderTemp, ~(1 << 9));
+        }
+        return false;
     }
 
     public override Vector2 GetRotation()
     {
-        return Vector2.zero;
+        Vector2 posDiffXZ = new Vector2(goalPos.x - transform.position.x, goalPos.z - transform.position.z);
+        float angle = (-Mathf.Atan2(posDiffXZ.y, posDiffXZ.x) * Mathf.Rad2Deg) + 180;
+        return new Vector2(angle, rotSpeed);
     }
 }

@@ -8,7 +8,7 @@ public class AttackExecuter : MonoBehaviour
     [SerializeField] Transform hitboxParent;
     // The parent for the hitboxes to be spawned under
     MoveExecuter me;
-    Attack curAttack;
+    Attack[] curAttacks;
 
     private void Awake()
     {
@@ -18,17 +18,23 @@ public class AttackExecuter : MonoBehaviour
 
     void ConsiderAttackExecution()
     {
-        if (curAttack != null)
+        if (curAttacks != null)
         {
-            // Since the move has changed, the attack for the last move should end.
-            curAttack.DisableAttack();
+            // Since the move has changed, the attacks for the last move should end.
+            foreach (Attack a in curAttacks)
+            {
+                a.DisableAttack();
+            }
         }
 
-        curAttack = me.GetCurrentMove().GetAttack();
+        curAttacks = me.GetCurrentMove().GetAttack();
 
-        if (curAttack != null)
+        if (curAttacks != null)
         {
-            curAttack.EnableAttack(hitboxParent);
+            foreach (Attack a in curAttacks)
+            {
+                a.EnableAttack(hitboxParent);
+            }
         }
     }
 }

@@ -141,9 +141,9 @@ public class VertAirBoost : AMove
         return false;
     }
 
-    public override Attack GetAttack()
+    public override Attack[] GetAttack()
     {
-        return movementSettings.VertBoostAttack;
+        return new Attack[] { movementSettings.VertBoostAttack, movementSettings.JumpAttack };
     }
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()

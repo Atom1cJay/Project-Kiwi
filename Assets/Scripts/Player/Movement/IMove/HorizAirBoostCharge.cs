@@ -89,6 +89,11 @@ public class HorizAirBoostCharge : AMove
         }
     }
 
+    public override Attack[] GetAttack()
+    {
+        return new Attack[] { movementSettings.JumpAttack };
+    }
+
     public override string AsString()
     {
         return "horizairboostcharge";

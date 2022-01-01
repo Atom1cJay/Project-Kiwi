@@ -61,10 +61,10 @@ public interface IMoveImmutable
     IMove GetNextMove();
 
     /// <summary>
-    /// Gives the attack (if any) associated with the move. If there is none,
+    /// Gives the attacks (if any) associated with the move. If there is none,
     /// returns null.
     /// </summary>
-    Attack GetAttack();
+    Attack[] GetAttack();
 
     /// <summary>
     /// Returns the exact particle GameObject that should be spawned around
