@@ -73,7 +73,7 @@ public class MovementParticleExecuter : MonoBehaviour
                 }
             }
             timeLeftToLive -= Time.deltaTime;
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
         Destroy(particles);
     }

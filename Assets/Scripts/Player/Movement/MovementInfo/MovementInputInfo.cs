@@ -39,7 +39,8 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Player.Jump.canceled += _ => OnJumpCancelled.Invoke();
         inputActionsHolder.inputActions.Player.Boost.started += _ => OnPushPress.Invoke();
         inputActionsHolder.inputActions.Player.VertBoost.started += _ => OnVertBoostCharge.Invoke();
-        OnVertBoostCharge.AddListener(() => StartCoroutine("WaitForVertBoostRelease"));
+        inputActionsHolder.inputActions.Player.VertBoost.canceled += _ => OnVertBoostRelease.Invoke();
+        //OnVertBoostCharge.AddListener(() => StartCoroutine("WaitForVertBoostRelease"));
         inputActionsHolder.inputActions.Player.Boost.performed += _ => OnHorizBoostCharge.Invoke();
         inputActionsHolder.inputActions.Player.Boost.canceled += _ => OnHorizBoostRelease.Invoke();
         inputActionsHolder.inputActions.Player.Dive.performed += _ => OnDiveInput.Invoke();
@@ -50,6 +51,7 @@ public class MovementInputInfo : MonoBehaviour
 
     }
 
+    /*
     IEnumerator WaitForVertBoostRelease()
     {
         vertBoostTimeCharged = 0;
@@ -65,6 +67,7 @@ public class MovementInputInfo : MonoBehaviour
         }
         OnVertBoostRelease.Invoke();
     }
+    */
 
     /// <summary>
     /// Gives the amount of time that the player last charged their vertical
@@ -203,7 +206,7 @@ public class MovementInputInfo : MonoBehaviour
         while (t < movementSettings.ReverseCoyoteTime && inputActionsHolder.inputActions.Player.Jump.ReadValue<float>() > 0)
         {
             t += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         inReverseCoyoteTime = false;

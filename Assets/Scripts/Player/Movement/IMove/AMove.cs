@@ -88,10 +88,18 @@ public abstract class AMove : IMove
     /// <returns></returns>
     protected float GetSharedMagnitudeWithPlayerAngle(Vector2 horizVector)
     {
+        Transform transform = mi.GetPlayerTransform();
+        float direction = Vector2.Dot(horizVector.normalized, new Vector2(transform.forward.x, transform.forward.z));
+        float directionWithMagnitude = direction * horizVector.magnitude;
+        return (directionWithMagnitude >= 0) ? directionWithMagnitude : 0;
+        /*
         float playerAngle = mi.GetPlayerTransform().eulerAngles.y * Mathf.Deg2Rad;
         float vectorAngle = (-Mathf.Atan2(horizVector.y, horizVector.x)) + (Mathf.PI / 2);
         float angleDifference = playerAngle - vectorAngle;
+        Debug.Log(horizVector);
+        //Debug.Log(Mathf.Cos(angleDifference) * horizVector.magnitude);
         return Mathf.Cos(angleDifference) * horizVector.magnitude;
+        */
     }
 
     public enum FromStatus
@@ -112,12 +120,6 @@ public abstract class AMove : IMove
     /// <returns></returns>
     protected IMove GetFeedbackMove(Vector2 horizVector)
     {
-        /*
-        if (receivedDeathFeedback)
-        {
-            return new Death(mii, mi, movementSettings);
-        }
-        */
         if (receivedJumpFeedback)
         {
             return new Jump(mii, mi, movementSettings, horizVector.magnitude);

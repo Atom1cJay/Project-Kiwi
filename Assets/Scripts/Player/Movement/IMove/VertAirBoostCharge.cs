@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class VertAirBoostCharge : AMove
 {
-    bool inSpeedDec;
+    bool inSpeedDec = false;
     float vertVel;
     float horizVel;
     float timeActive;
     readonly float maxTimeActive;
-    bool boostReleasePending;
+    bool boostReleasePending = false;
 
     /// <summary>
     /// Constructs a VertAirBoostCharge, initializing the objects that hold all

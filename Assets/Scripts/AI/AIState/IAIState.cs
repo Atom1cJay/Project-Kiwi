@@ -9,9 +9,20 @@ using UnityEngine;
 public interface IAIState
 {
     /// <summary>
-    /// Should this state be transitioned to, given the current state of the game?
+    /// Is the game in a state where it would make sense for this move to begin?
     /// </summary>
-    public bool ShouldTransition();
+    public bool ShouldBeginState();
+
+    /// <summary>
+    /// Is the game in a state where it would make sense for this move to end?
+    /// </summary>
+    public bool ShouldFinishState();
+
+    /// <summary>
+    /// This state is now the current state of the enemy. Do anything that needs
+    /// to be done at the start of the state.
+    /// </summary>
+    public void RegisterAsState();
 
     /// <summary>
     /// Advances time in the "simulation" of this AI state by one frame.
@@ -19,11 +30,17 @@ public interface IAIState
     public void AdvanceTime();
 
     /// <summary>
-    /// What should the velocity of the AI be in the X, Y, and Z axes?
-    /// This method should only be called/used after this move has been transitioned
-    /// into.
+    /// What position does the AI want to go to?
     /// </summary>
-    public Vector3 GetVelocity();
+    public Vector3 GetGoalPos();
+
+    /// <summary>
+    /// How should the character rotate? This method returns a Vector2, WHERE
+    /// THE X FIELD REPRESENTS THE ROTATION GOAL IN DEGREES, AND THE Y FIELD
+    /// REPRESENTS THE SPEED (IN DEGREES/SEC) IN WHICH THAT GOAL SHOULD BE APPROACHED.
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetRotation();
 
     /// <summary>
     /// What is the name of the animation that should be playing right now?
@@ -36,5 +53,5 @@ public interface IAIState
     /// Should this move destroy the enemy?
     /// Note that, if this is the case, any future moves should be ignored.
     /// </summary>
-    public abstract bool ShouldDestroy();
+    public abstract bool DestroysEnemy();
 }
