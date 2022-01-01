@@ -45,13 +45,13 @@ public class Dive : AMove
         return vertVel;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
         if (mii.AirReverseInput())
         {
-            return 0;
+            return new RotationInfo(0, false);
         }
-        return movementSettings.DiveRotationSpeed;
+        return new RotationInfo(movementSettings.DiveRotationSpeed, false);
     }
 
     public override IMove GetNextMove()

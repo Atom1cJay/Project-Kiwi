@@ -65,9 +65,9 @@ public class SlideRecovery : AMove
         return this;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return 0;
+        return new RotationInfo(0, false);
     }
 
     public override float GetVertSpeedThisFrame()

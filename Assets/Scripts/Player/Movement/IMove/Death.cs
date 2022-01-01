@@ -24,9 +24,9 @@ public class Death : AMove
         return 0;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return 0;
+        return new RotationInfo(0, false);
     }
 
     public override bool AdjustToSlope()

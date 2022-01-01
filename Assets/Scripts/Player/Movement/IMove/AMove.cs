@@ -33,7 +33,7 @@ public abstract class AMove : IMove
 
     public abstract float GetVertSpeedThisFrame();
 
-    public abstract float GetRotationSpeed();
+    public abstract RotationInfo GetRotationInfo();
 
     public abstract IMove GetNextMove();
 

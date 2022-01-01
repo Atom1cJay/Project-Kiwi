@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class AIBeeChase : AAIState
 {
-    [SerializeField] float radiusForChaseTemp;
-    [SerializeField] float rotSpeed;
+    [SerializeField] float timeForState;
+    [SerializeField] float speed;
+    Vector3 goalPos;
+    float timePassed;
 
     public override void AdvanceTime()
     {
-        // Nothing
+        timePassed += Time.deltaTime;
     }
 
     public override string GetAnimationID()
@@ -19,12 +21,18 @@ public class AIBeeChase : AAIState
 
     public override Vector3 GetGoalPos()
     {
-        return Player.position;
+        return goalPos;
+    }
+
+    public override float GetSpeed()
+    {
+        return speed;
     }
 
     public override void RegisterAsState()
     {
-        // Nothing
+        goalPos = Player.position;
+        timePassed = 0;
     }
 
     public override bool DestroysEnemy()
@@ -34,18 +42,16 @@ public class AIBeeChase : AAIState
 
     public override bool ShouldBeginState()
     {
-        return Vector3.Distance(transform.position, Player.position) <= radiusForChaseTemp;
+        return true;
     }
 
     public override bool ShouldFinishState()
     {
-        return Vector3.Distance(transform.position, Player.position) > radiusForChaseTemp;
+        return timePassed > timeForState;
     }
 
     public override Vector2 GetRotation()
     {
-        Vector2 posDiffXZ = new Vector2(Player.position.x - transform.position.x, Player.position.z - transform.position.z);
-        float angle = (-Mathf.Atan2(posDiffXZ.y, posDiffXZ.x) * Mathf.Rad2Deg) + 180;
-        return new Vector2(angle, rotSpeed);
+        return new Vector2(0, 0);
     }
 }

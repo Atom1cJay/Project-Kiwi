@@ -60,9 +60,9 @@ public class HorizAirBoostCharge : AMove
         return vertVel;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return movementSettings.HorizBoostChargeRotationSpeed;
+        return new RotationInfo(movementSettings.HorizBoostChargeRotationSpeed, true);
     }
 
     public override IMove GetNextMove()

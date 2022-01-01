@@ -25,6 +25,11 @@ public class AIBeeWanderState : AAIState
         return transform.position;
     }
 
+    public override float GetSpeed()
+    {
+        return 0;
+    }
+
     public override void RegisterAsState()
     {
         // Nothing
@@ -37,7 +42,7 @@ public class AIBeeWanderState : AAIState
 
     public override bool ShouldBeginState()
     {
-        return Vector3.Distance(transform.position, Player.position) > radiusForWanderTemp;
+        return true;
     }
 
     public override bool ShouldFinishState()

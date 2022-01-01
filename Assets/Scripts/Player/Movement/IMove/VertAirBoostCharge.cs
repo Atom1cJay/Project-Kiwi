@@ -65,9 +65,9 @@ public class VertAirBoostCharge : AMove
         return vertVel;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return 0;
+        return new RotationInfo(0, false);
     }
 
     public override IMove GetNextMove()

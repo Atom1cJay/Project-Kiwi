@@ -56,9 +56,10 @@ public class HorizAirBoost : AMove
         return vertVel;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return mii.AirReverseInput() ? 0 : movementSettings.HorizBoostRotation;
+        float speed = mii.AirReverseInput() ? 0 : movementSettings.HorizBoostRotation;
+        return new RotationInfo(speed, false);
     }
 
     public override IMove GetNextMove()

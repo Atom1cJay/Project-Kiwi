@@ -22,10 +22,10 @@ public interface IMoveImmutable
     float GetVertSpeedThisFrame();
 
     /// <summary>
-    /// Gives the rotation speed at which the player should be moving this
+    /// Gives the rotation info related to the player this
     /// frame.
     /// </summary>
-    float GetRotationSpeed();
+    RotationInfo GetRotationInfo();
 
     /// <summary>
     /// Determines whether this move being initiated should bring up the triple

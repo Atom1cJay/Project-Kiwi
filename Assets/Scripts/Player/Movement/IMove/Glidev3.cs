@@ -109,9 +109,9 @@ public class Glidev3 : AMove
         return vertVel;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return movementSettings.GlideRotationSpeed;
+        return new RotationInfo(movementSettings.GlideRotationSpeed, false);
     }
 
     public override IMove GetNextMove()

@@ -32,6 +32,8 @@ public abstract class AAIState : MonoBehaviour, IAIState
 
     public abstract Vector3 GetGoalPos();
 
+    public abstract float GetSpeed();
+
     public abstract Vector2 GetRotation();
 
     public abstract bool ShouldBeginState();

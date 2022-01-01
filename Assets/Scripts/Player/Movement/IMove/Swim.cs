@@ -91,9 +91,9 @@ public class Swim : AMove
         return 0;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return movementSettings.SwimRotationSpeed;
+        return new RotationInfo(movementSettings.SwimRotationSpeed, false);
     }
 
     public override IMove GetNextMove()

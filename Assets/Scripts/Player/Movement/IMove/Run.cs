@@ -88,19 +88,19 @@ public class Run : AMove
         return -1f; // To prevent floating point imprecision taking you off ground
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
         if (horizVel < movementSettings.InstantRotationSpeed)
         {
-            return float.MaxValue;
+            return new RotationInfo(float.MaxValue, false);
         }
         if (horizVel <= movementSettings.MaxSpeed)
         {
-            return movementSettings.GroundRotationSpeed;
+            return new RotationInfo(movementSettings.GroundRotationSpeed, true);
         }
         //return movementSettings.GroundRotationSpeed;
         float propToAbsoluteMax = (horizVel - movementSettings.MaxSpeed) / (movementSettings.MaxSpeedAbsolute - movementSettings.MaxSpeed);
-        return Mathf.Lerp(movementSettings.GroundRotationSpeed, movementSettings.GroundRotationSpeedMaxXSpeed, propToAbsoluteMax);
+        return new RotationInfo(Mathf.Lerp(movementSettings.GroundRotationSpeed, movementSettings.GroundRotationSpeedMaxXSpeed, propToAbsoluteMax), true);
     }
 
     public override IMove GetNextMove()

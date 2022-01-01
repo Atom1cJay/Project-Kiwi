@@ -48,9 +48,9 @@ public class HorizGroundBoostCharge : AMove
         return -0.5f; // To prevent floating point imprecision taking you off ground
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return 0;
+        return new RotationInfo(0, false);
     }
 
     public override IMove GetNextMove()

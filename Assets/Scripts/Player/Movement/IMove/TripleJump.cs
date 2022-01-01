@@ -105,13 +105,13 @@ public class TripleJump : AMove
         return vertVel;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
         if (divePending || horizBoostChargePending || vertBoostChargePending)
         {
-            return float.MaxValue;
+            return new RotationInfo(float.MaxValue, false);
         }
-        return movementSettings.AirRotationSpeed;
+        return new RotationInfo(movementSettings.AirRotationSpeed, true);
     }
 
     public override IMove GetNextMove()

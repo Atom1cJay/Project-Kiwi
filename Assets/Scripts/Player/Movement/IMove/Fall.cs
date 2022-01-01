@@ -95,13 +95,13 @@ public class Fall : AMove
         return vertVel;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
         if (divePending || horizBoostChargePending || vertBoostChargePending)
         {
-            return float.MaxValue;
+            return new RotationInfo(float.MaxValue, false);
         }
-        return movementSettings.AirRotationSpeed;
+        return new RotationInfo(movementSettings.AirRotationSpeed, false);
     }
 
     public override IMove GetNextMove()

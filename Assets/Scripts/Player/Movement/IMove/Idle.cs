@@ -36,9 +36,9 @@ public class Idle : AMove
         return Vector2.zero;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return float.MaxValue; // Instant
+        return new RotationInfo(float.MaxValue, false); // Instant
     }
 
     public override float GetVertSpeedThisFrame()

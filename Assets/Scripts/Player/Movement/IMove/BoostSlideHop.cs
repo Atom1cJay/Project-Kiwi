@@ -6,14 +6,13 @@ public class BoostSlideHop : AMove
 {
     bool landableTimerPassed;
     float vertVel;
-    Vector2 horizVector;
-    //bool objectHitPending;
+    float horizVel;
     bool boostChargePending;
 
     public BoostSlideHop(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(ms, mi, mii)
     {
         vertVel = movementSettings.BoostHopInitVelY;
-        horizVector = mi.GetEffectiveSpeed();
+        this.horizVel = mi.GetEffectiveSpeed().magnitude;
         //this.horizVel = horizVel * movementSettings.BoostHopInitVelXMultiplier;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", RunLandableTimer());
         mii.OnHorizBoostCharge.AddListener(() => boostChargePending = true);
@@ -33,7 +32,7 @@ public class BoostSlideHop : AMove
 
     public override Vector2 GetHorizSpeedThisFrame()
     {
-        return horizVector;
+        return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()
@@ -41,15 +40,15 @@ public class BoostSlideHop : AMove
         return vertVel;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return movementSettings.BoostSlideHopRotationSpeed;
+        return new RotationInfo(movementSettings.BoostSlideHopRotationSpeed, false);
     }
 
     public override IMove GetNextMove()
     {
         // Handle Feedback Moves
-        IMove feedbackMove = GetFeedbackMove(horizVector);
+        IMove feedbackMove = GetFeedbackMove(ForwardMovement(horizVel));
         if (feedbackMove != null)
         {
             return feedbackMove;
@@ -57,20 +56,20 @@ public class BoostSlideHop : AMove
         // Handle Everything Else
         if (PlayerSlopeHandler.ShouldSlide)
         {
-            return new Slide(mii, mi, movementSettings, horizVector);
+            return new Slide(mii, mi, movementSettings, ForwardMovement(horizVel));
         }
         if (mi.TouchingGround() && landableTimerPassed)
         {
-            return new Run(mii, mi, movementSettings, horizVector, FromStatus.FromAir);
+            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel), FromStatus.FromAir);
         }
         if (mi.BonkDetectorTouching())
         {
             //Vector3 kbVector = new Vector3(-ForwardMovement(horizVel).x, 0, -ForwardMovement(horizVel).y);
-            return new Knockback(mii, mi, movementSettings, Vector3.zero, horizVector);
+            return new Knockback(mii, mi, movementSettings, Vector3.zero, ForwardMovement(horizVel));
         }
         if (boostChargePending)
         {
-            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, horizVector);
+            return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, ForwardMovement(horizVel));
         }
         return this;
     }

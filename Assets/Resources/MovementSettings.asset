@@ -41,7 +41,7 @@ MonoBehaviour:
   jumpSpeedDecRateOverMaxSpeed: 1.5
   reverseCoyoteTime: 0.15
   coyoteTime: 0.12
-  dissonanceForHardTurn: 1.8
+  dissonanceForHardTurn: 1.9
   hardTurnMinSpeed: 1
   hardTurnTime: 0.15
   tjInitJumpVel: 9
@@ -59,7 +59,7 @@ MonoBehaviour:
   tjMinJumpTime: 0.3
   tjMaxJumpTime: 1.5
   tjMaxDissonance: 0.5
-  horizBoostChargeRotationSpeed: 60
+  horizBoostChargeRotationSpeed: 1
   horizBoostMaxChargeTime: 0.3
   horizBoostMaxTime: 0.7
   horizBoostRotation: 30
@@ -79,7 +79,7 @@ MonoBehaviour:
   horizBoostToGroundBoostSensitivity: 1
   horizBoostChargeVertNeutralizeTime: 0
   groundBoostRotationSpeed: 80
-  horizBoostMinGravity: 6.5
+  horizBoostMinGravity: 5
   horizBoostMaxGravity: 9.5
   horizBoostGravityIncRate: 15
   boostSlideSpeedDecRate: 7
@@ -135,9 +135,9 @@ MonoBehaviour:
   dissonanceForAirReverse: 1
   airReverseMinActivationSpeed: 0
   instantRotationSpeed: 1
-  groundRotationSpeed: 600
+  groundRotationSpeed: 10
   groundRotationSpeedMaxXSpeed: 10
-  airRotationSpeed: 700
+  airRotationSpeed: 9
   boostAftermathRotationSpeed: 50
   diveRotationSpeed: 50
   slideForceToZero: 0.5

@@ -55,9 +55,9 @@ public class GroundBoost : AMove
         return this;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return movementSettings.GroundBoostRotationSpeed;
+        return new RotationInfo(movementSettings.GroundBoostRotationSpeed, false);
     }
 
     public override float GetVertSpeedThisFrame()

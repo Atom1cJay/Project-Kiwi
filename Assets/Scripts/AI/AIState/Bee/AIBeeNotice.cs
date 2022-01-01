@@ -10,7 +10,6 @@ public class AIBeeNotice : AAIState
     float timePassedSinceStateStart;
     [SerializeField] float radiusForChaseTemp;
     [SerializeField] float timeForState;
-    float noticeAngle;
     [SerializeField] float rotationSpeed; // Radians
 
     public override void AdvanceTime()
@@ -33,11 +32,14 @@ public class AIBeeNotice : AAIState
         return transform.position;
     }
 
+    public override float GetSpeed()
+    {
+        return 0;
+    }
+
     public override void RegisterAsState()
     {
         timePassedSinceStateStart = 0;
-        Vector2 posDiffXZ = new Vector2(Player.position.x - transform.position.x, Player.position.z - transform.position.z);
-        noticeAngle = (-Mathf.Atan2(posDiffXZ.y, posDiffXZ.x) * Mathf.Rad2Deg) + 180;
     }
 
     public override bool ShouldBeginState()
@@ -52,6 +54,8 @@ public class AIBeeNotice : AAIState
 
     public override Vector2 GetRotation()
     {
+        Vector2 posDiffXZ = new Vector2(Player.position.x - transform.position.x, Player.position.z - transform.position.z);
+        float noticeAngle = (-Mathf.Atan2(posDiffXZ.y, posDiffXZ.x) * Mathf.Rad2Deg) + 180;
         return new Vector2(noticeAngle, rotationSpeed);
     }
 }

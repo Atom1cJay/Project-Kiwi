@@ -35,6 +35,11 @@ public interface IAIState
     public Vector3 GetGoalPos();
 
     /// <summary>
+    /// How fast should the AI move to its goal position?
+    /// </summary>
+    public float GetSpeed();
+
+    /// <summary>
     /// How should the character rotate? This method returns a Vector2, WHERE
     /// THE X FIELD REPRESENTS THE ROTATION GOAL IN DEGREES, AND THE Y FIELD
     /// REPRESENTS THE SPEED (IN DEGREES/SEC) IN WHICH THAT GOAL SHOULD BE APPROACHED.

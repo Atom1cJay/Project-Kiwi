@@ -44,13 +44,15 @@ public class AIEnactor : MonoBehaviour
         }
         // Enact simulation for the current tree
         currentTree.Node.AdvanceTime();
-        if (currentTree.Node.DestroysEnemy())
-        {
-            Debug.Log("Death");
-        }
-        navMeshAgent.destination = currentTree.Node.GetGoalPos();
-        //transform.position += currentTree.Node.GetVelocity() * Time.deltaTime;
+        navMeshAgent.SetDestination(currentTree.Node.GetGoalPos());
+        navMeshAgent.speed = currentTree.Node.GetSpeed();
         Quaternion rotGoal = Quaternion.Euler(0, currentTree.Node.GetRotation().x, 0);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotGoal, currentTree.Node.GetRotation().y * Time.deltaTime);
+    }
+
+    public void Kill()
+    {
+        Debug.Log("Death");
+        Destroy(gameObject);
     }
 }

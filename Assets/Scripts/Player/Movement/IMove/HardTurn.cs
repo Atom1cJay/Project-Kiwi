@@ -41,9 +41,9 @@ public class HardTurn : AMove
         return -3;
     }
 
-    public override float GetRotationSpeed()
+    public override RotationInfo GetRotationInfo()
     {
-        return 0;
+        return new RotationInfo(0, false);
     }
 
     public override IMove GetNextMove()
