@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AIBeeChase : AAIState
 {
-    Vector3 goalPos;
     [SerializeField] float radiusForChaseTemp;
+    [SerializeField] float rotSpeed;
 
     public override void AdvanceTime()
     {
@@ -19,12 +19,12 @@ public class AIBeeChase : AAIState
 
     public override Vector3 GetGoalPos()
     {
-        return goalPos;
+        return Player.position;
     }
 
     public override void RegisterAsState()
     {
-        goalPos = Player.position;
+        // Nothing
     }
 
     public override bool DestroysEnemy()
@@ -44,6 +44,8 @@ public class AIBeeChase : AAIState
 
     public override Vector2 GetRotation()
     {
-        return Vector2.zero;
+        Vector2 posDiffXZ = new Vector2(Player.position.x - transform.position.x, Player.position.z - transform.position.z);
+        float angle = (-Mathf.Atan2(posDiffXZ.y, posDiffXZ.x) * Mathf.Rad2Deg) + 180;
+        return new Vector2(angle, rotSpeed);
     }
 }
