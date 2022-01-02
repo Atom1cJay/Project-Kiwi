@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CelBasaltDark
-  m_Shader: {fileID: -6465566751694194690, guid: 9409ca2c9e79afd4698840f3001d5fb4, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 97302b3915374c847be1fe5a86862916, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -67,6 +67,26 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SteepStub_f6ca4de0003b4d5193cae27552cdf35c_SideXTexture_2310384352:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SteepStub_f6ca4de0003b4d5193cae27552cdf35c_SideZTexture_3329007957:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SteepStub_f6ca4de0003b4d5193cae27552cdf35c_TopBottomTexture_1501587055:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture_A:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture_B:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -87,6 +107,9 @@ Material:
     - RimExtraSize: 0.01
     - RimShadowPower: 1
     - RimStrength: 1
+    - Rim_Edge_Power: 0
+    - Rim_Shadow_Power: 0
+    - Rim_Strength: 0
     - Smoothness: 0
     - TransparencyOfTexture: 0.331
     - _AlphaClip: 0
@@ -109,6 +132,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _SizeOfChecker: 0.5
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -120,10 +144,16 @@ Material:
     - Albedo: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 0}
     - Ambient_Light: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 0}
     - Tiling: {r: 0.05, g: 0.05, b: 0.05, a: 0.67}
+    - _Ambient_Light_A: {r: 0.9254902, g: 0.9193892, b: 0.7882353, a: 0}
+    - _Ambient_Light_B: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color_A: {r: 0.46226418, g: 0.37911478, b: 0.28956926, a: 0}
+    - _Color_B: {r: 0.4339623, g: 0.27338925, b: 0.20633678, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _Tiling_A: {r: 0, g: 0, b: 0, a: 0}
+    - _Tiling_B: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &147891111805850919
 MonoBehaviour:
