@@ -9,6 +9,7 @@ using UnityEngine.AI;
 public class AIEnactor : MonoBehaviour
 {
     [SerializeField] AITree initTree; // The default state to be in (shouldTransition() does not have to be true for it)
+    [SerializeField] MeshUVConverter[] converters;
     [SerializeField] NavMeshAgent navMeshAgent;
     AITree currentTree;
 
@@ -31,6 +32,13 @@ public class AIEnactor : MonoBehaviour
                 {
                     // Change to the state contained by potNext
                     print("MOVE CHANGED TO " + potNext.Node);
+
+                    //update mesh(s)
+                    foreach (MeshUVConverter converter in converters)
+                    {
+                        converter.UpdateMesh(potNext.Node.GetAnimationID());
+                    }
+
                     selectedNewState = true;
                     currentTree = potNext;
                     potNext.Node.RegisterAsState();

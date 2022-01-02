@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4442100102270229090
+--- !u!114 &-7494636940515495377
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GrassV2
-  m_Shader: {fileID: -6465566751694194690, guid: 262ef6561864fb744a683e8ee383179f, type: 3}
+  m_Name: BodyTextureAngry
+  m_Shader: {fileID: -6465566751694194690, guid: 1afae7e1474e54cf6b570e2ac42be3b9, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -33,11 +33,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: b3368baf237dddf4d88d98b6839f7fb7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 589fe60809a8d6242b01932c1ff27760, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -61,7 +61,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 589fe60809a8d6242b01932c1ff27760, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -80,14 +80,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _TextureDeciderCustomFunction_63897cff723b43aa8c6704ad88ca251c_TextureA_3:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _TextureDeciderCustomFunction_63897cff723b43aa8c6704ad88ca251c_TextureB_5:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -103,10 +95,12 @@ Material:
     m_Ints: []
     m_Floats:
     - Dot_Product_For_Shade_Border: 0
-    - One_Out_Of_Every_Int_Off: 2
-    - Rim_Edge_Power: 0
-    - Rim_Shadow_Power: 0
-    - Rim_Strength: 0
+    - Metallic: 0
+    - RimEdgePower: 10
+    - RimExtraSize: 0.01
+    - RimShadowPower: 10
+    - RimStrength: 0
+    - Smoothness: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -118,31 +112,30 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _GlossMapScale: 0
+    - _GlossMapScale: 1
     - _Glossiness: 0
-    - _GlossyReflections: 0
+    - _GlossyReflections: 1
     - _Metallic: 0
+    - _Mode: 0
     - _OcclusionStrength: 1
-    - _Parallax: 0.005
+    - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Size: 1.96
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _UVSec: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Albedo: {r: 0.12885016, g: 0.30188674, b: 0.09512278, a: 0}
-    - Ambient_Light: {r: 0.9254902, g: 0.9193892, b: 0.7882353, a: 0}
-    - Tiling: {r: 3.37, g: 4, b: 0, a: 0}
-    - _AddedColor: {r: 0.6698113, g: 0.2995194, b: 0.2995194, a: 0}
+    - Albedo: {r: 1, g: 1, b: 1, a: 0}
+    - Ambient_Light: {r: 1, g: 1, b: 1, a: 0}
+    - Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FractalMultiplier: {r: 1, g: 0.5990566, b: 0.5990566, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
