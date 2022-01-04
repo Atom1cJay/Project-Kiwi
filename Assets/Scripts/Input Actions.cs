@@ -645,12 +645,21 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Select"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""84993e81-1e0d-4bd8-9c03-e5c41616ee49"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""229ce1cf-086a-4ea1-be88-c84bee122640"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Pause"",
@@ -687,6 +696,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveMouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""798226e2-9d3c-4b78-a801-238a32e16109"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -769,41 +787,8 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""10cf04f2-e2e5-4182-8a4a-0085c0eeb837"",
-                    ""path"": ""<HID::Core (Plus) Wired Controller>/button3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""Select"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""439838ef-d09c-4ee9-beaa-e1919984887e"",
-                    ""path"": ""<Keyboard>/enter"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Select"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0e3e4e6a-b4c6-4b44-ad40-22fd3644d247"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""Select"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e532b5c5-9517-428a-815c-7274bb51a3c9"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""37039d4b-a46e-4a95-a804-8da4ca94d83c"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -1019,6 +1004,72 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""action"": ""ToggleZoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5f1d5153-8b94-473f-b340-fc081eacf491"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MoveMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74db33ba-6e63-495e-901d-023e155f0f72"",
+                    ""path"": ""<HID::Core (Plus) Wired Controller>/button3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a6a573e-c7ac-4891-97cf-a4eb2600bcec"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""183f2e4f-7681-4c9e-9d68-b8fa203c5273"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d73f54e-3379-4eda-84c0-1a4efcbf656e"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14501d3d-6aab-45c9-a0a0-9b6b433fef38"",
+                    ""path"": ""*/{Submit}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1075,10 +1126,12 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_UI_Move = m_UI.FindAction("Move", throwIfNotFound: true);
         m_UI_Zoom = m_UI.FindAction("Zoom", throwIfNotFound: true);
         m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
+        m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
         m_UI_ToggleSpeed = m_UI.FindAction("ToggleSpeed", throwIfNotFound: true);
         m_UI_ToggleZoom = m_UI.FindAction("ToggleZoom", throwIfNotFound: true);
+        m_UI_MoveMouse = m_UI.FindAction("MoveMouse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1353,10 +1406,12 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Move;
     private readonly InputAction m_UI_Zoom;
     private readonly InputAction m_UI_Select;
+    private readonly InputAction m_UI_Submit;
     private readonly InputAction m_UI_Pause;
     private readonly InputAction m_UI_Back;
     private readonly InputAction m_UI_ToggleSpeed;
     private readonly InputAction m_UI_ToggleZoom;
+    private readonly InputAction m_UI_MoveMouse;
     public struct UIActions
     {
         private @InputActions m_Wrapper;
@@ -1364,10 +1419,12 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_UI_Move;
         public InputAction @Zoom => m_Wrapper.m_UI_Zoom;
         public InputAction @Select => m_Wrapper.m_UI_Select;
+        public InputAction @Submit => m_Wrapper.m_UI_Submit;
         public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputAction @Back => m_Wrapper.m_UI_Back;
         public InputAction @ToggleSpeed => m_Wrapper.m_UI_ToggleSpeed;
         public InputAction @ToggleZoom => m_Wrapper.m_UI_ToggleZoom;
+        public InputAction @MoveMouse => m_Wrapper.m_UI_MoveMouse;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1386,6 +1443,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Select.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
+                @Submit.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
+                @Submit.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
+                @Submit.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
                 @Pause.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
@@ -1398,6 +1458,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @ToggleZoom.started -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleZoom;
                 @ToggleZoom.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleZoom;
                 @ToggleZoom.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleZoom;
+                @MoveMouse.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveMouse;
+                @MoveMouse.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveMouse;
+                @MoveMouse.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveMouse;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -1411,6 +1474,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
+                @Submit.started += instance.OnSubmit;
+                @Submit.performed += instance.OnSubmit;
+                @Submit.canceled += instance.OnSubmit;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
@@ -1423,6 +1489,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @ToggleZoom.started += instance.OnToggleZoom;
                 @ToggleZoom.performed += instance.OnToggleZoom;
                 @ToggleZoom.canceled += instance.OnToggleZoom;
+                @MoveMouse.started += instance.OnMoveMouse;
+                @MoveMouse.performed += instance.OnMoveMouse;
+                @MoveMouse.canceled += instance.OnMoveMouse;
             }
         }
     }
@@ -1476,9 +1545,11 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
+        void OnSubmit(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
         void OnToggleSpeed(InputAction.CallbackContext context);
         void OnToggleZoom(InputAction.CallbackContext context);
+        void OnMoveMouse(InputAction.CallbackContext context);
     }
 }

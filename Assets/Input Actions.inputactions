@@ -11,7 +11,8 @@
                     "id": "24ae5c2f-ec11-45bf-bf29-792936f4fe0f",
                     "expectedControlType": "Vector2",
                     "processors": "StickDeadzone(max=1)",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
@@ -19,7 +20,8 @@
                     "id": "827ae8c5-b9c9-4eff-ae3e-e788c08a27d1",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Boost",
@@ -27,7 +29,8 @@
                     "id": "9827d522-3c05-4a73-99c3-a820bb166ce4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "VertBoost",
@@ -35,7 +38,8 @@
                     "id": "16f7d561-e9a3-46a8-a38b-b8100dd8eef6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Dive",
@@ -43,7 +47,8 @@
                     "id": "1ab046c3-dd5f-4518-8a99-a8c18c74d186",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "GroundPound",
@@ -51,7 +56,8 @@
                     "id": "f04f2731-960c-4145-80a9-ec9ce4d4ec92",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Glide",
@@ -59,7 +65,8 @@
                     "id": "9352f2b2-3ea4-4746-a1fa-73abf04be3bb",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Dialogue",
@@ -67,7 +74,8 @@
                     "id": "914e4939-b527-42d3-b58d-ebb9e30accc2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -380,7 +388,8 @@
                     "id": "13b41ae0-6b71-4dd1-a864-1d2715703cca",
                     "expectedControlType": "Axis",
                     "processors": "AxisDeadzone(max=1),Scale(factor=-1)",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "VerticalRotate",
@@ -388,7 +397,8 @@
                     "id": "0d182bfa-c72b-4099-8ae4-6c0204baefd0",
                     "expectedControlType": "Axis",
                     "processors": "AxisDeadzone(max=1)",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "AutoAdjust",
@@ -396,7 +406,8 @@
                     "id": "e2c55936-ee8b-47db-ad02-66ffec06334b",
                     "expectedControlType": "Button",
                     "processors": "Invert,AxisDeadzone(max=1)",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -511,7 +522,8 @@
                     "id": "3cb7b2f8-0e23-449e-8229-9fd53f912a29",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -538,7 +550,8 @@
                     "id": "05b4785d-a231-4542-a363-be9432f8ba06",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Respawn",
@@ -546,7 +559,8 @@
                     "id": "e5cc6880-a11b-4cbc-82be-b5b49164e129",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -595,7 +609,8 @@
                     "id": "243f9154-54b7-42e4-957d-77779f5f5f32",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Zoom",
@@ -603,15 +618,26 @@
                     "id": "08b7d9e4-0023-4f2b-97f2-0c9fe3408d03",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Select",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "84993e81-1e0d-4bd8-9c03-e5c41616ee49",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Submit",
+                    "type": "PassThrough",
+                    "id": "229ce1cf-086a-4ea1-be88-c84bee122640",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Pause",
@@ -619,7 +645,8 @@
                     "id": "4de7ad40-571f-49f4-852e-26b234678ab2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Back",
@@ -627,7 +654,8 @@
                     "id": "bdb05aea-0abb-4b74-b55d-784154c155f5",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ToggleSpeed",
@@ -635,7 +663,8 @@
                     "id": "19ef5aac-6bb8-4b4e-93be-34d3a671312f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ToggleZoom",
@@ -643,7 +672,17 @@
                     "id": "2bdd7e7d-4ed4-427f-9f0d-e1e2be47bef6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveMouse",
+                    "type": "Value",
+                    "id": "798226e2-9d3c-4b78-a801-238a32e16109",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -726,41 +765,8 @@
                 },
                 {
                     "name": "",
-                    "id": "10cf04f2-e2e5-4182-8a4a-0085c0eeb837",
-                    "path": "<HID::Core (Plus) Wired Controller>/button3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "439838ef-d09c-4ee9-beaa-e1919984887e",
-                    "path": "<Keyboard>/enter",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0e3e4e6a-b4c6-4b44-ad40-22fd3644d247",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e532b5c5-9517-428a-815c-7274bb51a3c9",
-                    "path": "<Keyboard>/space",
+                    "id": "37039d4b-a46e-4a95-a804-8da4ca94d83c",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -974,6 +980,72 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "ToggleZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5f1d5153-8b94-473f-b340-fc081eacf491",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "MoveMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74db33ba-6e63-495e-901d-023e155f0f72",
+                    "path": "<HID::Core (Plus) Wired Controller>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2a6a573e-c7ac-4891-97cf-a4eb2600bcec",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "183f2e4f-7681-4c9e-9d68-b8fa203c5273",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d73f54e-3379-4eda-84c0-1a4efcbf656e",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14501d3d-6aab-45c9-a0a0-9b6b433fef38",
+                    "path": "*/{Submit}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
