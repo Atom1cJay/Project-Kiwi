@@ -10,12 +10,15 @@ public class Sound : ScriptableObject
     [SerializeField] AudioClip clip;
 
     [Range(0.0f, 1.0f)]
-    [SerializeField] float volume;
+    [SerializeField] float volume = 1f;
     private float volumeMultiplier = 1;
 
     [Range(-3f, 3f)]
-    [SerializeField] float pitch;
-    [SerializeField] bool sfx, music, loop;
+    [SerializeField] float pitch = 1;
+    [SerializeField] bool SFX, MUSIC, loop, randomizePitch;
+
+    [Range(.1f, 1.9f)]
+    [SerializeField] float lowPitchRange, highPitchRange;
 
     public string GetName()
     {
@@ -23,15 +26,22 @@ public class Sound : ScriptableObject
     }
     public void Play(GameObject g)
     {
-        g.AddComponent<AudioSource>();
-        AudioSource audioSource = g.GetComponent<AudioSource>();
+        AudioSource audioSource = g.AddComponent<AudioSource>();
+
         audioSource.clip = clip;
+        pitch *= Random.Range(lowPitchRange, highPitchRange);
+
         audioSource.pitch = pitch;
         audioSource.volume = volume;
         audioSource.loop = loop;
 
-        SoundPlayer sp = new SoundPlayer();
+        SoundPlayer sp = g.AddComponent<SoundPlayer>();
+
+        sp.SetUpPlayer(audioSource, SFX, name);
+
         audioSource.Play();
+
+        AudioMasterController.instance.addToList(sp);
 
     }
 }

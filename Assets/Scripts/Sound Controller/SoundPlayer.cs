@@ -6,8 +6,15 @@ public class SoundPlayer : MonoBehaviour
 {
     bool started = false;
     bool sfx;
-    bool music;
+    bool fadeOutStart = false;
+    float fadeOutTime = 1f;
     AudioSource player;
+    string soundName;
+
+    public string getName()
+    {
+        return soundName;
+    }
 
     private void Update()
     {
@@ -15,18 +22,42 @@ public class SoundPlayer : MonoBehaviour
         {
             if(!player.isPlaying)
             {
-                Destroy(player);
-                Destroy(this);
+                Destroy(gameObject);
+            }
+        }
+
+        if (sfx)
+        {
+            player.pitch = player.pitch * AudioMasterController.instance.getSFXMult();
+        }
+        else
+        {
+            player.pitch = player.pitch * AudioMasterController.instance.getMusicMult();
+        }
+
+        if(fadeOutStart)
+        {
+
+            player.volume -= fadeOutTime * Time.deltaTime;
+            if (player.volume <= .01f)
+            {
+                Destroy(gameObject);
             }
         }
         
     }
 
-    public void SetUpPlayer(AudioSource audioSource, bool sfx, bool music)
+    public void fadeOut(float time)
+    {
+        fadeOutTime = player.volume / time;
+        fadeOutStart = true;
+    }
+
+    public void SetUpPlayer(AudioSource audioSource, bool sfx, string name)
     {
         this.sfx = sfx;
-        this.music = music;
         player = audioSource;
+        soundName = name;
         player.Play();
         started = true;
     }
