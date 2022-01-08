@@ -29,9 +29,9 @@ public class Sound : ScriptableObject
         AudioSource audioSource = g.AddComponent<AudioSource>();
 
         audioSource.clip = clip;
-        pitch *= Random.Range(lowPitchRange, highPitchRange);
+        float tempPitch = pitch * Random.Range(lowPitchRange, highPitchRange);
 
-        audioSource.pitch = pitch;
+        audioSource.pitch = tempPitch;
         audioSource.volume = volume;
         audioSource.loop = loop;
 
