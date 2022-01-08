@@ -186,7 +186,9 @@ public class AudioSystem : MonoBehaviour
 
         #endregion
 
-        GameObject tempSelected = eventSystem.currentSelectedGameObject;
+        /*
+        GameObject tempSelected = null;
+        tempSelected = EventSystem.current.currentSelectedGameObject;
         
 
         bool changeInSelected = !selected.Equals(tempSelected);
@@ -196,6 +198,7 @@ public class AudioSystem : MonoBehaviour
 
         if (changeInSelected)
             AudioMasterController.instance.PlaySound("MenuNavigation");
+        */
     }
 
 
