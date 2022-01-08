@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ccf30fb6683e148a930eb4e781aac1, type: 3}
   m_Name: Dive
   m_EditorClassIdentifier: 
-  name: 
-  clip: {fileID: 0}
+  name: Dive
+  clip: {fileID: 8300000, guid: 7e033df14094dcf448ae30da37b42a30, type: 3}
   volume: 1
   pitch: 1
-  SFX: 0
+  SFX: 1
   MUSIC: 0
   loop: 0
-  randomizePitch: 0
-  lowPitchRange: 0
-  highPitchRange: 0
+  randomizePitch: 1
+  lowPitchRange: 0.98
+  highPitchRange: 1.02
