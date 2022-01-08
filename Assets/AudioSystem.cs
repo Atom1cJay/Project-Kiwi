@@ -26,7 +26,7 @@ public class AudioSystem : MonoBehaviour
     void Start()
     {
         leftFootstep = true;
-        selected = eventSystem.currentSelectedGameObject;
+        //selected = eventSystem.currentSelectedGameObject;
         moveChanged = false;
         diving = false;
         startRunning = false;

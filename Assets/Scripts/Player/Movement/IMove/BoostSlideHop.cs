@@ -42,7 +42,14 @@ public class BoostSlideHop : AMove
 
     public override RotationInfo GetRotationInfo()
     {
-        return new RotationInfo(movementSettings.BoostSlideHopRotationSpeed, false);
+        if (mii.GetHorizDissonance() < movementSettings.BoostHopMaxDissonanceForTurning)
+        {
+            return new RotationInfo(movementSettings.BoostSlideHopRotationSpeed, true);
+        }
+        else
+        {
+            return new RotationInfo(0, false);
+        }
     }
 
     public override IMove GetNextMove()
@@ -81,17 +88,17 @@ public class BoostSlideHop : AMove
 
     public override bool AdjustToSlope()
     {
-        return true;
+        return false;
     }
 
     public override bool IncrementsTJcounter()
     {
-        return false;
+        return true;
     }
 
     public override bool TJshouldBreak()
     {
-        return true;
+        return false;
     }
 
     public override Attack[] GetAttack()

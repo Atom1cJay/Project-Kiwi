@@ -174,7 +174,7 @@ public class Jump : AMove
         {
             return new Dive(mii, mi, movementSettings);
         }
-        if (horizBoostChargePending && (!mi.InAntiBoostZone() || vertVel > 0))
+        if (horizBoostChargePending)
         {
             return new HorizAirBoostCharge(mii, mi, movementSettings, vertVel, horizVector);
         }

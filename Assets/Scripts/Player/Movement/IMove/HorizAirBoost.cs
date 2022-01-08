@@ -19,7 +19,7 @@ public class HorizAirBoost : AMove
     /// <param name="ms">Constants related to movement</param>
     public HorizAirBoost(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float propCharged, float vertVel, float horizVel) : base(ms, mi, mii)
     {
-        this.vertVel = vertVel / 4;
+        this.vertVel = vertVel / 6;
         gravity = movementSettings.HorizBoostMinGravity;
         this.horizVel = movementSettings.HorizBoostMinSpeedX + (propCharged * (movementSettings.HorizBoostMaxSpeedX - movementSettings.HorizBoostMinSpeedX));
         //mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
@@ -59,7 +59,7 @@ public class HorizAirBoost : AMove
     public override RotationInfo GetRotationInfo()
     {
         float speed = mii.AirReverseInput() ? 0 : movementSettings.HorizBoostRotation;
-        return new RotationInfo(speed, false);
+        return new RotationInfo(speed, true);
     }
 
     public override IMove GetNextMove()

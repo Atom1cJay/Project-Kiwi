@@ -15,6 +15,7 @@ public class CameraControl : MonoBehaviour
     [SerializeField] private float maxPivotSpeedHoriz;
     [SerializeField] private float maxPivotSpeedVert;
     [SerializeField] private float autoAdjustTime;
+    [SerializeField] private float mouseRotateMultiplier;
     private float horizPivotSpeed = 0;
     private float vertPivotSpeed = 0;
     private CameraUtils camUtils;
@@ -46,10 +47,10 @@ public class CameraControl : MonoBehaviour
         float vertMove = vertPivotSpeed * maxPivotSpeedVert * Time.deltaTime;
         camUtils.RotateBy(horizMove * InvertX, vertMove * InvertY);
         // Keyboard
-        float horizPivotSpeedMouse = iah.GetOldMouseInput().x; // THIS IS THE ONLY USE OF THE OLD INPUT SYSTEM IN THE GAME. IT'S BECAUSE THE
-        float vertPivotSpeedMouse = iah.GetOldMouseInput().y; // NEW INPUT SYSTEM WON'T SMOOTH MOUSE MOVEMENT PROPERLY.
-        horizMove = horizPivotSpeedMouse * maxPivotSpeedHoriz * Time.deltaTime;
-        vertMove = vertPivotSpeedMouse * maxPivotSpeedVert * Time.deltaTime;
+        float horizPivotSpeedMouse = iah.GetOldMouseInput().x * mouseRotateMultiplier; // THIS IS THE ONLY USE OF THE OLD INPUT SYSTEM IN THE GAME. IT'S BECAUSE THE
+        float vertPivotSpeedMouse = iah.GetOldMouseInput().y * mouseRotateMultiplier; // NEW INPUT SYSTEM WON'T SMOOTH MOUSE MOVEMENT PROPERLY.
+        horizMove = horizPivotSpeedMouse * maxPivotSpeedHoriz;
+        vertMove = vertPivotSpeedMouse * maxPivotSpeedVert;
         camUtils.RotateBy(horizMove * InvertX, vertMove * InvertY);
     }
 
