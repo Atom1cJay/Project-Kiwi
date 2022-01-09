@@ -26,7 +26,7 @@ public class AudioSystem : MonoBehaviour
     void Start()
     {
         leftFootstep = true;
-        selected = eventSystem.currentSelectedGameObject;
+        //selected = eventSystem.currentSelectedGameObject;
         moveChanged = false;
         diving = false;
         startRunning = false;
@@ -186,9 +186,11 @@ public class AudioSystem : MonoBehaviour
 
         #endregion
 
+        GameObject tempSelected = new GameObject();
+
         /*
-        GameObject tempSelected = null;
-        tempSelected = EventSystem.current.currentSelectedGameObject;
+        if (eventSystem.currentSelectedGameObject)
+        tempSelected = eventSystem.currentSelectedGameObject;
         
 
         bool changeInSelected = !selected.Equals(tempSelected);
