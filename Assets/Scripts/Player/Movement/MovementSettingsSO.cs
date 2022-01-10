@@ -124,11 +124,9 @@ public class MovementSettingsSO : ScriptableObject
     [Header("Horiz Boost Hop Settings")]
     [SerializeField] float boostHopInitVelY;
     [SerializeField] float boostHopInitVelXMultiplier;
-    [SerializeField] float boostHopInitVelXMoving;
-    [SerializeField] float boostHopInitVelXStopped;
-    [SerializeField] float boostHopXVelForMoving;
     [SerializeField] float boostHopGravity;
     [SerializeField] float boostSlideHopRotationSpeed;
+    [SerializeField] float boostHopMaxDissonanceForTurning;
 
     [Header("Vertical Boost Settings")]
     [SerializeField] float vertBoostChargeWaitBeforeSpeedDec;
@@ -147,11 +145,6 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float vertBoostMaxSpeedX;
 
     [Header("Push Boost Settings")]
-    [SerializeField] float pushSpeedDecRate;
-    [SerializeField] float pushIdealResetRate;
-    [SerializeField] float pushMaxHoldTime;
-    [SerializeField] float pushSpeedIncMin;
-    [SerializeField] float pushSpeedIncMax;
     [SerializeField] float pushSpeedMaintainTime;
 
     [Header("Ground Boost Settings")]
@@ -176,7 +169,6 @@ public class MovementSettingsSO : ScriptableObject
 
     [Header("Misc. Vertical")]
     [SerializeField] float defaultGravity;
-    [SerializeField] float stickToGroundMultiplier;
 
     [Header("Air Reverse Settings")]
     [SerializeField] float dissonanceForAirReverse;
@@ -327,6 +319,7 @@ public class MovementSettingsSO : ScriptableObject
     public float BoostHopInitVelXMultiplier { get { return boostHopInitVelXMultiplier; } }
     public float BoostHopGravity { get { return boostHopGravity; } }
     public float BoostSlideHopRotationSpeed { get { return boostSlideHopRotationSpeed; } }
+    public float BoostHopMaxDissonanceForTurning { get { return boostHopMaxDissonanceForTurning; } }
 
     public float VertBoostChargeWaitBeforeSpeedDec { get { return vertBoostChargeWaitBeforeSpeedDec; } }
     public float VertBoostMinLaunchVel { get { return vertBoostMinLaunchVel; } }

@@ -55,18 +55,18 @@ MonoBehaviour:
   tjGravityIncRateAtCancel: 75
   tjMaxBreakSpeed: 0.5
   tjMinHorizInputMagnitude: 0.9
-  tjMaxTimeBtwnJumps: 0.17
+  tjMaxTimeBtwnJumps: 0.12
   tjMinJumpTime: 0.3
   tjMaxJumpTime: 1.5
   tjMaxDissonance: 0.5
   horizBoostChargeRotationSpeed: 1
   horizBoostMaxChargeTime: 0.3
   horizBoostMaxTime: 0.7
-  horizBoostRotation: 30
+  horizBoostRotation: 0.9
   horizBoostAirReverseGravity: 16
   horizBoostNonAirReverseGravity: 0
-  horizBoostMinSpeedX: 6.75
-  horizBoostMaxSpeedX: 9.25
+  horizBoostMinSpeedX: 7
+  horizBoostMaxSpeedX: 9.5
   horizBoostMinSpeedGroundX: 7
   horizBoostMaxSpeedGroundX: 10
   horizBoostMinLengthGroundX: 0.65
@@ -79,8 +79,8 @@ MonoBehaviour:
   horizBoostToGroundBoostSensitivity: 1
   horizBoostChargeVertNeutralizeTime: 0
   groundBoostRotationSpeed: 80
-  horizBoostMinGravity: 5
-  horizBoostMaxGravity: 9.5
+  horizBoostMinGravity: 6.25
+  horizBoostMaxGravity: 9.75
   horizBoostGravityIncRate: 15
   boostSlideSpeedDecRate: 7
   boostSlideSpeedDecRateNoInput: 8.5
@@ -93,11 +93,9 @@ MonoBehaviour:
   boostSlideMaxDissonanceForHoldingFwd: 1
   boostHopInitVelY: 6.75
   boostHopInitVelXMultiplier: 1
-  boostHopInitVelXMoving: 7.5
-  boostHopInitVelXStopped: 1
-  boostHopXVelForMoving: 4
-  boostHopGravity: 23
-  boostSlideHopRotationSpeed: 30
+  boostHopGravity: 21
+  boostSlideHopRotationSpeed: 0.7
+  boostHopMaxDissonanceForTurning: 1.8
   vertBoostChargeWaitBeforeSpeedDec: 0.1
   vertBoostChargeGravityX: 9
   vertBoostMinLaunchVel: 6
@@ -108,15 +106,10 @@ MonoBehaviour:
   vertBoostMaxChargeTime: 0.5
   vertBoostMaxTime: 0.7
   vertBoostRotationSpeed: 150
-  vertBoostSensitivityX: 3.5
+  vertBoostSensitivityX: 5
   vertBoostAdjustSensitivityX: 10
   vertBoostGravityX: 8
   vertBoostMaxSpeedX: 5.5
-  pushSpeedDecRate: 0
-  pushIdealResetRate: 0
-  pushMaxHoldTime: 0.25
-  pushSpeedIncMin: 0
-  pushSpeedIncMax: 7
   pushSpeedMaintainTime: 0.7
   groundBoostMaxSpeedX: 8.5
   groundBoostSensitivityX: 4
@@ -131,12 +124,11 @@ MonoBehaviour:
   diveGravity: 29
   diveRecoveryTime: 0.1
   defaultGravity: 25
-  stickToGroundMultiplier: 0
   dissonanceForAirReverse: 1
   airReverseMinActivationSpeed: 0
   instantRotationSpeed: 1
-  groundRotationSpeed: 10
-  groundRotationSpeedMaxXSpeed: 10
+  groundRotationSpeed: 9
+  groundRotationSpeedMaxXSpeed: 9
   airRotationSpeed: 9
   boostAftermathRotationSpeed: 50
   diveRotationSpeed: 50
