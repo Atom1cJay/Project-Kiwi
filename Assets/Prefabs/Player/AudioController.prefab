@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1860552402811271186}
-  - component: {fileID: 7869001541238162021}
+  - component: {fileID: 4390698165960481034}
+  - component: {fileID: 4290857872028025457}
   m_Layer: 9
   m_Name: VCharge Controller
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_Father: {fileID: 3865432219276408900}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7869001541238162021
+--- !u!114 &4390698165960481034
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +42,199 @@ MonoBehaviour:
   m_GameObject: {fileID: 433074109774213933}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5389e601b8c1e248b60d4c3f8bddc93, type: 3}
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: vertairboostcharge
+  currentMove: vertairboostcharge
+--- !u!114 &4290857872028025457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433074109774213933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: JetCharge
+--- !u!1 &548922031375123239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6252475623451866570}
+  - component: {fileID: 6598527888869136586}
+  - component: {fileID: 1771558879112691665}
+  m_Layer: 9
+  m_Name: BoostJump Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6252475623451866570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548922031375123239}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3865432219276408900}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6598527888869136586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548922031375123239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: BoostJump
+--- !u!114 &1771558879112691665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548922031375123239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: boostslidehop
+--- !u!1 &725525881187264306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7145795341970419756}
+  - component: {fileID: 7345669757238823234}
+  - component: {fileID: 1237003376056349405}
+  m_Layer: 9
+  m_Name: VBoost Charge Stop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7145795341970419756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725525881187264306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 919283459425905655}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7345669757238823234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725525881187264306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: vertairboost
+--- !u!114 &1237003376056349405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725525881187264306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b642e80a2766974f926e37d35c011e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: JetCharge
+--- !u!1 &798502098237975218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4583797891358749670}
+  - component: {fileID: 4750471503120877404}
+  - component: {fileID: 7149974714800054236}
+  m_Layer: 9
+  m_Name: HBoost Charge Stop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4583797891358749670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798502098237975218}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4046178811241609297}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4750471503120877404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798502098237975218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: horizairboost
+--- !u!114 &7149974714800054236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798502098237975218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b642e80a2766974f926e37d35c011e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   soundName: JetCharge
 --- !u!1 &1611073593284894893
 GameObject:
@@ -55,7 +245,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6468005579691211}
-  - component: {fileID: 3286539722821253153}
+  - component: {fileID: 4739114318120742088}
+  - component: {fileID: 4539673769386570576}
   m_Layer: 9
   m_Name: ThirdJump Controller
   m_TagString: Untagged
@@ -78,7 +269,7 @@ Transform:
   m_Father: {fileID: 3865432219276408900}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3286539722821253153
+--- !u!114 &4739114318120742088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,11 +278,144 @@ MonoBehaviour:
   m_GameObject: {fileID: 1611073593284894893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5389e601b8c1e248b60d4c3f8bddc93, type: 3}
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: triplejump
+  currentMove: triplejump
+--- !u!114 &4539673769386570576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611073593284894893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   soundName: Jump3
+--- !u!1 &1918933999424397424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5853229073529740214}
+  - component: {fileID: 3848414338077669710}
+  - component: {fileID: 7374699185386254720}
+  m_Layer: 9
+  m_Name: BoostSlide Explosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5853229073529740214
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918933999424397424}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 776356024702840910}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3848414338077669710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918933999424397424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 264f5bb1923bd954d88a34b8a4b3685d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: boostslide
+  previousMove: horizgroundboostcharge
+  flipBool: 0
+--- !u!114 &7374699185386254720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918933999424397424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: JetExplosion
+--- !u!1 &2075576834157397244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5956447884621575213}
+  - component: {fileID: 4420136892708727448}
+  - component: {fileID: 5637397063697965379}
+  m_Layer: 9
+  m_Name: Idle Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5956447884621575213
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075576834157397244}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7796919714368144679}
+  m_Father: {fileID: 3865432219276408900}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4420136892708727448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075576834157397244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: idle
+--- !u!114 &5637397063697965379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075576834157397244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f89a2cce380b0418a8448ed1d05899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tc: {fileID: 6039758296549006782}
 --- !u!1 &2219626378689936827
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +425,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7375074320461554031}
-  - component: {fileID: 8402306393067572648}
+  - component: {fileID: 7262633190741264909}
+  - component: {fileID: 8276330567119868546}
   m_Layer: 9
   m_Name: HCharge Controller
   m_TagString: Untagged
@@ -124,7 +449,7 @@ Transform:
   m_Father: {fileID: 3865432219276408900}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8402306393067572648
+--- !u!114 &7262633190741264909
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,11 +458,150 @@ MonoBehaviour:
   m_GameObject: {fileID: 2219626378689936827}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5389e601b8c1e248b60d4c3f8bddc93, type: 3}
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: horizairboostcharge
   soundName: JetCharge
+--- !u!114 &8276330567119868546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2219626378689936827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: horizairboostcharge
+--- !u!1 &2772747695074348269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1798328935944302027}
+  - component: {fileID: 6409765634404464629}
+  - component: {fileID: 7742169594161456361}
+  m_Layer: 9
+  m_Name: BoostSlide SKid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1798328935944302027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2772747695074348269}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 776356024702840910}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6409765634404464629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2772747695074348269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 264f5bb1923bd954d88a34b8a4b3685d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: boostslide
+  previousMove: horizgroundboostcharge
+  flipBool: 1
+--- !u!114 &7742169594161456361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2772747695074348269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: BoostSlide
+--- !u!1 &2963430009350720681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7796919714368144679}
+  - component: {fileID: 3823800656746572863}
+  - component: {fileID: 5834540710137760409}
+  m_Layer: 9
+  m_Name: Idle Stopping
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7796919714368144679
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2963430009350720681}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5956447884621575213}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3823800656746572863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2963430009350720681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23720b4a5bc71c544aca3772dc25dd56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chainedTimes:
+  - delay: 0
+    soundName: RFootstep
+  - delay: 0.1
+    soundName: LFootstep
+--- !u!114 &5834540710137760409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2963430009350720681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da6c91c1ea81c846bd4a86d81f49b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveToCheckSpeed: run
+  moveToStart: idle
+  speedToHit: 5
+  me: {fileID: 0}
 --- !u!1 &3301164277006388366
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,8 +611,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 776356024702840910}
-  - component: {fileID: 8323018247433921793}
-  - component: {fileID: 1265081064176222933}
+  - component: {fileID: 9199927963657622367}
+  - component: {fileID: 7588322806264339514}
   m_Layer: 9
   m_Name: BoostSlide Controller
   m_TagString: Untagged
@@ -167,11 +631,13 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1798328935944302027}
+  - {fileID: 5853229073529740214}
   m_Father: {fileID: 3865432219276408900}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8323018247433921793
+--- !u!114 &9199927963657622367
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,12 +646,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3301164277006388366}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a29e7f7c02d1e4a49b548ff42f5079be, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b642e80a2766974f926e37d35c011e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: boostslide
   soundName: JetCharge
---- !u!114 &1265081064176222933
+--- !u!114 &7588322806264339514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,73 +659,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3301164277006388366}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4092ce47eb26d4468367fcc8980e3bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: boostslide
-  requiredPreviousMove: horizgroundboostcharge
-  soundName: JetExplosion
---- !u!1 &4879121922318332113
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 868034527542502588}
-  - component: {fileID: 3587364754330522540}
-  - component: {fileID: 1620748710036626474}
-  m_Layer: 9
-  m_Name: VBoost Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &868034527542502588
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4879121922318332113}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3587364754330522540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4879121922318332113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5389e601b8c1e248b60d4c3f8bddc93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  move: vertairboost
-  soundName: JetExplosion
---- !u!114 &1620748710036626474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4879121922318332113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a29e7f7c02d1e4a49b548ff42f5079be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  move: vertairboost
-  soundName: JetCharge
+  currentMove: boostslide
 --- !u!1 &4947753692803885042
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +672,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9018440727267281847}
-  - component: {fileID: 4869067075578926402}
+  - component: {fileID: 7644058634631313070}
+  - component: {fileID: 6088946647765348816}
   m_Layer: 9
   m_Name: Dive Controller
   m_TagString: Untagged
@@ -293,7 +696,7 @@ Transform:
   m_Father: {fileID: 3865432219276408900}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4869067075578926402
+--- !u!114 &7644058634631313070
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -302,11 +705,82 @@ MonoBehaviour:
   m_GameObject: {fileID: 4947753692803885042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5389e601b8c1e248b60d4c3f8bddc93, type: 3}
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: dive
   soundName: Dive
+--- !u!114 &6088946647765348816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4947753692803885042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: dive
+--- !u!1 &4970921024833304406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4678253495475590077}
+  - component: {fileID: 2433430217430424458}
+  - component: {fileID: 7790390508913696865}
+  m_Layer: 9
+  m_Name: VBoost Explosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4678253495475590077
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4970921024833304406}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 919283459425905655}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2433430217430424458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4970921024833304406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: vertairboost
+--- !u!114 &7790390508913696865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4970921024833304406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: JetExplosion
 --- !u!1 &5204249085327673557
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +792,7 @@ GameObject:
   - component: {fileID: 3865432219276408900}
   - component: {fileID: 3149784325922564935}
   - component: {fileID: 792830327167811529}
+  - component: {fileID: 5935677403952539857}
   m_Layer: 9
   m_Name: AudioController
   m_TagString: Untagged
@@ -343,11 +818,14 @@ Transform:
   - {fileID: 7375074320461554031}
   - {fileID: 1860552402811271186}
   - {fileID: 9108525226482916716}
+  - {fileID: 919283459425905655}
   - {fileID: 4046178811241609297}
-  - {fileID: 868034527542502588}
   - {fileID: 776356024702840910}
   - {fileID: 3397264992543615357}
   - {fileID: 9018440727267281847}
+  - {fileID: 5956447884621575213}
+  - {fileID: 6252475623451866570}
+  - {fileID: 4689447318532694652}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -373,7 +851,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f91832297ba616444a46304de5b65182, type: 2}
   - {fileID: 11400000, guid: c605691511f64aa4583493498b217834, type: 2}
   - {fileID: 11400000, guid: 83424d2950999244d91cc55a33a43984, type: 2}
-  fadeOutTime: 0
+  - {fileID: 11400000, guid: c4362cba3ac64f94083117dfdd4b8478, type: 2}
+  - {fileID: 11400000, guid: e07f036d791357e438e8590ce2b09fce, type: 2}
+  - {fileID: 11400000, guid: a63bfc616144c074bb622b661aa62a1c, type: 2}
+  - {fileID: 11400000, guid: 74e2b4bca9f98994daae9a72a46afdf3, type: 2}
+  - {fileID: 11400000, guid: c135966713f234945a3f7bf4a144a1e3, type: 2}
+  - {fileID: 11400000, guid: 9cda5c48ce56f8846943ca915d1bfc9b, type: 2}
+  - {fileID: 11400000, guid: 473246b35eca4b24583741a1fc474c55, type: 2}
+  - {fileID: 11400000, guid: 412894d3c5ac7c04da971a3adbed68be, type: 2}
+  - {fileID: 11400000, guid: 796ec98e2d3f51342a105d57f8807c8d, type: 2}
+  - {fileID: 11400000, guid: 67849b586dda254439c653440a5daf40, type: 2}
+  - {fileID: 11400000, guid: fc972db74d7ed3f4dad666ebed0e249e, type: 2}
 --- !u!114 &792830327167811529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,6 +875,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   me: {fileID: 0}
+--- !u!114 &5935677403952539857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204249085327673557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e1adf71c17f8454e913cde9ed4b2bd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSystem: {fileID: 0}
+  navigateButtonsSound: MenuNavigation
+  startPauseMenu: StartPause
+  closePauseMenu: EndPause
+  selectOption: SelectOption
 --- !u!1 &5426616352412882817
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +901,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9108525226482916716}
-  - component: {fileID: 754780778893382287}
+  - component: {fileID: 6983860986658536782}
+  - component: {fileID: 7795611321309248527}
   m_Layer: 9
   m_Name: GCharge Controller
   m_TagString: Untagged
@@ -419,7 +925,7 @@ Transform:
   m_Father: {fileID: 3865432219276408900}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &754780778893382287
+--- !u!114 &6983860986658536782
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -428,11 +934,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 5426616352412882817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5389e601b8c1e248b60d4c3f8bddc93, type: 3}
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: horizgroundboostcharge
   soundName: JetCharge
+--- !u!114 &7795611321309248527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5426616352412882817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: horizgroundboostcharge
 --- !u!1 &5692904420040372845
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +960,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3397264992543615357}
-  - component: {fileID: 2682356587552864586}
   m_Layer: 9
   m_Name: Running Controller
   m_TagString: Untagged
@@ -461,27 +978,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2600103753783130916}
+  - {fileID: 2551918767821710724}
   m_Father: {fileID: 3865432219276408900}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2682356587552864586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5692904420040372845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7fd2a48fa1dac34bb22f0192598ac65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  move: run
-  soundNamePrimary: LFootstep
-  soundNameAlt: RFootstep
-  me: {fileID: 0}
-  nextStep: 1.4
 --- !u!1 &5784521074447339933
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,8 +993,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4046178811241609297}
-  - component: {fileID: 1161230732498047893}
-  - component: {fileID: 8009672646536866129}
   m_Layer: 9
   m_Name: HBoost Controller
   m_TagString: Untagged
@@ -511,38 +1011,138 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6162625499064603018}
+  - {fileID: 4583797891358749670}
   m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1161230732498047893
+--- !u!1 &5957556807389445012
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6162625499064603018}
+  - component: {fileID: 3631151506125936653}
+  - component: {fileID: 394320995141891903}
+  m_Layer: 9
+  m_Name: HBoost Explosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6162625499064603018
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5957556807389445012}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4046178811241609297}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3631151506125936653
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5784521074447339933}
+  m_GameObject: {fileID: 5957556807389445012}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5389e601b8c1e248b60d4c3f8bddc93, type: 3}
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: horizairboost
+  currentMove: horizairboost
+--- !u!114 &394320995141891903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5957556807389445012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   soundName: JetExplosion
---- !u!114 &8009672646536866129
+--- !u!1 &6420213685065223108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2551918767821710724}
+  - component: {fileID: 6039758296549006782}
+  - component: {fileID: 4718067837123377757}
+  m_Layer: 9
+  m_Name: Running Charge Up
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2551918767821710724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6420213685065223108}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3397264992543615357}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6039758296549006782
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5784521074447339933}
+  m_GameObject: {fileID: 6420213685065223108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a29e7f7c02d1e4a49b548ff42f5079be, type: 3}
+  m_Script: {fileID: 11500000, guid: 23720b4a5bc71c544aca3772dc25dd56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: horizairboost
-  soundName: JetCharge
+  chainedTimes:
+  - delay: 0
+    soundName: StartLFootstep
+  - delay: 0.2
+    soundName: StartRFootstep
+  - delay: 0.1
+    soundName: StartLFootstep
+--- !u!114 &4718067837123377757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6420213685065223108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 264f5bb1923bd954d88a34b8a4b3685d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: run
+  previousMove: idle
+  flipBool: 0
 --- !u!1 &6616204672481879649
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,7 +1152,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9085473358346464733}
-  - component: {fileID: 4349776774694885354}
+  - component: {fileID: 6905113791676197351}
+  - component: {fileID: 3669744176194697923}
   m_Layer: 9
   m_Name: FirstJump Controller
   m_TagString: Untagged
@@ -575,7 +1176,7 @@ Transform:
   m_Father: {fileID: 3865432219276408900}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4349776774694885354
+--- !u!114 &6905113791676197351
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -584,11 +1185,167 @@ MonoBehaviour:
   m_GameObject: {fileID: 6616204672481879649}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5389e601b8c1e248b60d4c3f8bddc93, type: 3}
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: jump
+  currentMove: jump
+--- !u!114 &3669744176194697923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6616204672481879649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   soundName: Jump1
+--- !u!1 &7022632764660210495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 919283459425905655}
+  m_Layer: 9
+  m_Name: VBoost Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &919283459425905655
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7022632764660210495}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4678253495475590077}
+  - {fileID: 7145795341970419756}
+  m_Father: {fileID: 3865432219276408900}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7138617167027904014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4689447318532694652}
+  - component: {fileID: 7369735474311473654}
+  m_Layer: 9
+  m_Name: MusicController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4689447318532694652
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7138617167027904014}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3865432219276408900}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7369735474311473654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7138617167027904014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2fcd526a40b214cab3a6ddedbdaf81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  song1: Song1
+  song2: Song2
+  location1: {fileID: 0}
+  player: {fileID: 0}
+  dist: 100
+--- !u!1 &7477867587724600876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2600103753783130916}
+  - component: {fileID: 6716005157558983831}
+  - component: {fileID: 1297074499736864029}
+  m_Layer: 9
+  m_Name: Running Footsteps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2600103753783130916
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7477867587724600876}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3397264992543615357}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6716005157558983831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7477867587724600876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7fd2a48fa1dac34bb22f0192598ac65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundNamePrimary: LFootstep
+  soundNameAlt: RFootstep
+  me: {fileID: 0}
+  nextStep: 1.4
+--- !u!114 &1297074499736864029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7477867587724600876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04a7228aa8a347144bfb41948171b5b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: run
 --- !u!1 &9050394029417448896
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,7 +1355,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6927938978870997410}
-  - component: {fileID: 1383795042017541537}
+  - component: {fileID: 6202860605889755759}
+  - component: {fileID: 254074853551208362}
   m_Layer: 9
   m_Name: SecondJump Controller
   m_TagString: Untagged
@@ -621,7 +1379,7 @@ Transform:
   m_Father: {fileID: 3865432219276408900}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1383795042017541537
+--- !u!114 &6202860605889755759
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -630,8 +1388,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 9050394029417448896}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5389e601b8c1e248b60d4c3f8bddc93, type: 3}
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: doublejump
+  currentMove: doublejump
+--- !u!114 &254074853551208362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050394029417448896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   soundName: Jump2

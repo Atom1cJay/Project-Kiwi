@@ -2,21 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlternatingSounds : MonoBehaviour, ISoundController
+public class AlternatingSounds : MonoBehaviour
 {
-    [SerializeField] string move, soundNamePrimary, soundNameAlt;
+    [SerializeField] string soundNamePrimary, soundNameAlt;
     [SerializeField] MoveExecuter me;
     [SerializeField] float nextStep;
 
     bool primary = true;
     float distanceCovered = 0f;
-    public void PlaySounds(string lastMove, string thisMove)
+
+    private StateController StateChecker;
+
+    private void Awake()
     {
+        StateChecker = GetComponent<StateController>();
+    }
+
+    public void Update() {
 
         float speed = me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
 
 
-        if (thisMove.Equals(move))
+        if (StateChecker.StateCheck())
         {
         distanceCovered += speed * Time.deltaTime;
             if (distanceCovered >= nextStep)

@@ -51,4 +51,9 @@ public class UIControlSystem : MonoBehaviour, UIInterface
         if (ObjectToSetFirst != null)
             eventSystem.SetSelectedGameObject(ObjectToSetFirst);
     }
+
+    public GameObject GetObjectToSet()
+    {
+        return ObjectToSetFirst;
+    }
 }

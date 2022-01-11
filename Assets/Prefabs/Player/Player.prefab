@@ -5779,7 +5779,7 @@ Transform:
   - {fileID: 3737771198089158349}
   - {fileID: 3733205168459718950}
   - {fileID: 118458856086584984}
-  - {fileID: 6970136258216601706}
+  - {fileID: 5749686980779013437}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6647,13 +6647,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1968086106431674641, guid: 33639e0730b70894f8952c1677477a7f, type: 3}
   m_PrefabInstance: {fileID: 4902290892311218999}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &6133379190831173678
+--- !u!1001 &8822054446324551033
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 5116987452351034286}
     m_Modifications:
+    - target: {fileID: 792830327167811529, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
+      propertyPath: me
+      value: 
+      objectReference: {fileID: 1704877077}
     - target: {fileID: 3865432219276408900, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -6698,20 +6702,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4804431722930389333, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
-      propertyPath: me
-      value: 
-      objectReference: {fileID: 1704877077}
     - target: {fileID: 5204249085327673557, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
       propertyPath: m_Name
       value: AudioController
       objectReference: {fileID: 0}
+    - target: {fileID: 5834540710137760409, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
+      propertyPath: me
+      value: 
+      objectReference: {fileID: 1704877077}
+    - target: {fileID: 6716005157558983831, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
+      propertyPath: me
+      value: 
+      objectReference: {fileID: 1704877077}
+    - target: {fileID: 7369735474311473654, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 5116987452351034272}
+    - target: {fileID: 7369735474311473654, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
+      propertyPath: location1
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
---- !u!4 &6970136258216601706 stripped
+--- !u!4 &5749686980779013437 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3865432219276408900, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
-  m_PrefabInstance: {fileID: 6133379190831173678}
+  m_PrefabInstance: {fileID: 8822054446324551033}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9034226327515558653
 PrefabInstance:

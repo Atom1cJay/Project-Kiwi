@@ -24,24 +24,49 @@ public class Sound : ScriptableObject
     {
         return name;
     }
-    public void Play(GameObject g)
+    
+    public AudioClip GetClip()
     {
-        AudioSource audioSource = g.AddComponent<AudioSource>();
+        return clip;
+    }
 
-        audioSource.clip = clip;
-        float tempPitch = pitch * Random.Range(lowPitchRange, highPitchRange);
+    public float GetVolume()
+    {
+        return volume;
+    }
 
-        audioSource.pitch = tempPitch;
-        audioSource.volume = volume;
-        audioSource.loop = loop;
+    public float GetPitch ()
+    {
+        return pitch;
+    }
 
-        SoundPlayer sp = g.AddComponent<SoundPlayer>();
+    public bool GetSFX()
+    {
+        return SFX;
+    }
 
-        sp.SetUpPlayer(audioSource, SFX, name);
+    public bool GetMUSIC()
+    {
+        return MUSIC;
+    }
 
-        audioSource.Play();
+    public bool GetLoop()
+    {
+        return loop;
+    }
 
-        AudioMasterController.instance.addToList(sp);
+    public bool GetRandomizePitch()
+    {
+        return randomizePitch;
+    }
 
+    public float GetLowPitchRange()
+    {
+        return lowPitchRange;
+    }
+
+    public float GetHighPitchRange()
+    {
+        return highPitchRange;
     }
 }

@@ -8,7 +8,6 @@ public class AudioMasterController : MonoBehaviour
     public static AudioMasterController instance;
 
     [SerializeField] List<Sound> soundList;
-    [SerializeField] float fadeOutTime;
     List<SoundPlayer> allPlayers;
     GameObject playerSound;
     float sfxMult, musicMult;
@@ -36,14 +35,7 @@ public class AudioMasterController : MonoBehaviour
 
     public void StopSound(string name)
     {
-        foreach (SoundPlayer sp in allPlayers)
-        {
-            if (sp.getName().Equals(name))
-            {
-                allPlayers.Remove(sp);
-                sp.fadeOut(.5f);
-            }
-        }
+        FadeOutSound(name, 0.5f);
     }
 
     public bool isPlaying(string name)
@@ -93,7 +85,7 @@ public class AudioMasterController : MonoBehaviour
         {
             if (s.GetName().Equals(name))
             {
-                s.Play(newObject);
+               Play(newObject, s);
                 playedSong = true;
             }
         }
@@ -106,9 +98,89 @@ public class AudioMasterController : MonoBehaviour
 
     }
 
-    public float getFadeOutTime()
+    void Play(GameObject g, Sound s)
     {
-        return fadeOutTime;
+        AudioSource audioSource = g.AddComponent<AudioSource>();
+
+        audioSource.clip = s.GetClip();
+        audioSource.pitch = s.GetPitch();
+
+        if (s.GetRandomizePitch())
+        {
+            float tempPitch = s.GetPitch() * Random.Range(s.GetLowPitchRange(), s.GetHighPitchRange());
+            audioSource.pitch = tempPitch;
+        }
+
+        audioSource.volume = s.GetVolume();
+        audioSource.loop = s.GetLoop();
+
+        SoundPlayer sp = g.AddComponent<SoundPlayer>();
+
+        sp.SetUpPlayer(audioSource, s.GetSFX(), s.GetName());
+
+        addToList(sp);
+
+    }
+    public void FadeIn(Sound s, float time, GameObject g)
+    {
+
+        AudioSource audioSource = g.AddComponent<AudioSource>();
+
+        audioSource.clip = s.GetClip();
+        audioSource.pitch = s.GetPitch();
+
+        if (s.GetRandomizePitch())
+        {
+            float tempPitch = s.GetPitch() * Random.Range(s.GetLowPitchRange(), s.GetHighPitchRange());
+            audioSource.pitch = tempPitch;
+        }
+
+        audioSource.volume = s.GetVolume();
+        audioSource.loop = s.GetLoop();
+
+        SoundPlayer sp = g.AddComponent<SoundPlayer>();
+
+        sp.SetUpFadeIn(audioSource, s.GetSFX(), s.GetName(), time);
+
+        addToList(sp);
+
     }
 
+    public void FadeInSound(string name,float time, GameObject g)
+    {
+
+        //new audio player
+        GameObject newObject = new GameObject();
+        newObject.name = name + " sound!";
+        newObject.transform.parent = g.transform;
+
+        bool playedSong = false;
+
+        foreach (Sound s in soundList)
+        {
+            if (s.GetName().Equals(name))
+            {
+                FadeIn(s, time, newObject);
+                playedSong = true;
+            }
+        }
+
+        if (!playedSong)
+        {
+            Destroy(newObject);
+            Debug.Log("Sound: " + name + " not found!");
+        }
+    }
+
+    public void FadeOutSound(string name, float time)
+    {
+        foreach (SoundPlayer sp in allPlayers)
+        {
+            if (sp.getName().Equals(name))
+            {
+                allPlayers.Remove(sp);
+                sp.fadeOut(time);
+            }
+        }
+    }
 }

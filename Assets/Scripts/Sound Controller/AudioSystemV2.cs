@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class AudioSystemV2 : MonoBehaviour
 {
-    ISoundController[] controllers;
+    TransitionCheck[] controllers;
     [SerializeField] MoveExecuter me;
     string lastMove = "";
     // Start is called before the first frame update
     void Awake()
     {
-        controllers = GetComponentsInChildren<ISoundController>();
+        controllers = GetComponentsInChildren<TransitionCheck>();
     }
 
     // Update is called once per frame
     void Update()
     {
         string currentMove = me.GetCurrentMove().AsString();
-
-        foreach (ISoundController c in controllers)
+        //Debug.Log(currentMove);
+        foreach (TransitionCheck c in controllers)
         {
-            c.PlaySounds(lastMove, currentMove);
+            c.UpdateMoves(lastMove, currentMove);
         }
         lastMove = currentMove;
     }
