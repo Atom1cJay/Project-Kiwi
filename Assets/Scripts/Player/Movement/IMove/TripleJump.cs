@@ -11,6 +11,7 @@ public class TripleJump : AMove
     bool vertBoostChargePending;
     bool horizBoostChargePending;
     bool jumpCancelled;
+    bool jumpGroundableTimerComplete;
     bool groundPoundPending;
     bool glidePending;
 
@@ -41,6 +42,14 @@ public class TripleJump : AMove
                 vertVel *= movementSettings.JumpVelMultiplierAtCancel;
             }
         });
+        MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForJumpGroundableTimer());
+    }
+
+    // This can be run as a coroutine by using MonobehaviorUtils
+    private IEnumerator WaitForJumpGroundableTimer()
+    {
+        yield return new WaitForSeconds(movementSettings.JumpGroundableTimer);
+        jumpGroundableTimerComplete = true;
     }
 
     public override void AdvanceTime()
@@ -127,7 +136,7 @@ public class TripleJump : AMove
         {
             return new Slide(mii, mi, movementSettings, horizVector);
         }
-        if (mi.TouchingGround())
+        if (mi.TouchingGround() && jumpGroundableTimerComplete)
         {
             if (horizVector.magnitude == 0)
             {

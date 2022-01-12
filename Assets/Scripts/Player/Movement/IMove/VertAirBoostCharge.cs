@@ -67,7 +67,7 @@ public class VertAirBoostCharge : AMove
 
     public override RotationInfo GetRotationInfo()
     {
-        return new RotationInfo(0, false);
+        return new RotationInfo(movementSettings.VertBoostChargeRotation, true);
     }
 
     public override IMove GetNextMove()

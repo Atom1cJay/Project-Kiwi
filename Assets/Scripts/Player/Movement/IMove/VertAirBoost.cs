@@ -93,7 +93,7 @@ public class VertAirBoost : AMove
         {
             return new RotationInfo(float.MaxValue, false);
         }
-        return new RotationInfo(movementSettings.AirRotationSpeed, false);
+        return new RotationInfo(movementSettings.VertBoostRotationSpeed, false);
     }
 
     public override IMove GetNextMove()

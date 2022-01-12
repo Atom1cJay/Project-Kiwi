@@ -55,7 +55,7 @@ MonoBehaviour:
   tjGravityIncRateAtCancel: 75
   tjMaxBreakSpeed: 0.5
   tjMinHorizInputMagnitude: 0.9
-  tjMaxTimeBtwnJumps: 0.12
+  tjMaxTimeBtwnJumps: 0.09
   tjMinJumpTime: 0.3
   tjMaxJumpTime: 1.5
   tjMaxDissonance: 0.5
@@ -65,7 +65,7 @@ MonoBehaviour:
   horizBoostRotation: 0.9
   horizBoostAirReverseGravity: 16
   horizBoostNonAirReverseGravity: 0
-  horizBoostMinSpeedX: 7
+  horizBoostMinSpeedX: 6.5
   horizBoostMaxSpeedX: 9.5
   horizBoostMinSpeedGroundX: 7
   horizBoostMaxSpeedGroundX: 10
@@ -93,23 +93,24 @@ MonoBehaviour:
   boostSlideMaxDissonanceForHoldingFwd: 1
   boostHopInitVelY: 6.75
   boostHopInitVelXMultiplier: 1
-  boostHopGravity: 21
+  boostHopGravity: 23
   boostSlideHopRotationSpeed: 0.7
   boostHopMaxDissonanceForTurning: 1.8
-  vertBoostChargeWaitBeforeSpeedDec: 0.1
-  vertBoostChargeGravityX: 9
+  vertBoostChargeWaitBeforeSpeedDec: 0.08
+  vertBoostChargeGravityX: 13
   vertBoostMinLaunchVel: 6
   vertBoostMaxLaunchVel: 11
   vertBoostMinGeneralVelY: -10
-  vertBoostChargeGravity: 1
+  vertBoostChargeGravity: 0.5
   vertBoostGravity: 27
   vertBoostMaxChargeTime: 0.5
   vertBoostMaxTime: 0.7
-  vertBoostRotationSpeed: 150
+  vertBoostRotationSpeed: 300
   vertBoostSensitivityX: 5
   vertBoostAdjustSensitivityX: 10
   vertBoostGravityX: 8
   vertBoostMaxSpeedX: 5.5
+  vertBoostChargeRotation: 0
   pushSpeedMaintainTime: 0.7
   groundBoostMaxSpeedX: 8.5
   groundBoostSensitivityX: 4
@@ -127,7 +128,7 @@ MonoBehaviour:
   dissonanceForAirReverse: 1
   airReverseMinActivationSpeed: 0
   instantRotationSpeed: 1
-  groundRotationSpeed: 9
+  groundRotationSpeed: 8.5
   groundRotationSpeedMaxXSpeed: 9
   airRotationSpeed: 9
   boostAftermathRotationSpeed: 50

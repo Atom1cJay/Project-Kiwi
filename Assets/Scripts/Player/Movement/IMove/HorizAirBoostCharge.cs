@@ -62,7 +62,11 @@ public class HorizAirBoostCharge : AMove
 
     public override RotationInfo GetRotationInfo()
     {
-        return new RotationInfo(movementSettings.HorizBoostChargeRotationSpeed, true);
+        if (mii.GetHorizDissonance() < movementSettings.DissonanceForAirReverse)
+        {
+            return new RotationInfo(movementSettings.HorizBoostChargeRotationSpeed, true);
+        }
+        return new RotationInfo(0, false);
     }
 
     public override IMove GetNextMove()

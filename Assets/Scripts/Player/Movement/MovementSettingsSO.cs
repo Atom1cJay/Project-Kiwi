@@ -143,6 +143,7 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float vertBoostAdjustSensitivityX;
     [SerializeField] float vertBoostGravityX;
     [SerializeField] float vertBoostMaxSpeedX;
+    [SerializeField] float vertBoostChargeRotation;
 
     [Header("Push Boost Settings")]
     [SerializeField] float pushSpeedMaintainTime;
@@ -335,6 +336,7 @@ public class MovementSettingsSO : ScriptableObject
     public float VertBoostGravityX { get { return vertBoostGravityX; } }
     public float VertBoostMaxSpeedX { get { return vertBoostMaxSpeedX; } }
     public float VertBoostChargeGravityX { get { return vertBoostChargeGravityX; } }
+    public float VertBoostChargeRotation { get { return vertBoostChargeRotation; } }
 
     public float PushSpeedMaintainTime { get { return pushSpeedMaintainTime; } }
 
