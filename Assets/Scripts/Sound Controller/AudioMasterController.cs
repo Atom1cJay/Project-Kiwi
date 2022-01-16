@@ -13,7 +13,7 @@ public class AudioMasterController : MonoBehaviour
     float sfxMult, musicMult;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         sfxMult = 1f;
         musicMult = 1f;
@@ -35,13 +35,17 @@ public class AudioMasterController : MonoBehaviour
 
     public void StopSound(string name)
     {
-        FadeOutSound(name, 0.5f);
+        if (isPlaying(name))
+        {
+            FadeOutSound(name, 0.5f);
+        }
     }
 
     public bool isPlaying(string name)
     {
-        foreach (SoundPlayer sp in allPlayers)
+        for (int i = 0; i < allPlayers.Count; i++)
         {
+            SoundPlayer sp = allPlayers[i];
             if (sp.getName().Equals(name))
             {
                 return true;
@@ -49,11 +53,6 @@ public class AudioMasterController : MonoBehaviour
         }
 
         return false;
-    }
- 
-    public void addToList (SoundPlayer sp)
-    {
-        allPlayers.Add(sp);
     }
 
     public float getSFXMult()
@@ -116,9 +115,9 @@ public class AudioMasterController : MonoBehaviour
 
         SoundPlayer sp = g.AddComponent<SoundPlayer>();
 
-        sp.SetUpPlayer(audioSource, s.GetSFX(), s.GetName());
+        sp.SetUpPlayer(audioSource, s.GetSFX(), s.GetMUSIC(), s.GetName());
 
-        addToList(sp);
+        allPlayers.Add(sp);
 
     }
     public void FadeIn(Sound s, float time, GameObject g)
@@ -140,9 +139,9 @@ public class AudioMasterController : MonoBehaviour
 
         SoundPlayer sp = g.AddComponent<SoundPlayer>();
 
-        sp.SetUpFadeIn(audioSource, s.GetSFX(), s.GetName(), time);
+        sp.SetUpFadeIn(audioSource, s.GetSFX(), s.GetMUSIC(), s.GetName(), time);
 
-        addToList(sp);
+        allPlayers.Add(sp);
 
     }
 
@@ -174,13 +173,29 @@ public class AudioMasterController : MonoBehaviour
 
     public void FadeOutSound(string name, float time)
     {
-        foreach (SoundPlayer sp in allPlayers)
+
+        for (int i = 0; i < allPlayers.Count; i++)
         {
+            SoundPlayer sp = allPlayers[i];
             if (sp.getName().Equals(name))
             {
                 allPlayers.Remove(sp);
                 sp.fadeOut(time);
             }
         }
+    }
+
+    public void RemoveFromList(SoundPlayer sp)
+    {
+        allPlayers.Remove(sp);
+    }
+
+    public void SetSFX(float mult)
+    {
+        sfxMult = mult;
+    }
+    public void SetMusic(float mult)
+    {
+        musicMult = mult;
     }
 }

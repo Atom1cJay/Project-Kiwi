@@ -5,9 +5,10 @@ using UnityEngine;
 public class SoundPlayer : MonoBehaviour
 {
     bool started = false;
-    bool sfx;
+    bool sfx, music;
     bool fadeOutStart = false;
     bool fadeIn = false;
+
 
     float goalVolume;
     float fadeOutTime = 1f;
@@ -22,21 +23,14 @@ public class SoundPlayer : MonoBehaviour
 
     private void Update()
     {
+
         if (started)
         {
             if(!player.isPlaying)
             {
+                AudioMasterController.instance.RemoveFromList(this);
                 Destroy(gameObject);
             }
-        }
-
-        if (sfx)
-        {
-            player.pitch = player.pitch * AudioMasterController.instance.getSFXMult();
-        }
-        else
-        {
-            player.pitch = player.pitch * AudioMasterController.instance.getMusicMult();
         }
 
         if(fadeIn)
@@ -54,9 +48,11 @@ public class SoundPlayer : MonoBehaviour
             player.volume -= fadeOutTime * Time.deltaTime;
             if (player.volume <= .01f)
             {
+
                 Destroy(gameObject);
             }
         }
+        UpdateMultipliers();
 
     }
 
@@ -66,18 +62,23 @@ public class SoundPlayer : MonoBehaviour
         fadeOutStart = true;
     }
 
-    public void SetUpPlayer(AudioSource audioSource, bool sfx, string name)
+    public void SetUpPlayer(AudioSource audioSource, bool sfx, bool music, string name)
     {
         this.sfx = sfx;
+        this.music = music;
+
         player = audioSource;
+        goalVolume = player.volume;
         soundName = name;
+        UpdateMultipliers();
         player.Play();
         started = true;
     }
 
-    public void SetUpFadeIn(AudioSource audioSource, bool sfx, string name, float time)
+    public void SetUpFadeIn(AudioSource audioSource, bool sfx, bool music, string name, float time)
     {
         this.sfx = sfx;
+        this.music = music;
         fadeIn = true;
         player = audioSource;
         goalVolume = player.volume;
@@ -86,5 +87,18 @@ public class SoundPlayer : MonoBehaviour
         soundName = name;
         player.Play();
         started = true;
+    }
+
+    public void UpdateMultipliers()
+    {
+
+        float sfxMult = AudioMasterController.instance.getSFXMult();
+        float musicMult = AudioMasterController.instance.getMusicMult();
+
+        if (sfx)
+            player.volume = goalVolume * sfxMult;
+
+        if (music)
+            player.volume = goalVolume * musicMult;
     }
 }
