@@ -20,8 +20,9 @@ public class UIAudioController : MonoBehaviour
 
     void Update()
     {
-
-        GameObject temp = eventSystem.currentSelectedGameObject;
+        GameObject temp = null;
+        if (eventSystem.currentSelectedGameObject != null)
+            temp = eventSystem.currentSelectedGameObject;
         
 
         //play nothing
