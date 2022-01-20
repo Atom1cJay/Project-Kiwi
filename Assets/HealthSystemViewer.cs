@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthSystemViewer : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] PlayerHealth ph;
     [SerializeField] List<LeafFallScript> leaves;
+    [SerializeField] List<Image> images;
+    [SerializeField] List<Color> colors;
     int currentHealth;
 
     private void Awake()
@@ -32,6 +35,15 @@ public class HealthSystemViewer : MonoBehaviour
             if (leaves.Count > temp)
             {
                 leaves[temp].HealLeaf();
+            }
+        }
+
+        if (temp <= colors.Count)
+        {
+            foreach (Image i in images)
+            {
+                Color c = colors[temp - 1];
+                i.color = new Color(c.r, c.g, c.b, i.color.a);
             }
         }
 

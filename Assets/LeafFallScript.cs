@@ -7,6 +7,7 @@ public class LeafFallScript : MonoBehaviour
 {
     GameObject fallingLeaf = null;
     Vector3 originalPos;
+    Vector3 scale;
 
     [SerializeField] float DeltaX, DeltaY, fallingSpeed, randomMultiplier, DeltaAngle, targetAngle, deltaAngleSpeed, speed, changeInYAngleSpeed, finishedYLocation, fadeInTime;
 
@@ -37,6 +38,7 @@ public class LeafFallScript : MonoBehaviour
         originalPos = transform.position;
         image = GetComponent<Image>();
         c = image.color;
+        scale = Vector3.one;
         HealLeaf();
     }
 
@@ -127,7 +129,7 @@ public class LeafFallScript : MonoBehaviour
         //set up our initial vars
         fallingLeaf = newLeaf;
         adjustedSpeed = speed;
-        randomizedDeltaX = 0f;
+        randomizedDeltaX = DeltaX * Random.Range(1f - randomMultiplier, 1f + randomMultiplier);
         randomizedDeltaY = 0f;
         adjustedFallingSpeed = fallingSpeed / 2f;
         startTime = Time.time;
