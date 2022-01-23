@@ -17,7 +17,7 @@ public class AudioSystemV2 : MonoBehaviour
     void Update()
     {
         string currentMove = me.GetCurrentMove().AsString();
-        //Debug.Log(currentMove);
+        Debug.Log(currentMove);
         foreach (TransitionCheck c in controllers)
         {
             c.UpdateMoves(lastMove, currentMove);
