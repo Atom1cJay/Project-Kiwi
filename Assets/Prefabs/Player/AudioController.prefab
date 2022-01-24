@@ -536,6 +536,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundName: BoostSlide
+--- !u!1 &2790358297561305440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3643968781360846118}
+  - component: {fileID: 4410676519221655483}
+  - component: {fileID: 6206579337432941953}
+  m_Layer: 9
+  m_Name: Knockback Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3643968781360846118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2790358297561305440}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3865432219276408900}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4410676519221655483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2790358297561305440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: Knockback
+--- !u!114 &6206579337432941953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2790358297561305440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMove: knockback
 --- !u!1 &2963430009350720681
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,6 +885,7 @@ Transform:
   - {fileID: 5956447884621575213}
   - {fileID: 6252475623451866570}
   - {fileID: 4689447318532694652}
+  - {fileID: 3643968781360846118}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -862,6 +922,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 796ec98e2d3f51342a105d57f8807c8d, type: 2}
   - {fileID: 11400000, guid: 67849b586dda254439c653440a5daf40, type: 2}
   - {fileID: 11400000, guid: fc972db74d7ed3f4dad666ebed0e249e, type: 2}
+  - {fileID: 11400000, guid: 3b7b2562e487ff349b16a81c7314378b, type: 2}
 --- !u!114 &792830327167811529
 MonoBehaviour:
   m_ObjectHideFlags: 0
