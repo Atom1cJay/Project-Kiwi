@@ -5861,7 +5861,7 @@ MonoBehaviour:
   cameraControl: {fileID: 0}
   camTarget: {fileID: 0}
   shadowCaster: {fileID: 1149906098}
-  barrierRadius: 0.001
+  barrierRadius: 0.005
   OnMoveChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6609,6 +6609,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seed Counter
       objectReference: {fileID: 0}
+    - target: {fileID: 2420260698061884309, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: MapCamera
+      value: 
+      objectReference: {fileID: 6870351686182507045}
+    - target: {fileID: 2420260698061884309, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: PlayerCompass
+      value: 
+      objectReference: {fileID: 2077955666099779244}
+    - target: {fileID: 3674973788375753470, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4248694705795870462, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_Name
       value: BlueSeed Counter
@@ -6617,6 +6629,10 @@ PrefabInstance:
       propertyPath: me
       value: 
       objectReference: {fileID: 1704877077}
+    - target: {fileID: 4881841120387501191, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8102299546059221503, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -6810,6 +6826,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33639e0730b70894f8952c1677477a7f, type: 3}
+--- !u!20 &6870351686182507045 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1968086106431674642, guid: 33639e0730b70894f8952c1677477a7f, type: 3}
+  m_PrefabInstance: {fileID: 4902290892311218999}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6870351686182507046 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1968086106431674641, guid: 33639e0730b70894f8952c1677477a7f, type: 3}
