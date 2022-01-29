@@ -1,19 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CollectibleSystem : MonoBehaviour
 {
+    [HideInInspector]
+    public static CollectibleSystem instance;
 
-    [SerializeField] static int coinCount, blueCoinCount, starCount;
-    [SerializeField] CollectibleDisplay coinDisplay, bluecCoinDisplay, starDisplay;
+    [SerializeField] TextMeshProUGUI seedDisplay, blueSeedDisplay, wanderLeafDisplay;
+
+    [SerializeField] static int seedCount, blueSeedCount, wanderLeafCount;
+
 
     // Update is called once per frame
     void Start()
     {
-        coinDisplay.UpdateDisplay(coinCount);
-        bluecCoinDisplay.UpdateDisplay(blueCoinCount);
-        starDisplay.UpdateDisplay(starCount);
+        if (instance != null)
+        {
+            Debug.LogError("Multiple instances of CollectibleSystem exist. Only have one.");
+        }
+        instance = this;
     }
 
     //OnTriggerEnter
@@ -27,48 +34,32 @@ public class CollectibleSystem : MonoBehaviour
         }
     }
 
-    //Return the number of coins you have for the given Collectible Type
-    public int GetCount(Collectible.CollectibleType type)
-    {
-
-        if (type == Collectible.CollectibleType.COIN)
-        {
-            return coinCount;
-        }
-        else if (type == Collectible.CollectibleType.BLUECOIN)
-        {
-            return blueCoinCount;
-        }
-        else if (type == Collectible.CollectibleType.STAR)
-        {
-            return starCount;
-        }
-        else
-            return 0;
-    }
     public void CollectItem(CollectibleReader cr, int i = 1)
     {
         Debug.Log("collected item");
 
         Collectible.CollectibleType type = cr.GetCollectible().GetType();
 
-        if (type == Collectible.CollectibleType.COIN)
+        if (type == Collectible.CollectibleType.SEED)
         {
-            coinCount += i;
-            coinDisplay.UpdateDisplay(coinCount);
+            seedCount += i;
         }
-        else if (type == Collectible.CollectibleType.BLUECOIN)
+        else if (type == Collectible.CollectibleType.BLUESEED)
         {
-            blueCoinCount += i;
-            bluecCoinDisplay.UpdateDisplay(blueCoinCount);
+            blueSeedCount += i;
         }
-        else if (type == Collectible.CollectibleType.STAR)
+        else if (type == Collectible.CollectibleType.WANDERLEAF)
         {
-            starCount += i;
-            starDisplay.UpdateDisplay(starCount);
+            wanderLeafCount += i;
         }
+
+
+        seedDisplay.SetText(seedCount.ToString());
+        blueSeedDisplay.SetText(blueSeedCount.ToString());
+        wanderLeafDisplay.SetText(wanderLeafCount.ToString());
 
         cr.CollectObject();
     }
+
 
 }

@@ -6,14 +6,16 @@ using UnityEngine.UI;
 public class HealthSystemViewer : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] PlayerHealth ph;
     [SerializeField] List<LeafFallScript> leaves;
     [SerializeField] List<Image> images;
     [SerializeField] List<Color> colors;
+
+    PlayerHealth ph;
     int currentHealth;
 
-    private void Awake()
+    private void Start()
     {
+        ph = PlayerHealth.instance;
         currentHealth = ph.hp;
     }
 

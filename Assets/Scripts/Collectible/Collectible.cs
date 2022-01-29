@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Collectible", menuName ="Collectible")]
 public class Collectible : ScriptableObject
 {
-    public enum CollectibleType { COIN, BLUECOIN, STAR };
+    public enum CollectibleType { SEED, BLUESEED, WANDERLEAF };
 
     [SerializeField] CollectibleType type;
 

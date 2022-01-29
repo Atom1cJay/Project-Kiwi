@@ -7,15 +7,16 @@ using UnityEngine.UI;
 public class UIAudioController : MonoBehaviour
 {
 
-    [SerializeField] EventSystem eventSystem;
     [SerializeField] string navigateButtonsSound, startPauseMenu, closePauseMenu, selectOption;
+
+    EventSystem eventSystem;
     GameObject selected = null;
     bool clicked = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        eventSystem = EventSystem.current;
     }
 
     void Update()
