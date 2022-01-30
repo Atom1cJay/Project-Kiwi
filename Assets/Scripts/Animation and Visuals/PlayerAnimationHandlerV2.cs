@@ -7,17 +7,14 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
     [SerializeField] MoveExecuter me;
     //[SerializeField] MovementMaster mm;
     [SerializeField] Animator animator;
-    [SerializeField] List<string[]> pairs = new List<string[]>();
+    [SerializeField] float idleTime;
     bool onGround = false;
     bool diving, startRunning, stopping;
     int movesExtending = 0;
     int anyStateExtending = 0;
     float acceleration = 0f;
-    float lastSpeed = 0f;
-    float extraStopTime = 0f;
-    float timeToDance, startIdleTime;
-    bool resetSlowDown = true;
-    bool extending, anyStateTransition, boostSliding, startingIdle;
+    float timeToDance;
+    bool extending, anyStateTransition, boostSliding;
     float vertSpeed, jetrunThreshold, fallThreshold;
     string lM, temp, cM;
 
@@ -27,6 +24,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
     {
 
         animator.SetBool("IDLE", false);
+        animator.SetBool("IDLEDANCE", false);
         animator.SetBool("FALLING", false);
         animator.SetBool("RUNNING", false);
         animator.SetBool("DIVE", false);
@@ -80,6 +78,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         animator.SetBool("HCHARGE", false);
         animator.SetBool("HBOOST", false);
         animator.SetBool("VCHARGE", false);
+        animator.SetBool("IDLEDANCE", false);
         animator.SetBool("VBOOST", false);
         animator.SetBool("ONGROUND", onGround);
         animator.SetBool("DIVERECOVERY", false);
@@ -97,17 +96,6 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         animator.SetBool("GLIDING", false);
         animator.SetBool("KNOCKBACK", false);
 
-        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
-
-        foreach (AnimationClip clip in clips)
-        {
-            if (clip.name == "Idle")
-            {
-                startIdleTime = clip.length;
-            }
-        }
-
-        startingIdle = true;
 
     }
 
@@ -130,15 +118,16 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         }
 
 
+
         //Debug.Log(cM);
         //walking state not implemented yet
 
+        //ok
         //just for idle dance animation
-        if (cM != "idle")
+        if (!cM.Equals("idle"))
         {
-            timeToDance = Time.time + 100f;
+            timeToDance = (float)Time.time + idleTime;
         }
-
 
        
         if (extending)
@@ -166,7 +155,6 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
         {
             startRunning = true;
             onGround = true;
-            resetSlowDown = true;
             if (lM == "dive" && diving)
             {
                 anyStateTransition = false;
@@ -186,21 +174,17 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             }
             else
             {
-
-                currentMove("IDLE");
-                /*
-                if (Time.time > timeToDance - .25f)
+                if (Time.time < timeToDance)
                 {
-                    animator.SetBool("IDLE", false);
-                    startingIdle = true;
+                    Debug.Log("idle");
+                    currentMove("IDLE");
                     
                 }
-                else if (startingIdle)
+                else
                 {
-                    currentMove("IDLE");
-                    startingIdle = false;
-                    timeToDance = Time.time + startIdleTime;
-                }*/
+                    Debug.Log("dance");
+                    currentMove("IDLEDANCE");
+                }
 
             }
 
