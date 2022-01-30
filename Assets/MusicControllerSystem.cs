@@ -31,7 +31,8 @@ public class MusicControllerSystem : MonoBehaviour
             }
         }
 
-        AudioMasterController.instance.FadeInSound(controlPoints[currentController].song, transitionTime, gameObject);
+        if (controlPoints.Count > 0)
+            AudioMasterController.instance.FadeInSound(controlPoints[currentController].song, transitionTime, gameObject);
     }
 
     private void Update()
