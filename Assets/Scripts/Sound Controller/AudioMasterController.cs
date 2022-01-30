@@ -120,7 +120,7 @@ public class AudioMasterController : MonoBehaviour
         allPlayers.Add(sp);
 
     }
-    public void FadeIn(Sound s, float time, GameObject g)
+    void FadeIn(Sound s, float time, GameObject g)
     {
 
         AudioSource audioSource = g.AddComponent<AudioSource>();
@@ -144,10 +144,13 @@ public class AudioMasterController : MonoBehaviour
         allPlayers.Add(sp);
 
     }
+    public void FadeInSound(string name, float time)
+    {
+        FadeInSound(name, time, playerSound);
+    }
 
     public void FadeInSound(string name,float time, GameObject g)
     {
-
         //new audio player
         GameObject newObject = new GameObject();
         newObject.name = name + " sound!";
@@ -197,5 +200,13 @@ public class AudioMasterController : MonoBehaviour
     public void SetMusic(float mult)
     {
         musicMult = mult;
+    }
+
+    public void UpdateMultipliers()
+    {
+        foreach (SoundPlayer sp in allPlayers)
+        {
+            sp.UpdateMultipliers();
+        }
     }
 }

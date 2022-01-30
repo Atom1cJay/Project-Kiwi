@@ -546,7 +546,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3643968781360846118}
   - component: {fileID: 4410676519221655483}
-  - component: {fileID: 6206579337432941953}
+  - component: {fileID: 3604221357292056156}
   m_Layer: 9
   m_Name: Knockback Controller
   m_TagString: Untagged
@@ -582,7 +582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundName: Knockback
---- !u!114 &6206579337432941953
+--- !u!114 &3604221357292056156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -591,10 +591,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2790358297561305440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Script: {fileID: 11500000, guid: cde1dfa894bfc6447ad3343a3bef9acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentMove: knockback
+  onNegHealthChange: 0
 --- !u!1 &2963430009350720681
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,6 +924,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 67849b586dda254439c653440a5daf40, type: 2}
   - {fileID: 11400000, guid: fc972db74d7ed3f4dad666ebed0e249e, type: 2}
   - {fileID: 11400000, guid: 3b7b2562e487ff349b16a81c7314378b, type: 2}
+  - {fileID: 11400000, guid: 30693ec61f1b3764da908d298ca1ff7f, type: 2}
 --- !u!114 &792830327167811529
 MonoBehaviour:
   m_ObjectHideFlags: 0

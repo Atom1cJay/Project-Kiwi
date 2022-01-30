@@ -12,6 +12,8 @@ public class SoundPlayer : MonoBehaviour
 
     float goalVolume;
     float fadeOutTime = 1f;
+    float currentVolume = 0f;
+
     float fadeInTime = 1f;
     AudioSource player;
     string soundName;
@@ -36,8 +38,8 @@ public class SoundPlayer : MonoBehaviour
         if(fadeIn)
         {
 
-            player.volume += fadeInTime * Time.deltaTime;
-            if (player.volume >= goalVolume)
+            currentVolume += fadeInTime * Time.deltaTime;
+            if (currentVolume >= goalVolume)
             {
                 fadeIn = false;
             }
@@ -45,13 +47,14 @@ public class SoundPlayer : MonoBehaviour
         else if (fadeOutStart)
         {
 
-            player.volume -= fadeOutTime * Time.deltaTime;
-            if (player.volume <= .01f)
+            currentVolume -= fadeOutTime * Time.deltaTime;
+            if (currentVolume <= .01f)
             {
 
                 Destroy(gameObject);
             }
         }
+
         UpdateMultipliers();
 
     }
@@ -69,6 +72,7 @@ public class SoundPlayer : MonoBehaviour
 
         player = audioSource;
         goalVolume = player.volume;
+        currentVolume = player.volume;
         soundName = name;
         UpdateMultipliers();
         player.Play();
@@ -79,6 +83,7 @@ public class SoundPlayer : MonoBehaviour
     {
         this.sfx = sfx;
         this.music = music;
+
         fadeIn = true;
         player = audioSource;
         goalVolume = player.volume;
@@ -95,10 +100,11 @@ public class SoundPlayer : MonoBehaviour
         float sfxMult = AudioMasterController.instance.getSFXMult();
         float musicMult = AudioMasterController.instance.getMusicMult();
 
+
         if (sfx)
-            player.volume = goalVolume * sfxMult;
+            player.volume = currentVolume * sfxMult;
 
         if (music)
-            player.volume = goalVolume * musicMult;
+            player.volume = currentVolume * musicMult;
     }
 }
