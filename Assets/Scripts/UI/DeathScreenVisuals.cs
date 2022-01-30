@@ -21,8 +21,10 @@ public class DeathScreenVisuals : MonoBehaviour
         while (leaf.sizeDelta.x > 0)
         {
             float shrinkAmtThisFrame = leafSizeDecreaseSpeed * Time.deltaTime;
+            //print(leafSizeDecreaseSpeed);
             leaf.sizeDelta -= new Vector2(shrinkAmtThisFrame, shrinkAmtThisFrame);
-            yield return new WaitForEndOfFrame();
+            print(leaf.sizeDelta);
+            yield return null;
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
