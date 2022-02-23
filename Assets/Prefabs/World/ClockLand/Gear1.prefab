@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1560870280613585795}
   m_Layer: 0
   m_Name: lod_3
-  m_TagString: Untagged
+  m_TagString: Smooth Moving Platform (EXP)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,6 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1942367875726742993}
   - component: {fileID: 1942367875726742994}
+  - component: {fileID: 702016390736655114}
   m_Layer: 0
   m_Name: Gear1
   m_TagString: Untagged
@@ -165,6 +166,29 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1942367875182970511}
   m_Enabled: 1
+--- !u!114 &702016390736655114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942367875726742995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2709b3cc8bd1645cdb76a1d395487b99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onTransformChange:
+    m_PersistentCalls:
+      m_Calls: []
+  distanceToMove: {x: 0, y: 0, z: 0}
+  movementSpeed: 0
+  rotSpeed: {x: 0, y: 20, z: 0}
+  timeOffset: 0
+  movementSpace: 0
+  rotationIsRelative: 0
+  relativeTransform: {fileID: 0}
+  empty: {fileID: 1541509924753789287, guid: 28229561dbe0e48d1a2ca3e4c0f2040a, type: 3}
 --- !u!1 &1942367876002186192
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +202,7 @@ GameObject:
   - component: {fileID: 1942367876002186207}
   m_Layer: 0
   m_Name: lod_0
-  m_TagString: Untagged
+  m_TagString: Smooth Moving Platform (EXP)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -261,7 +285,7 @@ GameObject:
   - component: {fileID: 1942367876009169167}
   m_Layer: 0
   m_Name: lod_2
-  m_TagString: Untagged
+  m_TagString: Smooth Moving Platform (EXP)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -344,7 +368,7 @@ GameObject:
   - component: {fileID: 1942367876445530267}
   m_Layer: 0
   m_Name: lod_1
-  m_TagString: Untagged
+  m_TagString: Smooth Moving Platform (EXP)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

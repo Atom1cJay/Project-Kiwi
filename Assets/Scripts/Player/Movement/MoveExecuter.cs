@@ -71,7 +71,7 @@ public class MoveExecuter : MonoBehaviour
     {
         if (movingPlatform == null && mi.TouchingGround() && mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)"))
         {
-            movingPlatform = mi.GetGroundDetector().CollidingWith().GetComponent<AMovingPlatform>();
+            movingPlatform = mi.GetGroundDetector().CollidingWith().GetComponentInParent<AMovingPlatform>();
             movingPlatform.Register();
             smpStoredPos = movingPlatform.transform.position;
             movingPlatform.onTransformChange.AddListener(() => Move());
