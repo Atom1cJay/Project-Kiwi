@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WanderLeafMat
-  m_Shader: {fileID: -6465566751694194690, guid: cfa726be71b2c8a45977ce7621ecdb6f, type: 3}
+  m_Name: CelClockV2
+  m_Shader: {fileID: -6465566751694194690, guid: 3d10f4465a0dece4b8d6c49862434f9c, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 2
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -19,15 +19,11 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - RainbowTexture:
-        m_Texture: {fileID: 2800000, guid: ca315d5ded5eb2b41a4d1d7b333e3645, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _BasicCelSub_cadcfdc077f147bdafd62595e07d947e_Texture_3697513808:
+    - _BasicCelSub_da7ee11fc6394945813d0070091c8b37_Texture_3697513808:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -45,6 +41,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _DetailNormalMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Displacement:
+        m_Texture: {fileID: 2800000, guid: 705a2675b4fbb74488f22bfe49ba6435, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DisplacementSides:
+        m_Texture: {fileID: 2800000, guid: 4de6712352010094e9d6a49cb4ee1fb0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DisplacementTop:
+        m_Texture: {fileID: 2800000, guid: 1ad643194c28d14418e9b02ea5f4dfd2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -71,6 +79,42 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SteepStub_1c3244b3167d44f989b530ca4bafbab5_SideXTexture_2310384352:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SteepStub_1c3244b3167d44f989b530ca4bafbab5_SideZTexture_3329007957:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SteepStub_1c3244b3167d44f989b530ca4bafbab5_TopBottomTexture_1501587055:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SteepStub_c2d940e8ff6b4abf93a379c5dea1a4a7_SideXTexture_2310384352:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SteepStub_c2d940e8ff6b4abf93a379c5dea1a4a7_SideZTexture_3329007957:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SteepStub_c2d940e8ff6b4abf93a379c5dea1a4a7_TopBottomTexture_1501587055:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture:
+        m_Texture: {fileID: 2800000, guid: 29af6be03ca998740b522fcffe10a1de, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSides:
+        m_Texture: {fileID: 2800000, guid: 4760dae33f173f54ca8a3ef87e7f4ff2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureTop:
+        m_Texture: {fileID: 2800000, guid: 3f6b2458dec1795449abbbe9edbd82fd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -85,13 +129,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - AlphaClipThreshold: 0.1
-    - AlphaNoiseScale: 24.81
-    - AlphaSpeed: 0.19
-    - BorderAmount: -20.07
-    - BorderBrightness: -0.63
-    - RainbowBrightness: 4.88
-    - RainbowSpeed: 0.2
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -112,22 +149,33 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.5
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _Tiling_Top: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - AlphaStretch: {r: 1, g: 1, b: 0, a: 0}
+    - _Ambient_Light: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorSides: {r: 0.13725491, g: 0.1254902, b: 0.1254902, a: 0}
+    - _ColorTop: {r: 0.8901961, g: 0.8235294, b: 0.43529412, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Offset_Side_X: {r: 0, g: 0, b: 0, a: 0}
+    - _Offset_Side_Z: {r: 0, g: 0, b: 0, a: 0}
+    - _Offset_Top: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Tiling: {r: 0.5, g: 1, b: 0, a: 0}
+    - _Tiling: {r: 10, g: 10, b: 0, a: 0}
+    - _TilingSides: {r: 0.03, g: 0.03, b: 0, a: 0}
+    - _TilingTop: {r: 1, g: 1, b: 0, a: 0}
+    - _Tiling_Side_X: {r: 0.1, g: 2, b: 0, a: 0}
+    - _Tiling_Side_Z: {r: 2, g: 0.1, b: 0, a: 0}
+    - _Tiling_Top: {r: 2, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &1118509250898053723
+--- !u!114 &6790281782099757408
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

@@ -7,32 +7,29 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WanderLeafMat
-  m_Shader: {fileID: -6465566751694194690, guid: cfa726be71b2c8a45977ce7621ecdb6f, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 2
+  m_Name: CelClock
+  m_Shader: {fileID: 4800000, guid: 8d2bb70cbf9db8d4da26e15b26e74248, type: 3}
+  m_ShaderKeywords: _NORMALMAP
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - RainbowTexture:
-        m_Texture: {fileID: 2800000, guid: ca315d5ded5eb2b41a4d1d7b333e3645, type: 3}
+    - Texture:
+        m_Texture: {fileID: 2800000, guid: 29af6be03ca998740b522fcffe10a1de, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BasicCelSub_cadcfdc077f147bdafd62595e07d947e_Texture_3697513808:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 29af6be03ca998740b522fcffe10a1de, type: 3}
+        m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 705a2675b4fbb74488f22bfe49ba6435, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -52,8 +49,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 29af6be03ca998740b522fcffe10a1de, type: 3}
+        m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -85,13 +82,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - AlphaClipThreshold: 0.1
-    - AlphaNoiseScale: 24.81
-    - AlphaSpeed: 0.19
-    - BorderAmount: -20.07
-    - BorderBrightness: -0.63
-    - RainbowBrightness: 4.88
-    - RainbowSpeed: 0.2
+    - Dot_Product_For_Shade_Border: 0
+    - Metallic: 0
+    - RimEdgePower: 1
+    - RimExtraSize: 0.01
+    - RimShadowPower: 1
+    - RimStrength: 1
+    - Smoothness: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -105,6 +102,7 @@ Material:
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
+    - _GlossinessSource: 0
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
@@ -112,22 +110,26 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Shininess: 0
     - _Smoothness: 0.5
+    - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
+    - _SpecSource: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - AlphaStretch: {r: 1, g: 1, b: 0, a: 0}
+    - Albedo: {r: 1, g: 1, b: 1, a: 0}
+    - Ambient_Light: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
+    - Tiling: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Tiling: {r: 0.5, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &1118509250898053723
+--- !u!114 &8625575130860143355
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

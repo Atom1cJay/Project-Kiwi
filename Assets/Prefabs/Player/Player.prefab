@@ -6075,8 +6075,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175162f50fde84bc7a606ce4468448f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHP: 5
-  iFrameDuration: 3
+  startingHP: 3
+  iFrameDuration: 1.2
 --- !u!114 &1693213254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6653,21 +6653,45 @@ PrefabInstance:
       propertyPath: pe
       value: 
       objectReference: {fileID: 1693213253}
+    - target: {fileID: 596764837, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b0ac0c3b1737da940949d6f2d6813589, type: 3}
     - target: {fileID: 1026291952, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: dm
       value: 
       objectReference: {fileID: 4807263684804618571}
+    - target: {fileID: 1990298506, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: leafSizeDecreaseSpeed
+      value: 8000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990298506, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: leafStartingDimension
+      value: 7000
+      objectReference: {fileID: 0}
     - target: {fileID: 855746630734247938, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 333
       objectReference: {fileID: 0}
     - target: {fileID: 1592484079675899157, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_Name
-      value: New Canvas
+      value: Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 1655644365364092878, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_Name
       value: Seed Counter
+      objectReference: {fileID: 0}
+    - target: {fileID: 2325082319704590612, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_Color.b
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2325082319704590612, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8117647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2325082319704590612, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5294118
       objectReference: {fileID: 0}
     - target: {fileID: 2420260698061884309, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: MapCamera
@@ -6692,6 +6716,18 @@ PrefabInstance:
     - target: {fileID: 4881841120387501191, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664161523741193616, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_Color.b
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664161523741193616, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8117647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664161523741193616, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5294118
       objectReference: {fileID: 0}
     - target: {fileID: 8102299546059221503, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_Pivot.x
@@ -6787,6 +6823,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+--- !u!1 &1240844466956526833 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1592484079675899157, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+  m_PrefabInstance: {fileID: 513971807153822180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &810462756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240844466956526833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f19936250cbc764e91f0ca1bddbb1de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  song: Song2
+  position: {x: 0, y: 0, z: 0}
 --- !u!114 &1931669576205732003 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2157036876862853447, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
@@ -7265,9 +7320,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0bf9fe6b8531f48278081efff9f17a81, type: 2}
+    - target: {fileID: 6369364749818737238, guid: f0ac1ee392999314eb847095e93fe12c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6728297642402996013, guid: f0ac1ee392999314eb847095e93fe12c, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728297642402996013, guid: f0ac1ee392999314eb847095e93fe12c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6748995668481900857, guid: f0ac1ee392999314eb847095e93fe12c, type: 3}
       propertyPath: m_Layer
@@ -7354,6 +7417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   me: {fileID: 1704877077}
   animator: {fileID: 3314535538204995603}
+  idleTime: 5
 --- !u!4 &8857100007895373078 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f0ac1ee392999314eb847095e93fe12c, type: 3}
