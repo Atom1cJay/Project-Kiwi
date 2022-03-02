@@ -11,11 +11,28 @@ public class Damager : MonoBehaviour
     [SerializeField] DamageType damageType;
     bool isActivated = true;
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Vector3 hitNormal = transform.position - other.ClosestPointOnBounds(transform.position);
+            ConsiderDmg(hitNormal);
+        }
+    }
+
     private void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Vector3 hitNormal = other.GetContact(0).normal;
+            ConsiderDmg(hitNormal);
+        }
+    }
+
+    void ConsiderDmg(Vector3 hitNormal)
     {
         if (isActivated)
         {
-            Vector3 hitNormal = other.GetContact(0).normal;
             hitNormal.x = -hitNormal.x;
             hitNormal.z = -hitNormal.z;
             PlayerHealth.instance.HandleDamage(damageType, hitNormal);

@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 171ff9497c3b14c1faee695afbbe5a33, type: 2}
+  - {fileID: 2100000, guid: f0f56bcd1ff634bde993d3d9e604cb66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,9 +108,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1942367875726742993}
   - component: {fileID: 1942367875726742994}
-  - component: {fileID: 702016390736655114}
+  - component: {fileID: 5025169232572899974}
+  - component: {fileID: -8549377525114339765}
   m_Layer: 0
-  m_Name: Gear1
+  m_Name: GearTravelingXPlus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,7 +125,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942367875726742995}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.5, y: -5.82, z: 45.08}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -166,7 +167,7 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1942367875182970511}
   m_Enabled: 1
---- !u!114 &702016390736655114
+--- !u!114 &5025169232572899974
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,17 +176,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1942367875726742995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2709b3cc8bd1645cdb76a1d395487b99, type: 3}
+  m_Script: {fileID: 11500000, guid: dfcb90117a2ce42b4a898d13ac25e14d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeUntilDestroy: 40
+--- !u!114 &-8549377525114339765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942367875726742995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d730c4c5efc840398c5d37f80c18333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onTransformChange:
     m_PersistentCalls:
       m_Calls: []
-  distanceToMove: {x: 0, y: 0, z: 0}
-  movementSpeed: 0
-  rotSpeed: {x: 0, y: 20, z: 0}
+  movementVector: {x: 2.5, y: 0, z: 0}
+  rotSpeed: {x: 0, y: 10, z: 0}
   timeOffset: 0
-  movementSpace: 0
   rotationIsRelative: 0
   relativeTransform: {fileID: 0}
   empty: {fileID: 1541509924753789287, guid: 28229561dbe0e48d1a2ca3e4c0f2040a, type: 3}
@@ -250,7 +262,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 171ff9497c3b14c1faee695afbbe5a33, type: 2}
+  - {fileID: 2100000, guid: f0f56bcd1ff634bde993d3d9e604cb66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -333,7 +345,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 171ff9497c3b14c1faee695afbbe5a33, type: 2}
+  - {fileID: 2100000, guid: f0f56bcd1ff634bde993d3d9e604cb66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -416,7 +428,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 171ff9497c3b14c1faee695afbbe5a33, type: 2}
+  - {fileID: 2100000, guid: f0f56bcd1ff634bde993d3d9e604cb66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

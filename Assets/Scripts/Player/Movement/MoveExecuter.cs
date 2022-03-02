@@ -103,8 +103,6 @@ public class MoveExecuter : MonoBehaviour
             if (movingPlatform != null)
             {
                 extraMovement = movingPlatform.MvmtThisFrame();
-                //extraMovement = (movingPlatform.transform.position - smpStoredPos);
-                //smpStoredPos = movingPlatform.transform.position;
             }
             transform.Translate(extraMovement, Space.World);
             if (movingPlatform != null)
