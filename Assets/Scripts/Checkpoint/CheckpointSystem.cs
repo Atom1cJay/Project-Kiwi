@@ -5,16 +5,20 @@ using UnityEngine;
 public class CheckpointSystem : MonoBehaviour
 {
     [SerializeField] Material currentCheckpointMat,inactiveCheckpointMat;
-    [SerializeField] CheckpointLoader cL;
-    [SerializeField] bool makeFirst;
-    MeshRenderer mr;
+    CheckpointLoader cL;
+    [SerializeField] MeshRenderer mr;
 
     void Awake()
     {
         mr = GetComponent<MeshRenderer>();
         SetInactive();
-        if(makeFirst)
-            cL.SetCheckpoint(this);
+
+    }
+
+    private void Start()
+    {
+
+        cL = CheckpointLoader.Instance;
     }
 
     //Set checkpoint to inactive

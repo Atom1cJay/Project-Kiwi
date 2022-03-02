@@ -10,6 +10,7 @@ public class LeafFallScript : MonoBehaviour
     Vector3 scale;
 
     [SerializeField] float DeltaX, DeltaY, fallingSpeed, randomMultiplier, DeltaAngle, targetAngle, deltaAngleSpeed, speed, changeInYAngleSpeed, finishedYLocation, fadeInTime;
+    [SerializeField] Image image;
 
     //targets with randomized
     float adjustedSpeed = 0f;
@@ -27,19 +28,17 @@ public class LeafFallScript : MonoBehaviour
     float angleY = 0f;
     float alpha = 0f;
 
-    Image image;
-
     Color c;
-    bool healed = false;
+    bool healed;
 
     void Start ()
     {
+        fallingLeaf = null;
         angleY = 0f;
         originalPos = transform.position;
-        image = GetComponent<Image>();
         c = image.color;
         scale = Vector3.one;
-        HealLeaf();
+        //HealLeaf();
     }
 
     // Update is called once per frame
@@ -48,8 +47,6 @@ public class LeafFallScript : MonoBehaviour
 
         if (fallingLeaf != null)
         {
-            //disable image
-            image.color = new Color (c.r,c.g,c.b, 0f);
 
             //all maths to show floating down
 
@@ -104,13 +101,14 @@ public class LeafFallScript : MonoBehaviour
         }
         
     }
-
+    
     public void HealLeaf()
     {
         image.color = new Color(c.r, c.g, c.b, 0f);
         alpha = 0f;
         healed = true;
     }
+
     public void DropLeaf()
     {
         //we're not healed
@@ -134,5 +132,11 @@ public class LeafFallScript : MonoBehaviour
         adjustedFallingSpeed = fallingSpeed / 2f;
         startTime = Time.time;
         angleY = 0f;
+
+        //update color
+        c = image.color;
+
+        //disable image
+        image.color = new Color(c.r, c.g, c.b, 0f);
     }
 }

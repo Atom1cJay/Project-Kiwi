@@ -176,13 +176,13 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             {
                 if (Time.time < timeToDance)
                 {
-                    Debug.Log("idle");
+                    //Debug.Log("idle");
                     currentMove("IDLE");
                     
                 }
                 else
                 {
-                    Debug.Log("dance");
+                    //Debug.Log("dance");
                     currentMove("IDLEDANCE");
                 }
 

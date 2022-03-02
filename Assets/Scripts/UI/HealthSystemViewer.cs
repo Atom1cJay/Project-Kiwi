@@ -10,27 +10,41 @@ public class HealthSystemViewer : MonoBehaviour
     [SerializeField] List<Image> images;
     [SerializeField] List<Color> colors;
 
+    Color color;
+
     PlayerHealth ph;
     int currentHealth;
 
     private void Start()
     {
+
         ph = PlayerHealth.instance;
         currentHealth = ph.hp;
+        color = colors[currentHealth - 1];
+        foreach (Image image in images)
+        {
+            image.color = new Color(color.r, color.g, color.b, image.color.a);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         int temp = ph.hp;
-        //Debug.Log(temp + ", cur: " + currentHealth);
+        color = colors[temp - 1];
 
         if (temp == currentHealth - 1)
         {
             if (leaves.Count > temp)
-            {
+           {
                 leaves[temp].DropLeaf();
+           }
+
+            foreach (Image image in images)
+            {
+                image.color = new Color(color.r, color.g, color.b, image.color.a);
             }
+
         }
         else if (temp == currentHealth + 1)
         {
@@ -40,15 +54,8 @@ public class HealthSystemViewer : MonoBehaviour
             }
         }
 
-        if (temp <= colors.Count)
-        {
-            foreach (Image i in images)
-            {
-                Color c = colors[temp - 1];
-                i.color = new Color(c.r, c.g, c.b, i.color.a);
-            }
-        }
-
         currentHealth = temp;
+
     }
+
 }

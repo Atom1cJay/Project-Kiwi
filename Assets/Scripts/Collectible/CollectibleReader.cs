@@ -9,15 +9,17 @@ public class CollectibleReader : MonoBehaviour
 
     public bool tempForceNotCollected;
 
-    [SerializeField] static bool collected;
-
     Collider collectibleCollider;
 
+    public bool collected;
+    
     [SerializeField] GameObject collectibleVisual;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame supdate
     void Start()
     {
+        collected = CollectibleSystem.collected.Contains(gameObject.transform.position);
+
         //initialize the variables
         collectibleCollider = GetComponent<Collider>();
 
@@ -26,6 +28,7 @@ public class CollectibleReader : MonoBehaviour
 
         collectibleCollider.enabled = !collected;
         collectibleVisual.SetActive(!collected);
+
     }
 
     //Update the Collectible Reader

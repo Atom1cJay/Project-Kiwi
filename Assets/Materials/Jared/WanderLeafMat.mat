@@ -85,13 +85,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - AlphaClipThreshold: 0.1
-    - AlphaNoiseScale: 24.81
-    - AlphaSpeed: 0.19
-    - BorderAmount: -20.07
-    - BorderBrightness: -0.63
-    - RainbowBrightness: 4.88
-    - RainbowSpeed: 0.2
+    - AlphaClipThreshold: 0
+    - AlphaNoiseScale: 0.2
+    - AlphaSpeed: 4
+    - BorderAmount: 5
+    - BorderBrightness: 1
+    - RainbowBrightness: 5
+    - RainbowSpeed: 1.52
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -120,7 +120,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - AlphaStretch: {r: 1, g: 1, b: 0, a: 0}
+    - AlphaStretch: {r: 0.05, g: 0.5, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 8983773915658022302}
   - component: {fileID: 2198169533413912218}
   - component: {fileID: 7196773313087311688}
+  - component: {fileID: 5293251793107158320}
   m_Layer: 0
   m_Name: SeedV2
   m_TagString: Untagged
@@ -178,6 +179,19 @@ MonoBehaviour:
   collectible: {fileID: 11400000, guid: c7efe584d601a4841b9b11e1d7b0df31, type: 2}
   tempForceNotCollected: 1
   collectibleVisual: {fileID: 1482699212313749922}
+--- !u!114 &5293251793107158320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8639899061694445348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc550ede61a714b3187090055f2470d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotation: {x: 0, y: 120, z: 0}
 --- !u!1 &8828764458399994776
 GameObject:
   m_ObjectHideFlags: 0

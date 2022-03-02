@@ -8,19 +8,27 @@ public class CollectibleSystem : MonoBehaviour
     [HideInInspector]
     public static CollectibleSystem instance;
 
+    [HideInInspector]
+    public static List<Vector3> collected = new List<Vector3>();
+
     [SerializeField] TextMeshProUGUI seedDisplay, blueSeedDisplay, wanderLeafDisplay;
 
     [SerializeField] static int seedCount, blueSeedCount, wanderLeafCount;
 
 
     // Update is called once per frame
-    void Start()
+    void Awake()
     {
         if (instance != null)
         {
             Debug.LogError("Multiple instances of CollectibleSystem exist. Only have one.");
         }
         instance = this;
+    }
+
+    private void Start()
+    {
+        Debug.Log("Collected: " + collected.Count);
     }
 
     //OnTriggerEnter
@@ -37,12 +45,15 @@ public class CollectibleSystem : MonoBehaviour
     public void CollectItem(CollectibleReader cr, int i = 1)
     {
         Debug.Log("collected item");
+        CollectibleSystem.collected.Add(cr.gameObject.transform.position);
+        Debug.Log("updated c : " + CollectibleSystem.collected.Count);
 
         Collectible.CollectibleType type = cr.GetCollectible().GetType();
 
         if (type == Collectible.CollectibleType.SEED)
         {
             seedCount += i;
+            AudioMasterController.instance.PlaySound("CollectSeed");
         }
         else if (type == Collectible.CollectibleType.BLUESEED)
         {
@@ -51,6 +62,7 @@ public class CollectibleSystem : MonoBehaviour
         else if (type == Collectible.CollectibleType.WANDERLEAF)
         {
             wanderLeafCount += i;
+            AudioMasterController.instance.PlaySound("CollectWanderLeaf");
         }
 
 
