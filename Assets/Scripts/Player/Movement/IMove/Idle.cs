@@ -7,6 +7,8 @@ public class Idle : AMove
     bool boostChargePending;
     FromStatus fromStatus;
 
+    bool spawnedParticlesFirstFrame;
+
     /// <summary>
     /// Constructs a Idle, initializing the objects that hold all the
     /// information it needs to function.
@@ -105,6 +107,11 @@ public class Idle : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
+        if (spawnedParticlesFirstFrame)
+        {
+            return null;
+        }
+        spawnedParticlesFirstFrame = true;
         if (fromStatus == FromStatus.FromAir)
         {
             return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Landing, MovementParticleInfo.Instance.LandingImpact };

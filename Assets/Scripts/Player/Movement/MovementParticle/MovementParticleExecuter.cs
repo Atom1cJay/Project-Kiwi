@@ -7,34 +7,49 @@ public class MovementParticleExecuter : MonoBehaviour
 {
     MoveExecuter me;
 
+    struct Spawn
+    {
+        public GameObject prefab { get; private set; }
+        public GameObject instantiated { get; private set; }
+
+        public Spawn(GameObject prefab, GameObject instantiated)
+        {
+            this.prefab = prefab;
+            this.instantiated = instantiated;
+        }
+    }
+
+    List<Spawn> activeSpawns;
+
     void Awake()
     {
         me = GetComponent<MoveExecuter>();
-        //me.OnMoveChanged.AddListener(() => HandleMoveChange(me.GetCurrentMove()));
+        activeSpawns = new List<Spawn>();
     }
 
+    /// <summary>
+    /// Every frame, check which particles are supposed to spawn and despawn,
+    /// and update accordingly.
+    /// </summary>
     private void Update()
     {
         MovementParticleInfo.MovementParticles[] particles = me.GetCurrentMove().GetParticlesToSpawn();
-        if (particles != null) {
-            foreach (MovementParticleInfo.MovementParticles p in particles) {
-                SpawnParticle(p);
-            }
-        }
-    }
-
-    /*
-    void HandleMoveChange(IMoveImmutable move)
-    {
-        MovementParticleInfo.MovementParticles[] particles = move.GetParticlesToSpawn();
         if (particles != null)
         {
-            foreach (MovementParticleInfo.MovementParticles p in particles) {
+            foreach (MovementParticleInfo.MovementParticles p in particles)
+            {
                 SpawnParticle(p);
             }
         }
+        MovementParticleInfo.MovementParticles[] toStop = me.GetCurrentMove().GetParticlesToStop();
+        if (toStop != null)
+        {
+            foreach (MovementParticleInfo.MovementParticles p in toStop)
+            {
+                StopParticle(p);
+            }
+        }
     }
-    */
 
     void SpawnParticle(MovementParticleInfo.MovementParticles info)
     {
@@ -67,6 +82,32 @@ public class MovementParticleExecuter : MonoBehaviour
         {
             // No prompt for destruction can exist
             Debug.LogError("Particle system " + info + " could never be destroyed. Check its attributes.");
+        }
+
+        activeSpawns.Add(new Spawn(info.particles, spawned));
+    }
+
+    // If the particles represented by the given info struct are currently active, halt it.
+    void StopParticle(MovementParticleInfo.MovementParticles info)
+    {
+        Spawn toDelete = new Spawn(null, null); // Placeholder
+
+        foreach (Spawn s in activeSpawns)
+        {
+            if (s.prefab == info.particles)
+            {
+                if (s.instantiated != null)
+                {
+                    HaltAllParticlesFoundInGameObj(s.instantiated);
+                    toDelete = s;
+                    break;
+                }
+            }
+        }
+
+        if (toDelete.instantiated != null) // If not placeholder (actual value to delete)
+        {
+            activeSpawns.Remove(toDelete);
         }
     }
 
