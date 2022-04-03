@@ -40,7 +40,6 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Player.Boost.started += _ => OnPushPress.Invoke();
         inputActionsHolder.inputActions.Player.VertBoost.started += _ => OnVertBoostCharge.Invoke();
         inputActionsHolder.inputActions.Player.VertBoost.canceled += _ => OnVertBoostRelease.Invoke();
-        //OnVertBoostCharge.AddListener(() => StartCoroutine("WaitForVertBoostRelease"));
         inputActionsHolder.inputActions.Player.Boost.performed += _ => OnHorizBoostCharge.Invoke();
         inputActionsHolder.inputActions.Player.Boost.canceled += _ => OnHorizBoostRelease.Invoke();
         inputActionsHolder.inputActions.Player.Dive.performed += _ => OnDiveInput.Invoke();
@@ -50,24 +49,6 @@ public class MovementInputInfo : MonoBehaviour
         inputActionsHolder.inputActions.Checkpoint.Respawn.performed += _ => OnRespawnToCheckpointInput.Invoke();
 
     }
-
-    /*
-    IEnumerator WaitForVertBoostRelease()
-    {
-        vertBoostTimeCharged = 0;
-        while (vertBoostTimeCharged < movementSettings.VertBoostMaxChargeTime
-            && inputActionsHolder.inputActions.Player.VertBoost.ReadValue<float>() != 0)
-        {
-            vertBoostTimeCharged += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-        if (vertBoostTimeCharged > movementSettings.VertBoostMaxChargeTime)
-        {
-            vertBoostTimeCharged = movementSettings.VertBoostMaxChargeTime;
-        }
-        OnVertBoostRelease.Invoke();
-    }
-    */
 
     /// <summary>
     /// Gives the amount of time that the player last charged their vertical

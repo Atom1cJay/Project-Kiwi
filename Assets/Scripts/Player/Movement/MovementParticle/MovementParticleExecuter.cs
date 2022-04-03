@@ -10,46 +10,63 @@ public class MovementParticleExecuter : MonoBehaviour
     void Awake()
     {
         me = GetComponent<MoveExecuter>();
-        me.OnMoveChanged.AddListener(() => HandleParticleChange(me.GetCurrentMove()));
+        //me.OnMoveChanged.AddListener(() => HandleMoveChange(me.GetCurrentMove()));
     }
 
-    void HandleParticleChange(IMoveImmutable move)
+    private void Update()
+    {
+        MovementParticleInfo.MovementParticles[] particles = me.GetCurrentMove().GetParticlesToSpawn();
+        if (particles != null) {
+            foreach (MovementParticleInfo.MovementParticles p in particles) {
+                SpawnParticle(p);
+            }
+        }
+    }
+
+    /*
+    void HandleMoveChange(IMoveImmutable move)
     {
         MovementParticleInfo.MovementParticles[] particles = move.GetParticlesToSpawn();
-        GameObject spawned;
         if (particles != null)
         {
             foreach (MovementParticleInfo.MovementParticles p in particles) {
-                // Handle particle spawning
-                // Should particles be a child of the player or be on their own?
-                if (p.staysWithPlayer)
-                {
-                    spawned = Instantiate(p.particles, transform);
-                }
-                else
-                {
-                    // Offset in the prefabs section should be applied here
-                    Vector3 offset = p.particles.transform.position;
-                    spawned = Instantiate(p.particles, transform.position + offset, transform.rotation);
-                }
-
-                // Handle particle despawning
-                if (p.maxTimeBeforeDestroy > 0)
-                {
-                    // For timed destruction or (if applicable) post-halt destruction
-                    StartCoroutine(HandleParticleLifetime(p.maxTimeBeforeDestroy, p.haltedByNewMove, spawned, p.timeAfterHaltToDestroy));
-                }
-                else if (p.haltedByNewMove && p.timeAfterHaltToDestroy > 0)
-                {
-                    // For post-halt destruction
-                    StartCoroutine(HandleParticleLifetime(float.MaxValue, p.haltedByNewMove, spawned, p.timeAfterHaltToDestroy));
-                }
-                else
-                {
-                    // No prompt for destruction can exist
-                    Debug.LogError("Particle system " + p + " could never be destroyed. Check its attributes.");
-                }
+                SpawnParticle(p);
             }
+        }
+    }
+    */
+
+    void SpawnParticle(MovementParticleInfo.MovementParticles info)
+    {
+        GameObject spawned;
+
+        // Should particles be a child of the player or be on their own?
+        if (info.staysWithPlayer)
+        {
+            spawned = Instantiate(info.particles, transform);
+        }
+        else
+        {
+            // Offset in the prefabs section should be applied here
+            Vector3 offset = info.particles.transform.position;
+            spawned = Instantiate(info.particles, transform.position + offset, transform.rotation);
+        }
+
+        // Handle particle despawning
+        if (info.maxTimeBeforeDestroy > 0)
+        {
+            // For timed destruction or (if applicable) post-halt destruction
+            StartCoroutine(HandleParticleLifetime(info.maxTimeBeforeDestroy, info.haltedByNewMove, spawned, info.timeAfterHaltToDestroy));
+        }
+        else if (info.haltedByNewMove && info.timeAfterHaltToDestroy > 0)
+        {
+            // For post-halt destruction
+            StartCoroutine(HandleParticleLifetime(float.MaxValue, info.haltedByNewMove, spawned, info.timeAfterHaltToDestroy));
+        }
+        else
+        {
+            // No prompt for destruction can exist
+            Debug.LogError("Particle system " + info + " could never be destroyed. Check its attributes.");
         }
     }
 
@@ -66,7 +83,7 @@ public class MovementParticleExecuter : MonoBehaviour
             if (newMove && newMoveHalts && !moveHalted)
             {
                 moveHalted = true;
-                HaltAllParticlesFoundInGameObj(particles, timeAfterHaltToDestroy);
+                HaltAllParticlesFoundInGameObj(particles);
                 if (timeAfterHaltToDestroy >= 0)
                 {
                     timeLeftToLive = timeAfterHaltToDestroy;
@@ -80,7 +97,7 @@ public class MovementParticleExecuter : MonoBehaviour
 
     // For all particle systems found in the given gameObject OR its children,
     // stop the particle system
-    void HaltAllParticlesFoundInGameObj(GameObject go, float timeAfterHaltToDestroy)
+    void HaltAllParticlesFoundInGameObj(GameObject go)
     {
         ParticleSystem[] allPS = go.GetComponentsInChildren<ParticleSystem>();
         if (allPS.Length != 0)

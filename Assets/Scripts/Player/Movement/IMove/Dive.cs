@@ -10,6 +10,7 @@ public class Dive : AMove
 {
     float horizVel;
     float vertVel;
+    bool spawnedParticlesFirstFrame;
 
     /// <summary>
     /// Constructs a Dive, initializing the objects that hold all the
@@ -109,6 +110,11 @@ public class Dive : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
+        if (spawnedParticlesFirstFrame)
+        {
+            return null;
+        }
+        spawnedParticlesFirstFrame = true;
         return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Stars };
     }
 }

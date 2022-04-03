@@ -12,6 +12,7 @@ public class Run : AMove
     bool timeBetweenJumpsBreaksTJ;
     bool pushPending;
     readonly FromStatus fromStatus = FromStatus.Null;
+    bool spawnedParticlesFirstFrame;
 
     /// <summary>
     /// Constructs a Run, initializing the objects that hold all the
@@ -98,7 +99,6 @@ public class Run : AMove
         {
             return new RotationInfo(movementSettings.GroundRotationSpeed, true);
         }
-        //return movementSettings.GroundRotationSpeed;
         float propToAbsoluteMax = (horizVel - movementSettings.MaxSpeed) / (movementSettings.MaxSpeedAbsolute - movementSettings.MaxSpeed);
         return new RotationInfo(Mathf.Lerp(movementSettings.GroundRotationSpeed, movementSettings.GroundRotationSpeedMaxXSpeed, propToAbsoluteMax), true);
     }
@@ -175,6 +175,18 @@ public class Run : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
+        if (spawnedParticlesFirstFrame)
+        {
+            return null;
+
+        }
+        spawnedParticlesFirstFrame = true;
+
+        if (mi.BoopingWater())
+        {
+            return null;
+        }
+
         switch (fromStatus)
         {
             case FromStatus.FromSlide:

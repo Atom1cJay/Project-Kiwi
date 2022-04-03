@@ -9,20 +9,21 @@ public class CollisionDetector : MonoBehaviour
     private GameObject collidingWith = null;
     [SerializeField] private List<GameObject> gameObjectsToIgnore;
     [SerializeField] LayerMask layersToInclude;
+    [SerializeField] bool includeTriggers;
 
     private void UpdateCollisionStatus()
     {
-        Debug.DrawLine(transform.position, transform.position + (Vector3.right * (transform.localScale.magnitude / 2) / 1.3f));
-        foreach (Collider c in Physics.OverlapSphere(transform.position, (transform.localScale.magnitude / 2) / 1.3f, layersToInclude)) // TODO FIX BAD GENERALIZE
+        QueryTriggerInteraction qti = includeTriggers ? QueryTriggerInteraction.Collide : QueryTriggerInteraction.Ignore;
+        //Debug.DrawLine(transform.position, transform.position + (Vector3.right * (transform.localScale.magnitude / 2) / 1.3f));
+        foreach (Collider c in Physics.OverlapSphere(transform.position, (transform.localScale.magnitude / 2) / 1.3f, layersToInclude, qti)) // TODO FIX BAD GENERALIZE
         {
-            if (!c.isTrigger && !gameObjectsToIgnore.Contains(c.gameObject))
+            if (!gameObjectsToIgnore.Contains(c.gameObject))
             {
                 collidingWith = c.gameObject;
                 colliding = true;
                 return;
             }
         }
-
         collidingWith = null;
         colliding = false;
     }

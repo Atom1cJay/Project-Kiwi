@@ -28,7 +28,6 @@ public class DoubleJump : AMove
     public DoubleJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(ms, mi, mii)
     {
         this.horizVector = mi.GetEffectiveSpeed();
-        //this.horizVector = horizVector;
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", IncrementJumpTimer());
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForJumpGroundableTimer());
         gravity = movementSettings.JumpInitGravity;
@@ -116,7 +115,6 @@ public class DoubleJump : AMove
     public override Vector2 GetHorizSpeedThisFrame()
     {
         return horizVector;
-        //return ForwardMovement(horizVel);
     }
 
     public override float GetVertSpeedThisFrame()

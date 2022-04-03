@@ -10,6 +10,7 @@ public class BoostSlide : AMove
     FromStatus fromStatus;
 
     bool boostChargePending;
+    bool spawnedParticlesFirstFrame;
 
     public BoostSlide(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel, bool allowRefresh) : base(ms, mi, mii)
     {
@@ -125,6 +126,11 @@ public class BoostSlide : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
+        if (spawnedParticlesFirstFrame)
+        {
+            return null;
+        }
+        spawnedParticlesFirstFrame = true;
         if (fromStatus == FromStatus.FromBoostCharge)
         {
             return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.SlidingBoost, MovementParticleInfo.Instance.SlidingTracks };

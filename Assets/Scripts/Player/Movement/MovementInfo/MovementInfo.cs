@@ -8,15 +8,22 @@ using UnityEngine.Events;
 [RequireComponent(typeof(PlayerHealth))]
 public class MovementInfo : MonoBehaviour
 {
-    public static MovementInfo instance;
+    public static MovementInfo instance; // There can be only one
+
+    // A bunch of collision detectors
     [SerializeField] CollisionDetector groundDetector;
     [SerializeField] CollisionDetector bonkDetector;
     [SerializeField] CollisionDetector waterDetector;
     [SerializeField] CollisionDetector antiBoostDetector;
-    public PlayerHealth ph { get; private set; }
+    [SerializeField] CollisionDetector waterBoopDetector;
+
+    // Triple Jump Tracking
     private int tjJumpCount;
     IMoveImmutable storedMove; // The move from the last frame
     MoveExecuter me;
+
+    // Other
+    public PlayerHealth ph { get; private set; }
     Vector2 effectiveSpeed;
 
     [HideInInspector] public UnityEvent onJumpAttackFeedbackReceived = new UnityEvent();
@@ -124,10 +131,20 @@ public class MovementInfo : MonoBehaviour
         return bonkDetector;
     }
 
-    // Is the water detector colliding with anything?
+    // Is the water detector (i.e. the one that should be used for swimming)
+    // colliding with anything?
     public bool TouchingWater()
     {
         return waterDetector.Colliding();
+    }
+
+    /// <summary>
+    /// Is the player touching the water (visually - NOT the detector that is
+    /// checked for swimming)
+    /// </summary>
+    public bool BoopingWater()
+    {
+        return waterBoopDetector.Colliding();
     }
 
     public Vector2 GetEffectiveSpeed()

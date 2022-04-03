@@ -8,6 +8,7 @@ public class VertAirBoost : AMove
     float vertVel;
     Vector2 horizVector;
     bool divePending;
+    bool spawnedParticlesFirstFrame;
 
     /// <summary>
     /// Constructs a VertAirBoost, initializing the objects that hold all the
@@ -148,6 +149,11 @@ public class VertAirBoost : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
+        if (spawnedParticlesFirstFrame)
+        {
+            return null;
+        }
+        spawnedParticlesFirstFrame = true;
         return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.VertBoost };
     }
 }

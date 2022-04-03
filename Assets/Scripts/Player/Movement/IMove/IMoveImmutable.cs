@@ -67,12 +67,18 @@ public interface IMoveImmutable
     Attack[] GetAttack();
 
     /// <summary>
-    /// Returns the exact particle GameObject that should be spawned around
-    /// the player when this move takes place. Null for no particles. Particles
-    /// are only spawned at the beginning of a move (currently at least).
+    /// Returns the particle information for all particles that should be
+    /// spawned **this frame**.
     /// </summary>
-    /// <returns></returns>
     MovementParticleInfo.MovementParticles[] GetParticlesToSpawn();
+
+    /// <summary>
+    /// Returns the particle information for all particles that should be
+    /// stopped **this frame**.
+    /// If no such particles exist, or the particles are already stopped,
+    /// nothing will happen.
+    /// </summary>
+    MovementParticleInfo.MovementParticles[] GetParticlesToStop();
 
     /// <summary>
     /// Should a pause be allowed to occur if a pause input is made by the player?

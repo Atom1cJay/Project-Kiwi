@@ -49,6 +49,8 @@ public abstract class AMove : IMove
 
     public virtual MovementParticleInfo.MovementParticles[] GetParticlesToSpawn() { return null; }
 
+    public virtual MovementParticleInfo.MovementParticles[] GetParticlesToStop() { return null; }
+
     public virtual bool Pausable() { return false; }
 
     /// <summary>
@@ -92,14 +94,6 @@ public abstract class AMove : IMove
         float direction = Vector2.Dot(horizVector.normalized, new Vector2(transform.forward.x, transform.forward.z));
         float directionWithMagnitude = direction * horizVector.magnitude;
         return (directionWithMagnitude >= 0) ? directionWithMagnitude : 0;
-        /*
-        float playerAngle = mi.GetPlayerTransform().eulerAngles.y * Mathf.Deg2Rad;
-        float vectorAngle = (-Mathf.Atan2(horizVector.y, horizVector.x)) + (Mathf.PI / 2);
-        float angleDifference = playerAngle - vectorAngle;
-        Debug.Log(horizVector);
-        //Debug.Log(Mathf.Cos(angleDifference) * horizVector.magnitude);
-        return Mathf.Cos(angleDifference) * horizVector.magnitude;
-        */
     }
 
     public enum FromStatus

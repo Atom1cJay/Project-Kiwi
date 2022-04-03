@@ -8,7 +8,7 @@ public class HorizAirBoost : AMove
     float vertVel;
     float horizVel;
 
-    //bool objectHitPending;
+    bool spawnedParticlesFirstFrame;
 
     /// <summary>
     /// Constructs a HorizAirBoost, initializing the objects that hold all the
@@ -111,6 +111,11 @@ public class HorizAirBoost : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
+        if (spawnedParticlesFirstFrame)
+        {
+            return null;
+        }
+        spawnedParticlesFirstFrame = true;
         return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.HorizBoost };
     }
 }

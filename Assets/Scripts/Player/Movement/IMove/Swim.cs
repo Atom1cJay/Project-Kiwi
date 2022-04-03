@@ -13,6 +13,7 @@ public class Swim : AMove
     private bool receivedJumpFeedback;
     private bool receivedKnockbackFeedback;
     private Vector3 knockbackFeedbackNormal; // Only to be accessed if received knockback feedback
+    bool spawnedParticlesFirstFrame;
 
     /// <summary>
     /// Constructs a Swim, initializing the objects that hold all the
@@ -148,6 +149,11 @@ public class Swim : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
+        if (spawnedParticlesFirstFrame)
+        {
+            return null;
+        }
+        spawnedParticlesFirstFrame = true;
         return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Splash, MovementParticleInfo.Instance.SwimCircles, MovementParticleInfo.Instance.SwimCirclesEdges };
     }
 
