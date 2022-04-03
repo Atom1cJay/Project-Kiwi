@@ -9,6 +9,8 @@ public class HorizGroundBoostCharge : AMove
     readonly float maxTimeToCharge;
     bool boostReleasePending;
 
+    bool spawnedParticlesFirstFrame;
+
     /// <summary>
     /// Constructs a HorizAirBoostCharge, initializing the objects that hold all
     /// the information it needs to function.
@@ -100,6 +102,11 @@ public class HorizGroundBoostCharge : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
+        if (spawnedParticlesFirstFrame)
+        {
+            return null;
+        }
+        spawnedParticlesFirstFrame = true;
         return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Sliding, MovementParticleInfo.Instance.SlidingTracks };
     }
 

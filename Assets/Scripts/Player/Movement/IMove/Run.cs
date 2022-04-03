@@ -14,6 +14,8 @@ public class Run : AMove
     readonly FromStatus fromStatus = FromStatus.Null;
     bool spawnedParticlesFirstFrame;
 
+    bool inBoopingWaterState; // Making water boop particles?
+
     /// <summary>
     /// Constructs a Run, initializing the objects that hold all the
     /// information it needs to function. FromIdle will be false by
@@ -175,17 +177,19 @@ public class Run : AMove
 
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
-        if (spawnedParticlesFirstFrame)
+        if (!inBoopingWaterState && mi.BoopingWater())
+        {
+            inBoopingWaterState = true;
+            return new MovementParticleInfo.MovementParticles[]
+                { MovementParticleInfo.Instance.WaterWalking };
+        }
+
+        if (spawnedParticlesFirstFrame) // Everything from here on out should only spawn the first frame
         {
             return null;
-
         }
+
         spawnedParticlesFirstFrame = true;
-
-        if (mi.BoopingWater())
-        {
-            return null;
-        }
 
         switch (fromStatus)
         {
@@ -203,6 +207,17 @@ public class Run : AMove
             default:
                 return null;
         }
+    }
+
+    public override MovementParticleInfo.MovementParticles[] GetParticlesToStop()
+    {
+        if (inBoopingWaterState && !mi.BoopingWater())
+        {
+            inBoopingWaterState = false;
+            return new MovementParticleInfo.MovementParticles[]
+                { MovementParticleInfo.Instance.WaterWalking };
+        }
+        return null;
     }
 
     public override bool Pausable()
