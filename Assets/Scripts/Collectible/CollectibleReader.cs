@@ -12,7 +12,9 @@ public class CollectibleReader : MonoBehaviour
     Collider collectibleCollider;
 
     public bool collected;
-    
+
+    public string name;
+
     [SerializeField] GameObject collectibleVisual;
 
     // Start is called before the first frame supdate

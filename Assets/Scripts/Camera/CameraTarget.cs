@@ -17,6 +17,8 @@ public class CameraTarget : MonoBehaviour
     [SerializeField] float maxPosDiffY;
     [SerializeField] float minPosDiffY;
 
+    Transform temp = null;
+
     private void Awake()
     {
         ResetToPlayerCenter();
@@ -68,5 +70,19 @@ public class CameraTarget : MonoBehaviour
         }
 
         return axisChange;
+    }
+
+
+    public void focusOnObject(Transform t, float duration)
+    {
+        temp = player;
+        player = t;
+        Invoke("returnFocus", duration);
+
+    }
+
+    void returnFocus()
+    {
+        player = temp;
     }
 }
