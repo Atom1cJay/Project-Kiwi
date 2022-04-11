@@ -300,7 +300,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BoostJump
-  m_Speed: 3
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -312,7 +312,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1306576925009953733, guid: f0ac1ee392999314eb847095e93fe12c, type: 3}
+  m_Motion: {fileID: -2989550437145841316, guid: f0ac1ee392999314eb847095e93fe12c, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -476,7 +476,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ground Horizontal Charge
-  m_Speed: 1.25
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -583508816400424798}
@@ -2218,7 +2218,7 @@ AnimatorStateMachine:
     m_Position: {x: -200, y: -520, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8120808361021947892}
-    m_Position: {x: 330, y: -900, z: 0}
+    m_Position: {x: 310, y: -910, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4066087192811946384}
     m_Position: {x: -480, y: -880, z: 0}
@@ -2767,9 +2767,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
-  m_TransitionOffset: 0
-  m_ExitTime: 0.8459436
+  m_TransitionDuration: 0.19999999
+  m_TransitionOffset: 0.020101333
+  m_ExitTime: 1.0488703
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -4369,7 +4369,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Boost Slide
-  m_Speed: 1.5
+  m_Speed: 1.35
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8658251195812260139}
@@ -4383,7 +4383,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -6137390773831557435, guid: f0ac1ee392999314eb847095e93fe12c, type: 3}
+  m_Motion: {fileID: -5206226973769149734, guid: f0ac1ee392999314eb847095e93fe12c, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -5695,7 +5695,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ground Pound
-  m_Speed: 1.5
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -5707,7 +5707,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7722618539597456502, guid: f0ac1ee392999314eb847095e93fe12c, type: 3}
+  m_Motion: {fileID: -7421985595323285455, guid: f0ac1ee392999314eb847095e93fe12c, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 7664120462568309158
-    second: BoostSlide
+    second: AppleLad | BoostSlideV2
   - first:
       74: 517356357601532381
     second: JetpackHorizontalBoost
@@ -207,6 +207,21 @@ ModelImporter:
   - first:
       74: 8951708584942277876
     second: AppleLad| SwimmingV3
+  - first:
+      74: -7421985595323285455
+    second: CharacterModel|GroundPound V2
+  - first:
+      74: -5206226973769149734
+    second: CharacterModel|BoostSlideV2
+  - first:
+      74: -2989550437145841316
+    second: CharacterModel|BoostSlideJumpV2
+  - first:
+      74: 8450824280446396905
+    second: AppleLad|BoostSlideV2
+  - first:
+      74: 7771261001798484777
+    second: CharacterModel|BoostSlideJumpV2 (2)
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -440,11 +455,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AppleLad|BoostSlideJump
-      takeName: CharacterModel|BoostSlideJump
+      name: CharacterModel|BoostSlideJumpV2
+      takeName: CharacterModel|BoostSlideJumpV2
       internalID: 0
       firstFrame: 0
-      lastFrame: 42
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -527,11 +542,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AppleLad|GroundPound
-      takeName: CharacterModel|GroundPound
+      name: CharacterModel|GroundPound V2
+      takeName: CharacterModel|GroundPound V2
       internalID: 0
       firstFrame: 0
-      lastFrame: 29
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -705,7 +720,7 @@ ModelImporter:
       takeName: CharacterModel|JetpackHorizontalGroundChargeCopy
       internalID: 0
       firstFrame: 0
-      lastFrame: 31
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -991,8 +1006,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AppleLad|BoostSlide
-      takeName: BoostSlide
+      name: CharacterModel|BoostSlideV2
+      takeName: CharacterModel|BoostSlideV2
       internalID: 0
       firstFrame: 0
       lastFrame: 57
@@ -1082,7 +1097,7 @@ ModelImporter:
       takeName: CharacterModel|GlideAnimation
       internalID: 0
       firstFrame: 0
-      lastFrame: 60
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1119,6 +1134,35 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: CharacterModel|BoostSlideJumpV2 (2)
+      takeName: CharacterModel|BoostSlideJumpV2
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
