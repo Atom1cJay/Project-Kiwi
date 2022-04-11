@@ -42,6 +42,7 @@ public class CameraUtils : MonoBehaviour
     {
         if (camMode != CameraMode.AroundPlayer)
         {
+            Debug.LogError("CamUtils.RotateBy() called, when camera is not centered around player");
             return;
         }
         horizAngle += horizAmount;
