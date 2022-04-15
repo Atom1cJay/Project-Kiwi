@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class HealthSystemViewer : MonoBehaviour
     [SerializeField] List<Image> images;
     [SerializeField] List<Color> colors;
 
+    [SerializeField] TMP_Text health;
     Color color;
 
     PlayerHealth ph;
@@ -30,6 +32,7 @@ public class HealthSystemViewer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         int temp = ph.hp;
         color = colors[temp - 1];
 
@@ -56,6 +59,7 @@ public class HealthSystemViewer : MonoBehaviour
 
         currentHealth = temp;
 
+        health.text = ""+currentHealth;
     }
 
 }

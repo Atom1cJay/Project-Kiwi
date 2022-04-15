@@ -18,6 +18,7 @@ public class CameraTarget : MonoBehaviour
     [SerializeField] float minPosDiffY;
 
     Transform temp = null;
+    float tempIncreaseHeight = 0f;
 
     private void Awake()
     {
@@ -78,11 +79,14 @@ public class CameraTarget : MonoBehaviour
         temp = player;
         player = t;
         Invoke("returnFocus", duration);
+        tempIncreaseHeight = 2f;
 
     }
 
     void returnFocus()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         player = temp;
+        tempIncreaseHeight = 0f;
     }
 }

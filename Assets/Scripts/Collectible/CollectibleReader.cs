@@ -49,8 +49,18 @@ public class CollectibleReader : MonoBehaviour
     //Sets collected to true
     public void CollectObject()
     {
-        collected = true;
-        UpdateCollectibleReader();
+        if (!collected)
+        {
+            collected = true;
+
+            if (GetComponentInParent<CollectWanderLeafScript>() != null)
+            {
+                GetComponentInParent<CollectWanderLeafScript>().startCollect();
+                Invoke("UpdateCollectibleReader", 5f);
+            }
+            else
+                UpdateCollectibleReader();
+        }
     }
 
 

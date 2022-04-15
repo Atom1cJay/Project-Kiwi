@@ -12,20 +12,19 @@ public class CollectWanderLeafScript : MonoBehaviour
     [SerializeField] float startDuration, stayDuration, exitDuration, distanceToGoUp;
 
     bool started = false;
+    bool collected = false;
 
     int animState = 0;
 
-
-    // Start ssfis called before the first frame update
-    void Start()
+    public void startCollect()
     {
-        
+        collected = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.O) && !started)
+        if (collected && !started)
         {
             started = true;
             animState = 1;
