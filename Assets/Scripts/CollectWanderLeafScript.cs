@@ -28,7 +28,7 @@ public class CollectWanderLeafScript : MonoBehaviour
         {
             started = true;
             animState = 1;
-            rot.slowToStop(startDuration / 2.5f);
+            //rot.slowToStop(startDuration / 2.5f);
             Invoke("startCollection", startDuration);
 
             GameObject.FindGameObjectWithTag("CameraTargetController")

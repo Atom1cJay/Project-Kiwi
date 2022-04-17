@@ -17,8 +17,10 @@ public class CollectibleReader : MonoBehaviour
 
     [SerializeField] GameObject collectibleVisual;
 
-    Animator anim; // Optional!
-    [SerializeField] float animLength; // Optional!
+    [SerializeField] bool playAnimation;
+
+    Animator anim; // Optional! (Used if playAnimation is true)
+    [SerializeField] float animLength; // Optional! (Used if playAnimation is true)
 
     // Start is called before the first frame supdate
     void Start()
@@ -62,10 +64,13 @@ public class CollectibleReader : MonoBehaviour
                 GetComponentInParent<CollectWanderLeafScript>().startCollect();
                 Invoke("UpdateCollectibleReader", 5f);
             }
-            else if (anim != null)
+            else if (playAnimation && anim != null)
+            {
+                Invoke("UpdateCollectibleReader", animLength);
+            }
+            if (playAnimation && anim != null)
             {
                 anim.SetTrigger("Collected");
-                Invoke("UpdateCollectibleReader", animLength);
             }
             else
             {
