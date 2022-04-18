@@ -34,9 +34,9 @@ public class CollectibleSystem : MonoBehaviour
     //OnTriggerEnter
     void OnTriggerEnter (Collider col)
     {
-        if (col.gameObject.GetComponent<CollectibleReader>() != null)
+        CollectibleReader cr = col.gameObject.GetComponent<CollectibleReader>();
+        if (cr != null && !cr.collected)
         {
-            CollectibleReader cr = col.gameObject.GetComponent<CollectibleReader>();
             CollectItem(cr);
             cr.CollectObject();
         }
