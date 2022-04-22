@@ -731,9 +731,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   validGround:
     serializedVersion: 2
-    m_Bits: 1
-  offsetAboveRaycastHitPoint: 0.1
+    m_Bits: 32769
+  distFromGround: 0.5
   raycastLength: 30
+  sun: {fileID: 0}
 --- !u!1 &1162142621
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,7 +885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1261989592
 Transform:
   m_ObjectHideFlags: 0
@@ -7219,6 +7220,10 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 519351487, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: ph
+      value: 
+      objectReference: {fileID: 1693213253}
     - target: {fileID: 1026291952, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: dm
       value: 
@@ -7269,7 +7274,7 @@ PrefabInstance:
       objectReference: {fileID: 1704877077}
     - target: {fileID: 5506231368963300186, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7664161523741193616, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_Sprite
@@ -7508,6 +7513,14 @@ PrefabInstance:
       propertyPath: soundList.Array.data[23]
       value: 
       objectReference: {fileID: 11400000, guid: accb995be44ba4346a558c7876b4d60c, type: 2}
+    - target: {fileID: 3848414338077669710, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
+      propertyPath: currentMove
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3848414338077669710, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
+      propertyPath: previousMove
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3865432219276408900, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
       propertyPath: m_RootOrder
       value: 4
