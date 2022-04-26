@@ -202,6 +202,7 @@ public class Run : AMove
                 return new MovementParticleInfo.MovementParticles[]
                 { MovementParticleInfo.Instance.Accel, MovementParticleInfo.Instance.Walking, MovementParticleInfo.Instance.WalkingSmoke };
             case FromStatus.FromAir:
+            case FromStatus.FromGlide:
                 return new MovementParticleInfo.MovementParticles[]
                 { MovementParticleInfo.Instance.Landing, MovementParticleInfo.Instance.LandingImpact, MovementParticleInfo.Instance.Walking, MovementParticleInfo.Instance.WalkingSmoke };
             default:

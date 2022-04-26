@@ -16,18 +16,19 @@ public class CameraInstructionLeaf : ACameraInstruction
         }
     }
 
-    public override void RunInstructions(Transform c, Vector3 initPos)
+    public override void RunInstructions(Transform c, Vector3 initPos, Quaternion restartRot)
     {
-        StartCoroutine(RunInstructionsProcess(c, initPos));
+        StartCoroutine(RunInstructionsProcess(c, initPos, restartRot));
     }
 
-    private IEnumerator RunInstructionsProcess(Transform c, Vector3 initPos)
+    private IEnumerator RunInstructionsProcess(Transform c, Vector3 initPos, Quaternion restartRot)
     {
         TimescaleHandler.setPausedForCameraTransition(timeStopped);
 
         // Travel
         float timeElapsed = 0;
         Vector3 startingPos = c.position;
+        Quaternion startingRot = c.rotation;
 
         while (timeElapsed < travelTime)
         {
@@ -40,10 +41,12 @@ public class CameraInstructionLeaf : ACameraInstruction
                     Mathf.SmoothStep(startingPos.x, initPos.x, timeRatio),
                     Mathf.SmoothStep(startingPos.y, initPos.y, timeRatio),
                     Mathf.SmoothStep(startingPos.z, initPos.z, timeRatio));
+                c.rotation = Quaternion.Lerp(startingRot, restartRot, Mathf.SmoothStep(0, 1, timeRatio));
             }
             else
             {
                 c.position = Vector3.Lerp(startingPos, initPos, timeRatio);
+                c.rotation = Quaternion.Lerp(startingRot, restartRot, timeRatio);
             }
 
             yield return new WaitForEndOfFrame();

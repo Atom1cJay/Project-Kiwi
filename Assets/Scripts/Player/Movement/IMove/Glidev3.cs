@@ -135,11 +135,11 @@ public class Glidev3 : AMove
         {
             if (mii.GetHorizontalInput().magnitude <= .25f)
             {
-                return new Idle(mii, mi, movementSettings);
+                return new Idle(mii, mi, movementSettings, FromStatus.FromGlide);
             }
             else
             {
-                return new Run(mii, mi, movementSettings, horizVector);
+                return new Run(mii, mi, movementSettings, horizVector, FromStatus.FromGlide);
             }
         }
         else if (/*objectHitPending*/mi.BonkDetectorTouching())

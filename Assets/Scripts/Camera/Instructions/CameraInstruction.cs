@@ -28,19 +28,22 @@ public class CameraInstruction : ACameraInstruction
         }
     }
 
-    public override void RunInstructions(Transform c, Vector3 initPos)
+    // DO NOT CALL THIS DIRECTLY FROM A UNITYEVENT OR SOMETHING.
+    // Call the CameraUtils method to make this process happen.
+    public override void RunInstructions(Transform c, Vector3 initPos, Quaternion restartRot)
     {
         RunningInstructions = true;
-        StartCoroutine(RunInstructionsSequence(c, initPos));
+        StartCoroutine(RunInstructionsSequence(c, initPos, restartRot));
     }
 
-    IEnumerator RunInstructionsSequence(Transform c, Vector3 restartPos)
+    IEnumerator RunInstructionsSequence(Transform c, Vector3 restartPos, Quaternion restartRot)
     {
         TimescaleHandler.setPausedForCameraTransition(timeStopped);
 
         // Travel
         float timeElapsed = 0;
         Vector3 startingPos = c.position;
+        Quaternion startingRot = c.rotation;
 
         while (timeElapsed < travelTime)
         {
@@ -53,10 +56,12 @@ public class CameraInstruction : ACameraInstruction
                     Mathf.SmoothStep(startingPos.x, goalTransform.position.x, timeRatio),
                     Mathf.SmoothStep(startingPos.y, goalTransform.position.y, timeRatio),
                     Mathf.SmoothStep(startingPos.z, goalTransform.position.z, timeRatio));
+                c.rotation = Quaternion.Lerp(startingRot, goalTransform.rotation, Mathf.SmoothStep(0, 1, timeRatio));
             }
             else
             {
                 c.position = Vector3.Lerp(startingPos, goalTransform.position, timeRatio);
+                c.rotation = Quaternion.Lerp(startingRot, goalTransform.rotation, timeRatio);
             }
 
             yield return new WaitForEndOfFrame();
@@ -73,7 +78,7 @@ public class CameraInstruction : ACameraInstruction
         }
 
         // Next in sequence
-        next.RunInstructions(c, restartPos);
+        next.RunInstructions(c, restartPos, restartRot);
     }
 
     /// <summary>

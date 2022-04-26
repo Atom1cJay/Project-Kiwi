@@ -24,7 +24,7 @@ public abstract class ACameraInstruction : MonoBehaviour
     /// Exeucte the instructions, on the given camera transform, and the
     /// given original position where the traveling should end.
     /// </summary>
-    public abstract void RunInstructions(Transform c, Vector3 restartPos);
+    public abstract void RunInstructions(Transform c, Vector3 restartPos, Quaternion restartRot);
 
     /// <summary>
     /// How long will the instructions take to exeucte from this instruction?

@@ -42,7 +42,7 @@ public class CameraUtils : MonoBehaviour
     {
         if (camMode != CameraMode.AroundPlayer)
         {
-            Debug.LogError("CamUtils.RotateBy() called, when camera is not centered around player");
+            //Debug.LogError("CamUtils.RotateBy() called, when camera is not centered around player");
             return;
         }
         horizAngle += horizAmount;
@@ -201,7 +201,7 @@ public class CameraUtils : MonoBehaviour
             return;
         }
         camMode = CameraMode.FollowingInstructions;
-        instructions.RunInstructions(transform, transform.position);
+        instructions.RunInstructions(transform, transform.position, transform.rotation);
         StartCoroutine(WaitForInstructions(instructions));
     }
 
