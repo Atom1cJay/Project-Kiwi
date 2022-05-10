@@ -1,0 +1,876 @@
+DIRECTORY.H
+
+// Directory manipulation functions.
+//
+// Feel free to use as inspiration.
+
+// based on cs3650 starter code
+
+#ifndef DIRECTORY_H
+#define DIRECTORY_H
+
+#define DIR_NAME_LENGTH 48
+
+#include "blocks.h"
+#include "inode.h"
+#include "slist.h"
+
+typedef struct direntry {
+  char name[DIR_NAME_LENGTH];
+  int inum;
+  char _reserved[12];
+} dirent_t;
+
+int is_directory(inode_t *inode);
+// Includes freed dirents. Recommended to use this when making
+// for loops which go over the directory entries. Just remember to
+// skip over direntries whose inums are -1 (direntries which are free).
+int num_dirents(inode_t *inode);
+// Does NOT include freed dirents. Useful for things like checking
+// whether a directory is empty.
+int num_dirents_in_use(inode_t *inode);
+int directory_init(inode_t *inode, int dir_inum, int parent_inum);
+// Returns the inum of the obtained inode, or -1 if it doesn't exist.
+int directory_lookup(inode_t *dd, const char *name);
+dirent_t *directory_lookup_entry(inode_t *inode, const char *name);
+// Freed dirents still have an index. Freed dirents will return null.
+dirent_t *directory_lookup_entry_by_idx(inode_t *inode, int idx);
+//int tree_lookup(const char *path)
+// Returns -1 if a direntry cannot be allocated for space reasons.
+int directory_put(inode_t *dd, const char *name, int inum);
+// Returns 0 if the entry of the given name is found and deleted.
+// Returns -1 if the given entry doesn't exist.
+// Returns -2 if allow_dir_del is 0 and the given entry is for a directory.
+// Returns -3 if allow_file_del is 0 and the given entry is for a file.
+// Returns -4 if the given entry is for a directory that is not empty.
+int directory_delete(inode_t *dd, const char *name, int allow_dir_del, int allow_file_del);
+//slist_t *directory_list(const char *path);
+//void print_directory(inode_t *dd);
+
+#endif
+
+
+
+
+
+
+
+
+
+
+DIRECTORY.C
+
+#include <assert.h>
+#include <string.h>
+
+#include "directory.h"
+
+int is_directory(inode_t *inode) {
+  return (inode->mode & (1 << 14)) && !(inode->mode & (1 << 13)) && !(inode->mode & (1 << 12));
+}
+
+int directory_init(inode_t *inode, int dir_inum, int parent_inum) {
+  assert(is_directory(inode));
+  assert(directory_put(inode, ".", dir_inum) == 0);
+  assert(directory_put(inode, "..", parent_inum) == 0);
+  return 0;
+}
+
+// Includes freed dirents
+int num_dirents(inode_t *inode) {
+  assert(is_directory(inode));
+  return inode->size / sizeof(dirent_t); // Assumed divisible
+}
+
+// Does not include freed dirents
+int num_dirents_in_use(inode_t *inode) {
+  assert(is_directory(inode));
+  int count = 0;
+  for (int i = 0; i < num_dirents(inode); i++) {
+    if (directory_lookup_entry_by_idx(inode, i) != NULL) {
+      count++;
+    }
+  }
+  return count;
+}
+
+dirent_t *directory_lookup_entry(inode_t *inode, const char *name) {
+  assert(is_directory(inode));
+  for (int i = 0; i < num_dirents(inode); i++) {
+    dirent_t *current = (dirent_t *)inode_idx(inode, i * sizeof(dirent_t));
+    if (strcmp(name, current->name) == 0 && current->inum != -1) {
+      return current;
+    }
+  }
+  return NULL;
+}
+
+int directory_lookup(inode_t *inode, const char *name) {
+  assert(is_directory(inode));
+  dirent_t *dirent = directory_lookup_entry(inode, name);
+  if (dirent != NULL) {
+    return dirent->inum;
+  }
+  return -1;
+}
+
+// Freed dirents still have an index. Freed dirents will return null.
+dirent_t *directory_lookup_entry_by_idx(inode_t *inode, int idx) {
+  assert(is_directory(inode)); // TODO either return error instead in all directory methods, or check for directory status in nufs.c
+  assert(idx >= 0 && inode->size >= (idx + 1) * sizeof(dirent_t));
+  dirent_t *dirent = (dirent_t *)inode_idx(inode, idx * sizeof(dirent_t));
+  if (dirent->inum == -1) {
+    return NULL; // Is freed
+  }
+  return dirent;
+}
+
+int directory_put(inode_t *inode, const char *name, int inum) {
+  assert(is_directory(inode));
+  // Look for any already-existing free dirents
+  for (int i = 0; i < num_dirents(inode); i++) {
+    dirent_t *current = (dirent_t *)inode_idx(inode, i * sizeof(dirent_t));
+    if (current->inum == -1) { // Indicates a free dirent
+      strcpy(current->name, name);
+      current->inum = inum;
+      get_inode(inum)->refs += 1;
+      return 0; // Success
+    }
+  }
+  // Try to make a new dirent
+  int stored_size = inode->size;
+  int rv = inode_set_size(inode, inode->size + sizeof(dirent_t));
+  dirent_t *new_dirent = (dirent_t *)inode_idx(inode, stored_size);
+  if (rv == -1) {
+    return -1;
+  }
+  strcpy(new_dirent->name, name);
+  new_dirent->inum = inum;
+  get_inode(inum)->refs += 1;
+  return 0;
+}
+
+// Is the directory effectively empty (i.e. the only entries are . and ..)
+int is_empty_dir(inode_t *inode) {
+  assert(is_directory(inode));
+  return num_dirents_in_use(inode) == 2 && directory_lookup(inode, ".") >= 0 && directory_lookup(inode, "..") >= 0;
+}
+
+int directory_delete(inode_t *inode, const char *name, int allow_dir_del, int allow_file_del) {
+  assert(is_directory(inode));
+  dirent_t *to_delete = directory_lookup_entry(inode, name);
+  if (to_delete != NULL) { // If the requested entry exists and is not freed
+     inode_t *inode_to_delete = get_inode(to_delete->inum);
+     if (is_directory(inode_to_delete) && !allow_dir_del) {
+       return -2;
+     }
+     if (!is_directory(inode_to_delete) && !allow_file_del) {
+       return -3;
+     }
+     if (is_directory(inode_to_delete) && !is_empty_dir(inode_to_delete)) {
+       return -4;
+     }
+     inode_to_delete->refs -= 1;
+     if (inode_to_delete->refs <= 0) {
+       free_inode(to_delete->inum);
+     }
+     to_delete->inum = -1;
+     strcpy(to_delete->name, "DEBUG: FREED DIRENTRY"); // TODO change to empty string or something
+     // If the deleted entry was the last in its directory, decrease the size of the
+     // directory inode
+     if ((void *)to_delete == inode_idx(inode, inode->size - sizeof(dirent_t))) {
+       inode->size -= sizeof(dirent_t);
+     }
+     return 0;
+  }
+  return -1; // Requested name did not come up
+}
+
+
+
+
+
+
+
+
+
+
+
+
+NUFS.C
+
+// based on cs3650 starter code
+
+#include <assert.h>
+#include <bsd/string.h>
+#include <dirent.h>
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+#define FUSE_USE_VERSION 26
+#include <fuse.h>
+
+#include "storage.h"
+
+// TODO worry about file access permissions for every single function
+
+// implementation for: man 2 access
+// Checks if a file exists.
+int nufs_access(const char *path, int mask) { // TODO what is mask?
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }
+  if (storage_lookup(path) == -1) {
+    printf("access(%s, %04o) -> %d\n", path, mask, 0);
+    return -ENOENT;
+  }
+  printf("access(%s, %04o) -> %d\n", path, mask, 0);
+  return 0;
+}
+
+// Gets an object's attributes (type, permissions, size, etc).
+// Implementation for: man 2 stat
+// This is a crucial function.
+// TODO any other attributes other than mode, size, and uid?
+int nufs_getattr(const char *path, struct stat *st) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }
+  int inum = storage_lookup(path);
+  if (inum == -1) {
+    printf("getattr(%s) -> (%d) {mode: %04o, size: %ld}\n", path, -ENOENT, st->st_mode,st->st_size);
+    return -ENOENT;
+  }
+  inode_t *inode = get_inode(inum);
+  st->st_mode = inode->mode;
+  st->st_size = inode->size;
+  st->st_uid = getuid(); // TODO this is wrong!
+  printf("getattr(%s) -> (%d) {mode: %04o, size: %ld}\n", path, 0, st->st_mode,st->st_size);
+  return 0;
+}
+
+// implementation for: man 2 readdir
+// lists the contents of a directory
+int nufs_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
+                 off_t offset, struct fuse_file_info *fi) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }
+  struct stat st;
+  int inum = storage_lookup(path); // TODO complex paths?
+  if (inum == -1) {
+    printf("readdir(%s) -> %d\n", path, -ENOENT);
+    return -ENOENT;
+  }
+  inode_t *inode = get_inode(inum);
+  if (!is_directory(inode)) {
+    printf("readdir(%s) -> %d\n", path, -EBADF);
+    return -ENOTDIR; // TODO right error?
+  }
+  for (int i = 0; i < num_dirents(inode); i++) {
+    dirent_t *dirent = directory_lookup_entry_by_idx(inode, i);
+    if (dirent == NULL) { // The dirent stored at that index is freed
+      continue;
+    }
+    inode_t *nxt_file = get_inode(dirent->inum);
+    // TODO code repetition with getattr?
+    st.st_mode = nxt_file->mode;
+    st.st_size = nxt_file->size;
+    st.st_uid = getuid(); // TODO wrong!!
+    filler(buf, dirent->name, &st, 0);
+  }
+  printf("readdir(%s) -> %d\n", path, 0);
+  return 0;
+}
+
+// mknod makes a filesystem object like a file or directory
+// called for: man 2 open, man 2 link
+// Note, for this assignment, you can alternatively implement the create
+// function.
+int nufs_mknod(const char *path, mode_t mode, dev_t rdev) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    printf("mknod(%s, %04o) -> %d\n", path, mode, -ENAMETOOLONG);
+    return -ENAMETOOLONG;
+  }
+  int rv = storage_create_file(path, mode);
+  if (rv == -1) {
+    printf("mknod(%s, %04o) -> %d\n", path, mode, -EEXIST);
+    return -EEXIST;
+  }
+  if (rv == -2) {
+    printf("mknod(%s, %04o) -> %d\n", path, mode, -ENOSPC);
+    return -ENOSPC; // Failed to create a file for storage reasons
+  }
+  if (rv == -3) {
+    printf("mknod(%s, %04o) -> %d\n", path, mode, -ENOTDIR);
+    return -ENOTDIR; // 'Directory' in path was not actually a directory
+  }
+  printf("mknod(%s, %04o) -> %d\n", path, mode, 0);
+  return 0;
+  // Allocate an inode to hold the inode in (check if success, save inum)
+  /*
+  int inum = alloc_inode();
+  if (inum == -1) {
+    printf("mknod(%s, %04o) -> %d\n", path, mode, -1);
+    return -ENOSPC; // TODO wrong error code?
+  }
+  // Set all the inode fields appropriately
+  inode_t *inode = get_inode(inum);
+  inode->refs = 0;
+  inode->mode = mode;
+  inode->size = 0;
+  inode->block = -1; // A block will be allocated if the file's size is ever increased beyond 0
+  // Allocate a direntry in the appropriate directory to refer to the inode number (for now, root only)  
+  int rv = directory_put(get_inode(0), path + 1, inum);
+  if (rv == -1) {
+    printf("mknod(%s, %04o) -> %d\n", path, mode, -1);
+    return -ENOSPC; // TODO wrong error code?
+  }
+  // TODO Add '.' and '..' direntries to the given inode's data, if it's a directory
+  printf("mknod(%s, %04o) -> %d\n", path, mode, 0);
+  return 0;
+  */
+}
+
+// most of the following callbacks implement
+// another system call; see section 2 of the manual
+int nufs_mkdir(const char *path, mode_t mode) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }
+  int rv = nufs_mknod(path, mode | 040000, 0);
+  printf("mkdir(%s) -> %d\n", path, rv);
+  return rv;
+}
+
+int nufs_unlink(const char *path) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }
+  int inum_dir = storage_get_dir(path);
+  if (inum_dir == -2) {
+    printf("unlink(%s) -> %d\n", path, -EBUSY);
+    return -EBUSY; // The original path gave the root directory
+  }
+  if (inum_dir == -1) {
+    printf("unlink(%s) -> %d\n", path, -ENOENT);
+    return -ENOENT; // The directory holding the given file doesn't exist
+  }
+  inode_t *inode_dir = get_inode(inum_dir);
+  int rv = directory_delete(inode_dir, storage_get_last_token(path), 0, 1);
+  if (rv == -1) {
+    printf("unlink(%s) -> %d\n", path, -ENOENT);
+    return -ENOENT; // The given path does not exist
+  }
+  if (rv == -2) {
+    printf("unlink(%s) -> %d\n", path, -EISDIR);
+    return -EISDIR; // The original path gave some other directory
+  }
+  printf("unlink(%s) -> %d\n", path, 0);
+  return 0;
+}
+
+int nufs_link(const char *from, const char *to) {
+  if (strlen(from) > MAX_PATH_SIZE || strlen(to) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }
+  int to_inum = storage_lookup(to);
+  if (to_inum == -1) {
+    printf("link(%s => %s) -> %d\n", from, to, -ENOENT);
+    return -ENOENT; // 'to' does not exist
+  }
+  inode_t *to_inode = get_inode(to_inum);
+  if (is_directory(to_inode)) {
+    printf("link(%s => %s) -> %d\n", from, to, -EPERM);
+    return -EPERM; // 'to' is a directory, cannot link to it
+  }
+  int rv = storage_alloc_direntry_at(from, to_inum);
+  if (rv == -1) {
+    printf("link(%s => %s) -> %d\n", from, to, -EEXIST);
+    return -EEXIST; // 'from' already exists
+  }
+  if (rv == -2) {
+    printf("link(%s => %s) -> %d\n", from, to, -ENOSPC);
+    return -ENOSPC; // Failed to allocate direntry for space reasons 
+  }
+  if (rv == -3) {
+    printf("link(%s => %s) -> %d\n", from, to, -ENOTDIR);
+    return -ENOTDIR; // 'Directory' in path was not actually a directory
+  }
+  printf("link(%s => %s) -> %d\n", from, to, 0);
+  return 0;
+}
+
+int nufs_rmdir(const char *path) {
+  // TODO do NOT REMOVE IF . OR ..
+  // TODO fix this not working for the first layer
+  // TODO get rid of extra stuff in error messages
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }
+  int inum_dir = storage_get_dir(path);
+  if (inum_dir == -2) {
+    printf("rmdir enoent(%s) -> %d\n", path, -EBUSY);
+    return -EBUSY; // The original path gave the root directory
+  }
+  if (inum_dir == -1) {
+    printf("rmdir eisdir(%s) -> %d\n", path, -ENOENT);
+    return -ENOENT; // The directory holding the given directory doesn't exist
+  }
+  inode_t *inode_dir = get_inode(inum_dir);
+  int rv = directory_delete(inode_dir, storage_get_last_token(path), 1, 0);
+  if (rv == -1) {
+    printf("rmdir enoent(%s) -> %d\n", path, -ENOENT);
+    return -ENOENT; // The given path does not exist
+  }
+  if (rv == -3) {
+    printf("rmdir enotdir(%s) -> %d\n", path, -ENOTDIR);
+    return -ENOTDIR; // The given path leads to a file
+  }
+  if (rv == -4) {
+    printf("rmdir enotempty(%s) -> %d\n", path, -ENOTEMPTY);
+    return -ENOTEMPTY; // The given path leads to a file
+  }
+  printf("rmdir(%s) -> %d\n", path, 0);
+  return 0;
+  /*
+  int inum = storage_lookup(path);
+  if (inum == -1) {
+    printf("rmdir(%s) -> %d\n", path, -ENOENT);
+    return -ENOENT;
+  }
+  inode_t *inode = get_inode(inum);
+  if (!is_directory(inode)) {
+    printf("rmdir(%s) -> %d\n", path, -ENOTDIR);
+    return -ENOTDIR;
+  }
+  if (num_dirents_in_use(inode) != 0) {
+    return -ENOTEMPTY;
+  }
+  */
+  // TODO very similar process to unlink (+ abstraction?)
+  /*int rv = nufs_unlink(path);
+  printf("rmdir(%s) -> %d\n", path, rv);
+  return rv;*/
+}
+
+// implements: man 2 rename
+// called to move a file within the same filesystem
+int nufs_rename(const char *from, const char *to) {
+  if (strlen(from) > MAX_PATH_SIZE || strlen(to) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }  
+  int rv_link = nufs_link(to, from);
+  if (rv_link < 0) {
+    printf("rename(%s => %s) -> %d\n", from, to, rv_link);
+    return rv_link;
+  }
+  int rv_unlink = nufs_unlink(from);
+  if (rv_unlink < 0) {
+    printf("rename(%s => %s) -> %d\n", from, to, rv_unlink);
+    return rv_unlink;
+  }
+  printf("rename(%s => %s) -> %d\n", from, to, 0);
+  return 0;
+}
+
+int nufs_chmod(const char *path, mode_t mode) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }
+  int inum = storage_lookup(path);
+  if (inum != -1) {
+    inode_t *inode = get_inode(inum);
+    inode->mode = mode;
+    printf("chmod(%s, %04o) -> %d\n", path, mode, 0);
+    return 0;
+  }
+  printf("chmod(%s, %04o) -> %d\n", path, mode, -ENOENT);
+  return -ENOENT;
+}
+
+// TODO in prog
+int nufs_truncate(const char *path, off_t size) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }  
+  int inum = storage_lookup(path);
+  if (inum != -1) {
+    inode_t *inode = get_inode(inum);
+    if (inode_set_size(inode, size) != 1) {
+
+    }
+    return -ENOSPC; // TODO Technically this could also happen bc of the FS file size limit (what is that err?)
+  }
+  int rv = -1;
+  printf("truncate(%s, %ld bytes) -> %d\n", path, size, rv);
+  return rv;
+}
+
+// This is called on open, but doesn't need to do much
+// since FUSE doesn't assume you maintain state for
+// open files.
+// You can just check whether the file is accessible.
+int nufs_open(const char *path, struct fuse_file_info *fi) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }  
+  if (storage_lookup(path) != -1) {
+    int rv = 0;
+    printf("open(%s) -> %d\n", path, rv);
+    return rv;
+  }
+  return -ENOENT;
+}
+
+// Actually read data
+int nufs_read(const char *path, char *buf, size_t size, off_t offset,
+              struct fuse_file_info *fi) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }  
+  int inum = storage_lookup(path);
+  if (inum == -1) {
+    printf("read(%s, %ld bytes, @+%ld) -> %d\n", path, size, offset, -ENOENT);
+    return -ENOENT;
+  }
+  inode_t *inode = get_inode(inum);
+  if (is_directory(inode)) {
+    printf("read(%s, %ld bytes, @+%ld) -> %d\n", path, size, offset, -ENOENT);
+    return -EISDIR; // TODO wrong error?
+  }
+  // read until (whichever comes first) end of file or 'size' bytes are read
+  int bytes_to_read = (size > inode->size - offset) ? (inode->size - offset) : size;
+  for (int i = 0; i < bytes_to_read; i++) {
+    buf[i] =  *((char *)inode_idx(inode, offset + i));
+  }
+  int rv = bytes_to_read;
+  printf("read(%s, %ld bytes, @+%ld) -> %d\n", path, size, offset, rv);
+  return rv;
+}
+
+// Actually write data
+int nufs_write(const char *path, const char *buf, size_t size, off_t offset,
+               struct fuse_file_info *fi) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }  
+  int inum = storage_lookup(path);
+  if (inum == -1) {
+    printf("write(%s, %ld bytes, @+%ld) -> %d\n", path, size, offset, -ENOENT);
+    return -ENOENT;
+  }
+  inode_t *inode = get_inode(inum);
+  if (is_directory(inode)) {
+    printf("write(%s, %ld bytes, @+%ld) -> %d\n", path, size, offset, -EBADF);
+    return -EISDIR; // TODO wrong error? (SOME ERROR FOR 'THIS IS A DIRECTORY')
+  }
+  // Increase the file size if it's needed to hold this new data
+  if (offset + size > inode->size) {
+    int rv = inode_set_size(inode, offset + size);
+    if (rv == -1) {
+      return -ENOSPC;
+    }
+  }
+  // For file byte #offset, put char, then file byte #offset + sizeof(char), put char, etc.
+  for (int i = 0; i < size; i++) {
+    char *char_ptr = (char *)inode_idx(inode, offset + i);
+    *char_ptr = buf[i];
+  }
+  printf("write(%s, %ld bytes, @+%ld) -> %d\n", path, size, offset, size);
+  return size;
+}
+
+// Update the timestamps on a file or directory.
+int nufs_utimens(const char *path, const struct timespec ts[2]) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }  
+  int rv = -1;
+  printf("utimens(%s, [%ld, %ld; %ld %ld]) -> %d\n", path, ts[0].tv_sec,
+         ts[0].tv_nsec, ts[1].tv_sec, ts[1].tv_nsec, rv);
+  return rv;
+}
+
+// Extended operations
+int nufs_ioctl(const char *path, int cmd, void *arg, struct fuse_file_info *fi,
+               unsigned int flags, void *data) {
+  if (strlen(path) > MAX_PATH_SIZE) {
+    return -ENAMETOOLONG;
+  }
+  int rv = -1;
+  printf("ioctl(%s, %d, ...) -> %d\n", path, cmd, rv);
+  return rv;
+}
+
+void nufs_init_ops(struct fuse_operations *ops) {
+  memset(ops, 0, sizeof(struct fuse_operations));
+  ops->access = nufs_access;
+  ops->getattr = nufs_getattr;
+  ops->readdir = nufs_readdir;
+  ops->mknod = nufs_mknod;
+  // ops->create   = nufs_create; // alternative to mknod
+  ops->mkdir = nufs_mkdir;
+  ops->link = nufs_link;
+  ops->unlink = nufs_unlink;
+  ops->rmdir = nufs_rmdir;
+  ops->rename = nufs_rename;
+  ops->chmod = nufs_chmod;
+  ops->truncate = nufs_truncate;
+  ops->open = nufs_open;
+  ops->read = nufs_read;
+  ops->write = nufs_write;
+  ops->utimens = nufs_utimens;
+  ops->ioctl = nufs_ioctl;
+};
+
+struct fuse_operations nufs_ops;
+
+int main(int argc, char *argv[]) {
+  assert(argc > 2 && argc < 6);
+  //printf("TODO: mount %s as data file\n", argv[--argc]);
+  storage_init(argv[--argc]);
+  nufs_init_ops(&nufs_ops);
+  return fuse_main(argc, argv, &nufs_ops, NULL);
+}
+
+
+
+
+
+
+
+STORAGE.H
+
+// Disk storage manipulation.
+//
+// Feel free to use as inspiration.
+
+// based on cs3650 starter code
+
+#ifndef NUFS_STORAGE_H
+#define NUFS_STORAGE_H
+
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <time.h>
+#include <unistd.h>
+
+#include "blocks.h"
+#include "directory.h"
+#include "inode.h"
+#include "bitmap.h"
+#include "slist.h"
+
+#define MAX_PATH_SIZE 256
+
+void storage_init(const char *path);
+// Returns the inum referred to by the direntry at the given path...
+// or -1 if the path is invalid.
+int storage_lookup(const char *path);
+// Create a direntry at the given location. If the path is multiple layers deep,
+// new directories (with new inodes) may be created 'on the way' to the ultimate
+// direntry.
+// Returns -1 if the described path already has a dirent.
+// Returns -2 if the direntry cannot be allocated for space reasons.
+int storage_alloc_direntry_at(const char *path, int inum_to_refer_to);
+// Create a file at the given location. This includes making a directory entry for the file,
+// and allocating a new inode (and setting it appropriately).
+// If the path is multiple layers deep, multiple directories may be allocated 'on the way'
+// to the ultimate file if necessary.
+// Returns -1 if the described path already has a dirent.
+// Returns -2 if a new file cannot be allocated for space reasons.
+// Returns -3 if a 'directory' in the path is not actually a directory.
+int storage_create_file(const char *path, mode_t mode);
+// Return the inum of the DIRECTORY potentially holding the given file.
+// Return -1 if the given path is the root directory (no directory is holding it)
+// Return -2 if the directory cannot be found (and the given path isn't the root directory)
+int storage_get_dir(const char *path);
+// Gets the last token in the path.
+// Beware: If the given path is the root directory, the last token will be the empty string.
+char *storage_get_last_token(const char *path);
+/*
+int storage_stat(const char *path, struct stat *st);
+int storage_read(const char *path, char *buf, size_t size, off_t offset);
+int storage_write(const char *path, const char *buf, size_t size, off_t offset);
+int storage_truncate(const char *path, off_t size);
+int storage_mknod(const char *path, int mode);
+int storage_unlink(const char *path);
+int storage_link(const char *from, const char *to);
+int storage_rename(const char *from, const char *to);
+int storage_set_time(const char *path, const struct timespec ts[2]);
+slist_t *storage_list(const char *path);
+*/
+#endif
+
+
+
+
+
+
+
+
+
+
+STORAGE.C
+
+#include <assert.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "storage.h"
+
+void storage_init(const char *image_path) {
+  blocks_init(image_path); // Set up actual image file, mark block 0 as taken
+  inode_init(); // Mark block 1 as taken, for the inode array  TODO ensure safe? ensure enough memory?
+  // Set every entry in block bitmap (excl. block 0, 1), inode bitmap to all 0's
+  void *blocks_bitmap = get_blocks_bitmap();
+  for (int i = 2; i < BLOCK_COUNT; i++) {
+    bitmap_put(blocks_bitmap, i, 0);
+  }
+  void *inode_bitmap = get_inode_bitmap();
+  for (int i = 0; i < INODE_COUNT; i++) {
+    bitmap_put(inode_bitmap, i, 0);
+  }
+  // Create the root directory as an inode (inode 0), mark inode 0 as used TODO ensure safe/enough memory?
+  bitmap_put(inode_bitmap, 0, 1);
+  inode_t *root_dir_inode = get_inode(0);
+  root_dir_inode->refs = 0;
+  root_dir_inode->mode = 040755; // TODO good?
+  root_dir_inode->size = 0;
+  root_dir_inode->block = -1;
+  assert(directory_init(root_dir_inode, 0, 0) == 0);
+}
+
+// Assumes that dest has the space it needs allocated, and the path is a well-formed path.
+// Returns whether this is the last token.
+int copy_first_token(char *dest, const char *path) {
+  int idx = 0;
+  while (*(path + idx) != '\0' && *(path + idx) != '/') {
+    dest[idx] = path[idx];
+    idx++;
+  }
+  dest[idx] = '\0';
+  return *(path + idx) == '\0';
+}
+
+int storage_lookup_help(const char *path, int parent_dir_inum) {
+  inode_t *parent_dir = get_inode(parent_dir_inum); // Assumed: parent dir inum exists
+  char token[MAX_PATH_SIZE + 1];
+  int is_last_token = copy_first_token(token, path); // Assumed: path size is at most MAX_PATH_SIZE
+  int next_inum = directory_lookup(parent_dir, token);
+  if (next_inum < 0) {
+    return -1; // Did not find the file/directory
+  }
+  if (!is_last_token) {
+    return storage_lookup_help(path + strlen(token) + 1, next_inum);
+  }
+  return next_inum; // Success!
+}
+
+int storage_lookup(const char *path) {
+  if (strcmp(path, "/") == 0) {
+    return 0; // Root directory is inode 0
+  }
+  return storage_lookup_help(path + 1, 0);
+}
+
+// If inum_to_refer_to is negative, a new inode will be allocated for the new file.
+// If it is not negative, no new inodes will be allocated, and the new direntry
+// will refer to the given inum. In this case, the mode argument will not be used. 
+int storage_create_file_help(const char *path, mode_t mode, int parent_dir_inum, int inum_to_refer_to) {
+  inode_t *parent_dir = get_inode(parent_dir_inum); // Assumed: parent dir inum exists
+  char token[MAX_PATH_SIZE + 1];
+  int is_last_token = copy_first_token(token, path); // Assumed: path size is at most MAX_PATH_SIZE
+  printf("Token: %s, Last Token? %d\n", token, is_last_token);
+  int next_inum = directory_lookup(parent_dir, token);
+  if (is_last_token && next_inum >= 0) {
+    return -1; // Path already exists
+  }
+  if (!is_last_token && next_inum >= 0) {
+    inode_t *inode = get_inode(next_inum);
+    if (!is_directory(inode)) {
+      return -3;
+    }
+    return storage_create_file_help(path + strlen(token) + 1, mode, next_inum, inum_to_refer_to);
+  }
+  // There is no direntry for this token... make one
+  if (inum_to_refer_to >= 0) {
+    next_inum = inum_to_refer_to; // If we want the final file to refer to an existing inode
+  }
+  else {
+    next_inum = alloc_inode(); // If we want the final file to refer to a new inode... 
+    if (next_inum < 0) {
+      return -2; // Failed to allocate inode for storage reasons
+    }
+    inode_t *inode = get_inode(next_inum);
+    inode->refs = 0;
+    inode->mode = is_last_token ? mode : mode | 040000;
+    inode->size = 0;
+    inode->block = -1; // No block allocated yet bc no data to hold
+    if (is_directory(inode)) {
+      directory_init(inode, next_inum, parent_dir_inum); // Assumed: Enough space for this
+    }
+  }
+  int rv = directory_put(parent_dir, token, next_inum);
+  if (rv < 0) {
+    return -2; // Failed to allocate direntry for storage reasons
+  }
+  if (!is_last_token) {
+    return storage_create_file_help(path + strlen(token) + 1, mode, next_inum, inum_to_refer_to);
+  }
+  return 0; // Success!
+}
+
+int storage_alloc_direntry_at(const char *path, int inum_to_refer_to) {
+  if (strcmp(path, "/") == 0) {
+    return -1; // Path already exists for root directory case
+  }
+  return storage_create_file_help(path + 1, 0, 0, inum_to_refer_to);
+}
+
+int storage_create_file(const char *path, mode_t mode) {
+  if (strcmp(path, "/") == 0) {
+    return -1;  // Path already exists for root directory case
+  }
+  return storage_create_file_help(path + 1, mode, 0, -1);
+}
+
+int storage_get_dir(const char *path) {
+  if (strcmp(path, "/") == 0) {
+    return -2;
+  }
+  char *dir_path;
+  dir_path = malloc(MAX_PATH_SIZE + 1);
+  int hit_first_slash = 0; // Assumed: There is at least one slash (the path is well-formed)
+  for (int i = strlen(path) - 1; i >= 0; i--) {
+    if (hit_first_slash) {
+      dir_path[i] = path[i];
+    }
+    if (!hit_first_slash && path[i] == '/') {
+      hit_first_slash = 1;
+    }
+  }
+  if (strcmp(dir_path, "") == 0) {
+    return 0; // The directory holding the given file is the root directory
+  }
+  // Otherwise...
+  int rv = storage_lookup(dir_path);
+  free(dir_path);
+  return rv;
+}
+
+char *storage_get_last_token(const char *path) {
+  char *start = path; // The first '/'
+  for (; *path != '\0'; path++) {
+    if (*path == '/') {
+      start = path; // Found a later '/'
+    }
+  }
+  return start + 1;
+}
+

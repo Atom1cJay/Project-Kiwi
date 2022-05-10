@@ -26,19 +26,22 @@ public class UpDownManager : MonoBehaviour
     [SerializeField] int moveTime;
     [SerializeField] ACameraInstruction demoScene;
     [SerializeField] CameraUtils camUtils;
+    [SerializeField] List<int> groupsThatStartDown;
+    static List<int> groupsThatStartDownSt;
     bool showedDemoScene; // Demo scene should only happen once
     bool transitioning = false;
 
     private void Awake()
     {
         groups = new Dictionary<int, GroupInfo>();
+        groupsThatStartDownSt = groupsThatStartDown;
     }
 
     public static void Register(UpDownComponent comp)
     {
         if (!groups.ContainsKey(comp.groupID))
         {
-            groups.Add(comp.groupID, new GroupInfo(new List<UpDownComponent>(), true));
+            groups.Add(comp.groupID, new GroupInfo(new List<UpDownComponent>(), GroupStartsUp(comp.groupID)));
         }
         groups[comp.groupID].components.Add(comp);
     }
@@ -76,5 +79,10 @@ public class UpDownManager : MonoBehaviour
         }
         g.ToggleIsUp();
         transitioning = false;
+    }
+
+    public static bool GroupStartsUp(int groupID)
+    {
+        return !groupsThatStartDownSt.Contains(groupID);
     }
 }

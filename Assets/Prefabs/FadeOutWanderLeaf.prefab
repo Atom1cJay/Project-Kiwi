@@ -48,8 +48,8 @@ MonoBehaviour:
   PS: {fileID: 7344474164232562992}
   mr: {fileID: 5767172851948757120}
   rot: {fileID: 3671632410664012286}
-  startDuration: 3
-  stayDuration: 2
+  startDuration: 2
+  stayDuration: 1
   exitDuration: 1
   distanceToGoUp: 1.25
 --- !u!1 &7344474164232562991
@@ -4972,9 +4972,17 @@ PrefabInstance:
       value: The Beach Leaf
       objectReference: {fileID: 0}
     - target: {fileID: 7462428982601657669, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
+      propertyPath: animLength
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7462428982601657669, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
       propertyPath: collectible
       value: 
       objectReference: {fileID: 11400000, guid: 184e1f07cb3304d8ab6ca37a0d3e12c2, type: 2}
+    - target: {fileID: 7462428982601657669, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
+      propertyPath: playAnimation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7462428982601657671, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -5021,6 +5029,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
+--- !u!1 &171998570816441073 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7462428982601657668, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
+  m_PrefabInstance: {fileID: 7344474163591948213}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &22457756
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171998570816441073}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 36af14da224e5409f82ba016d80d26e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &171998570816441074 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7462428982601657671, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
@@ -5031,7 +5064,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6275927088891309643, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
   m_PrefabInstance: {fileID: 7344474163591948213}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 171998570816441073}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc550ede61a714b3187090055f2470d7, type: 3}

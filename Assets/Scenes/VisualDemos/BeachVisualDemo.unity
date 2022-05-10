@@ -259,31 +259,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &22457751 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 171998570816441073, guid: 82155a2d5576b4e4ea5be687ba2fd9b6, type: 3}
-  m_PrefabInstance: {fileID: 7344474162707882593}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &22457756
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 22457751}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 36af14da224e5409f82ba016d80d26e1, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!43 &25072711
 Mesh:
   m_ObjectHideFlags: 0
@@ -10625,14 +10600,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 171998570816441072, guid: 82155a2d5576b4e4ea5be687ba2fd9b6, type: 3}
-      propertyPath: animLength
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 171998570816441072, guid: 82155a2d5576b4e4ea5be687ba2fd9b6, type: 3}
-      propertyPath: playAnimation
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7344474163931448832, guid: 82155a2d5576b4e4ea5be687ba2fd9b6, type: 3}
       propertyPath: m_Name
       value: FadeOutWanderLeaf

@@ -10,6 +10,7 @@ public class UpDownComponent : MonoBehaviour
 
     private void Start()
     {
+        transform.position = UpDownManager.GroupStartsUp(groupID) ? up.position : down.position;
         UpDownManager.Register(this);
     }
 }
