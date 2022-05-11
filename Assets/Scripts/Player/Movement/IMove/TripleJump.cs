@@ -12,7 +12,7 @@ public class TripleJump : AJump
     /// <param name="mi">Information on the state of the player</param>
     /// <param name="ms">Constants related to movement</param>
     /// <param name="horizVel">The horizontal speed moving into this move</param>
-    public TripleJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(mii, mi, ms) { }
+    public TripleJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector) : base(mii, mi, ms, ms.TjInitJumpVel, 1) { }
 
     public override void AdvanceTime()
     {

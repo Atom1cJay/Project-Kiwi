@@ -17,13 +17,13 @@ public abstract class AJump : AMove
     protected bool glidePending;
     protected Vector2 horizVector;
 
-    public AJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms) : base(ms, mi, mii)
+    public AJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float initVel, float cancelMultiplier) : base(ms, mi, mii)
     {
         horizVector = mi.GetEffectiveSpeed();
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", IncrementJumpTimer());
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForJumpGroundableTimer());
         gravity = movementSettings.JumpInitGravity;
-        vertVel = movementSettings.JumpInitVel;
+        vertVel = initVel;
         mii.OnDiveInput.AddListener(() => divePending = true);
         mii.OnVertBoostCharge.AddListener(() => vertBoostChargePending = true);
         mii.OnPushPress.AddListener(() => horizBoostChargePending = true);

@@ -49,6 +49,15 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float jumpSensitivityReverseX;
     [SerializeField] float jumpSpeedDecRateOverMaxSpeed;
 
+    [Header("DoubleJump Settings")]
+    [SerializeField] float djInitVel;
+    [SerializeField] float djInitGravity;
+    [SerializeField] float djMaxUncancelledGravity;
+    [SerializeField] float djMaxCancelledGravity;
+    [SerializeField] float djVelMultiplierAtCancel;
+    [SerializeField] float djUncancelledGravityIncrease;
+    [SerializeField] float djCancelledGravityIncrease;
+
     [Header("Coyote Time Settings")]
     [SerializeField] float reverseCoyoteTime;
     [SerializeField] float coyoteTime;
@@ -258,6 +267,14 @@ public class MovementSettingsSO : ScriptableObject
     public float JumpSensitivityReverseX { get { return jumpSensitivityReverseX; } }
     public float JumpGravityX { get { return jumpGravityX; } }
     public float JumpSpeedDecRateOverMaxSpeed { get { return jumpSpeedDecRateOverMaxSpeed; } }
+
+    public float DjInitVel { get { return djInitVel; } }
+    public float DjInitGravity { get { return djInitGravity; } }
+    public float DjMaxUncancelledGravity { get { return djMaxUncancelledGravity; } }
+    public float DjMaxCancelledGravity { get { return djMaxCancelledGravity; } }
+    public float DjVelMultiplierAtCancel { get { return djVelMultiplierAtCancel; } }
+    public float DjUncancelledGravityIncrease { get { return djUncancelledGravityIncrease; } }
+    public float DjCancelledGravityIncrease { get { return djCancelledGravityIncrease; } }
 
     public float ReverseCoyoteTime { get { return reverseCoyoteTime; } }
     public float CoyoteTime { get { return coyoteTime; } }

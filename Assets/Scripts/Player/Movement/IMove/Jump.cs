@@ -12,7 +12,7 @@ public class Jump : AJump
     /// <param name="mi">Information on the state of the player</param>
     /// <param name="ms">Constants related to movement</param>
     /// <param name="horizVel">The horizontal speed moving into this move</param>
-    public Jump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(mii, mi, ms) { }
+    public Jump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float horizVel) : base(mii, mi, ms, ms.JumpInitVel, ms.JumpVelMultiplierAtCancel) { }
 
     public override void AdvanceTime()
     {
