@@ -27,6 +27,8 @@ public class PlayerHealth : MonoBehaviour
         onHealthChanged = new UnityEvent();
         onBasicHit = new Vector3Event();
         onDeath = new UnityEvent();
+        // Do NOT ignore collision between these two layers
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player Collision"), LayerMask.NameToLayer("Damaging"), false);
     }
 
     /// <summary>
