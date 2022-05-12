@@ -15,7 +15,6 @@ public class PlayerHealth : MonoBehaviour
     public UnityEvent onHealthChanged { get; private set; }
     public Vector3Event onBasicHit { get; private set; }
     public UnityEvent onDeath { get; private set; }
-    bool isInvulnerable;
 
     private void Awake()
     {
@@ -33,11 +32,13 @@ public class PlayerHealth : MonoBehaviour
     /// <summary>
     /// Takes damage of the specified type to the player, if the conditions are
     /// right for damage to take place.
+    /// ASSUMED: This method will only get called if the player is either invulnerable,
+    /// or the damaging object ignores invulnerability.
     /// </summary>
     /// <param name="damageType">The type of damage relevant to the hit being (potentially) taken</param>
     public void HandleDamage(DamageType damageType, Vector3 normalOfContact)
     {
-        if (isInvulnerable || hp <= 0)
+        if (hp <= 0)
         {
             return;
         }
@@ -80,8 +81,8 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     IEnumerator IFrames()
     {
-        isInvulnerable = true;
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player Collision"), LayerMask.NameToLayer("Damaging"), true);
         yield return new WaitForSeconds(iFrameDuration);
-        isInvulnerable = false;
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player Collision"), LayerMask.NameToLayer("Damaging"), false);
     }
 }

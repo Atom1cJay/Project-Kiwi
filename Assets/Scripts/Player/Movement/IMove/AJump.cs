@@ -34,7 +34,7 @@ public abstract class AJump : AMove
             if (vertVel > movementSettings.JumpVelocityOfNoReturn)
             {
                 jumpCancelled = true;
-                vertVel *= movementSettings.JumpVelMultiplierAtCancel;
+                vertVel *= cancelMultiplier;
             }
         });
     }

@@ -123,7 +123,11 @@ public abstract class AMove : IMove
         {
             return new Swim(mii, mi, movementSettings, horizVector);
         }
-        if (receivedKnockbackFeedback || receivedDeathFeedback)
+        if (receivedDeathFeedback)
+        {
+            return new Death(mii, mi, movementSettings);
+        }
+        if (receivedKnockbackFeedback)
         {
             return new Knockback(mii, mi, movementSettings, knockbackFeedbackNormal, horizVector);
         }
