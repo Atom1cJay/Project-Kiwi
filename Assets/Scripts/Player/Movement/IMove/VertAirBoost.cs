@@ -8,6 +8,7 @@ public class VertAirBoost : AMove
     float vertVel;
     Vector2 horizVector;
     bool divePending;
+    bool gpPending;
     bool spawnedParticlesFirstFrame;
 
     /// <summary>
@@ -27,6 +28,7 @@ public class VertAirBoost : AMove
         this.horizVector = ForwardMovement(horizVel);
         vertVel = movementSettings.VertBoostMinLaunchVel + (propCharged * (movementSettings.VertBoostMaxLaunchVel - movementSettings.VertBoostMinLaunchVel));
         mii.OnDiveInput.AddListener(() => divePending = true);
+        mii.OnGroundPound.AddListener(() => gpPending = true);
     }
 
     public override void AdvanceTime()
@@ -117,6 +119,10 @@ public class VertAirBoost : AMove
         if (divePending)
         {
             return new Dive(mii, mi, movementSettings);
+        }
+        if (gpPending)
+        {
+            return new GroundPound(mii, mi, movementSettings);
         }
 
         return this;

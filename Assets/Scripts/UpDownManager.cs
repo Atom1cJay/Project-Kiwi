@@ -28,7 +28,7 @@ public class UpDownManager : MonoBehaviour
     [SerializeField] CameraUtils camUtils;
     [SerializeField] List<int> groupsThatStartDown;
     static List<int> groupsThatStartDownSt;
-    bool showedDemoScene; // Demo scene should only happen once
+    //bool showedDemoScene; // Demo scene should only happen once
     bool transitioning = false;
 
     private void Awake()
@@ -53,11 +53,11 @@ public class UpDownManager : MonoBehaviour
             Debug.LogError("Cannot accomodate up-down toggle. Already in transition mode.");
             return;
         }
-        if (!showedDemoScene)
-        {
+        //if (!showedDemoScene)
+        //{
             camUtils.HandleInstructions(demoScene);
-            showedDemoScene = true;
-        }
+            //showedDemoScene = true;
+        //}
         StartCoroutine("Move", groups[groupID]);
     }
 
