@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 824573181}
-  m_IndirectSpecularColor: {r: 0.07494759, g: 0.005332201, b: 0.11806369, a: 1}
+  m_IndirectSpecularColor: {r: 0.07412219, g: 0.005067488, b: 0.11781868, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15038,14 +15038,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 824573179}
-  m_LocalRotation: {x: 0.33141357, y: -0.46193978, z: 0.19134171, w: 0.8001032}
+  m_LocalRotation: {x: 0.4330127, y: -0.4330127, z: 0.25, w: 0.75}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 671880541}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 45, y: -60, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: -60, z: 0}
 --- !u!108 &824573181
 Light:
   m_ObjectHideFlags: 0
@@ -15058,7 +15058,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0.65433264, g: 0.504717, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1.2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -17078,6 +17078,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1455085439}
     m_Modifications:
+    - target: {fileID: 6369405447660314338, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac42e99beb3b14ed68b8779fbd3c8748, type: 2}
     - target: {fileID: 6369405447660314339, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
       propertyPath: m_TagString
       value: Smooth Moving Platform (EXP)
@@ -17086,6 +17090,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Smooth Moving Platform (EXP)
       objectReference: {fileID: 0}
+    - target: {fileID: 6369405448163266863, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac42e99beb3b14ed68b8779fbd3c8748, type: 2}
     - target: {fileID: 6369405448413791382, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
       propertyPath: m_Name
       value: Long Gear (3)
@@ -17142,6 +17150,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Smooth Moving Platform (EXP)
       objectReference: {fileID: 0}
+    - target: {fileID: 6369405448510929209, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac42e99beb3b14ed68b8779fbd3c8748, type: 2}
     - target: {fileID: 6369405449338103986, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -18789,6 +18801,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1455085439}
     m_Modifications:
+    - target: {fileID: 6369405447660314338, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac42e99beb3b14ed68b8779fbd3c8748, type: 2}
     - target: {fileID: 6369405447660314339, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
       propertyPath: m_TagString
       value: Smooth Moving Platform (EXP)
@@ -18797,6 +18813,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Smooth Moving Platform (EXP)
       objectReference: {fileID: 0}
+    - target: {fileID: 6369405448163266863, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac42e99beb3b14ed68b8779fbd3c8748, type: 2}
     - target: {fileID: 6369405448413791382, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
       propertyPath: m_Name
       value: Long Gear (1)
@@ -18853,6 +18873,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Smooth Moving Platform (EXP)
       objectReference: {fileID: 0}
+    - target: {fileID: 6369405448510929209, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac42e99beb3b14ed68b8779fbd3c8748, type: 2}
     - target: {fileID: 6369405449338103986, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -47066,6 +47090,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1455085439}
     m_Modifications:
+    - target: {fileID: 6369405447660314338, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac42e99beb3b14ed68b8779fbd3c8748, type: 2}
     - target: {fileID: 6369405447660314339, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
       propertyPath: m_TagString
       value: Smooth Moving Platform (EXP)
@@ -47074,6 +47102,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Smooth Moving Platform (EXP)
       objectReference: {fileID: 0}
+    - target: {fileID: 6369405448163266863, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac42e99beb3b14ed68b8779fbd3c8748, type: 2}
     - target: {fileID: 6369405448413791382, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
       propertyPath: m_Name
       value: Long Gear (2)
@@ -47130,6 +47162,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Smooth Moving Platform (EXP)
       objectReference: {fileID: 0}
+    - target: {fileID: 6369405448510929209, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac42e99beb3b14ed68b8779fbd3c8748, type: 2}
     - target: {fileID: 6369405449338103986, guid: aa4ded1bdac31452ba855dbd0a5828b4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
