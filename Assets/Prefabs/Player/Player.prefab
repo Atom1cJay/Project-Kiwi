@@ -6817,7 +6817,6 @@ GameObject:
   - component: {fileID: 268057638005112137}
   - component: {fileID: 318227356393339313}
   - component: {fileID: 8535370298518496290}
-  - component: {fileID: 4447236306043979949}
   - component: {fileID: 611600165815388777}
   m_Layer: 9
   m_Name: Dialogue Detector
@@ -6825,7 +6824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &268057638005112137
 Transform:
   m_ObjectHideFlags: 0
@@ -6891,19 +6890,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4447236306043979949
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7395146658376982564}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.50000006
-  m_Center: {x: 0, y: 0.0000038146977, z: 0.00003051758}
 --- !u!114 &611600165815388777
 MonoBehaviour:
   m_ObjectHideFlags: 0

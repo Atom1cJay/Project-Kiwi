@@ -4,12 +4,19 @@ using UnityEngine;
 
 /// <summary>
 /// Gives a gameObject the ability to damage the player.
-/// NOTE: Requires that this object have a trigger collider.
+/// NOTE: This script will change the collision layer of the object to
+/// "Damaging".
 /// </summary>
 public class Damager : MonoBehaviour
 {
     [SerializeField] DamageType damageType;
+    [SerializeField] bool ignoreInvulnerability;
     bool isActivated = true;
+
+    private void Start()
+    {
+        gameObject.layer = ignoreInvulnerability ? LayerMask.NameToLayer("DamagingIgnoreInv") : LayerMask.NameToLayer("Damaging");
+    }
 
     private void OnTriggerStay(Collider other)
     {
