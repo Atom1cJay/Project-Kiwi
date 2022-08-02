@@ -26,10 +26,13 @@ public class CheckpointLoader : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("CP: " + CheckpointSave.Instance.getNum());
         if (CheckpointSave.Instance.getNum() == -1)
             SetCheckpoint(firstCheckpoint);
         else
             SetCheckpoint(checkpoints[CheckpointSave.Instance.getNum()]);
+
+        transform.position = currentCheckpoint.GetPosition() + new Vector3(0,1,0);
     }
     /// <summary>
     /// Gives the current checkpoint activated by the player (null if none are).

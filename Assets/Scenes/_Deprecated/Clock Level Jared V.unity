@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 824573181}
-  m_IndirectSpecularColor: {r: 2.2003937, g: 2.4478874, b: 2.6765866, a: 1}
+  m_IndirectSpecularColor: {r: 2.2003942, g: 2.4478905, b: 2.6765943, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -875,6 +875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &43526340
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1083,6 +1084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &50220561
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1443,6 +1445,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flower (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7462428982601657668, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7462428982601657669, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
       propertyPath: tempForceNotCollected
       value: 0
@@ -1465,7 +1471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7462428982601657671, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -41.66
+      value: -141
       objectReference: {fileID: 0}
     - target: {fileID: 7462428982601657671, guid: 14854dc8249ecde458f9d18106b0289e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2109,6 +2115,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicClockBaked (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1451920262720733438, guid: 27bf47980cec04803bb756430bc05cd3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1451920263388816944, guid: 27bf47980cec04803bb756430bc05cd3, type: 3}
       propertyPath: rotSpeed.y
       value: -50
@@ -2648,6 +2658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 1
+  ignoreInvulnerability: 0
 --- !u!1 &152769880
 GameObject:
   m_ObjectHideFlags: 0
@@ -2953,6 +2964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &170429827
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3980,6 +3992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &285358810
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4393,6 +4406,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SeedV2 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8639899061694445348, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8983773915658022302, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -4684,6 +4701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &342780730
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4955,6 +4973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &374453721
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5498,6 +5517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 1
+  ignoreInvulnerability: 0
 --- !u!1 &407020337
 GameObject:
   m_ObjectHideFlags: 0
@@ -5884,7 +5904,7 @@ Transform:
   m_GameObject: {fileID: 417881238}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.0037748588, y: -0.5252174, z: 0.007}
-  m_LocalScale: {x: 1.0480448, y: 1, z: 0.8868159}
+  m_LocalScale: {x: 1.0480448, y: 1, z: 1.0520297}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1963103197}
@@ -7350,6 +7370,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SeedV2 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8639899061694445348, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8983773915658022302, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -8493,7 +8517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &601450565
 Transform:
   m_ObjectHideFlags: 0
@@ -8979,6 +9003,10 @@ PrefabInstance:
     - target: {fileID: 8639899061694445348, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
       propertyPath: m_Name
       value: SeedV2 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639899061694445348, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8983773915658022302, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
       propertyPath: m_RootOrder
@@ -9864,6 +9892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &721163919
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10213,6 +10242,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicClockBaked (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 1451920262720733438, guid: 27bf47980cec04803bb756430bc05cd3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1451920263388816944, guid: 27bf47980cec04803bb756430bc05cd3, type: 3}
       propertyPath: rotSpeed.y
       value: 50
@@ -10361,6 +10394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &756255602
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10908,6 +10942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &762638495
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12221,6 +12256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &868111041
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13547,7 +13583,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30736
+  m_Name: pb_Mesh153864
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15253,6 +15289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &1000018331
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16443,6 +16480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &1081100762
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17166,6 +17204,10 @@ PrefabInstance:
     - target: {fileID: 8639899061694445348, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
       propertyPath: m_Name
       value: SeedV2 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639899061694445348, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8983773915658022302, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
       propertyPath: m_RootOrder
@@ -18487,6 +18529,10 @@ PrefabInstance:
     - target: {fileID: 8639899061694445348, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
       propertyPath: m_Name
       value: SeedV2 (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639899061694445348, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8983773915658022302, guid: bd94b69a179033f45a092eb0d084b228, type: 3}
       propertyPath: m_RootOrder
@@ -20793,6 +20839,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicClockBaked (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1451920262720733438, guid: 27bf47980cec04803bb756430bc05cd3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1451920263388816944, guid: 27bf47980cec04803bb756430bc05cd3, type: 3}
       propertyPath: rotSpeed.y
       value: 40
@@ -20857,6 +20907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &1325664015
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22921,7 +22972,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-8414
+  m_Name: pb_Mesh-146764
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -24202,7 +24253,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-6724
+  m_Name: pb_Mesh-74100
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -25705,6 +25756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &1531495281
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26298,6 +26350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 1
+  ignoreInvulnerability: 0
 --- !u!1001 &1600865364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26311,15 +26364,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 362626323108239854, guid: 3151e621c7738634b8a0911ac59be10e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -76.3
+      value: -99.5
       objectReference: {fileID: 0}
     - target: {fileID: 362626323108239854, guid: 3151e621c7738634b8a0911ac59be10e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.4
+      value: 3.34
       objectReference: {fileID: 0}
     - target: {fileID: 362626323108239854, guid: 3151e621c7738634b8a0911ac59be10e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 51.2
+      value: 249.3
       objectReference: {fileID: 0}
     - target: {fileID: 362626323108239854, guid: 3151e621c7738634b8a0911ac59be10e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26352,6 +26405,10 @@ PrefabInstance:
     - target: {fileID: 1584994956735558408, guid: 3151e621c7738634b8a0911ac59be10e, type: 3}
       propertyPath: m_Name
       value: Checkpoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584994956735558408, guid: 3151e621c7738634b8a0911ac59be10e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2551216787988451776, guid: 3151e621c7738634b8a0911ac59be10e, type: 3}
       propertyPath: m_Mesh
@@ -26988,7 +27045,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31148
+  m_Name: pb_Mesh154244
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -27194,6 +27251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &1661877737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30256,6 +30314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &1771801319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30420,6 +30479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &1778142998
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31175,7 +31235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1831841990
 Transform:
   m_ObjectHideFlags: 0
@@ -31245,6 +31305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &1836607524
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31314,7 +31375,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1918
+  m_Name: pb_Mesh-69312
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -31520,6 +31581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &1840260505
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31860,7 +31922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5116987452351034286, guid: 70613cbda13764daea7160e7333018b7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -50
+      value: -109.27
       objectReference: {fileID: 0}
     - target: {fileID: 5116987452351034286, guid: 70613cbda13764daea7160e7333018b7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -31868,7 +31930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5116987452351034286, guid: 70613cbda13764daea7160e7333018b7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 200
+      value: 251.8
       objectReference: {fileID: 0}
     - target: {fileID: 5116987452351034286, guid: 70613cbda13764daea7160e7333018b7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -32910,6 +32972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &1896777393
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33929,7 +33992,7 @@ Transform:
   m_GameObject: {fileID: 1963103196}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 45.3, y: -13.847112, z: 137.8}
-  m_LocalScale: {x: 148.04, y: 1, z: 187.32994}
+  m_LocalScale: {x: 148.04, y: 1, z: 163.6121}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 417881239}
@@ -33949,6 +34012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 1
+  ignoreInvulnerability: 0
 --- !u!65 &1963103199
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34134,6 +34198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &1972490217
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34383,6 +34448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!65 &2001599733
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34718,7 +34784,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-6020
+  m_Name: pb_Mesh-144478
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -36074,6 +36140,10 @@ PrefabInstance:
     - target: {fileID: 1584994956735558408, guid: 3151e621c7738634b8a0911ac59be10e, type: 3}
       propertyPath: m_Name
       value: Checkpoint (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584994956735558408, guid: 3151e621c7738634b8a0911ac59be10e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2551216787988451776, guid: 3151e621c7738634b8a0911ac59be10e, type: 3}
       propertyPath: m_Mesh

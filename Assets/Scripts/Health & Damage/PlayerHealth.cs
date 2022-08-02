@@ -53,6 +53,7 @@ public class PlayerHealth : MonoBehaviour
                 hp--;
                 break;
             case DamageType.Instakill:
+                onBasicHit.Invoke(normalOfContact);
                 print("INSTAKILL HIT TAKEN");
                 hp = 0;
                 break;

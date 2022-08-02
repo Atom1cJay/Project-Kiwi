@@ -6,7 +6,7 @@ public class CheckpointVisualLoader : MonoBehaviour
 {
     [SerializeField] Animator animator;
 
-    [SerializeField] GameObject visual, tempVisual;
+    [SerializeField] GameObject tempVisual;
     [SerializeField] float timeToDisplay;
     [SerializeField] ParticleSystem PS;
 
