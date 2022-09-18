@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CelBoots
-  m_Shader: {fileID: -6465566751694194690, guid: 1afae7e1474e54cf6b570e2ac42be3b9, type: 3}
+  m_Name: ClockGeomBrighter2 1
+  m_Shader: {fileID: -6465566751694194690, guid: 07ca63b62765c40e5a22d74aa91391c8, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -82,12 +82,12 @@ Material:
     m_Ints: []
     m_Floats:
     - Dot_Product_For_Shade_Border: 0
-    - Metallic: 1
+    - Metallic: 0
     - RimEdgePower: 1
     - RimExtraSize: 0.01
     - RimShadowPower: 1
-    - RimStrength: 0
-    - Smoothness: 1
+    - RimStrength: 1
+    - Smoothness: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -116,15 +116,15 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Albedo: {r: 0.2924528, g: 0.20406808, b: 0.19450872, a: 0}
+    - Albedo: {r: 0.745283, g: 0.7381422, b: 0.51677644, a: 0}
     - Ambient_Light: {r: 1, g: 1, b: 1, a: 0}
     - Tiling: {r: 0, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &8144781285274944114
+--- !u!114 &147891111805850919
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

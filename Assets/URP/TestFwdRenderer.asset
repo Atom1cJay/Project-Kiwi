@@ -1,5 +1,25 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2875788284336438967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca1dd0d5e2339164fbfa65154fa150db, type: 3}
+  m_Name: BasicFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 524288
+    Event: 500
+    blitMat: {fileID: 2100000, guid: eb776a213c6068f4cbd3292d8c7a65a0, type: 2}
+    pixelDensity: 1
 --- !u!114 &-1895332705120886819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,7 +77,8 @@ MonoBehaviour:
   - {fileID: 7268992239049613846}
   - {fileID: -1895332705120886819}
   - {fileID: 3898668430796914989}
-  m_RendererFeatureMap: 16a29fbbeda5e064dddf1654f26cb2e52d01ae2248da1a36
+  - {fileID: -2875788284336438967}
+  m_RendererFeatureMap: 16a29fbbeda5e064dddf1654f26cb2e52d01ae2248da1a364981e5beca2517d8
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -76,7 +97,7 @@ MonoBehaviour:
   m_AssetVersion: 1
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 524279
   m_TransparentLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
