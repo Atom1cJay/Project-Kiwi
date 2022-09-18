@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LinearMovingPlatform : AMovingPlatform
+public class LinearMovingPlatform : MonoBehaviour //AMovingPlatform
 {
+    /*
     [SerializeField] Vector3 movementVector;
     [SerializeField] Vector3 rotSpeed;
     [SerializeField] float timeOffset;
@@ -101,4 +102,5 @@ public class LinearMovingPlatform : AMovingPlatform
         Destroy(phantom.gameObject);
         phantom = null;
     }
+    */
 }

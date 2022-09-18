@@ -6,14 +6,23 @@ public class ObjectSpawner : MonoBehaviour
 {
     [SerializeField] GameObject obj;
     [SerializeField] float interval;
+    [Header("0: No Limit")]
+    [SerializeField] int numSpawns;
+    int spawnsLeft;
 
     private void Start()
     {
-        InvokeRepeating("Spawn", 0, interval);
+        StartCoroutine("SpawnCoroutine");
     }
 
-    void Spawn()
+    IEnumerator SpawnCoroutine()
     {
-        Instantiate(obj, transform);
+        spawnsLeft = (numSpawns == 0) ? int.MaxValue : numSpawns;
+        while (spawnsLeft > 0)
+        {
+            yield return new WaitForSeconds(interval);
+            Instantiate(obj, transform);
+            spawnsLeft -= 1;
+        }
     }
 }

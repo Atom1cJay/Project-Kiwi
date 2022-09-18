@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6369405447660314338}
   m_Layer: 0
   m_Name: lod_1
-  m_TagString: Untagged
+  m_TagString: Smooth Moving Platform (EXP)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 5930922566903493872}
   m_Layer: 0
   m_Name: lod_3
-  m_TagString: Untagged
+  m_TagString: Smooth Moving Platform (EXP)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,6 +191,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6369405448413791384}
   - component: {fileID: 6369405448413791385}
+  - component: {fileID: 3394320815152002909}
+  - component: {fileID: 6443063212608163083}
   m_Layer: 0
   m_Name: Long Gear
   m_TagString: Untagged
@@ -248,6 +250,41 @@ LODGroup:
     renderers:
     - renderer: {fileID: 6369405448163266863}
   m_Enabled: 1
+--- !u!114 &3394320815152002909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369405448413791382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2709b3cc8bd1645cdb76a1d395487b99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moverScript: {fileID: 6443063212608163083}
+  onTransformChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6443063212608163083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369405448413791382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b8933ee697f74e9b9a32ca3d1d4cf95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceToMove: {x: 0, y: 0, z: 0}
+  movementSpeed: 0
+  rotSpeed: {x: 0, y: 20, z: 0}
+  timeOffset: 0
+  movementSpace: 0
+  rotationIsRelative: 0
+  relativeTransform: {fileID: 0}
 --- !u!1 &6369405448510929206
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +298,7 @@ GameObject:
   - component: {fileID: 6369405448510929209}
   m_Layer: 0
   m_Name: lod_2
-  m_TagString: Untagged
+  m_TagString: Smooth Moving Platform (EXP)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -344,7 +381,7 @@ GameObject:
   - component: {fileID: 6369405449338103986}
   m_Layer: 0
   m_Name: lod_0
-  m_TagString: Untagged
+  m_TagString: Smooth Moving Platform (EXP)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

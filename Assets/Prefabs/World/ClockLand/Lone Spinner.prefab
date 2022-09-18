@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1459089757338239665}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5.04, y: 0.017, z: 0}
-  m_LocalScale: {x: 10, y: 0.01, z: 0.7}
+  m_LocalScale: {x: 10, y: 0.2, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1459089757637727058}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: add8f206d6e8b4560af5ac7ed8e05b3b, type: 2}
+  - {fileID: 2100000, guid: 3aba9016fb2ac4b0d9b9cd6d79b90440, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 0
+  ignoreInvulnerability: 0
 --- !u!1 &1459089757637727071
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1459089757637727058}
   - component: {fileID: 1459089757637727057}
+  - component: {fileID: 2449668289474707967}
   - component: {fileID: 1459089757637727056}
   m_Layer: 0
   m_Name: Lone Spinner
@@ -136,7 +138,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1459089757637727071}
-  m_LocalRotation: {x: -0, y: 0.20059493, z: -0, w: 0.9796743}
+  m_LocalRotation: {x: 0, y: 0.20059064, z: 0, w: 0.9796752}
   m_LocalPosition: {x: -3.5666199, y: -5.317686, z: 3.499588}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -158,17 +160,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2709b3cc8bd1645cdb76a1d395487b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moverScript: {fileID: 2449668289474707967}
   onTransformChange:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2449668289474707967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459089757637727071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b8933ee697f74e9b9a32ca3d1d4cf95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   distanceToMove: {x: 0, y: 0, z: 0}
   movementSpeed: 0
-  rotSpeed: {x: 0, y: -70, z: 0}
+  rotSpeed: {x: 0, y: 70, z: 0}
   timeOffset: 0
   movementSpace: 0
   rotationIsRelative: 0
   relativeTransform: {fileID: 0}
-  empty: {fileID: 0}
 --- !u!114 &1459089757637727056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,8 +224,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1459089757743405137}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -11.77, z: 0}
-  m_LocalScale: {x: 1, y: 40.618618, z: 1}
+  m_LocalPosition: {x: 0, y: 2.88, z: 0}
+  m_LocalScale: {x: 1, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1459089757637727058}

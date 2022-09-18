@@ -28,7 +28,7 @@ public class MoveExecuter : MonoBehaviour
     [SerializeField] CameraTarget camTarget;
     [SerializeField] StickToGround shadowCaster;
     [SerializeField] float barrierRadius;
-    AMovingPlatform movingPlatform = null;
+    Ridable ridable = null;
 
     public UnityEvent OnMoveChanged;
 
@@ -54,7 +54,7 @@ public class MoveExecuter : MonoBehaviour
 
     void Update()
     {
-        if (movingPlatform == null) // If not null, the moving platform's TransformChange event will call it instead
+        if (ridable == null) // If not null, the moving platform's TransformChange event will call it instead
         {
             Move();
         }
@@ -69,20 +69,20 @@ public class MoveExecuter : MonoBehaviour
 
     void UpdateMovingPlatformStatus()
     {
-        if (movingPlatform == null && mi.TouchingGround() && mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)"))
+        if (ridable == null && mi.TouchingGround() && mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)"))
         {
-            movingPlatform = mi.GetGroundDetector().CollidingWith().GetComponentInParent<AMovingPlatform>();
-            movingPlatform.Register();
-            smpStoredPos = movingPlatform.transform.position;
-            movingPlatform.onTransformChange.AddListener(() => Move());
+            ridable = mi.GetGroundDetector().CollidingWith().GetComponentInParent<Ridable>();
+            ridable.Register();
+            smpStoredPos = ridable.transform.position;
+            ridable.onTransformChange.AddListener(() => Move());
         }
         if (!moveThisFrame.AdjustToSlope() || (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity) ||(mi.TouchingGround() && !mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)")))
         {
-            if (movingPlatform != null)
+            if (ridable != null)
             {
-                movingPlatform.Deregister();
-                movingPlatform.onTransformChange.RemoveAllListeners(); // todo bad?
-                movingPlatform = null;
+                ridable.Deregister();
+                ridable.onTransformChange.RemoveAllListeners(); // todo bad?
+                ridable = null;
             }
         }
     }
@@ -100,15 +100,15 @@ public class MoveExecuter : MonoBehaviour
             Vector2 origPosXZ = new Vector2(transform.position.x, transform.position.z);
             Vector3 extraMovement = Vector3.zero; // Movement from moving platform, if applicable. Should not pay attention to physics
             // Special Moving Platform Movement
-            if (movingPlatform != null)
+            if (ridable != null)
             {
-                extraMovement = movingPlatform.MvmtThisFrame();
+                extraMovement = ridable.TranslationThisFrame();
             }
             transform.Translate(extraMovement, Space.World);
-            if (movingPlatform != null)
+            if (ridable != null)
             {
-                transform.Translate(movingPlatform.PosChangeFromRotThisFrame(new Vector3(transform.position.x, charCont.bounds.min.y, transform.position.z)), Space.World);
-                rotator.RotateExtra(movingPlatform.RotThisFrame().y);
+                transform.Translate(ridable.PlayerPosChangeFromRotThisFrame(new Vector3(transform.position.x, charCont.bounds.min.y, transform.position.z)), Space.World);
+                rotator.RotateExtra(ridable.RotThisFrame().y);
             }
             // End Special Moving Platform Movement
             bh.HandleBumperMoved();

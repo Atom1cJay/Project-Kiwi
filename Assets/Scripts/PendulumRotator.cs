@@ -6,10 +6,16 @@ public class PendulumRotator : MonoBehaviour
 {
     [SerializeField] float pace;
     [SerializeField] float angleExtremity;
+    Quaternion initRot;
 
-    private void Update()
+    void Start()
+    {
+        initRot = transform.localRotation;
+    }
+
+    void Update()
     {
         float cosValue = Mathf.Cos(Time.time * pace);
-        transform.localRotation *= Quaternion.AngleAxis(cosValue * angleExtremity * Time.deltaTime, Vector3.forward/*transform.forward*/);
+        transform.localRotation = initRot * Quaternion.AngleAxis(cosValue * angleExtremity, Vector3.forward);
     }
 }
