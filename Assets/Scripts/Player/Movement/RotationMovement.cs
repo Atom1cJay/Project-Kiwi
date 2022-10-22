@@ -22,7 +22,7 @@ public class RotationMovement : MonoBehaviour
     public void DetermineRotation()
     {
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-        IMoveImmutable curMove = me.GetCurrentMove();
+        IMoveImmutable curMove = MoveExecuter.GetCurrentMove();
         RotationInfo rotInfo = curMove.GetRotationInfo();
         float rotationSpeed = rotInfo.speed;
         if (mii.GetHorizontalInput().magnitude == 0) return; // Otherwise would trend forward

@@ -16,7 +16,7 @@ using UnityEngine.Events;
 public class MoveExecuter : MonoBehaviour
 {
     IMove moveLastFrame = null;
-    IMove moveThisFrame;
+    static IMove moveThisFrame;
     CharacterController charCont;
     MovementInfo mi;
     MovementInputInfo mii;
@@ -198,7 +198,7 @@ public class MoveExecuter : MonoBehaviour
     /// <summary>
     /// Provides immutable access to the move which is currently taking place.
     /// </summary>
-    public IMoveImmutable GetCurrentMove()
+    public static IMoveImmutable GetCurrentMove()
     {
         return moveThisFrame;
     }

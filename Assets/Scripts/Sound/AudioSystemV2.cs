@@ -15,7 +15,7 @@ public class AudioSystemV2 : MonoBehaviour
 
     void Update()
     {
-        string currentMove = me.GetCurrentMove().AsString();
+        string currentMove = MoveExecuter.GetCurrentMove().AsString();
         foreach (TransitionCheck c in controllers)
         {
             c.UpdateMoves(lastMove, currentMove);

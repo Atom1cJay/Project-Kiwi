@@ -20,7 +20,7 @@ public class AlternatingSounds : MonoBehaviour
 
     public void Update() {
 
-        float speed = me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
+        float speed = MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
 
 
         if (StateChecker.StateCheck())

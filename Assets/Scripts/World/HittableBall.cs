@@ -16,7 +16,7 @@ public class HittableBall : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Vector2 speed = me.GetCurrentMove().GetHorizSpeedThisFrame();
+        Vector2 speed = MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame();
         float horizForceAngle = Mathf.Atan2(speed.y, speed.x);
         float horizForceMultiplier = speed.magnitude;
         if (other.gameObject.layer == 9)

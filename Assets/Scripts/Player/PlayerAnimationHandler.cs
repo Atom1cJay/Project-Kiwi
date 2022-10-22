@@ -85,10 +85,10 @@ public class PlayerAnimationHandler : MonoBehaviour
     {
         animator.SetBool("CANTRANSITIONTOIDLE", canTransitionToIdle);
 
-        float speed = me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
+        float speed = MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
         StartCoroutine(GetAcceleration(speed));
-        temp = me.GetCurrentMove().AsString();
-        vertSpeed = me.GetCurrentMove().GetVertSpeedThisFrame();
+        temp = MoveExecuter.GetCurrentMove().AsString();
+        vertSpeed = MoveExecuter.GetCurrentMove().GetVertSpeedThisFrame();
         //Debug.Log("threshold " + fallThreshold + " sspeed:" + vertSpeed);
 
         //move changed
@@ -289,7 +289,7 @@ public class PlayerAnimationHandler : MonoBehaviour
     IEnumerator GetAcceleration(float t)
     {
         yield return new WaitForSeconds(0.1f);
-        acceleration = (me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude - t) / 0.1f;
+        acceleration = (MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame().magnitude - t) / 0.1f;
     }
 
     IEnumerator FinishedStopping(float t)

@@ -41,10 +41,10 @@ public class AudioSystem : MonoBehaviour
 
         #region Movement
         //get speeds
-        float speed = me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
+        float speed = MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
         StartCoroutine(GetAcceleration(speed));
-        temp = me.GetCurrentMove().AsString();
-        vertSpeed = me.GetCurrentMove().GetVertSpeedThisFrame();
+        temp = MoveExecuter.GetCurrentMove().AsString();
+        vertSpeed = MoveExecuter.GetCurrentMove().GetVertSpeedThisFrame();
 
         distanceCovered += speed * Time.deltaTime;
 
@@ -207,7 +207,7 @@ public class AudioSystem : MonoBehaviour
     IEnumerator GetAcceleration(float t)
     {
         yield return new WaitForSeconds(0.1f);
-        acceleration = (me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude - t) / 0.1f;
+        acceleration = (MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame().magnitude - t) / 0.1f;
     }
 
     void playOnlyOnFirst(string sound)

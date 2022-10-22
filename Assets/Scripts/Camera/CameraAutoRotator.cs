@@ -26,7 +26,7 @@ public class CameraAutoRotator : MonoBehaviour
         transformRight.y = 0;
         transformRight = transformRight.normalized;
         // Figure out player speed relative to transform.right
-        Vector2 playerSpeed = me.GetCurrentMove().GetHorizSpeedThisFrame();
+        Vector2 playerSpeed = MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame();
         Vector3 playerSpeedXZ = new Vector3(playerSpeed.x, 0, playerSpeed.y);
         float xSpeedRelative = Vector3.Dot(playerSpeedXZ.normalized, transformRight) * playerSpeed.magnitude;
         // Reset the tracked speed if it's below some minimum

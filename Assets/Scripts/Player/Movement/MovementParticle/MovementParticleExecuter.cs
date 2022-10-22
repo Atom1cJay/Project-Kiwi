@@ -33,7 +33,7 @@ public class MovementParticleExecuter : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        MovementParticleInfo.MovementParticles[] particles = me.GetCurrentMove().GetParticlesToSpawn();
+        MovementParticleInfo.MovementParticles[] particles = MoveExecuter.GetCurrentMove().GetParticlesToSpawn();
         if (particles != null)
         {
             foreach (MovementParticleInfo.MovementParticles p in particles)
@@ -41,7 +41,7 @@ public class MovementParticleExecuter : MonoBehaviour
                 SpawnParticle(p);
             }
         }
-        MovementParticleInfo.MovementParticles[] toStop = me.GetCurrentMove().GetParticlesToStop();
+        MovementParticleInfo.MovementParticles[] toStop = MoveExecuter.GetCurrentMove().GetParticlesToStop();
         if (toStop != null)
         {
             foreach (MovementParticleInfo.MovementParticles p in toStop)

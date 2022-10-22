@@ -14,7 +14,7 @@ public class SpeedCheckTransition : MonoBehaviour, TransitionCheck
     string move = "";
     public bool StateCheck()
     {
-        float speed = me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
+        float speed = MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
         bool value = false;
 
         if (moveToCheckSpeed.Equals(move))

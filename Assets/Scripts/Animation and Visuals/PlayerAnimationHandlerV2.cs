@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerAnimationHandlerV2 : MonoBehaviour
 {
-    [SerializeField] MoveExecuter me;
-    //[SerializeField] MovementMaster mm;
     [SerializeField] Animator animator;
     [SerializeField] float idleTime;
     bool onGround = false;
@@ -102,10 +100,10 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
     void FixedUpdate()
     {
 
-        float speed = me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
+        float speed = MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
         StartCoroutine(GetAcceleration(speed));
-        temp = me.GetCurrentMove().AsString();
-        vertSpeed = me.GetCurrentMove().GetVertSpeedThisFrame();
+        temp = MoveExecuter.GetCurrentMove().AsString();
+        vertSpeed = MoveExecuter.GetCurrentMove().GetVertSpeedThisFrame();
         //Debug.Log("threshold " + fallThreshold + " sspeed:" + vertSpeed);
 
 
@@ -139,7 +137,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             }
             currentMove(extendedMove);
         }
-        else if (startRunning && speed < 0.5f && me.GetCurrentMove().GetVertSpeedThisFrame() == 0f && onGround)
+        else if (startRunning && speed < 0.5f && MoveExecuter.GetCurrentMove().GetVertSpeedThisFrame() == 0f && onGround)
         {
 
             boostSliding = false;
@@ -420,7 +418,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
     IEnumerator GetAcceleration(float t)
     {
         yield return new WaitForSeconds(0.1f);
-        acceleration = (me.GetCurrentMove().GetHorizSpeedThisFrame().magnitude - t) / 0.1f;
+        acceleration = (MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame().magnitude - t) / 0.1f;
     }
 
     IEnumerator AnyStateAgain(float t)
