@@ -108,6 +108,11 @@ public class Dive : AMove
         return new Attack[] { movementSettings.DiveAttack, movementSettings.JumpAttack };
     }
 
+    public override SoundProfile GetSoundProfile()
+    {
+        return movementSettings.Dive_SoundProfile;
+    }
+
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
         if (spawnedParticlesFirstFrame)

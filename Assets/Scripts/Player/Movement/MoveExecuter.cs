@@ -30,12 +30,16 @@ public class MoveExecuter : MonoBehaviour
     [SerializeField] float barrierRadius;
     Ridable ridable = null;
 
+    public static MoveExecuter instance;
+
     public delegate void OnMoveChangedDelegate(IMoveImmutable oldMove, IMoveImmutable newMove);
 
-    public static event OnMoveChangedDelegate OnMoveChanged;
+    public event OnMoveChangedDelegate OnMoveChanged;
 
     private void Awake()
     {
+        instance = this;
+        OnMoveChanged = null;
         charCont = GetComponent<CharacterController>();
         mi = GetComponent<MovementInfo>();
         mii = GetComponent<MovementInputInfo>();

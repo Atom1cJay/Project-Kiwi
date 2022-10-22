@@ -153,6 +153,11 @@ public class BoostSlide : AMove
         }
     }
 
+    public override SoundProfile GetSoundProfile()
+    {
+        return movementSettings.BoostSlide_SoundProfile;
+    }
+
     public override bool Pausable()
     {
         return true;

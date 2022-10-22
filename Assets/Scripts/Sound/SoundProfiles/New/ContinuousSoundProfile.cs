@@ -51,7 +51,7 @@ public abstract class ContinuousSoundProfile : SoundProfile
     /// </summary>
     protected void PlayNextSound()
     {
-        AudioMasterController.instance.PlaySound(sounds[currentSound].name);
+        AudioMasterController.instance.PlaySound(sounds[currentSound].GetName());
         SelectNextSound();
     }
 }

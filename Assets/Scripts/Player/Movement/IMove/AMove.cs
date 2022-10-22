@@ -51,6 +51,8 @@ public abstract class AMove : IMove
 
     public virtual MovementParticleInfo.MovementParticles[] GetParticlesToStop() { return null; }
 
+    public virtual SoundProfile GetSoundProfile() { return null; }
+
     public virtual bool Pausable() { return false; }
 
     /// <summary>

@@ -153,6 +153,11 @@ public class VertAirBoost : AMove
         return new Attack[] { movementSettings.VertBoostAttack, movementSettings.JumpAttack };
     }
 
+    public override SoundProfile GetSoundProfile()
+    {
+        return movementSettings.Boost_SoundProfile;
+    }
+
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
         if (spawnedParticlesFirstFrame)

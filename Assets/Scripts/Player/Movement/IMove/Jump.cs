@@ -34,5 +34,10 @@ public class Jump : AJump
     {
         return "jump";
     }
+
+    public override SoundProfile GetSoundProfile()
+    {
+        return movementSettings.Jump_SoundProfile;
+    }
 }
    

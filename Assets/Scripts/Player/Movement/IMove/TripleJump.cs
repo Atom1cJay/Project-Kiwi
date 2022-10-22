@@ -34,4 +34,9 @@ public class TripleJump : AJump
     {
         return "triplejump";
     }
+
+    public override SoundProfile GetSoundProfile()
+    {
+        return movementSettings.TripleJump_SoundProfile;
+    }
 }

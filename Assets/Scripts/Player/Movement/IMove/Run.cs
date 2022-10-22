@@ -221,6 +221,11 @@ public class Run : AMove
         return null;
     }
 
+    public override SoundProfile GetSoundProfile()
+    {
+        return movementSettings.Run_SoundProfile;
+    }
+
     public override bool Pausable()
     {
         return true;

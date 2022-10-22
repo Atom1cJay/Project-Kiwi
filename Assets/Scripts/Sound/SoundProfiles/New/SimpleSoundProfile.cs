@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Sound Profile/Simple")]
 public class SimpleSoundProfile : SoundProfile
 {
     [SerializeField] Sound sound;
@@ -9,7 +10,7 @@ public class SimpleSoundProfile : SoundProfile
 
     public override void Initiate()
     {
-        AudioMasterController.instance.PlaySound(sound.name);
+        AudioMasterController.instance.PlaySound(sound.GetName());
     }
 
     public override void AdvanceTime() { }
@@ -18,7 +19,7 @@ public class SimpleSoundProfile : SoundProfile
     {
         if (stopSoundAtEnd)
         {
-            AudioMasterController.instance.StopSound(sound.name);
+            AudioMasterController.instance.StopSound(sound.GetName());
         }
     }
 }

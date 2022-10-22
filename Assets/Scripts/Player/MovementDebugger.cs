@@ -8,7 +8,7 @@ public class MovementDebugger : MonoBehaviour
 
     void Start()
     {
-        MoveExecuter.OnMoveChanged += (oldMove, newMove) => LogSwitch(newMove);
+        MoveExecuter.instance.OnMoveChanged += (oldMove, newMove) => LogSwitch(newMove);
     }
 
     void LogSwitch(IMoveImmutable newMove)

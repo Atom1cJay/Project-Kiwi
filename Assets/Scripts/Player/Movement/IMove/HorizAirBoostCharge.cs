@@ -98,6 +98,11 @@ public class HorizAirBoostCharge : AMove
         return new Attack[] { movementSettings.JumpAttack };
     }
 
+    public override SoundProfile GetSoundProfile()
+    {
+        return movementSettings.BoostCharge_SoundProfile;
+    }
+
     public override string AsString()
     {
         return "horizairboostcharge";

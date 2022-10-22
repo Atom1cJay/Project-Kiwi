@@ -81,6 +81,12 @@ public interface IMoveImmutable
     MovementParticleInfo.MovementParticles[] GetParticlesToStop();
 
     /// <summary>
+    /// Returns the sound profile associated with this specific move.
+    /// Returns null if there is no sound profile associated with the move.
+    /// </summary>
+    SoundProfile GetSoundProfile();
+
+    /// <summary>
     /// Should a pause be allowed to occur if a pause input is made by the player?
     /// </summary>
     bool Pausable();

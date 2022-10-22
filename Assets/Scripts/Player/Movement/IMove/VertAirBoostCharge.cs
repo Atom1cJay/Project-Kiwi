@@ -111,4 +111,9 @@ public class VertAirBoostCharge : AMove
     {
         return new Attack[] { movementSettings.JumpAttack };
     }
+
+    public override SoundProfile GetSoundProfile()
+    {
+        return movementSettings.BoostCharge_SoundProfile;
+    }
 }

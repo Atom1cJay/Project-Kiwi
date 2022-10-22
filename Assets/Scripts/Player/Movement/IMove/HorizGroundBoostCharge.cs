@@ -110,6 +110,11 @@ public class HorizGroundBoostCharge : AMove
         return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.Sliding, MovementParticleInfo.Instance.SlidingTracks };
     }
 
+    public override SoundProfile GetSoundProfile()
+    {
+        return movementSettings.BoostCharge_SoundProfile;
+    }
+
     public override bool Pausable()
     {
         return true;

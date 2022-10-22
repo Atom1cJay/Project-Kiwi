@@ -34,4 +34,9 @@ public class DoubleJump : AJump
     {
         return "doublejump";
     }
+
+    public override SoundProfile GetSoundProfile()
+    {
+        return movementSettings.DoubleJump_SoundProfile;
+    }
 }

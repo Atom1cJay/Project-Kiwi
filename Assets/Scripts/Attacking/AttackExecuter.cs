@@ -8,9 +8,9 @@ public class AttackExecuter : MonoBehaviour
     // The parent for the hitboxes to be spawned under
     Attack[] curAttacks;
 
-    private void Awake()
+    private void Start()
     {
-        MoveExecuter.OnMoveChanged += (oldMove, newMove) => ConsiderAttackExecution(newMove);
+        MoveExecuter.instance.OnMoveChanged += (oldMove, newMove) => ConsiderAttackExecution(newMove);
     }
 
     void ConsiderAttackExecution(IMoveImmutable newMove)
