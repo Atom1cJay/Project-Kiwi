@@ -30,9 +30,9 @@ public class MoveExecuter : MonoBehaviour
     [SerializeField] float barrierRadius;
     Ridable ridable = null;
 
-    public UnityEvent OnMoveChanged;
+    public delegate void OnMoveChangedDelegate(IMoveImmutable oldMove, IMoveImmutable newMove);
 
-    Vector3 smpStoredPos = Vector3.zero;
+    public static event OnMoveChangedDelegate OnMoveChanged;
 
     private void Awake()
     {
@@ -73,7 +73,6 @@ public class MoveExecuter : MonoBehaviour
         {
             ridable = mi.GetGroundDetector().CollidingWith().GetComponentInParent<Ridable>();
             ridable.Register();
-            smpStoredPos = ridable.transform.position;
             ridable.onTransformChange.AddListener(() => Move());
         }
         if (!moveThisFrame.AdjustToSlope() || (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity) ||(mi.TouchingGround() && !mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)")))
@@ -148,8 +147,8 @@ public class MoveExecuter : MonoBehaviour
     {
         if (moveThisFrame != moveLastFrame)
         {
+            OnMoveChanged.Invoke(moveLastFrame, moveThisFrame);
             moveLastFrame = moveThisFrame;
-            OnMoveChanged.Invoke();
         }
     }
 

@@ -2,21 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MoveExecuter))]
 public class AttackExecuter : MonoBehaviour
 {
     [SerializeField] Transform hitboxParent;
     // The parent for the hitboxes to be spawned under
-    MoveExecuter me;
     Attack[] curAttacks;
 
     private void Awake()
     {
-        me = GetComponent<MoveExecuter>();
-        me.OnMoveChanged.AddListener(() => ConsiderAttackExecution());
+        MoveExecuter.OnMoveChanged += (oldMove, newMove) => ConsiderAttackExecution(newMove);
     }
 
-    void ConsiderAttackExecution()
+    void ConsiderAttackExecution(IMoveImmutable newMove)
     {
         if (curAttacks != null)
         {
@@ -27,7 +24,7 @@ public class AttackExecuter : MonoBehaviour
             }
         }
 
-        curAttacks = me.GetCurrentMove().GetAttack();
+        curAttacks = newMove.GetAttack();
 
         if (curAttacks != null)
         {

@@ -117,7 +117,7 @@ public class MovementParticleExecuter : MonoBehaviour
     {
         bool moveHalted = false;
         bool newMove = false;
-        me.OnMoveChanged.AddListener(() => { newMove = true; });
+        MoveExecuter.OnMoveChanged += (_, _) => newMove = true;
         float timeLeftToLive = lifetime;
         while (timeLeftToLive > 0)
         {

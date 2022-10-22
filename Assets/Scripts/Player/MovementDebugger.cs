@@ -2,21 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MoveExecuter))]
 public class MovementDebugger : MonoBehaviour
 {
-    MoveExecuter me;
     string storedMoveString = "nothing";
 
-    private void Start()
+    void Start()
     {
-        me = GetComponent<MoveExecuter>();
-        me.OnMoveChanged.AddListener(() => LogSwitch());
+        MoveExecuter.OnMoveChanged += (oldMove, newMove) => LogSwitch(newMove);
     }
 
-    void LogSwitch()
+    void LogSwitch(IMoveImmutable newMove)
     {
-        string curMoveString = me.GetCurrentMove().AsString();
+        string curMoveString = newMove.AsString();
         print("SWITCH: " + storedMoveString + " -> " + curMoveString);
         storedMoveString = curMoveString;
     }
