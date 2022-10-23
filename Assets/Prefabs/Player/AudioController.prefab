@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &433074109774213933
+--- !u!1 &95615445033354844
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,176 +8,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1860552402811271186}
-  - component: {fileID: 4390698165960481034}
-  - component: {fileID: 4290857872028025457}
-  m_Layer: 9
-  m_Name: VCharge Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1860552402811271186
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433074109774213933}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4390698165960481034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433074109774213933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentMove: vertairboostcharge
---- !u!114 &4290857872028025457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433074109774213933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: JetCharge
---- !u!1 &548922031375123239
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6252475623451866570}
-  - component: {fileID: 6598527888869136586}
-  - component: {fileID: 1771558879112691665}
-  m_Layer: 9
-  m_Name: BoostJump Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &6252475623451866570
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548922031375123239}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6598527888869136586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548922031375123239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: BoostJump
---- !u!114 &1771558879112691665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548922031375123239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentMove: boostslidehop
---- !u!1 &725525881187264306
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7145795341970419756}
-  - component: {fileID: 7345669757238823234}
-  - component: {fileID: 1237003376056349405}
-  m_Layer: 9
-  m_Name: VBoost Charge Stop
+  - component: {fileID: 3523517873960700707}
+  - component: {fileID: 1866843621740763877}
+  - component: {fileID: 977253832644839023}
+  m_Layer: 0
+  m_Name: RunFromIdle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7145795341970419756
+--- !u!4 &3523517873960700707
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 725525881187264306}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 95615445033354844}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 919283459425905655}
-  m_RootOrder: 1
+  m_Father: {fileID: 825624359572254288}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7345669757238823234
+--- !u!114 &1866843621740763877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 725525881187264306}
+  m_GameObject: {fileID: 95615445033354844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMove: vertairboost
---- !u!114 &1237003376056349405
+  preTransitionMove: idle
+  postTransitionMove: run
+--- !u!114 &977253832644839023
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 725525881187264306}
+  m_GameObject: {fileID: 95615445033354844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b642e80a2766974f926e37d35c011e3, type: 3}
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundName: JetCharge
---- !u!1 &798502098237975218
+  occurrence: {fileID: 1866843621740763877}
+  soundProfile: {fileID: 11400000, guid: 2ac6c884787b0494e97e606bd803268f, type: 2}
+--- !u!1 &713541986380544157
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,58 +69,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4583797891358749670}
-  - component: {fileID: 4750471503120877404}
-  - component: {fileID: 7149974714800054236}
-  m_Layer: 9
-  m_Name: HBoost Charge Stop
+  - component: {fileID: 1242914132829655902}
+  - component: {fileID: 4349362816380584054}
+  - component: {fileID: 7621777416216888680}
+  m_Layer: 0
+  m_Name: BoostSlide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4583797891358749670
+--- !u!4 &1242914132829655902
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798502098237975218}
+  m_GameObject: {fileID: 713541986380544157}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4046178811241609297}
-  m_RootOrder: 1
+  m_Father: {fileID: 6274319274564034399}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4750471503120877404
+--- !u!114 &4349362816380584054
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798502098237975218}
+  m_GameObject: {fileID: 713541986380544157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMove: horizairboost
---- !u!114 &7149974714800054236
+  preTransitionMove: 
+  postTransitionMove: boostslide
+--- !u!114 &7621777416216888680
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798502098237975218}
+  m_GameObject: {fileID: 713541986380544157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b642e80a2766974f926e37d35c011e3, type: 3}
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundName: JetCharge
---- !u!1 &1611073593284894893
+  occurrence: {fileID: 4349362816380584054}
+  soundProfile: {fileID: 11400000, guid: 3150282a5447041949f753062ef7f337, type: 2}
+--- !u!1 &797415379571299626
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,58 +130,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6468005579691211}
-  - component: {fileID: 4739114318120742088}
-  - component: {fileID: 4539673769386570576}
-  m_Layer: 9
-  m_Name: ThirdJump Controller
+  - component: {fileID: 2334387032016101116}
+  - component: {fileID: 4606511590352118192}
+  - component: {fileID: 2234669383409905684}
+  m_Layer: 0
+  m_Name: HorizCharge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &6468005579691211
+  m_IsActive: 1
+--- !u!4 &2334387032016101116
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1611073593284894893}
+  m_GameObject: {fileID: 797415379571299626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3865432219276408900}
+  m_Father: {fileID: 6274319274564034399}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4739114318120742088
+--- !u!114 &4606511590352118192
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1611073593284894893}
+  m_GameObject: {fileID: 797415379571299626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMove: triplejump
---- !u!114 &4539673769386570576
+  preTransitionMove: 
+  postTransitionMove: horizairboostcharge
+--- !u!114 &2234669383409905684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1611073593284894893}
+  m_GameObject: {fileID: 797415379571299626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundName: Jump3
---- !u!1 &1918933999424397424
+  occurrence: {fileID: 4606511590352118192}
+  soundProfile: {fileID: 11400000, guid: ef9377a9a118f4a80abac5a12bcd7a4c, type: 2}
+--- !u!1 &902493331432393657
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -303,60 +191,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5853229073529740214}
-  - component: {fileID: 3848414338077669710}
-  - component: {fileID: 7374699185386254720}
-  m_Layer: 9
-  m_Name: BoostSlide Explosion
+  - component: {fileID: 3014024010285465835}
+  - component: {fileID: 8309102598955442969}
+  - component: {fileID: 8885823486271441400}
+  m_Layer: 0
+  m_Name: GroundCharge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5853229073529740214
+--- !u!4 &3014024010285465835
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1918933999424397424}
+  m_GameObject: {fileID: 902493331432393657}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 776356024702840910}
-  m_RootOrder: 1
+  m_Father: {fileID: 6274319274564034399}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3848414338077669710
+--- !u!114 &8309102598955442969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1918933999424397424}
+  m_GameObject: {fileID: 902493331432393657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 264f5bb1923bd954d88a34b8a4b3685d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMove: boostslide
-  previousMove: horizgroundboostcharge
-  flipBool: 0
---- !u!114 &7374699185386254720
+  preTransitionMove: 
+  postTransitionMove: horizgroundboostcharge
+--- !u!114 &8885823486271441400
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1918933999424397424}
+  m_GameObject: {fileID: 902493331432393657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundName: JetExplosion
---- !u!1 &2075576834157397244
+  occurrence: {fileID: 8309102598955442969}
+  soundProfile: {fileID: 11400000, guid: ef9377a9a118f4a80abac5a12bcd7a4c, type: 2}
+--- !u!1 &1247266033265188698
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -364,425 +252,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5956447884621575213}
-  - component: {fileID: 4420136892708727448}
-  - component: {fileID: 5637397063697965379}
-  m_Layer: 9
-  m_Name: Idle Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5956447884621575213
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075576834157397244}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7796919714368144679}
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4420136892708727448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075576834157397244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentMove: idle
---- !u!114 &5637397063697965379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075576834157397244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6f89a2cce380b0418a8448ed1d05899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tc: {fileID: 6039758296549006782}
---- !u!1 &2219626378689936827
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7375074320461554031}
-  - component: {fileID: 7262633190741264909}
-  - component: {fileID: 8276330567119868546}
-  m_Layer: 9
-  m_Name: HCharge Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &7375074320461554031
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2219626378689936827}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7262633190741264909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2219626378689936827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: JetCharge
---- !u!114 &8276330567119868546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2219626378689936827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentMove: horizairboostcharge
---- !u!1 &2772747695074348269
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1798328935944302027}
-  - component: {fileID: 6409765634404464629}
-  - component: {fileID: 7742169594161456361}
-  m_Layer: 9
-  m_Name: BoostSlide SKid
+  - component: {fileID: 1995223362544804066}
+  - component: {fileID: 6071682841118732994}
+  - component: {fileID: 7869927694134061310}
+  m_Layer: 0
+  m_Name: BoostJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1798328935944302027
+--- !u!4 &1995223362544804066
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2772747695074348269}
+  m_GameObject: {fileID: 1247266033265188698}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 776356024702840910}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6409765634404464629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2772747695074348269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 264f5bb1923bd954d88a34b8a4b3685d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentMove: boostslide
-  previousMove: horizgroundboostcharge
-  flipBool: 1
---- !u!114 &7742169594161456361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2772747695074348269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: BoostSlide
---- !u!1 &2790358297561305440
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3643968781360846118}
-  - component: {fileID: 4410676519221655483}
-  - component: {fileID: 3604221357292056156}
-  m_Layer: 9
-  m_Name: Knockback Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &3643968781360846118
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2790358297561305440}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4410676519221655483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2790358297561305440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: Knockback
---- !u!114 &3604221357292056156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2790358297561305440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cde1dfa894bfc6447ad3343a3bef9acc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentMove: knockback
-  onNegHealthChange: 0
---- !u!1 &2963430009350720681
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7796919714368144679}
-  - component: {fileID: 3823800656746572863}
-  - component: {fileID: 5834540710137760409}
-  m_Layer: 9
-  m_Name: Idle Stopping
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7796919714368144679
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2963430009350720681}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5956447884621575213}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3823800656746572863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2963430009350720681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23720b4a5bc71c544aca3772dc25dd56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chainedTimes:
-  - delay: 0
-    soundName: RFootstep
-  - delay: 0.1
-    soundName: LFootstep
---- !u!114 &5834540710137760409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2963430009350720681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1da6c91c1ea81c846bd4a86d81f49b29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveToCheckSpeed: run
-  moveToStart: idle
-  speedToHit: 5
-  me: {fileID: 0}
---- !u!1 &3301164277006388366
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 776356024702840910}
-  - component: {fileID: 9199927963657622367}
-  - component: {fileID: 7588322806264339514}
-  m_Layer: 9
-  m_Name: BoostSlide Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &776356024702840910
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3301164277006388366}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1798328935944302027}
-  - {fileID: 5853229073529740214}
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9199927963657622367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3301164277006388366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b642e80a2766974f926e37d35c011e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: JetCharge
---- !u!114 &7588322806264339514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3301164277006388366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentMove: boostslide
---- !u!1 &4947753692803885042
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9018440727267281847}
-  - component: {fileID: 7644058634631313070}
-  - component: {fileID: 6088946647765348816}
-  m_Layer: 9
-  m_Name: Dive Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &9018440727267281847
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4947753692803885042}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3865432219276408900}
+  m_Father: {fileID: 6274319274564034399}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7644058634631313070
+--- !u!114 &6071682841118732994
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4947753692803885042}
+  m_GameObject: {fileID: 1247266033265188698}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundName: Dive
---- !u!114 &6088946647765348816
+  preTransitionMove: 
+  postTransitionMove: boostslidehop
+--- !u!114 &7869927694134061310
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4947753692803885042}
+  m_GameObject: {fileID: 1247266033265188698}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMove: dive
---- !u!1 &4970921024833304406
+  occurrence: {fileID: 6071682841118732994}
+  soundProfile: {fileID: 11400000, guid: c876cbd3299c945b3b4ede50b230c2bd, type: 2}
+--- !u!1 &1743251922304812722
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -790,57 +313,320 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4678253495475590077}
-  - component: {fileID: 2433430217430424458}
-  - component: {fileID: 7790390508913696865}
-  m_Layer: 9
-  m_Name: VBoost Explosion
+  - component: {fileID: 6274319274564034399}
+  m_Layer: 0
+  m_Name: MoveTransitionSounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4678253495475590077
+--- !u!4 &6274319274564034399
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4970921024833304406}
+  m_GameObject: {fileID: 1743251922304812722}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2328484388500838383}
+  - {fileID: 6243703858948587055}
+  - {fileID: 7027862338379520711}
+  - {fileID: 2334387032016101116}
+  - {fileID: 8467956583205024158}
+  - {fileID: 3014024010285465835}
+  - {fileID: 3364022857560536728}
+  - {fileID: 84272468669054065}
+  - {fileID: 1242914132829655902}
+  - {fileID: 825624359572254288}
+  - {fileID: 7569018370745446221}
+  - {fileID: 1995223362544804066}
+  - {fileID: 4771064591693479058}
+  - {fileID: 2653796489673052437}
+  m_Father: {fileID: 3865432219276408900}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2881225658765752581
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 825624359572254288}
+  m_Layer: 0
+  m_Name: Run
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &825624359572254288
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2881225658765752581}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3523517873960700707}
+  - {fileID: 2054522106270559745}
+  m_Father: {fileID: 6274319274564034399}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2908445194759061815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7027862338379520711}
+  - component: {fileID: 1124926531006834053}
+  - component: {fileID: 1807902142239635372}
+  m_Layer: 0
+  m_Name: ThirdJump
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7027862338379520711
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2908445194759061815}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 919283459425905655}
+  m_Father: {fileID: 6274319274564034399}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1124926531006834053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2908445194759061815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preTransitionMove: 
+  postTransitionMove: triplejump
+--- !u!114 &1807902142239635372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2908445194759061815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occurrence: {fileID: 1124926531006834053}
+  soundProfile: {fileID: 11400000, guid: b1330508f0cbb46a6ac10f057707c120, type: 2}
+--- !u!1 &3880058339233684481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7569018370745446221}
+  - component: {fileID: 7420997220545283501}
+  - component: {fileID: 6090103478273303362}
+  m_Layer: 0
+  m_Name: Dive
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7569018370745446221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880058339233684481}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6274319274564034399}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7420997220545283501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880058339233684481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preTransitionMove: 
+  postTransitionMove: dive
+--- !u!114 &6090103478273303362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880058339233684481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occurrence: {fileID: 7420997220545283501}
+  soundProfile: {fileID: 11400000, guid: 1dc383ad99a24485ba3546115fa5c919, type: 2}
+--- !u!1 &4172780124312533044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 84272468669054065}
+  - component: {fileID: 7152487042746080661}
+  - component: {fileID: 4120034082524844235}
+  m_Layer: 0
+  m_Name: VerticalBoost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &84272468669054065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4172780124312533044}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6274319274564034399}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7152487042746080661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4172780124312533044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preTransitionMove: 
+  postTransitionMove: vertairboost
+--- !u!114 &4120034082524844235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4172780124312533044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occurrence: {fileID: 7152487042746080661}
+  soundProfile: {fileID: 11400000, guid: bebae302d407f495886cef06e04fe2e1, type: 2}
+--- !u!1 &4878760815299417952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2328484388500838383}
+  - component: {fileID: 7417439541962211896}
+  - component: {fileID: 6367635571651065266}
+  m_Layer: 0
+  m_Name: FirstJump
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2328484388500838383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878760815299417952}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6274319274564034399}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2433430217430424458
+--- !u!114 &7417439541962211896
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4970921024833304406}
+  m_GameObject: {fileID: 4878760815299417952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMove: vertairboost
---- !u!114 &7790390508913696865
+  preTransitionMove: 
+  postTransitionMove: jump
+--- !u!114 &6367635571651065266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4970921024833304406}
+  m_GameObject: {fileID: 4878760815299417952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundName: JetExplosion
+  occurrence: {fileID: 7417439541962211896}
+  soundProfile: {fileID: 11400000, guid: 28c55c5138beb4c87afd33bf1311d7e1, type: 2}
 --- !u!1 &5204249085327673557
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,7 +637,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3865432219276408900}
   - component: {fileID: 3149784325922564935}
-  - component: {fileID: 792830327167811529}
   - component: {fileID: 5935677403952539857}
   m_Layer: 9
   m_Name: AudioController
@@ -872,22 +657,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4689447318532694652}
-  - {fileID: 9085473358346464733}
-  - {fileID: 6927938978870997410}
-  - {fileID: 6468005579691211}
-  - {fileID: 7375074320461554031}
-  - {fileID: 1860552402811271186}
-  - {fileID: 9108525226482916716}
-  - {fileID: 919283459425905655}
-  - {fileID: 4046178811241609297}
-  - {fileID: 776356024702840910}
-  - {fileID: 3397264992543615357}
-  - {fileID: 9018440727267281847}
-  - {fileID: 5956447884621575213}
-  - {fileID: 6252475623451866570}
-  - {fileID: 3643968781360846118}
-  - {fileID: 4510159930292502566}
+  - {fileID: 6274319274564034399}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -926,19 +696,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fc972db74d7ed3f4dad666ebed0e249e, type: 2}
   - {fileID: 11400000, guid: 3b7b2562e487ff349b16a81c7314378b, type: 2}
   - {fileID: 11400000, guid: 30693ec61f1b3764da908d298ca1ff7f, type: 2}
---- !u!114 &792830327167811529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5204249085327673557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3918f0e2793e4f345b214baa1c261c46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  me: {fileID: 0}
+  - {fileID: 11400000, guid: 60a712e725fcf47ff97de94f566b59d5, type: 2}
+  - {fileID: 11400000, guid: bd93ca8a856cf4da599368a015cf46a9, type: 2}
 --- !u!114 &5935677403952539857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,7 +714,7 @@ MonoBehaviour:
   startPauseMenu: StartPause
   closePauseMenu: EndPause
   selectOption: SelectOption
---- !u!1 &5426616352412882817
+--- !u!1 &5206454171107125380
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -963,183 +722,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9108525226482916716}
-  - component: {fileID: 6983860986658536782}
-  - component: {fileID: 7795611321309248527}
-  m_Layer: 9
-  m_Name: GCharge Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &9108525226482916716
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5426616352412882817}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6983860986658536782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5426616352412882817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: JetCharge
---- !u!114 &7795611321309248527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5426616352412882817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentMove: horizgroundboostcharge
---- !u!1 &5692904420040372845
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3397264992543615357}
-  m_Layer: 9
-  m_Name: Running Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &3397264992543615357
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5692904420040372845}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2600103753783130916}
-  - {fileID: 2551918767821710724}
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5784521074447339933
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4046178811241609297}
-  m_Layer: 9
-  m_Name: HBoost Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &4046178811241609297
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5784521074447339933}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6162625499064603018}
-  - {fileID: 4583797891358749670}
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5957556807389445012
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6162625499064603018}
-  - component: {fileID: 3631151506125936653}
-  - component: {fileID: 394320995141891903}
-  m_Layer: 9
-  m_Name: HBoost Explosion
+  - component: {fileID: 4771064591693479058}
+  - component: {fileID: 866843636596476029}
+  - component: {fileID: 2931398535431070468}
+  m_Layer: 0
+  m_Name: Knockback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6162625499064603018
+--- !u!4 &4771064591693479058
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5957556807389445012}
+  m_GameObject: {fileID: 5206454171107125380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4046178811241609297}
-  m_RootOrder: 0
+  m_Father: {fileID: 6274319274564034399}
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3631151506125936653
+--- !u!114 &866843636596476029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5957556807389445012}
+  m_GameObject: {fileID: 5206454171107125380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMove: horizairboost
---- !u!114 &394320995141891903
+  preTransitionMove: 
+  postTransitionMove: knockback
+--- !u!114 &2931398535431070468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5957556807389445012}
+  m_GameObject: {fileID: 5206454171107125380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundName: JetExplosion
---- !u!1 &6420213685065223108
+  occurrence: {fileID: 866843636596476029}
+  soundProfile: {fileID: 11400000, guid: 486012f63cf19401abd8d1608a43120c, type: 2}
+--- !u!1 &6819910619950557934
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1147,66 +783,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2551918767821710724}
-  - component: {fileID: 6039758296549006782}
-  - component: {fileID: 4718067837123377757}
-  m_Layer: 9
-  m_Name: Running Charge Up
+  - component: {fileID: 8467956583205024158}
+  - component: {fileID: 4939092880838507243}
+  - component: {fileID: 6275610218686117891}
+  m_Layer: 0
+  m_Name: VerticalCharge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2551918767821710724
+--- !u!4 &8467956583205024158
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6420213685065223108}
+  m_GameObject: {fileID: 6819910619950557934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3397264992543615357}
-  m_RootOrder: 1
+  m_Father: {fileID: 6274319274564034399}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6039758296549006782
+--- !u!114 &4939092880838507243
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6420213685065223108}
+  m_GameObject: {fileID: 6819910619950557934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23720b4a5bc71c544aca3772dc25dd56, type: 3}
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chainedTimes:
-  - delay: 0
-    soundName: StartLFootstep
-  - delay: 0.2
-    soundName: StartRFootstep
-  - delay: 0.1
-    soundName: StartLFootstep
---- !u!114 &4718067837123377757
+  preTransitionMove: 
+  postTransitionMove: vertairboostcharge
+--- !u!114 &6275610218686117891
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6420213685065223108}
+  m_GameObject: {fileID: 6819910619950557934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 264f5bb1923bd954d88a34b8a4b3685d, type: 3}
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMove: run
-  previousMove: idle
-  flipBool: 0
---- !u!1 &6616204672481879649
+  occurrence: {fileID: 4939092880838507243}
+  soundProfile: {fileID: 11400000, guid: ef9377a9a118f4a80abac5a12bcd7a4c, type: 2}
+--- !u!1 &7471787909335954453
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1214,58 +844,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9085473358346464733}
-  - component: {fileID: 6905113791676197351}
-  - component: {fileID: 3669744176194697923}
-  m_Layer: 9
-  m_Name: FirstJump Controller
+  - component: {fileID: 6243703858948587055}
+  - component: {fileID: 3206498060159744761}
+  - component: {fileID: 6787013438778515948}
+  m_Layer: 0
+  m_Name: SecondJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &9085473358346464733
+  m_IsActive: 1
+--- !u!4 &6243703858948587055
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6616204672481879649}
+  m_GameObject: {fileID: 7471787909335954453}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3865432219276408900}
+  m_Father: {fileID: 6274319274564034399}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6905113791676197351
+--- !u!114 &3206498060159744761
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6616204672481879649}
+  m_GameObject: {fileID: 7471787909335954453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMove: jump
---- !u!114 &3669744176194697923
+  preTransitionMove: 
+  postTransitionMove: doublejump
+--- !u!114 &6787013438778515948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6616204672481879649}
+  m_GameObject: {fileID: 7471787909335954453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundName: Jump1
---- !u!1 &7022632764660210495
+  occurrence: {fileID: 3206498060159744761}
+  soundProfile: {fileID: 11400000, guid: e08a03765ac844cab8fcaee8cc64be8d, type: 2}
+--- !u!1 &7505633201651642169
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1273,32 +905,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 919283459425905655}
-  m_Layer: 9
-  m_Name: VBoost Controller
+  - component: {fileID: 2054522106270559745}
+  - component: {fileID: 5014532903522383799}
+  - component: {fileID: 717411760178422952}
+  m_Layer: 0
+  m_Name: RunInGeneral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &919283459425905655
+  m_IsActive: 1
+--- !u!4 &2054522106270559745
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7022632764660210495}
+  m_GameObject: {fileID: 7505633201651642169}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4678253495475590077}
-  - {fileID: 7145795341970419756}
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 7
+  m_Children: []
+  m_Father: {fileID: 825624359572254288}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7138617167027904014
+--- !u!114 &5014532903522383799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7505633201651642169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preTransitionMove: 
+  postTransitionMove: run
+--- !u!114 &717411760178422952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7505633201651642169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occurrence: {fileID: 5014532903522383799}
+  soundProfile: {fileID: 11400000, guid: 82594a484bb474596aa99d6c36d41953, type: 2}
+--- !u!1 &8313280066657184699
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1306,48 +966,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4689447318532694652}
-  - component: {fileID: 7369735474311473654}
-  m_Layer: 9
-  m_Name: MusicController
+  - component: {fileID: 2653796489673052437}
+  - component: {fileID: 6331252700480224186}
+  - component: {fileID: 7414157421473003924}
+  m_Layer: 0
+  m_Name: Glide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4689447318532694652
+--- !u!4 &2653796489673052437
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7138617167027904014}
+  m_GameObject: {fileID: 8313280066657184699}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 0
+  m_Father: {fileID: 6274319274564034399}
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7369735474311473654
+--- !u!114 &6331252700480224186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7138617167027904014}
+  m_GameObject: {fileID: 8313280066657184699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df2fcd526a40b214cab3a6ddedbdaf81, type: 3}
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  song1: Song1
-  song2: Song2
-  location1: {fileID: 0}
-  player: {fileID: 0}
-  dist: 100
---- !u!1 &7477867587724600876
+  preTransitionMove: 
+  postTransitionMove: glide
+--- !u!114 &7414157421473003924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8313280066657184699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occurrence: {fileID: 6331252700480224186}
+  soundProfile: {fileID: 11400000, guid: 75eca4a926ed446dc9582a0620201117, type: 2}
+--- !u!1 &8364307690783650774
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1355,147 +1027,56 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2600103753783130916}
-  - component: {fileID: 6716005157558983831}
-  - component: {fileID: 1297074499736864029}
-  m_Layer: 9
-  m_Name: Running Footsteps
+  - component: {fileID: 3364022857560536728}
+  - component: {fileID: 6531498178129995517}
+  - component: {fileID: 266139038849791635}
+  m_Layer: 0
+  m_Name: HorizontalBoost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2600103753783130916
+--- !u!4 &3364022857560536728
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7477867587724600876}
+  m_GameObject: {fileID: 8364307690783650774}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3397264992543615357}
-  m_RootOrder: 0
+  m_Father: {fileID: 6274319274564034399}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6716005157558983831
+--- !u!114 &6531498178129995517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7477867587724600876}
+  m_GameObject: {fileID: 8364307690783650774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7fd2a48fa1dac34bb22f0192598ac65, type: 3}
+  m_Script: {fileID: 11500000, guid: 5056dc88c25334a4ea2d9b0e44886e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundNamePrimary: LFootstep
-  soundNameAlt: RFootstep
-  me: {fileID: 0}
-  nextStep: 1.4
---- !u!114 &1297074499736864029
+  preTransitionMove: 
+  postTransitionMove: horizairboost
+--- !u!114 &266139038849791635
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7477867587724600876}
+  m_GameObject: {fileID: 8364307690783650774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04a7228aa8a347144bfb41948171b5b5, type: 3}
+  m_Script: {fileID: 11500000, guid: fa82883fa0d3c4e9b89ae7a4bba29dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMove: run
---- !u!1 &8083992209739414268
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4510159930292502566}
-  m_Layer: 9
-  m_Name: MovementSoundPlayer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4510159930292502566
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8083992209739414268}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &9050394029417448896
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6927938978870997410}
-  - component: {fileID: 6202860605889755759}
-  - component: {fileID: 254074853551208362}
-  m_Layer: 9
-  m_Name: SecondJump Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &6927938978870997410
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9050394029417448896}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3865432219276408900}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6202860605889755759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9050394029417448896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2801a24411e1b514fbc314b98f1e35ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentMove: doublejump
---- !u!114 &254074853551208362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9050394029417448896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47446f4690ff6b44ea31f7ed7b92f4d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: Jump2
+  occurrence: {fileID: 6531498178129995517}
+  soundProfile: {fileID: 11400000, guid: bebae302d407f495886cef06e04fe2e1, type: 2}

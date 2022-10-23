@@ -234,19 +234,6 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float knockbackXTimeToZero;
     [SerializeField] float knockbackRecoveryTime;
 
-    [Header("Audio Settings")]
-    [SerializeField] SoundProfile jump_soundProfile;
-    [SerializeField] SoundProfile doubleJump_soundProfile;
-    [SerializeField] SoundProfile tripleJump_soundProfile;
-    [SerializeField] SoundProfile run_soundProfile;
-    [SerializeField] SoundProfile dive_soundProfile;
-    [SerializeField] SoundProfile boostCharge_soundProfile;
-    [SerializeField] SoundProfile boost_soundProfile;
-    [SerializeField] SoundProfile boostHop_soundProfile;
-    [SerializeField] SoundProfile boostSlide_soundProfile;
-    [SerializeField] SoundProfile knockback_soundProfile;
-    [SerializeField] SoundProfile glide_soundProfile;
-
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
     public float MaxSpeedAbsolute { get { return maxSpeedAbsolute; } }
@@ -436,18 +423,6 @@ public class MovementSettingsSO : ScriptableObject
     public float KnockbackYGravity { get { return knockbackYGravity; } }
     public float KnockbackXTimeToZero { get { return knockbackXTimeToZero; } }
     public float KnockbackRecoveryTime { get { return knockbackRecoveryTime; } }
-
-    public SoundProfile Jump_SoundProfile { get { return jump_soundProfile; } }
-    public SoundProfile DoubleJump_SoundProfile { get { return doubleJump_soundProfile; } }
-    public SoundProfile TripleJump_SoundProfile { get { return tripleJump_soundProfile; } }
-    public SoundProfile Run_SoundProfile { get { return run_soundProfile; } }
-    public SoundProfile Dive_SoundProfile { get { return dive_soundProfile; } }
-    public SoundProfile BoostCharge_SoundProfile { get { return boostCharge_soundProfile; } }
-    public SoundProfile Boost_SoundProfile { get { return boost_soundProfile; } }
-    public SoundProfile BoostHop_SoundProfile { get { return boostHop_soundProfile; } }
-    public SoundProfile BoostSlide_SoundProfile { get { return boostSlide_soundProfile; } }
-    public SoundProfile Knockback_SoundProfile { get { return knockback_soundProfile; } }
-    public SoundProfile Glide_SoundProfile { get { return glide_soundProfile; } }
 
     static MovementSettingsSO _instance;
     public static MovementSettingsSO Instance

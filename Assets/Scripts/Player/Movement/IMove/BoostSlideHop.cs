@@ -105,9 +105,4 @@ public class BoostSlideHop : AMove
     {
         return new Attack[] { movementSettings.JumpAttack };
     }
-
-    public override SoundProfile GetSoundProfile()
-    {
-        return movementSettings.BoostHop_SoundProfile;
-    }
 }

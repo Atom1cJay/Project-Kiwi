@@ -111,11 +111,6 @@ public class Knockback : AMove
         return new Attack[] { movementSettings.JumpAttack };
     }
 
-    public override SoundProfile GetSoundProfile()
-    {
-        return movementSettings.Knockback_SoundProfile;
-    }
-
     public override string AsString()
     {
         return "knockback";

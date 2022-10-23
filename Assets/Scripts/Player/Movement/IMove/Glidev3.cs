@@ -178,9 +178,4 @@ public class Glidev3 : AMove
     {
         return true;
     }
-
-    public override SoundProfile GetSoundProfile()
-    {
-        return movementSettings.Glide_SoundProfile;
-    }
 }

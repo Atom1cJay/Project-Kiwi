@@ -109,11 +109,6 @@ public class HorizAirBoost : AMove
         return new Attack[] { movementSettings.HorizBoostAttack, movementSettings.JumpAttack };
     }
 
-    public override SoundProfile GetSoundProfile()
-    {
-        return movementSettings.Boost_SoundProfile;
-    }
-
     public override MovementParticleInfo.MovementParticles[] GetParticlesToSpawn()
     {
         if (spawnedParticlesFirstFrame)
