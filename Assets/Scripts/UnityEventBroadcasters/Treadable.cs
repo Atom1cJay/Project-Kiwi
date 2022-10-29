@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Treadable : MonoBehaviour
 {
     [SerializeField] UnityEvent OnTread;
-    [SerializeField] bool oneTimeActivation;
+    [SerializeField] bool oneTimeActivationPerScene;
     bool cannotActivate;
 
     private void OnCollisionStay(Collision collision)
@@ -26,7 +26,7 @@ public class Treadable : MonoBehaviour
     /// </summary>
     private void BroadcastTreadEvent()
     {
-        if (oneTimeActivation)
+        if (oneTimeActivationPerScene)
         {
             cannotActivate = true;
         }

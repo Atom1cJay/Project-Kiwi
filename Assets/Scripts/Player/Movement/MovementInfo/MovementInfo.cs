@@ -83,7 +83,7 @@ public class MovementInfo : MonoBehaviour
     /// </summary>
     private void UpdateTripleJumpStatus()
     {
-        IMoveImmutable curMove = MoveExecuter.GetCurrentMove();
+        IMoveImmutable curMove = MoveExecuter.instance.GetCurrentMove();
         if (curMove.TJshouldBreak())
         {
             tjJumpCount = 0;
@@ -91,7 +91,7 @@ public class MovementInfo : MonoBehaviour
         if (curMove != storedMove)
         {
             tjJumpCount += curMove.IncrementsTJcounter() ? 1 : 0;
-            storedMove = MoveExecuter.GetCurrentMove();
+            storedMove = MoveExecuter.instance.GetCurrentMove();
         }
     }
 

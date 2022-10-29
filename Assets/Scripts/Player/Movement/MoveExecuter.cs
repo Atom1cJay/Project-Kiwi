@@ -30,7 +30,23 @@ public class MoveExecuter : MonoBehaviour
     [SerializeField] float barrierRadius;
     Ridable ridable = null;
 
-    public static MoveExecuter instance;
+    static MoveExecuter _instance;
+    public static MoveExecuter instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("Tried to get MoveExecuter instance before it is set in Awake()");
+            }
+            return _instance;
+        }
+        set
+        {
+            _instance = value;
+        }
+    }
+
 
     public delegate void OnMoveChangedDelegate(IMoveImmutable oldMove, IMoveImmutable newMove);
 
@@ -202,7 +218,7 @@ public class MoveExecuter : MonoBehaviour
     /// <summary>
     /// Provides immutable access to the move which is currently taking place.
     /// </summary>
-    public static IMoveImmutable GetCurrentMove()
+    public IMoveImmutable GetCurrentMove()
     {
         return moveThisFrame;
     }

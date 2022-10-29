@@ -25,7 +25,7 @@ public class UIPauseHandler : MonoBehaviour
     /// </summary>
     void ConsiderPausing()
     {
-        if (!paused && IAH.inputActions.UI.Pause.ReadValue<float>() > 0 && MoveExecuter.GetCurrentMove().Pausable())
+        if (!paused && IAH.inputActions.UI.Pause.ReadValue<float>() > 0 && MoveExecuter.instance.GetCurrentMove().Pausable())
             ForcePause();
     }
 

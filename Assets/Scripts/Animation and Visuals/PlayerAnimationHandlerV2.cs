@@ -100,10 +100,10 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
     void FixedUpdate()
     {
 
-        float speed = MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
+        float speed = MoveExecuter.instance.GetCurrentMove().GetHorizSpeedThisFrame().magnitude;
         StartCoroutine(GetAcceleration(speed));
-        temp = MoveExecuter.GetCurrentMove().AsString();
-        vertSpeed = MoveExecuter.GetCurrentMove().GetVertSpeedThisFrame();
+        temp = MoveExecuter.instance.GetCurrentMove().AsString();
+        vertSpeed = MoveExecuter.instance.GetCurrentMove().GetVertSpeedThisFrame();
         //Debug.Log("threshold " + fallThreshold + " sspeed:" + vertSpeed);
 
 
@@ -137,7 +137,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
             }
             currentMove(extendedMove);
         }
-        else if (startRunning && speed < 0.5f && MoveExecuter.GetCurrentMove().GetVertSpeedThisFrame() == 0f && onGround)
+        else if (startRunning && speed < 0.5f && MoveExecuter.instance.GetCurrentMove().GetVertSpeedThisFrame() == 0f && onGround)
         {
 
             boostSliding = false;
@@ -418,7 +418,7 @@ public class PlayerAnimationHandlerV2 : MonoBehaviour
     IEnumerator GetAcceleration(float t)
     {
         yield return new WaitForSeconds(0.1f);
-        acceleration = (MoveExecuter.GetCurrentMove().GetHorizSpeedThisFrame().magnitude - t) / 0.1f;
+        acceleration = (MoveExecuter.instance.GetCurrentMove().GetHorizSpeedThisFrame().magnitude - t) / 0.1f;
     }
 
     IEnumerator AnyStateAgain(float t)
