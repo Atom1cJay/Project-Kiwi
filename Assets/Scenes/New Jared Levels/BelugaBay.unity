@@ -6254,6 +6254,7 @@ MonoBehaviour:
   OnPound:
     m_PersistentCalls:
       m_Calls: []
+  oneTimeActivationPerScene: 0
 --- !u!114 &1180894252 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4663490803033977606, guid: 70613cbda13764daea7160e7333018b7, type: 3}
@@ -10030,6 +10031,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 628137679916667016, guid: 70613cbda13764daea7160e7333018b7, type: 3}
+      propertyPath: soundProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 478b537f78ceb4d6285dccabf6a8b7a5, type: 2}
     - target: {fileID: 1812740180572047622, guid: 70613cbda13764daea7160e7333018b7, type: 3}
       propertyPath: m_IsActive
       value: 0

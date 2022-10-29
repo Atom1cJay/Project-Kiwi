@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeb7b3e774ffd49c8be04230143549b8, type: 3}
+  m_Script: {fileID: 11500000, guid: cff9369aa482049cd8ac837449086363, type: 3}
   m_Name: RunRegular
   m_EditorClassIdentifier: 
-  elements:
-  - soundProfile: {fileID: 11400000, guid: ac6e9c31f2b0d40e9a8e461d37d9012b, type: 2}
-    timeToPlay: 0.19
-  - soundProfile: {fileID: 11400000, guid: bab0a947e6e4d4d43a202f169416b678, type: 2}
-    timeToPlay: 0.19
-  loopSequence: 1
+  boopingWaterSoundProfile: {fileID: 11400000, guid: 543dac77587644e8a87e9352548e4b1b, type: 2}
+  notBoopingWaterSoundProfile: {fileID: 11400000, guid: 82594a484bb474596aa99d6c36d41953, type: 2}

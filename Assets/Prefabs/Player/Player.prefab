@@ -1108,9 +1108,54 @@ Transform:
   - {fileID: 6564809734400936219}
   - {fileID: 6764330477301944907}
   - {fileID: 4403935425391801186}
+  - {fileID: 2524099438081929391}
   m_Father: {fileID: 5116987452351034286}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &758137763516903569
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2524099438081929391}
+  - component: {fileID: 1484013492036565929}
+  m_Layer: 9
+  m_Name: SurfaceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2524099438081929391
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758137763516903569}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2276095046423539012}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1484013492036565929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758137763516903569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2b50f68cbc6f4bd6b78c61d98237afa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1250148963275902434
 GameObject:
   m_ObjectHideFlags: 0
@@ -6270,7 +6315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraControl: {fileID: 0}
   camTarget: {fileID: 0}
-  shadowCaster: {fileID: 0}
+  shadowCaster: {fileID: 4663490803033977606}
   barrierRadius: 0.005
 --- !u!114 &1704877078
 MonoBehaviour:
@@ -6384,8 +6429,8 @@ MonoBehaviour:
   seedDisplay: {fileID: 7438056359786874682}
   blueSeedDisplay: {fileID: 8057860603794289910}
   wanderLeafDisplay: {fileID: 1931669576205732003}
-  collectSeed: {fileID: 0}
-  collectWanderLeaf: {fileID: 0}
+  collectSeed: {fileID: 11400000, guid: c1c1e54b18535684f8676711b4c70046, type: 2}
+  collectWanderLeaf: {fileID: 11400000, guid: accb995be44ba4346a558c7876b4d60c, type: 2}
 --- !u!136 &23901401652546964
 CapsuleCollider:
   m_ObjectHideFlags: 0
