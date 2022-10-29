@@ -16,12 +16,16 @@ public class StickToGround : MonoBehaviour
     // Based on the given position, stick to the nearest "floor" below that position.
     public void UpdatePosition(Vector3 pos)
     {
+        if (sun == null)
+        {
+            Debug.LogError("Cannot update position of drop shadow because sun is not provided.");
+            return;
+        }
         RaycastHit hit;
         if (Physics.Raycast(pos, Vector3.down, out hit, raycastLength, validGround))
         {
             Vector3 goalShadowPos = hit.point;
             transform.position = goalShadowPos - (sun.transform.forward * distFromGround);
-            //transform.position = new Vector3(pos.x, hit.point.y + distFromGround, pos.z);
         }
     }
 
