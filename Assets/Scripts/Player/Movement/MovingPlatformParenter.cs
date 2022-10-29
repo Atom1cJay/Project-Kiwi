@@ -16,6 +16,7 @@ public class MovingPlatformParenter : MonoBehaviour
     }
 
     //Get on Ball
+    // TODO Remove this!
     public void OnBall()
     {
         onBall = true;
@@ -23,6 +24,7 @@ public class MovingPlatformParenter : MonoBehaviour
 
 
     //Get off Ball
+    // TODO Remove this!
     public void OffBall()
     {
         onBall = false;
@@ -40,7 +42,7 @@ public class MovingPlatformParenter : MonoBehaviour
             {
                 GameObject ground = mi.GetGroundDetector().CollidingWith();
                 Transform parent;
-                if (ground.CompareTag("Moving Platform (Has Wrapper)"))
+                if (ground.CompareTag("Moving Platform"))
                     parent = ground.transform.parent;
                 else
                     parent = null;

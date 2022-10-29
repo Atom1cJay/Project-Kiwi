@@ -73,13 +73,13 @@ public class MoveExecuter : MonoBehaviour
 
     void UpdateMovingPlatformStatus()
     {
-        if (ridable == null && mi.TouchingGround() && mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)"))
+        if (ridable == null && mi.TouchingGround() && mi.GetGroundDetector().CollidingWith().CompareTag("Moving Platform"))
         {
             ridable = mi.GetGroundDetector().CollidingWith().GetComponentInParent<Ridable>();
             ridable.Register();
             ridable.onTransformChange.AddListener(() => Move());
         }
-        if (!moveThisFrame.AdjustToSlope() || (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity) ||(mi.TouchingGround() && !mi.GetGroundDetector().CollidingWith().CompareTag("Smooth Moving Platform (EXP)")))
+        if (!moveThisFrame.AdjustToSlope() || (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity) ||(mi.TouchingGround() && !mi.GetGroundDetector().CollidingWith().CompareTag("Moving Platform")))
         {
             if (ridable != null)
             {
