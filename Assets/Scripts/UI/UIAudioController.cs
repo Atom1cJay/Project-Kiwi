@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UIAudioController : MonoBehaviour
 {
 
-    [SerializeField] string navigateButtonsSound, startPauseMenu, closePauseMenu, selectOption;
+    [SerializeField] Sound navigateButtonsSound, startPauseMenu, closePauseMenu, selectOption;
 
     EventSystem eventSystem;
     GameObject selected = null;

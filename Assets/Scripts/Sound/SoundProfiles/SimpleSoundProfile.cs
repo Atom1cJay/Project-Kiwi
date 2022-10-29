@@ -10,7 +10,7 @@ public class SimpleSoundProfile : SoundProfile
 
     public override void Initiate()
     {
-        AudioMasterController.instance.PlaySound(sound.GetName());
+        AudioMasterController.instance.PlaySound(sound);
     }
 
     public override void AdvanceTime() { }

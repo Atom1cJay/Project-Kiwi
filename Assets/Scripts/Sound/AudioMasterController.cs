@@ -9,10 +9,8 @@ public class AudioMasterController : MonoBehaviour
 
     [SerializeField] List<Sound> soundList;
     List<SoundPlayer> allPlayers;
-    GameObject playerSound;
     float sfxMult, musicMult;
 
-    // Start is called before the first frame update
     void Awake()
     {
         sfxMult = 1f;
@@ -23,14 +21,6 @@ public class AudioMasterController : MonoBehaviour
         {
             instance = this;
         }
-
-        playerSound = gameObject;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void StopSound(string name)
@@ -65,39 +55,7 @@ public class AudioMasterController : MonoBehaviour
         return musicMult;
     }
 
-    public void PlaySound(string name)
-    {
-        PlaySound(name, playerSound);
-    }
-
-    public void PlaySound(string name, GameObject g)
-    {
-
-        //new audio player
-        GameObject newObject = new GameObject();
-        newObject.name = name + " sound!";
-        newObject.transform.parent = g.transform;
-
-        bool playedSong = false;
-
-        foreach (Sound s in soundList)
-        {
-            if (s.GetName().Equals(name))
-            {
-               Play(newObject, s);
-                playedSong = true;
-            }
-        }
-
-        if (!playedSong)
-        {
-            Destroy(newObject);
-            Debug.Log("Sound: " + name + " not found!");
-        }
-
-    }
-
-    void Play(GameObject g, Sound s)
+    void PlaySoundOnGameObject(GameObject g, Sound s)
     {
         AudioSource audioSource = g.AddComponent<AudioSource>();
 
@@ -118,11 +76,23 @@ public class AudioMasterController : MonoBehaviour
         sp.SetUpPlayer(audioSource, s.GetSFX(), s.GetMUSIC(), s.GetName());
 
         allPlayers.Add(sp);
-
     }
+
+    private void PlaySound(Sound s, Transform parent)
+    {
+        GameObject soundGameObject = new GameObject();
+        soundGameObject.name = s.GetName() + " sound!";
+        soundGameObject.transform.parent = parent;
+        PlaySoundOnGameObject(soundGameObject, s);
+    }
+
+    public void PlaySound(Sound s)
+    {
+        PlaySound(s, this.gameObject.transform);
+    }
+
     void FadeIn(Sound s, float time, GameObject g)
     {
-
         AudioSource audioSource = g.AddComponent<AudioSource>();
 
         audioSource.clip = s.GetClip();
@@ -146,10 +116,10 @@ public class AudioMasterController : MonoBehaviour
     }
     public void FadeInSound(string name, float time)
     {
-        FadeInSound(name, time, playerSound);
+        FadeInSound(name, time, this.gameObject);
     }
 
-    public void FadeInSound(string name,float time, GameObject g)
+    public void FadeInSound(string name, float time, GameObject g)
     {
         //new audio player
         GameObject newObject = new GameObject();
