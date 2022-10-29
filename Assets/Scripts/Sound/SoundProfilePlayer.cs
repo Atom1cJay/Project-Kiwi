@@ -4,23 +4,20 @@ using UnityEngine;
 
 public class SoundProfilePlayer : MonoBehaviour
 {
-    [SerializeField] FinishableOccurrence occurrence;
     [SerializeField] SoundProfile soundProfile;
     bool occurrenceIsActive = false;
 
-    void Start()
+    public void StartSoundProfileExecution()
     {
-        occurrence.OnOccurrenceStart += () =>
-        {
-            soundProfile.Initiate();
-            occurrenceIsActive = true;
-            StartCoroutine("AdvanceTimeForSoundProfile");
-        };
-        occurrence.OnOccurrenceFinish += () =>
-        {
-            soundProfile.Finish();
-            occurrenceIsActive = false;
-        };
+        soundProfile.Initiate();
+        occurrenceIsActive = true;
+        StartCoroutine("AdvanceTimeForSoundProfile");
+    }
+
+    public void FinishSoundProfileExecution()
+    {
+        soundProfile.Finish();
+        occurrenceIsActive = false;
     }
 
     IEnumerator AdvanceTimeForSoundProfile()

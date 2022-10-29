@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class MoveTransitionOccurrence : FinishableOccurrence
+/// <summary>
+/// UnityEventBroadcaster that broadcasts an event whenever the player's move is
+/// changed to a specific one.
+/// </summary>
+public class MoveTransitionOccurrenceUEB : MonoBehaviour
 {
     [Header("Leave Blank = Any Is Okay")]
     [SerializeField] string preTransitionMove;
     [SerializeField] string postTransitionMove;
+    public UnityEvent onPostTransitionMove; // Called when we go from pre to post transition move
+    public UnityEvent onPostTransitionMoveEnd;
     bool active = false;
 
     void Start()
@@ -19,7 +26,7 @@ public class MoveTransitionOccurrence : FinishableOccurrence
             }
             else
             {
-                InvokeOnOccurrenceFinish();
+                onPostTransitionMoveEnd.Invoke();
                 active = false;
             }
         };
@@ -31,7 +38,7 @@ public class MoveTransitionOccurrence : FinishableOccurrence
         bool postCond = postTransitionMove == "" || postTransitionMove == newMove.AsString();
         if (preCond && postCond)
         {
-            InvokeOnOccurrenceStart();
+            onPostTransitionMove.Invoke();
             active = true;
         }
     }
