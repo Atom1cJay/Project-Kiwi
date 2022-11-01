@@ -2,111 +2,127 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Raft : AMovingPlatform
+public class Raft : MonoBehaviour
 {
-    enum Phase
-    {
-        Rising,
-        Floating,
-        Sinking
-    }
 
     [SerializeField] Transform startPos;
     [SerializeField] Transform endPos;
-    [SerializeField] float riseSinkYMvmt;
-    [SerializeField] float riseSinkTime;
-    [SerializeField] float floatTime; // Time moving from endRisePos to startSinkPos
-    float totalTime;
-    Phase curPhase;
-    float relativePhaseProgress; // From 0 (starting) to 1 (ending)
+    [SerializeField] float sinkTime;// Time moving from endRisePos to startSinkPos
+    [SerializeField] float pauseFloatTime; // Time to pause before sinking
+    [SerializeField] float riseMult; // Rise mult
+
+    float deltaTime;
     float relativeProgress; // From 0 (starting) to 1 (ending)
 
     private void Start()
     {
-        if (startPos.position.y != endPos.position.y)
-        {
-            Debug.LogError("Start Pos Y and End Pos Y are different. This may not be intentional.");
-        }
+        deltaTime = 0f;
         GoToStartTransform();
-        totalTime = (riseSinkTime * 2) + floatTime;
-        curPhase = Phase.Rising;
-        relativeProgress = 0;
-        relativePhaseProgress = 0;
     }
 
     void GoToStartTransform()
     {
         transform.position = startPos.position;
-        Vector3 moveVector = endPos.position - startPos.position;
-        float moveVectorDir = Mathf.Atan2(moveVector.z, moveVector.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, moveVectorDir + 90, 0);
     }
 
-    void HandleHorizontalMovement()
+    void setPosition(bool increasing = false)
     {
-        print(relativeProgress);
-        relativeProgress = Mathf.Clamp(relativeProgress + (Time.deltaTime / totalTime), 0, 1);
-        Vector3 btwnPos = Vector3.Lerp(startPos.position, endPos.position, Mathf.SmoothStep(0, 1, relativeProgress));
-        transform.position = new Vector3(btwnPos.x, transform.position.y, btwnPos.z);
-        if (relativeProgress >= 1)
+        float actualProgress = relativeProgress - pauseFloatTime;
+
+        if (actualProgress < 0)
         {
-            relativeProgress = 0;
+            actualProgress = 0f;
+        }
+
+        Debug.Log("set position " + actualProgress);
+
+        float pct = Mathf.Clamp(actualProgress / sinkTime, 0f, 1f);
+
+        float adjustedPct = increasing ? easeInBounce(pct) : pct;
+
+        Vector3 btwnPos = Vector3.Lerp(startPos.position, endPos.position, adjustedPct);
+        transform.position = btwnPos;
+    }
+
+    float easeOutExpo(float x) {
+        return x == 1 ? 1 : 1 - Mathf.Pow(2, -10 * x);
+    }
+
+    float easeInBounce(float x)
+    {
+        return 1 - easeOutBounce(1 - x);
+    }
+
+    float easeOutBounce(float x)
+    {
+        float n1 = 7.5625f;
+        float d1 = 2.75f;
+
+        if (x < 1 / d1)
+        {
+            return n1 * x * x;
+        }
+        else if (x < 2 / d1)
+        {
+            return n1 * (x -= 1.5f / d1) * x + 0.75f;
+        }
+        else if (x < 2.5 / d1)
+        {
+            return n1 * (x -= 2.25f / d1) * x + 0.9375f;
+        }
+        else
+        {
+            return n1 * (x -= 2.625f / d1) * x + 0.984375f;
         }
     }
 
-    void HandleRising()
+    public void Translate()
     {
-        relativePhaseProgress = Mathf.Clamp(relativePhaseProgress + (Time.deltaTime / riseSinkTime), 0, 1);
-        float y = startPos.position.y + Mathf.SmoothStep(0, riseSinkYMvmt, relativePhaseProgress);
-        transform.position = new Vector3(transform.position.x, y, transform.position.z);
-        if (relativePhaseProgress >= 1)
+        StopCoroutine("rise");
+
+        /*
+        if (deltaTime <= maxDeltaTime)
         {
-            curPhase = Phase.Floating;
-            relativePhaseProgress = 0;
-        }
+            deltaTime += Time.deltaTime * acceleration;
+        }*/
+
+        relativeProgress += Time.deltaTime;
+
+        setPosition();
+
+        StartCoroutine("rise");
     }
 
-    void HandleFloating()
+    IEnumerator rise()
     {
-        relativePhaseProgress = Mathf.Clamp(relativePhaseProgress + (Time.deltaTime / floatTime), 0, 1);
-        if (relativePhaseProgress >= 1)
+        yield return new WaitForSeconds(Time.deltaTime);
+
+        //If we've stopped floating, sink
+        if (relativeProgress >= pauseFloatTime)
         {
-            curPhase = Phase.Sinking;
-            relativePhaseProgress = 0;
+            while ((relativeProgress - pauseFloatTime) < sinkTime)
+            {
+                relativeProgress += Time.deltaTime;
+                setPosition();
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
         }
+
+        //rise
+        while (relativeProgress > 0f)
+        {
+            /*
+            if (deltaTime >= -maxDeltaTime)
+            {
+                deltaTime -= Time.deltaTime * acceleration;
+            }*/
+
+            relativeProgress += -Time.deltaTime * riseMult;
+            setPosition(true);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        deltaTime = 0f;
     }
 
-    void HandleSinking()
-    {
-        relativePhaseProgress = Mathf.Clamp(relativePhaseProgress + (Time.deltaTime / riseSinkTime), 0, 1);
-        float y = startPos.position.y + Mathf.SmoothStep(riseSinkYMvmt, 0, relativePhaseProgress);
-        transform.position = new Vector3(transform.position.x, y, transform.position.z);
-        if (relativePhaseProgress >= 1)
-        {
-            curPhase = Phase.Rising;
-            relativePhaseProgress = 0;
-        }
-    }
-
-    public override void Translate()
-    {
-        HandleHorizontalMovement();
-        switch (curPhase)
-        {
-            case Phase.Rising:
-                HandleRising();
-                break;
-            case Phase.Floating:
-                HandleFloating();
-                break;
-            case Phase.Sinking:
-                HandleSinking();
-                break;
-        }
-    }
-
-    public override void Rotate()
-    {
-        // No rotation
-    }
 }
