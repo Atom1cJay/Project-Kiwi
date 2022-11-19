@@ -12,7 +12,7 @@ public class SandMonster : MonoBehaviour
 
     private void Start()
     {
-        angle = Random.Range(0, 360);
+        //angle = Random.Range(0, 360);
     }
 
     private void Update()
@@ -34,6 +34,6 @@ public class SandMonster : MonoBehaviour
         {
             Debug.LogError("Sand Monster: Raycast not finding any ground. This may be an inappropriate surface for it.");
         }
-        print(Physics.OverlapSphere(transform.position, 1));
+        //print(Physics.OverlapSphere(transform.position, 1));
     }
 }
