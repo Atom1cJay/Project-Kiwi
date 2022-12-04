@@ -6,5 +6,6 @@ public enum DamageType
 {
     BasicHit, // Standard knockback
     Instakill, // Standard knockback, results in death
-    FallKill // No knockback, results in death
+    FallKill, // No knockback, results in death
+    Knockback //Just knockback
 }

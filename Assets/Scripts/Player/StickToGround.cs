@@ -13,6 +13,14 @@ public class StickToGround : MonoBehaviour
     [SerializeField] float raycastLength;
     [SerializeField] Transform sun;
 
+    private void Awake()
+    {
+        if (sun == null)
+        {
+            sun = GameObject.FindGameObjectWithTag("Sun").transform;
+        }
+    }
+
     // Based on the given position, stick to the nearest "floor" below that position.
     public void UpdatePosition(Vector3 pos)
     {

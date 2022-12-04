@@ -11,6 +11,7 @@ public class Damager : MonoBehaviour
 {
     [SerializeField] DamageType damageType;
     [SerializeField] bool ignoreInvulnerability;
+    [SerializeField] bool destroyOnContact = false;
     bool isActivated = true;
 
     private void Start()
@@ -33,6 +34,11 @@ public class Damager : MonoBehaviour
         {
             Vector3 hitNormal = other.GetContact(0).normal;
             ConsiderDmg(hitNormal);
+        }
+
+        if (destroyOnContact)
+        {
+            Destroy(gameObject);
         }
     }
 

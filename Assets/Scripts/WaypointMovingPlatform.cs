@@ -53,6 +53,11 @@ public class WaypointMovingPlatform : AMovingPlatform
         }
     }
 
+    private void Update()
+    {
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {

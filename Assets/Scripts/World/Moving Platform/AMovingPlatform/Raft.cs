@@ -34,8 +34,6 @@ public class Raft : MonoBehaviour
             actualProgress = 0f;
         }
 
-        Debug.Log("set position " + actualProgress);
-
         float pct = Mathf.Clamp(actualProgress / sinkTime, 0f, 1f);
 
         float adjustedPct = increasing ? easeInBounce(pct) : pct;

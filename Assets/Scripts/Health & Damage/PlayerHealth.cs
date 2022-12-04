@@ -61,6 +61,10 @@ public class PlayerHealth : MonoBehaviour
                 print("FALL HIT TAKEN");
                 hp = 0;
                 break;
+            case DamageType.Knockback:
+                onBasicHit.Invoke(normalOfContact);
+                print("KNOCKBACK HIT TAKEN");
+                break;
             default:
                 Debug.LogError("Cannot take damage; unrecognized dmg type.");
                 break;
