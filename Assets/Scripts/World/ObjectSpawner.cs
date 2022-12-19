@@ -21,7 +21,8 @@ public class ObjectSpawner : MonoBehaviour
         while (spawnsLeft > 0)
         {
             yield return new WaitForSeconds(interval);
-            Instantiate(obj, transform);
+            GameObject g = Instantiate(obj, transform);
+            g.SetActive(true);
             spawnsLeft -= 1;
         }
     }

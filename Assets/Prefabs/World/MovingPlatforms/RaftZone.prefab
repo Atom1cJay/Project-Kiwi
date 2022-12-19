@@ -58,7 +58,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 567069248603709148}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -77,9 +77,9 @@ GameObject:
   m_Component:
   - component: {fileID: 567069248667260969}
   - component: {fileID: 567069248667260970}
-  - component: {fileID: 567069248667260968}
+  - component: {fileID: 6974166792802633103}
   m_Layer: 0
-  m_Name: TestRaft
+  m_Name: FirstRaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,11 +113,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2709b3cc8bd1645cdb76a1d395487b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moverScript: {fileID: 567069248667260968}
+  moverScript: {fileID: 6974166792802633103}
   onTransformChange:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &567069248667260968
+--- !u!114 &6974166792802633103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,14 +126,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 567069248667260971}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 581d7d748715a4f67a8e200604331a3b, type: 3}
+  m_Script: {fileID: 11500000, guid: d40c61e00e1b0fc4da2cc6506eab0593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startPos: {fileID: 567069249343894032}
   endPos: {fileID: 567069249697754272}
-  riseSinkYMvmt: 2.5
-  riseSinkTime: 2.5
-  floatTime: 10
+  riseSinkYMvmt: 1
+  riseSinkTime: 1
+  floatTime: 1
 --- !u!1 &567069249343894033
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,8 +340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj: {fileID: 567069248667260971}
-  interval: 5
-  numSpawns: 2
+  interval: 2.5
+  numSpawns: 3
 --- !u!1 &2077777725735076588
 GameObject:
   m_ObjectHideFlags: 0
