@@ -27,6 +27,19 @@ public class Damager : MonoBehaviour
             ConsiderDmg(hitNormal);
         }
     }
+    private void OnCollisionEnter(Collision other)
+    {
+        if (destroyOnContact)
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                Vector3 hitNormal = other.GetContact(0).normal;
+                ConsiderDmg(hitNormal);
+            }
+
+            Destroy(gameObject);
+        }
+    }
 
     private void OnCollisionStay(Collision other)
     {

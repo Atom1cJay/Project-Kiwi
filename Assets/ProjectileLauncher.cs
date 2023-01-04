@@ -5,8 +5,10 @@ using UnityEngine;
 public class ProjectileLauncher : MonoBehaviour
 {
     [SerializeField] float timeBetweenLaunch;
-    [SerializeField] GameObject projectile;
-    [SerializeField] float launchAngle, launchSpeed;
+    [SerializeField] GameObject launchingPoint, projectile;
+    [SerializeField] float launchAngle, launchSpeed, range;
+    [SerializeField] bool rotateTorwardsPlayer = false;
+    [SerializeField] LayerMask validGround;
 
 
     GameObject player;
@@ -18,12 +20,32 @@ public class ProjectileLauncher : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
+    private void Update()
+    {
+        if (rotateTorwardsPlayer)
+        {
+            Vector3 rot = transform.localEulerAngles;
+            transform.LookAt(player.transform.position);
+            transform.localEulerAngles = new Vector3(rot.x, transform.localEulerAngles.y, rot.z);
+        }
+    }
+
     void launchProjectile()
     {
-        GameObject proj = Instantiate(projectile, transform.position, Quaternion.identity);
-        ArcProjectile ap = proj.GetComponentInChildren<ArcProjectile>();
+        if (range == 0 || Vector3.Distance(player.transform.position, launchingPoint.transform.position) <= range)
+        {
 
-        ap.launchProjectileWithAngle(player.transform.position, launchAngle);
+            RaycastHit hit;
+
+            if (Physics.Raycast(player.transform.position, Vector3.down, out hit, (player.transform.localScale.y / 2f) + 0.05f, validGround))
+            {
+                GameObject proj = Instantiate(projectile, launchingPoint.transform.position, Quaternion.identity);
+                ArcProjectile ap = proj.GetComponentInChildren<ArcProjectile>();
+
+                ap.launchProjectileWithAngle(player.transform.position, launchAngle);
+            }
+
+        }
     }
 
 }
