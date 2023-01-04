@@ -7,16 +7,25 @@ public class Raft : MonoBehaviour
 
     [SerializeField] Transform startPos;
     [SerializeField] Transform endPos;
-    [SerializeField] float sinkTime;// Time moving from endRisePos to startSinkPos
-    [SerializeField] float pauseFloatTime; // Time to pause before sinking
-    [SerializeField] float riseMult; // Rise mult
 
-    float deltaTime;
+    [SerializeField] float pauseFloatTime; // Time to pause before sinking
+    [SerializeField] float sinkTime;// Time moving from endRisePos to startSinkPos
+    [SerializeField] float riseTime; // time to rise
+    [SerializeField] float pauseAfterSinkTime; 
+    [SerializeField] float pauseAfterWobbleTime; // time to rise
+    [SerializeField] float wobbleTime = 0.5f;
+    [SerializeField] float wobbleAmplitude = 20f;
+
     float relativeProgress; // From 0 (starting) to 1 (ending)
+
+    Vector3 defaultAngle;
+
+    bool translating = false;
+    bool sinking = false;
 
     private void Start()
     {
-        deltaTime = 0f;
+        defaultAngle = transform.localEulerAngles;
         GoToStartTransform();
     }
 
@@ -25,21 +34,20 @@ public class Raft : MonoBehaviour
         transform.position = startPos.position;
     }
 
-    void setPosition(bool increasing = false)
+    void setPosition(float pct, bool increasing)
     {
-        float actualProgress = relativeProgress - pauseFloatTime;
-
-        if (actualProgress < 0)
-        {
-            actualProgress = 0f;
-        }
-
-        float pct = Mathf.Clamp(actualProgress / sinkTime, 0f, 1f);
-
         float adjustedPct = increasing ? easeInBounce(pct) : pct;
 
-        Vector3 btwnPos = Vector3.Lerp(startPos.position, endPos.position, adjustedPct);
-        transform.position = btwnPos;
+        Vector3 goalPos = Vector3.Lerp(startPos.position, endPos.position, adjustedPct);
+        transform.position = goalPos;
+    }
+    void wobbleEffect(float pct)
+    {
+        float goalXAngle = defaultAngle.x + Mathf.Sin(pct * 2 * Mathf.PI) * wobbleAmplitude;
+
+        Vector3 goalAngle = new Vector3(goalXAngle, defaultAngle.y, defaultAngle.z);
+
+        transform.localEulerAngles = goalAngle;
     }
 
     float easeOutExpo(float x) {
@@ -76,51 +84,96 @@ public class Raft : MonoBehaviour
 
     public void Translate()
     {
-        StopCoroutine("rise");
-
-        /*
-        if (deltaTime <= maxDeltaTime)
+        if (!sinking)
         {
-            deltaTime += Time.deltaTime * acceleration;
-        }*/
+            StopCoroutine("offRaft");
 
-        relativeProgress += Time.deltaTime;
+            translating = true;
 
-        setPosition();
+            if (relativeProgress >= pauseFloatTime)
+            {
+                translating = false;
+                sinking = true;
 
-        StartCoroutine("rise");
+                StartCoroutine("sinkRaft");
+            }
+            else
+            {
+                StartCoroutine("offRaft");
+            }
+
+        }
     }
 
-    IEnumerator rise()
+    IEnumerator offRaft()
     {
         yield return new WaitForSeconds(Time.deltaTime);
+        translating = false;
+    }
 
-        //If we've stopped floating, sink
-        if (relativeProgress >= pauseFloatTime)
+    private void Update()
+    {
+        if (!sinking)
         {
-            while ((relativeProgress - pauseFloatTime) < sinkTime)
+            if (translating)
             {
                 relativeProgress += Time.deltaTime;
-                setPosition();
-                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            else
+            {
+                float tempProgress = relativeProgress - Time.deltaTime;
+
+                relativeProgress = tempProgress < 0 ? 0f : tempProgress;
             }
         }
+    }
 
-        //rise
-        while (relativeProgress > 0f)
+    IEnumerator sinkRaft()
+    {
+        float timeWobbling = 0f;
+
+        while (timeWobbling <= wobbleTime)
         {
-            /*
-            if (deltaTime >= -maxDeltaTime)
-            {
-                deltaTime -= Time.deltaTime * acceleration;
-            }*/
-
-            relativeProgress += -Time.deltaTime * riseMult;
-            setPosition(true);
+            timeWobbling += Time.deltaTime;
+            wobbleEffect(timeWobbling / wobbleTime);
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
-        deltaTime = 0f;
+        float pauseWobblingTime = 0f;
+
+        while (pauseWobblingTime <= pauseAfterWobbleTime)
+        {
+            pauseWobblingTime += Time.deltaTime;
+            wobbleEffect(1f);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        yield return new WaitForSeconds(pauseAfterWobbleTime);
+
+        float timeSinking = 0f;
+
+        while (timeSinking < sinkTime)
+        {
+            timeSinking += Time.deltaTime;
+            setPosition(timeSinking / sinkTime, false);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        yield return new WaitForSeconds(pauseAfterSinkTime);
+
+        float timeRising = 0f;
+
+        while (timeRising < riseTime)
+        {
+            timeRising += Time.deltaTime;
+            setPosition(1f - (timeRising / riseTime), true);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        setPosition(0f, true);
+
+        sinking = false;
+        relativeProgress = 0f;
     }
 
 }

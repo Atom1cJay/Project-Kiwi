@@ -44,7 +44,6 @@ public class AutoRaft : AMovingPlatform
 
     void HandleHorizontalMovement()
     {
-        print(relativeProgress);
         relativeProgress = Mathf.Clamp(relativeProgress + (Time.deltaTime / totalTime), 0, 1);
         Vector3 btwnPos = Vector3.Lerp(startPos.position, endPos.position, Mathf.SmoothStep(0, 1, relativeProgress));
         transform.position = new Vector3(btwnPos.x, transform.position.y, btwnPos.z);

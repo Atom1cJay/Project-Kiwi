@@ -30,7 +30,7 @@ public class Treadable : MonoBehaviour
         {
             cannotActivate = true;
         }
-        print("Tread Event");
+        //print("Tread Event");
         OnTread.Invoke();
     }
 }
