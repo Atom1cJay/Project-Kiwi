@@ -16,7 +16,7 @@ MonoBehaviour:
   maxSpeedAbsolute: 15
   runSensitivityX: 8
   runGravityX: 22
-  runGravityXOverTopSpeed: 6
+  runGravityXOverTopSpeed: 8
   runGravityXOverTopSpeedNoInput: 10
   boostRunRotation: 0
   airSensitivityX: 5
@@ -72,13 +72,13 @@ MonoBehaviour:
   horizBoostRotation: 0.9
   horizBoostAirReverseGravity: 16
   horizBoostNonAirReverseGravity: 0
-  horizBoostMinSpeedX: 6.5
-  horizBoostMaxSpeedX: 12
+  horizBoostMinSpeedX: 2
+  horizBoostMaxSpeedX: 8
   horizBoostMinSpeedGroundX: 7
   horizBoostMaxSpeedGroundX: 12
   horizBoostMinLengthGroundX: 0.65
   horizBoostMaxLengthGroundX: 0.65
-  horizBoostChargeGravityXAir: 15
+  horizBoostChargeGravityXAir: 7
   horizBoostChargeGravityXGround: 7
   horizBoostChargeGravityY: 0
   horizBoostChargeGravityYGoingUp: 20

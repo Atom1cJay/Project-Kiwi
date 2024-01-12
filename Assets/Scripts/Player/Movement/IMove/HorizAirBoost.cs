@@ -21,7 +21,7 @@ public class HorizAirBoost : AMove
     {
         this.vertVel = vertVel / 6;
         gravity = movementSettings.HorizBoostMinGravity;
-        this.horizVel = movementSettings.HorizBoostMinSpeedX + (propCharged * (movementSettings.HorizBoostMaxSpeedX - movementSettings.HorizBoostMinSpeedX));
+        this.horizVel = horizVel + movementSettings.HorizBoostMinSpeedX + (propCharged * (movementSettings.HorizBoostMaxSpeedX - movementSettings.HorizBoostMinSpeedX));
         //mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
     }
 
@@ -43,6 +43,10 @@ public class HorizAirBoost : AMove
         else {
         horizVel = InputUtils.SmoothedInput(
             horizVel, horizVel * mii.GetHorizontalInput().magnitude, 0, movementSettings.HorizBoostAirReverseGravity);
+        }
+        if (horizVel > movementSettings.MaxSpeedAbsolute)
+        {
+            horizVel = movementSettings.MaxSpeedAbsolute;
         }
     }
 
