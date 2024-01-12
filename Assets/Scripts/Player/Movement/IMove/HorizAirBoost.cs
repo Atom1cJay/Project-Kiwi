@@ -73,7 +73,8 @@ public class HorizAirBoost : AMove
         // Handle Everything Else
         if (mi.TouchingGround())
         {
-            return new BoostSlide(mii, mi, movementSettings, horizVel, false);
+            return new Run(mii, mi, movementSettings, ForwardMovement(horizVel));
+            //return new BoostSlide(mii, mi, movementSettings, horizVel, false);
         }
         if (/*objectHitPending*/mi.BonkDetectorTouching())
         {

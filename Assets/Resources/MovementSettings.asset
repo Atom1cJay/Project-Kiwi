@@ -16,8 +16,8 @@ MonoBehaviour:
   maxSpeedAbsolute: 15
   runSensitivityX: 8
   runGravityX: 22
-  runGravityXOverTopSpeed: 16
-  runGravityXOverTopSpeedNoInput: 24
+  runGravityXOverTopSpeed: 6
+  runGravityXOverTopSpeedNoInput: 10
   boostRunRotation: 0
   airSensitivityX: 5
   airGravityX: 7
@@ -73,9 +73,9 @@ MonoBehaviour:
   horizBoostAirReverseGravity: 16
   horizBoostNonAirReverseGravity: 0
   horizBoostMinSpeedX: 6.5
-  horizBoostMaxSpeedX: 9.5
+  horizBoostMaxSpeedX: 12
   horizBoostMinSpeedGroundX: 7
-  horizBoostMaxSpeedGroundX: 10
+  horizBoostMaxSpeedGroundX: 12
   horizBoostMinLengthGroundX: 0.65
   horizBoostMaxLengthGroundX: 0.65
   horizBoostChargeGravityXAir: 15
@@ -172,14 +172,3 @@ MonoBehaviour:
   knockbackYGravity: 25
   knockbackXTimeToZero: 0.7
   knockbackRecoveryTime: 0.3
-  jump_soundProfile: {fileID: 11400000, guid: 28c55c5138beb4c87afd33bf1311d7e1, type: 2}
-  doubleJump_soundProfile: {fileID: 11400000, guid: e08a03765ac844cab8fcaee8cc64be8d, type: 2}
-  tripleJump_soundProfile: {fileID: 11400000, guid: b1330508f0cbb46a6ac10f057707c120, type: 2}
-  run_soundProfile: {fileID: 11400000, guid: 1dd908ada27fa4581a2cbdcb87d973a5, type: 2}
-  dive_soundProfile: {fileID: 11400000, guid: 1dc383ad99a24485ba3546115fa5c919, type: 2}
-  boostCharge_soundProfile: {fileID: 11400000, guid: ef9377a9a118f4a80abac5a12bcd7a4c, type: 2}
-  boost_soundProfile: {fileID: 11400000, guid: bebae302d407f495886cef06e04fe2e1, type: 2}
-  boostHop_soundProfile: {fileID: 11400000, guid: c876cbd3299c945b3b4ede50b230c2bd, type: 2}
-  boostSlide_soundProfile: {fileID: 11400000, guid: 3150282a5447041949f753062ef7f337, type: 2}
-  knockback_soundProfile: {fileID: 11400000, guid: 1e10ddfcb8f364164acace329b35bc52, type: 2}
-  glide_soundProfile: {fileID: 11400000, guid: 75eca4a926ed446dc9582a0620201117, type: 2}
