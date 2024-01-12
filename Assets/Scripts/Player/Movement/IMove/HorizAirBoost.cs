@@ -21,7 +21,8 @@ public class HorizAirBoost : AMove
     {
         this.vertVel = vertVel / 6;
         gravity = movementSettings.HorizBoostMinGravity;
-        this.horizVel = horizVel + movementSettings.HorizBoostMinSpeedX + (propCharged * (movementSettings.HorizBoostMaxSpeedX - movementSettings.HorizBoostMinSpeedX));
+        this.horizVel = horizVel + movementSettings.HorizBoostMinSpeedIncreaseX + (propCharged * (movementSettings.HorizBoostMaxSpeedIncreaseX - movementSettings.HorizBoostMinSpeedIncreaseX));
+        this.horizVel = Mathf.Clamp(this.horizVel, movementSettings.HorizBoostMinSpeedX, movementSettings.MaxSpeedAbsolute);
         //mi.OnCharContTouchSomething.AddListener(() => objectHitPending = true);
     }
 

@@ -12,7 +12,8 @@ public class GroundBoost : AMove
     public GroundBoost(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float propCharged) : base(ms, mi, mii)
     {
         duration = movementSettings.HorizBoostMinLengthGroundX + (propCharged * (movementSettings.HorizBoostMaxLengthGroundX - movementSettings.HorizBoostMinLengthGroundX));
-        horizVel = movementSettings.HorizBoostMinSpeedGroundX + (propCharged * (movementSettings.HorizBoostMaxSpeedGroundX - movementSettings.HorizBoostMinSpeedGroundX));
+        horizVel += movementSettings.HorizBoostMinSpeedIncreaseGroundX + (propCharged * (movementSettings.HorizBoostMaxSpeedIncreaseGroundX - movementSettings.HorizBoostMinSpeedIncreaseGroundX));
+        horizVel = Mathf.Clamp(horizVel, movementSettings.HorizBoostMinSpeedX, movementSettings.MaxSpeedAbsolute);
         mii.OnJump.AddListener(() => jumpPending = true);
         MonobehaviourUtils.Instance.StartCoroutine("ExecuteCoroutine", WaitForBoostEnd());
     }

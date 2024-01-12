@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89a9c384f4044d949915fc3cf99a7e4, type: 3}
   m_Name: MovementSettings
   m_EditorClassIdentifier: 
-  maxSpeed: 6
-  maxSpeedAbsolute: 15
+  maxSpeed: 6.5
+  maxSpeedAbsolute: 12
   runSensitivityX: 8
-  runGravityX: 22
-  runGravityXOverTopSpeed: 8
+  runGravityX: 27
+  runGravityXOverTopSpeed: 3
   runGravityXOverTopSpeedNoInput: 10
   boostRunRotation: 0
   airSensitivityX: 5
@@ -72,10 +72,11 @@ MonoBehaviour:
   horizBoostRotation: 0.9
   horizBoostAirReverseGravity: 16
   horizBoostNonAirReverseGravity: 0
-  horizBoostMinSpeedX: 2
-  horizBoostMaxSpeedX: 8
-  horizBoostMinSpeedGroundX: 7
-  horizBoostMaxSpeedGroundX: 12
+  horizBoostMinSpeedIncreaseX: 0.5
+  horizBoostMaxSpeedIncreaseX: 8
+  horizBoostMinSpeedX: 4
+  horizBoostMinSpeedIncreaseGroundX: 0.5
+  horizBoostMaxSpeedIncreaseGroundX: 8
   horizBoostMinLengthGroundX: 0.65
   horizBoostMaxLengthGroundX: 0.65
   horizBoostChargeGravityXAir: 7
@@ -86,8 +87,8 @@ MonoBehaviour:
   horizBoostToGroundBoostSensitivity: 1
   horizBoostChargeVertNeutralizeTime: 0
   groundBoostRotationSpeed: 80
-  horizBoostMinGravity: 6.25
-  horizBoostMaxGravity: 9.75
+  horizBoostMinGravity: 8
+  horizBoostMaxGravity: 11
   horizBoostGravityIncRate: 15
   boostSlideSpeedDecRate: 7
   boostSlideSpeedDecRateNoInput: 8.5
@@ -116,7 +117,7 @@ MonoBehaviour:
   vertBoostSensitivityX: 5
   vertBoostAdjustSensitivityX: 10
   vertBoostGravityX: 8
-  vertBoostMaxSpeedX: 5.5
+  vertBoostMaxSpeedX: 8
   vertBoostChargeRotation: 0
   pushSpeedMaintainTime: 0.7
   groundBoostMaxSpeedX: 8.5

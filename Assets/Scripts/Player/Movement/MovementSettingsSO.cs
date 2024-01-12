@@ -93,10 +93,11 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float horizBoostRotation;
     [SerializeField] float horizBoostAirReverseGravity;
     [SerializeField] float horizBoostNonAirReverseGravity;
+    [SerializeField] float horizBoostMinSpeedIncreaseX;
+    [SerializeField] float horizBoostMaxSpeedIncreaseX;
     [SerializeField] float horizBoostMinSpeedX;
-    [SerializeField] float horizBoostMaxSpeedX;
-    [SerializeField] float horizBoostMinSpeedGroundX;
-    [SerializeField] float horizBoostMaxSpeedGroundX;
+    [SerializeField] float horizBoostMinSpeedIncreaseGroundX;
+    [SerializeField] float horizBoostMaxSpeedIncreaseGroundX;
     [SerializeField] float horizBoostMinLengthGroundX;
     [SerializeField] float horizBoostMaxLengthGroundX;
     [SerializeField] float horizBoostChargeGravityXAir;
@@ -311,9 +312,10 @@ public class MovementSettingsSO : ScriptableObject
     public float HorizBoostAirReverseGravity { get { return horizBoostAirReverseGravity; } }
     public float HorizBoostNonAirReverseGravity { get { return horizBoostNonAirReverseGravity; } }
     public float HorizBoostMinSpeedX { get { return horizBoostMinSpeedX; } }
-    public float HorizBoostMaxSpeedX { get { return horizBoostMaxSpeedX; } }
-    public float HorizBoostMinSpeedGroundX { get { return horizBoostMinSpeedGroundX; } }
-    public float HorizBoostMaxSpeedGroundX { get { return horizBoostMaxSpeedGroundX; } }
+    public float HorizBoostMinSpeedIncreaseX { get { return horizBoostMinSpeedIncreaseX; } }
+    public float HorizBoostMaxSpeedIncreaseX { get { return horizBoostMaxSpeedIncreaseX; } }
+    public float HorizBoostMinSpeedIncreaseGroundX { get { return horizBoostMinSpeedIncreaseGroundX; } }
+    public float HorizBoostMaxSpeedIncreaseGroundX { get { return horizBoostMaxSpeedIncreaseGroundX; } }
     public float HorizBoostMinLengthGroundX { get { return horizBoostMinLengthGroundX; } }
     public float HorizBoostMaxLengthGroundX { get { return horizBoostMaxLengthGroundX; } }
     public float HorizBoostChargeGravityXAir { get { return horizBoostChargeGravityXAir; } }
