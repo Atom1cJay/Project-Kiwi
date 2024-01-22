@@ -38,6 +38,14 @@ public class Run : AMove
     public Run(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, Vector2 horizVector, FromStatus fromStatus) : this(mii, mi, ms, horizVector)
     {
         this.fromStatus = fromStatus;
+        if (this.fromStatus == FromStatus.FromAir) // Potential land event
+        {
+            Landable potentialLandScript = mi.GetGroundDetector().CollidingWith().GetComponent<Landable>();
+            if (potentialLandScript != null)
+            {
+                potentialLandScript.BroadcastLandEvent();
+            }
+        }
     }
 
     public override void AdvanceTime()

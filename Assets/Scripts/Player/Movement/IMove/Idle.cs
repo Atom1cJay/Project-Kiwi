@@ -26,6 +26,14 @@ public class Idle : AMove
     public Idle(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, FromStatus fromStatus) : this(mii, mi, ms)
     {
         this.fromStatus = fromStatus;
+        if (this.fromStatus == FromStatus.FromAir) // Potential land event
+        {
+            Landable potentialLandScript = mi.GetGroundDetector().CollidingWith().GetComponent<Landable>();
+            if (potentialLandScript != null)
+            {
+                potentialLandScript.BroadcastLandEvent();
+            }
+        }
     }
 
     public override void AdvanceTime()
