@@ -6,7 +6,18 @@ public class CloudPathFollower : PathFollower
 {
     [SerializeField] float thunderSpeedMultiplier;
     [SerializeField] float thunderSpeedDuration;
+    [Header ("Landing Effect")]
+    [SerializeField] MeshRenderer cloudRenderer;
+    [SerializeField] float timeToLerpIn, timeToLerpOut;
+    [SerializeField] Color landingCloudColor;
+
+    Color originalCloudColor;
     bool inThunderSpeed;
+
+    private void Awake()
+    {
+        originalCloudColor = cloudRenderer.materials[0].GetColor("Albedo");
+    }
 
     public void ActivateThunderSpeed()
     {
@@ -29,5 +40,34 @@ public class CloudPathFollower : PathFollower
         }
         speed = initSpeed;
         inThunderSpeed = false;
+    }
+
+    public void changeToLandingColor(float sec)
+    {
+        StartCoroutine(changeLandingColor(sec));
+    }
+
+    IEnumerator changeLandingColor(float pause)
+    {
+        Debug.Log("pos");
+        float t = 0f;
+        while (t < timeToLerpIn)
+        {
+            cloudRenderer.materials[0].SetColor("Albedo", Color.Lerp(originalCloudColor, landingCloudColor, t / timeToLerpIn));
+            t += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        yield return new WaitForSeconds(pause);
+
+        t = 0f;
+
+        while (t < timeToLerpOut)
+        {
+            cloudRenderer.materials[0].SetColor("Albedo", Color.Lerp(landingCloudColor, originalCloudColor, t / timeToLerpOut));
+            t += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
     }
 }
