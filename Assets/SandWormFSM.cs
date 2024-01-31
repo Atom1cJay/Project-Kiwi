@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SandWormFSM : MonoBehaviour
+public class SandWormFSM : AMovingPlatform
 {
     [Header("FSM Variables | Patrol")]
     [SerializeField] float distanceToAttack;
@@ -11,14 +11,16 @@ public class SandWormFSM : MonoBehaviour
     [SerializeField] float warmUpTime;
     [SerializeField] float attackUpTime;
     [SerializeField] float timeToCloseMouth;
+    [SerializeField] float timeAfterClosedMouth;
     [SerializeField] float burrowDistance;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float attackUpDistance;
-    [SerializeField] float hangAirTime;
-    [SerializeField] float attackDownTime;
     [SerializeField] float resumePatrolingTime;
-    [SerializeField] Rigidbody rb;
     [SerializeField] Animator sandWormAnimator;
+
+    [Header("SandWorm Vars")]
+    [SerializeField] GameObject killBox;
+    [SerializeField] float gravity;
 
 
     public bool alive = true;
@@ -28,12 +30,14 @@ public class SandWormFSM : MonoBehaviour
 
     GameObject[] playerObjects;
     GameObject currentTarget;
+    Vector3 velocity;
 
     // Start is called before the first frame update
     void Start()
     {
         playerObjects = GameObject.FindGameObjectsWithTag("Player");
         StartCoroutine(FSM());
+        killBox.SetActive(false);
     }
 
     IEnumerator FSM()
@@ -98,6 +102,7 @@ public class SandWormFSM : MonoBehaviour
     IEnumerator commenceAttack()
     {
         attackState = SandWormAttackState.WARM_UP;
+        killBox.SetActive(false);
 
         Vector3 playerPos = currentTarget.transform.position;
         Vector3 groundPos = Vector3.zero;
@@ -108,69 +113,78 @@ public class SandWormFSM : MonoBehaviour
             groundPos = hit.point;
         }
 
-        //set pos
-        transform.position = groundPos + new Vector3(0f, burrowDistance, 0f);
+        // Set position
+        transform.position = groundPos + Vector3.up * burrowDistance;
+        Vector3 startingPos = transform.position;
 
-        //Start WarmUp
-        //Do particles
+        // Start WarmUp
+        // Do particles
 
         yield return new WaitForSeconds(warmUpTime);
 
-        //Start Attack
+        // Start Attack
         attackState = SandWormAttackState.GOING_UP;
         sandWormAnimator.SetTrigger("StartAttack");
 
-        Vector3 startingAttackPos = transform.position;
-        Vector3 goalPos = startingAttackPos + new Vector3(0f, attackUpDistance, 0f);
+        float totalTimeUp = attackUpTime + timeToCloseMouth + timeAfterClosedMouth;
+        float initialVelocity = attackUpDistance / totalTimeUp - 0.5f * gravity * totalTimeUp;
 
-        float totalTime = attackUpTime + timeToCloseMouth;
+        // Apply the calculated initial velocity
+        velocity = Vector3.up * initialVelocity;
 
-        float t = 0f;
+        yield return new WaitForSeconds(attackUpTime);
 
-        //lerp to position with animations
-        while (t < totalTime)
-        {
-            transform.position = Vector3.Lerp(transform.position, Vector3.Lerp(startingAttackPos, goalPos, t / totalTime), Time.deltaTime * lerpSpeed);
+        attackState = SandWormAttackState.CLOSING_MOUTH;
+        sandWormAnimator.SetTrigger("CloseMouth");
 
-            if (t >= attackUpTime && attackState == SandWormAttackState.GOING_UP)
-            {
-                attackState = SandWormAttackState.CLOSING_MOUTH;
-                sandWormAnimator.SetTrigger("CloseMouth");
-            }
+        yield return new WaitForSeconds(timeToCloseMouth);
 
-            t += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
+        killBox.SetActive(true);
 
-        t = 0f;
+        yield return new WaitForSeconds(timeAfterClosedMouth);
 
-        //wait in air
-        yield return new WaitForSeconds(hangAirTime);
-
-        //go down
+        // Go down
         attackState = SandWormAttackState.GOING_DOWN;
+        killBox.SetActive(false);
 
-        while (t < attackDownTime)
+        while (transform.position.y >= startingPos.y)
         {
-            transform.position = Vector3.Lerp(goalPos, startingAttackPos, t / attackDownTime);
-
-            t += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
+            yield return new WaitForEndOfFrame();
         }
 
-        //wait after
-        yield return new WaitForSeconds(resumePatrolingTime);
+        velocity = Vector3.zero;
+        attackState = SandWormAttackState.WAITING;
 
-        //Done with attack
+        // Wait after
+        yield return new WaitForSeconds(resumePatrolingTime);
+        attackState = SandWormAttackState.NOT_ATTACKING;
+
+        // Done with attack
         currentTarget = findTarget();
 
-        if (Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack) {
+        if (Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack)
+        {
             currentState = SandWormState.ATTACKING;
         }
         else
         {
             currentState = SandWormState.PATROLING;
         }
+
+    }
+
+    public override void Translate()
+    {
+        if (currentState == SandWormState.ATTACKING && attackState != SandWormAttackState.WARM_UP && attackState != SandWormAttackState.WARM_UP && attackState != SandWormAttackState.WAITING)
+        {
+            velocity += new Vector3(0f, gravity * Time.deltaTime, 0f);
+            transform.position += velocity * Time.deltaTime;
+        }
+    }
+
+    public override void Rotate()
+    {
+        ///do nothing
     }
 }
 
@@ -186,5 +200,7 @@ enum SandWormAttackState
     WARM_UP,
     GOING_UP,
     CLOSING_MOUTH,
-    GOING_DOWN
+    MOUTH_CLOSED,
+    GOING_DOWN,
+    WAITING
 }
