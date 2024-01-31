@@ -40,7 +40,8 @@ public class Run : AMove
         this.fromStatus = fromStatus;
         if (this.fromStatus == FromStatus.FromAir) // Potential land event
         {
-            Landable potentialLandScript = mi.GetGroundDetector().CollidingWith().GetComponent<Landable>();
+
+            Landable potentialLandScript = mi.GetGroundDetector().CollidingWith()?.GetComponent<Landable>();
             if (potentialLandScript != null)
             {
                 potentialLandScript.BroadcastLandEvent();
