@@ -230,7 +230,7 @@ public class SandWormFSM : AMovingPlatform
         if (currentState == SandWormState.ATTACKING && attackState != SandWormAttackState.WARM_UP && attackState != SandWormAttackState.WARM_UP && attackState != SandWormAttackState.WAITING)
         {
             velocity += new Vector3(0f, gravity * Time.deltaTime, 0f);
-            transform.position += velocity * Time.deltaTime;
+            transform.Translate(velocity * Time.deltaTime);
         }
     }
 
