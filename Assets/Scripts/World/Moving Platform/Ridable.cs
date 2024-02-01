@@ -20,15 +20,15 @@ public class Ridable : MonoBehaviour
 
     void Update()
     {
-        Vector3 origPos = transform.position;
-        startFrameRot = transform.rotation;
-        Vector3 startFrameRotEuler = transform.rotation.eulerAngles;
+        Vector3 origPos = moverScript.gameObject.transform.position;
+        startFrameRot = moverScript.gameObject.transform.rotation;
+        Vector3 startFrameRotEuler = moverScript.gameObject.transform.rotation.eulerAngles;
         moverScript.FrameStart();
         moverScript.Translate();
         moverScript.Rotate();
-        translationThisFrame = transform.position - origPos;
-        endFrameRot = transform.rotation;
-        Vector3 endFrameRotEuler = transform.rotation.eulerAngles;
+        translationThisFrame = moverScript.gameObject.transform.position - origPos;
+        endFrameRot = moverScript.gameObject.transform.rotation;
+        Vector3 endFrameRotEuler = moverScript.gameObject.transform.rotation.eulerAngles;
         rotThisFrame = endFrameRotEuler - startFrameRotEuler;
         onTransformChange.Invoke();
     }
@@ -45,9 +45,9 @@ public class Ridable : MonoBehaviour
 
     public Vector3 PlayerPosChangeFromRotThisFrame(Vector3 playerOrigPos)
     {
-        transform.rotation = startFrameRot;
+        moverScript.gameObject.transform.rotation = startFrameRot;
         phantom.transform.position = playerOrigPos;
-        transform.rotation = endFrameRot;
+        moverScript.gameObject.transform.rotation = endFrameRot;
         return phantom.transform.position - playerOrigPos;
     }
 
