@@ -17,7 +17,6 @@ public class SandWormFSM : AMovingPlatform
     [SerializeField] float attackUpTime;
     [SerializeField] float timeToCloseMouth;
     [SerializeField] float timeAfterClosedMouth;
-    [SerializeField] float burrowDistance;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float attackUpDistance;
     [SerializeField] float resumePatrolingTime;
@@ -27,8 +26,6 @@ public class SandWormFSM : AMovingPlatform
     [Header("SandWorm Vars")]
     [SerializeField] GameObject killBox;
     [SerializeField] float gravity;
-
-
 
     public bool alive = true;
 
@@ -43,7 +40,6 @@ public class SandWormFSM : AMovingPlatform
     SandWormAttackState attackState = SandWormAttackState.NOT_ATTACKING;
 
     //player and target
-    GameObject[] playerObjects;
     GameObject currentTarget;
 
     Vector3 velocity;
@@ -51,8 +47,6 @@ public class SandWormFSM : AMovingPlatform
     // Start is called before the first frame update
     void Start()
     {
-        playerObjects = GameObject.FindGameObjectsWithTag("Player");
-
         initialPos = transform.position;
         currentCheckpoint = checkpointPos();
 
@@ -84,11 +78,18 @@ public class SandWormFSM : AMovingPlatform
         float leastDistance = -1;
         int playerIndex = -1;
 
-        playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        List<GameObject> possibleTargets = new List<GameObject>();
 
-        for (int i = 0; i < playerObjects.Length; i++)
+        possibleTargets.Add(GameObject.FindGameObjectWithTag("Player"));
+
+        SandWormBait[] bait = FindObjectsOfType<SandWormBait>();
+
+        foreach (SandWormBait swb in bait)
+            possibleTargets.Add(swb.gameObject);
+
+        for (int i = 0; i < possibleTargets.Count; i++)
         {
-            float dist = Vector3.Distance(transform.position, playerObjects[i].transform.position);
+            float dist = Vector3.Distance(transform.position, possibleTargets[i].transform.position);
             if (leastDistance == -1 || dist <= leastDistance)
             {
                 leastDistance = dist;
@@ -96,7 +97,7 @@ public class SandWormFSM : AMovingPlatform
             }
         }
 
-        return playerObjects[playerIndex];
+        return possibleTargets[playerIndex];
     }
 
     Vector3 checkpointPos()
@@ -152,14 +153,17 @@ public class SandWormFSM : AMovingPlatform
         Vector3 playerPos = currentTarget.transform.position;
         Vector3 groundPos = Vector3.zero;
 
-        RaycastHit hit;
-        if (Physics.Raycast(playerPos, Vector3.down, out hit, Mathf.Infinity, ~groundLayer))
+        StickToGround shadow = currentTarget.GetComponentInChildren<StickToGround>();
+        
+        if (shadow != null)
         {
-            groundPos = hit.point;
+            groundPos = shadow.gameObject.transform.position;
         }
 
         // Set position
-        transform.position = groundPos + Vector3.up * burrowDistance;
+        transform.position = groundPos + Vector3.up;
+
+        preAttackParticleSystem.gameObject.transform.position = groundPos;
 
         preAttackParticleSystem.Play();
         Vector3 startingPos = transform.position;
@@ -202,6 +206,7 @@ public class SandWormFSM : AMovingPlatform
 
         velocity = Vector3.zero;
         attackState = SandWormAttackState.WAITING;
+        sandWormAnimator.SetTrigger("Reset");
 
         // Wait after
         yield return new WaitForSeconds(resumePatrolingTime);

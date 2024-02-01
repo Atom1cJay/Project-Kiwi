@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 824573181}
-  m_IndirectSpecularColor: {r: 1.0832852, g: 1.6653317, b: 2.5084293, a: 1}
+  m_IndirectSpecularColor: {r: 1.0832862, g: 1.665337, b: 2.50844, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20406,6 +20406,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1364528182, guid: 75eb4cbae77ae314f9d223cad78a3edf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1365760699, guid: 75eb4cbae77ae314f9d223cad78a3edf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984241608, guid: 75eb4cbae77ae314f9d223cad78a3edf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1367721584502682673, guid: 75eb4cbae77ae314f9d223cad78a3edf, type: 3}
       propertyPath: m_Name
       value: Worm
@@ -20454,17 +20466,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1367721584502682679, guid: 75eb4cbae77ae314f9d223cad78a3edf, type: 3}
+      propertyPath: gravity
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1367721584502682679, guid: 75eb4cbae77ae314f9d223cad78a3edf, type: 3}
+      propertyPath: attackUpDistance
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1367721584868798093, guid: 75eb4cbae77ae314f9d223cad78a3edf, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1367721584868798095, guid: 75eb4cbae77ae314f9d223cad78a3edf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 24.914
       objectReference: {fileID: 0}
     - target: {fileID: 1367721584868798095, guid: 75eb4cbae77ae314f9d223cad78a3edf, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.0897
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178183495068244550, guid: 75eb4cbae77ae314f9d223cad78a3edf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75eb4cbae77ae314f9d223cad78a3edf, type: 3}

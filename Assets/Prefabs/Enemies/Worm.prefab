@@ -4842,7 +4842,7 @@ GameObject:
   - component: {fileID: 1782082736}
   - component: {fileID: 1782082735}
   m_Layer: 0
-  m_Name: Sand Monster Particles (1)
+  m_Name: Sand Monster Above Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9803,26 +9803,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f706fb13dfba5f428a10d63f1c3b055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToAttack: 8
+  distanceToAttack: 12
   radiusPatrol: 10
   distanceToNextPoint: 0.5
   moveSpeed: 7.5
   patrolLerpSpeed: 0.5
   patrolParticleSystem: {fileID: 1782082736}
   warmUpTime: 2
-  attackUpTime: 2.5
-  timeToCloseMouth: 1.5
-  timeAfterClosedMouth: 1
-  burrowDistance: 1
+  attackUpTime: 1.25
+  timeToCloseMouth: 0.75
+  timeAfterClosedMouth: 0.1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 273
-  attackUpDistance: 30
+    m_Bits: 32769
+  attackUpDistance: 10
   resumePatrolingTime: 2
   sandWormAnimator: {fileID: 1367721583751376759}
   preAttackParticleSystem: {fileID: 1407021108}
   killBox: {fileID: 1367721583298758613}
-  gravity: -5
+  gravity: -20
   alive: 1
 --- !u!1 &1367721584868798094
 GameObject:
@@ -9835,10 +9834,10 @@ GameObject:
   - component: {fileID: 1367721584868798095}
   - component: {fileID: 1367721584868798098}
   - component: {fileID: 1367721584868798093}
-  - component: {fileID: 1367721584868798092}
   - component: {fileID: 1367721584868798099}
+  - component: {fileID: 1367721583130758244}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: MouthCollider
   m_TagString: Moving Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9852,9 +9851,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367721584868798094}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 26.719997, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 25.5, z: 0.0897007}
+  m_LocalScale: {x: 3, y: 1.5, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1545199721878898842}
   m_RootOrder: 3
@@ -9866,7 +9865,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367721584868798094}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1367721584868798093
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9909,19 +9908,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1367721584868798092
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367721584868798094}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3, y: 0.5967746, z: 3}
-  m_Center: {x: 0, y: 0.12640023, z: 0}
 --- !u!114 &1367721584868798099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9938,6 +9924,20 @@ MonoBehaviour:
   onTransformChange:
     m_PersistentCalls:
       m_Calls: []
+--- !u!64 &1367721583130758244
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367721584868798094}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1367721583110779252
 PrefabInstance:
   m_ObjectHideFlags: 0
