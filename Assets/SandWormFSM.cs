@@ -6,7 +6,12 @@ public class SandWormFSM : AMovingPlatform
 {
     [Header("FSM Variables | Patrol")]
     [SerializeField] float distanceToAttack;
-    
+    [SerializeField] float radiusPatrol;
+    [SerializeField] float distanceToNextPoint;
+    [SerializeField] float moveSpeed;
+    [SerializeField] float patrolLerpSpeed;
+    [SerializeField] ParticleSystem patrolParticleSystem;
+
     [Header("FSM Variables | Attack")]
     [SerializeField] float warmUpTime;
     [SerializeField] float attackUpTime;
@@ -17,26 +22,43 @@ public class SandWormFSM : AMovingPlatform
     [SerializeField] float attackUpDistance;
     [SerializeField] float resumePatrolingTime;
     [SerializeField] Animator sandWormAnimator;
+    [SerializeField] ParticleSystem preAttackParticleSystem;
 
     [Header("SandWorm Vars")]
     [SerializeField] GameObject killBox;
     [SerializeField] float gravity;
 
 
+
     public bool alive = true;
 
+    //patrol
+    Vector3 currentCheckpoint;
+    Vector3 initialPos;
+    Vector3 lastPos;
+    Vector3 patrolVelocity = Vector3.zero;
+
+    //state
     SandWormState currentState = SandWormState.PATROLING;
     SandWormAttackState attackState = SandWormAttackState.NOT_ATTACKING;
 
+    //player and target
     GameObject[] playerObjects;
     GameObject currentTarget;
+
     Vector3 velocity;
 
     // Start is called before the first frame update
     void Start()
     {
         playerObjects = GameObject.FindGameObjectsWithTag("Player");
+
+        initialPos = transform.position;
+        currentCheckpoint = checkpointPos();
+
+        patrolParticleSystem.Play();
         StartCoroutine(FSM());
+
         killBox.SetActive(false);
     }
 
@@ -77,6 +99,18 @@ public class SandWormFSM : AMovingPlatform
         return playerObjects[playerIndex];
     }
 
+    Vector3 checkpointPos()
+    {
+        float randomAngle = Random.Range(0f, 2f * Mathf.PI);
+
+        // Calculate the X and Z coordinates using polar coordinates
+        float xPos = initialPos.x + radiusPatrol * Mathf.Cos(randomAngle);
+        float zPos = initialPos.z + radiusPatrol * Mathf.Sin(randomAngle);
+
+        // Create the position vector
+        return new Vector3(xPos, initialPos.y, zPos);
+    }
+
     void Patrol()
     {
         attackState = SandWormAttackState.NOT_ATTACKING;
@@ -88,6 +122,17 @@ public class SandWormFSM : AMovingPlatform
 
         if (Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack) {
             currentState = SandWormState.ATTACKING;
+            patrolParticleSystem.Stop();
+        }
+        else if (Vector3.Distance(transform.position, currentCheckpoint) <= distanceToNextPoint)
+        {
+            currentCheckpoint = checkpointPos();
+        }
+        else
+        {
+            patrolVelocity = Vector3.Lerp(patrolVelocity, (currentCheckpoint - transform.position).normalized * moveSpeed, Time.deltaTime * patrolLerpSpeed);
+            transform.position += patrolVelocity * Time.deltaTime;
+            lastPos = transform.position;
         }
     }
 
@@ -115,6 +160,8 @@ public class SandWormFSM : AMovingPlatform
 
         // Set position
         transform.position = groundPos + Vector3.up * burrowDistance;
+
+        preAttackParticleSystem.Play();
         Vector3 startingPos = transform.position;
 
         // Start WarmUp
@@ -122,6 +169,7 @@ public class SandWormFSM : AMovingPlatform
 
         yield return new WaitForSeconds(warmUpTime);
 
+        preAttackParticleSystem.Stop();
         // Start Attack
         attackState = SandWormAttackState.GOING_UP;
         sandWormAnimator.SetTrigger("StartAttack");
@@ -159,6 +207,8 @@ public class SandWormFSM : AMovingPlatform
         yield return new WaitForSeconds(resumePatrolingTime);
         attackState = SandWormAttackState.NOT_ATTACKING;
 
+        transform.position = lastPos;
+
         // Done with attack
         currentTarget = findTarget();
 
@@ -169,6 +219,8 @@ public class SandWormFSM : AMovingPlatform
         else
         {
             currentState = SandWormState.PATROLING;
+            patrolParticleSystem.Play();
+            patrolVelocity = Vector3.zero;
         }
 
     }
