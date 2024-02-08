@@ -103,9 +103,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1550236236240618557, guid: 832f4695fce3cd94890b4e45c6f208dc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6c6b1553542523446bdbb46734554520, type: 2}
+    - target: {fileID: -1550236236240618557, guid: 832f4695fce3cd94890b4e45c6f208dc, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 0a8881294ce262a489403580af9d84d7, type: 2}
+      objectReference: {fileID: 2100000, guid: 45d733712096a2f419a25cfcb8113577, type: 2}
     - target: {fileID: 690990212751528477, guid: 832f4695fce3cd94890b4e45c6f208dc, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -128,6 +132,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 832f4695fce3cd94890b4e45c6f208dc, type: 3}
+--- !u!1 &632615975524228905 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7425127889004549896, guid: 832f4695fce3cd94890b4e45c6f208dc, type: 3}
+  m_PrefabInstance: {fileID: 1167317851125741521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1385564846
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632615975524228905}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -659154897101713895, guid: 832f4695fce3cd94890b4e45c6f208dc, type: 3}
 --- !u!4 &1709569177082073146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 832f4695fce3cd94890b4e45c6f208dc, type: 3}
@@ -223,6 +246,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlowerPot3rdArea
       objectReference: {fileID: 0}
+    - target: {fileID: 3431987151992605221, guid: 05b26729501bf754e984fbffebe390c3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d6c16d86015f87f4fa0628939bb9911f, type: 2}
+    - target: {fileID: 3431987151992605221, guid: 05b26729501bf754e984fbffebe390c3, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 899b0beed33d6674d9c3b01c2324b8f4, type: 2}
+    - target: {fileID: 3431987151992605221, guid: 05b26729501bf754e984fbffebe390c3, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 167ad39de7eb0034a95c547e20d4b067, type: 2}
+    - target: {fileID: 3431987151992605221, guid: 05b26729501bf754e984fbffebe390c3, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: f9d76054663715049a1fb0b3d7374986, type: 2}
+    - target: {fileID: 7983307947541531043, guid: 05b26729501bf754e984fbffebe390c3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6c6b1553542523446bdbb46734554520, type: 2}
+    - target: {fileID: 7983307947541531043, guid: 05b26729501bf754e984fbffebe390c3, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 45d733712096a2f419a25cfcb8113577, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05b26729501bf754e984fbffebe390c3, type: 3}
 --- !u!4 &1709569176844425373 stripped
@@ -230,6 +277,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 05b26729501bf754e984fbffebe390c3, type: 3}
   m_PrefabInstance: {fileID: 1167317851363196790}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2902229770847572002 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4068421717928144724, guid: 05b26729501bf754e984fbffebe390c3, type: 3}
+  m_PrefabInstance: {fileID: 1167317851363196790}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1385564847
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2902229770847572002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1539549367688167472, guid: 05b26729501bf754e984fbffebe390c3, type: 3}
 --- !u!1001 &1752481304976516507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -297,9 +363,37 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 550332878988028424, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6c6b1553542523446bdbb46734554520, type: 2}
+    - target: {fileID: 550332878988028424, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 45d733712096a2f419a25cfcb8113577, type: 2}
     - target: {fileID: 919132149155446097, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
       propertyPath: m_Name
       value: FlowerPot1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304179497543497446, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d6c16d86015f87f4fa0628939bb9911f, type: 2}
+    - target: {fileID: 4304179497543497446, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 899b0beed33d6674d9c3b01c2324b8f4, type: 2}
+    - target: {fileID: 4304179497543497446, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 73e2d0c9acd4daa4687e01d1c64c408e, type: 2}
+    - target: {fileID: 4304179497543497446, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0c53d810cfdead64e8057215da21d25c, type: 2}
+    - target: {fileID: 8386009582420158719, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
@@ -308,6 +402,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
   m_PrefabInstance: {fileID: 1752481304976516507}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2388740754467384660 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4140096106839509199, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
+  m_PrefabInstance: {fileID: 1752481304976516507}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1385564848
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388740754467384660}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 768597171691254339, guid: 09aaa12e6d02cfd4cbd40cc389b51010, type: 3}
 --- !u!1001 &8787914239471059735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -379,8 +492,51 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlowerPot4thArea
       objectReference: {fileID: 0}
+    - target: {fileID: 4116723079412366641, guid: 7347f505868446f428bfd200141a547e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d6c16d86015f87f4fa0628939bb9911f, type: 2}
+    - target: {fileID: 4116723079412366641, guid: 7347f505868446f428bfd200141a547e, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 899b0beed33d6674d9c3b01c2324b8f4, type: 2}
+    - target: {fileID: 4116723079412366641, guid: 7347f505868446f428bfd200141a547e, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6be7095a41938b941a12b89a30445119, type: 2}
+    - target: {fileID: 4116723079412366641, guid: 7347f505868446f428bfd200141a547e, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7267c2cd400927c4ea9f7d74c8d2d57c, type: 2}
+    - target: {fileID: 6283197274671513072, guid: 7347f505868446f428bfd200141a547e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6c6b1553542523446bdbb46734554520, type: 2}
+    - target: {fileID: 6283197274671513072, guid: 7347f505868446f428bfd200141a547e, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 45d733712096a2f419a25cfcb8113577, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7347f505868446f428bfd200141a547e, type: 3}
+--- !u!1 &1065501430766537414 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8592193638241896913, guid: 7347f505868446f428bfd200141a547e, type: 3}
+  m_PrefabInstance: {fileID: 8787914239471059735}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1385564849
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065501430766537414}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5435059883724570943, guid: 7347f505868446f428bfd200141a547e, type: 3}
 --- !u!4 &9114801919720187132 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7347f505868446f428bfd200141a547e, type: 3}
