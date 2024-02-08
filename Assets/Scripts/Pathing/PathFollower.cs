@@ -11,6 +11,8 @@ public class PathFollower : AMovingPlatform
     [SerializeField] bool x = true;
     [SerializeField] bool y = true;
     [SerializeField] bool z = true;
+    [SerializeField] bool rotateWithPath = false;
+    [SerializeField] Vector3 pathRotationAddOn;
     float distance;
 
     void Start()
@@ -27,10 +29,16 @@ public class PathFollower : AMovingPlatform
     {
         distance += speed * Time.deltaTime;
         Vector3 pathPos = pathCreator.path.GetPointAtDistance(distance);
+        Vector3 pathDir = pathCreator.path.GetDirectionAtDistance(distance);
+        Quaternion pathRot = Quaternion.LookRotation(pathDir);
         Vector3 desiredPos = transform.position = new Vector3(
             x ? pathPos.x : transform.position.x,
             y ? pathPos.y : transform.position.y,
             z ? pathPos.z : transform.position.z);
         transform.Translate(desiredPos - transform.position);
+        if (rotateWithPath)
+        {
+            transform.rotation = pathRot * Quaternion.Euler(pathRotationAddOn);
+        }
     }
 }
