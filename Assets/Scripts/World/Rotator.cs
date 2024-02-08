@@ -11,7 +11,7 @@ public class Rotator : MonoBehaviour
 
     void Update()
     {
-        transform.localEulerAngles += rotation * Time.deltaTime;
+        transform.localRotation *= Quaternion.Euler(rotation * Time.deltaTime);
 
         /*
         if (stopping)
