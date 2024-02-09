@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2333027396476506040
+--- !u!114 &-2908835861605589413
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CelFlowerYellow1 1
-  m_Shader: {fileID: -6465566751694194690, guid: 1afae7e1474e54cf6b570e2ac42be3b9, type: 3}
+  m_Name: CelDirt
+  m_Shader: {fileID: -6465566751694194690, guid: 9a4fd50ff7461442e830a2feeba45846, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -95,12 +95,14 @@ Material:
     m_Ints: []
     m_Floats:
     - Dot_Product_For_Shade_Border: 0
-    - Metallic: 0
-    - RimEdgePower: -0.41
-    - RimExtraSize: 0.01
-    - RimShadowPower: 0.51
-    - RimStrength: 0.49
-    - Smoothness: 0.09
+    - One_Out_Of_Every_Int_Off: 2
+    - One_Out_Of_Every_Off: 3
+    - Rim_Edge_Power: 0
+    - Rim_Shadow_Power: 0
+    - Rim_Strength: 0
+    - Wave_Amplitude: 1
+    - Wave_Frequency: 0.5
+    - Wave_Off_On_Rate: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -129,9 +131,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Albedo: {r: 0.98039216, g: 0.878268, b: 0.36764705, a: 0}
-    - Ambient_Light: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
+    - Albedo: {r: 0.774, g: 0.5708688, b: 0.33971947, a: 0}
+    - Ambient_Light: {r: 1, g: 1, b: 1, a: 0}
     - Tiling: {r: 0, g: 0, b: 0, a: 0}
+    - Wave_Color_Multiplier: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
