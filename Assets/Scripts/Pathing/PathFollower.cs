@@ -12,7 +12,7 @@ public class PathFollower : AMovingPlatform
     [SerializeField] bool y = true;
     [SerializeField] bool z = true;
     [SerializeField] bool rotateWithPath = false;
-    [SerializeField] Vector3 pathRotationAddOn;
+    [SerializeField] bool destroyAtEndOfPath = false;
     float distance;
 
     void Start()
@@ -28,6 +28,10 @@ public class PathFollower : AMovingPlatform
     public override void Translate()
     {
         distance += speed * Time.deltaTime;
+        if (destroyAtEndOfPath && distance > pathCreator.path.length)
+        {
+            Destroy(gameObject);
+        }
         Vector3 pathPos = pathCreator.path.GetPointAtDistance(distance);
         Vector3 pathDir = pathCreator.path.GetDirectionAtDistance(distance);
         Quaternion pathRot = Quaternion.LookRotation(pathDir);
@@ -38,7 +42,13 @@ public class PathFollower : AMovingPlatform
         transform.Translate(desiredPos - transform.position);
         if (rotateWithPath)
         {
-            transform.rotation = pathRot * Quaternion.Euler(pathRotationAddOn);
+            transform.rotation = pathRot;
         }
+    }
+
+    public void SetPathCreator(PathCreator pc)
+    {
+        this.pathCreator = pc;
+        distance = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
     }
 }
