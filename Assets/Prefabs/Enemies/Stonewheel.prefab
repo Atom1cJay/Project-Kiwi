@@ -778,8 +778,7 @@ GameObject:
   - component: {fileID: 4074109214361108797}
   - component: {fileID: 1734099506}
   - component: {fileID: 1734099507}
-  - component: {fileID: 1734099508}
-  - component: {fileID: 1734099512}
+  - component: {fileID: 1130996300668736566}
   m_Layer: 0
   m_Name: Stonewheel
   m_TagString: Untagged
@@ -838,11 +837,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2709b3cc8bd1645cdb76a1d395487b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moverScript: {fileID: 1734099508}
+  moverScript: {fileID: 1130996300668736566}
   onTransformChange:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1734099508
+--- !u!114 &1130996300668736566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -851,28 +850,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3729530325266832263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d5799212bb794c9696739ea427467cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8226e9845e8474efb9c107f4b27d6704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pathCreator: {fileID: 0}
   speed: 5
   x: 1
-  y: 0
+  y: 1
   z: 1
-  rotateWithPath: 1
---- !u!114 &1734099512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3729530325266832263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc550ede61a714b3187090055f2470d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotation: {x: 0, y: 0, z: 0}
+  rotateWithPath: 0
+  destroyAtEndOfPath: 0
+  extraRotation: {x: 90, y: 0, z: 0}
 --- !u!1 &4502649261459906160
 GameObject:
   m_ObjectHideFlags: 0

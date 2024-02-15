@@ -11,7 +11,7 @@ public class PathFollower : AMovingPlatform
     [SerializeField] bool x = true;
     [SerializeField] bool y = true;
     [SerializeField] bool z = true;
-    [SerializeField] bool rotateWithPath = false;
+    [SerializeField] protected bool rotateWithPath = false;
     [SerializeField] bool destroyAtEndOfPath = false;
     float distance;
 
