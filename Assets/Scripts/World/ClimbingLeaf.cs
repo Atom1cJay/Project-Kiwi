@@ -18,14 +18,15 @@ public class ClimbingLeaf : MonoBehaviour
     {
         StopAllCoroutines();
         StartCoroutine(leafProcess());
-
-        if (leafsToChain.Length > 0)
-            Invoke("chainLeaves", timeToChain);
     }
 
     IEnumerator leafProcess()
     {
-        yield return new WaitForSeconds(timeToWaitAtStart);
+        if (!leafUp)
+            yield return new WaitForSeconds(timeToWaitAtStart);
+
+        if (leafsToChain.Length > 0)
+            Invoke("chainLeaves", timeToChain);
 
         if (!leafUp)
         {
