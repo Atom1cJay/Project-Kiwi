@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8412433749353964622}
   - component: {fileID: 8730498584892938935}
   - component: {fileID: 5238668797219275436}
-  - component: {fileID: 5238668797219275424}
   - component: {fileID: 5238668797219275439}
+  - component: {fileID: 2040889825596633806}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -100,21 +100,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5447036705194824928, guid: ebb29f4923a01934bafe39347d33d789, type: 3}
---- !u!114 &5238668797219275424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1594075387214505433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1022c641dca7c444c87d7b4cb2aa0b0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gotoPosition: {fileID: 5238668795743541529}
-  timeToGetToPos: 0.125
-  timeToReturnToPos: 0.1
 --- !u!114 &5238668797219275439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +115,7 @@ MonoBehaviour:
   OnPound:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5238668797219275424}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TransformationAnimation, Assembly-CSharp
         m_MethodName: startAnimation
         m_Mode: 1
@@ -155,6 +140,21 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   oneTimeActivationPerScene: 0
+--- !u!114 &2040889825596633806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594075387214505433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105501e6102c1304f8b2f50a77f96468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gotoPosition: {fileID: 5238668795743541529}
+  timeToGetToPos: 0.125
+  timeToReturnToPos: 0.1
 --- !u!1 &4932026884715233268
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5238668795743541510}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SinkPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
