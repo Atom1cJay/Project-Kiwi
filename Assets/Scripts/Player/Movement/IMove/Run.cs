@@ -210,6 +210,8 @@ public class Run : AMove
             case FromStatus.FromIdle:
                 return new MovementParticleInfo.MovementParticles[]
                 { MovementParticleInfo.Instance.Accel, MovementParticleInfo.Instance.Walking, MovementParticleInfo.Instance.WalkingSmoke };
+            case FromStatus.FromBoostCharge:
+                return new MovementParticleInfo.MovementParticles[] { MovementParticleInfo.Instance.HorizBoost };
             case FromStatus.FromAir:
             case FromStatus.FromGlide:
                 return new MovementParticleInfo.MovementParticles[]
