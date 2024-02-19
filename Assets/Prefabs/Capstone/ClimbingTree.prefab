@@ -133,6 +133,7 @@ Transform:
   - {fileID: 8660930226537828813}
   - {fileID: 8660930225902520457}
   - {fileID: 8660930225679399422}
+  - {fileID: 2786298696232825272}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -234,6 +235,65 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1515845076679713200, guid: b9017f547af66a34a9b72f5cfc8fca77, type: 3}
+--- !u!1 &6530062055708521115
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2786298696232825272}
+  - component: {fileID: 4131253869104390846}
+  m_Layer: 0
+  m_Name: SprinklerReceiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2786298696232825272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6530062055708521115}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 284792847819198368}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4131253869104390846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6530062055708521115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff0484b4cb6c6845892720dd7053576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  receiveSprinkle:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 322413004230681180}
+        m_TargetAssemblyTypeName: ClimbingLeaf, Assembly-CSharp
+        m_MethodName: startLeaf
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &322413003073623195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -708,3 +768,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8955617643718542678, guid: 2af773dc5f260a144ae1710f793d8767, type: 3}
   m_PrefabInstance: {fileID: 9204081493982249199}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &322413004230681180 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8917698669754311347, guid: 2af773dc5f260a144ae1710f793d8767, type: 3}
+  m_PrefabInstance: {fileID: 9204081493982249199}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59727e51efdf5ed479990ab449815c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
