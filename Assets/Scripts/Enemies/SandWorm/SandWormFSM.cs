@@ -11,6 +11,7 @@ public class SandWormFSM : AMovingPlatform
     [SerializeField] float moveSpeed;
     [SerializeField] float patrolLerpSpeed;
     [SerializeField] ParticleSystem patrolParticleSystem;
+    [SerializeField] float bodySize;
 
     [Header("FSM Variables | Attack")]
     [SerializeField] float warmUpTime;
@@ -47,6 +48,14 @@ public class SandWormFSM : AMovingPlatform
     // Start is called before the first frame update
     void Start()
     {
+        //disable colliders for raycast
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, groundLayer))
+        {
+            Vector3 goalShadowPos = hit.point;
+            transform.position = goalShadowPos - (GameObject.FindGameObjectWithTag("Sun").transform.transform.forward * 0.01f);
+        }
+
         initialPos = transform.position;
         currentCheckpoint = checkpointPos();
 
@@ -60,6 +69,7 @@ public class SandWormFSM : AMovingPlatform
     {
         while(alive)
         {
+            Debug.Log("fml");
             switch(currentState)
             {
                 case SandWormState.PATROLING:
@@ -121,9 +131,11 @@ public class SandWormFSM : AMovingPlatform
             currentTarget = findTarget();
         }
 
-        if (Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack) {
+
+        if (Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack && canJumpWithoutHittingAnything(currentTarget.transform.position)) {
             currentState = SandWormState.ATTACKING;
             patrolParticleSystem.Stop();
+            Debug.Log("wobba wobba");
         }
         else if (Vector3.Distance(transform.position, currentCheckpoint) <= distanceToNextPoint)
         {
@@ -230,6 +242,42 @@ public class SandWormFSM : AMovingPlatform
 
     }
 
+    int POINTS_CHECKED_AROUND_PLAYER = 8;
+
+    bool canJumpWithoutHittingAnything(Vector3 pos)
+    {
+        bool hitAnything = false;
+
+        //Debug.DrawRay(pos, Vector3.up * attackUpDistance);
+        if (Physics.Raycast(pos, Vector3.up, attackUpDistance, groundLayer))
+        {
+            hitAnything = true;
+        }
+
+        // Cast rays at points around the player in a circle
+        for (int i = 0; i < POINTS_CHECKED_AROUND_PLAYER; i++) 
+        {
+            // Calculate the angle for this point around the circle
+            float angle = i * (360f / POINTS_CHECKED_AROUND_PLAYER);
+
+            // Calculate the direction vector for this point
+            Vector3 direction = Quaternion.Euler(0f, angle, 0f) * Vector3.forward;
+
+            // Calculate the position of the point around the circle
+            Vector3 circlePoint = pos + direction * bodySize / 2;
+
+            //Debug.DrawRay(circlePoint, Vector3.up * attackUpDistance);
+            if (Physics.Raycast(circlePoint, Vector3.up, attackUpDistance, groundLayer))
+            {
+                hitAnything = true;
+            }
+        }
+
+        return !hitAnything;
+    }
+
+
+
     public override void Translate()
     {
         if (currentState == SandWormState.ATTACKING && attackState != SandWormAttackState.WARM_UP && attackState != SandWormAttackState.WARM_UP && attackState != SandWormAttackState.WAITING)
@@ -245,7 +293,7 @@ public class SandWormFSM : AMovingPlatform
     }
 }
 
-enum SandWormState
+public enum SandWormState
 {
     PATROLING,
     ATTACKING
