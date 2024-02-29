@@ -8,8 +8,14 @@ public class CloudPathFollower : PathFollower
     [SerializeField] float thunderSpeedDuration;
     [Header ("Landing Effect")]
     [SerializeField] MeshRenderer cloudRenderer;
-    [SerializeField] float timeToLerpIn, timeToLerpOut;
+    [SerializeField] float timeToLerpInLand, timeToLerpOutLand;
     [SerializeField] Color landingCloudColor;
+    [Header ("Lightening Effect")]
+    [SerializeField] float timeToLerpInLightening;
+    [SerializeField] float timeToLerpOutLightening;
+    [SerializeField] float lighteningDuration;
+    [SerializeField] float lightneningEffectDistance;
+    [SerializeField] Color lighteningCloudColor;
 
     Color originalCloudColor;
     bool inThunderSpeed;
@@ -44,19 +50,19 @@ public class CloudPathFollower : PathFollower
 
     public void changeToLandingColor(float sec)
     {
-        StartCoroutine(changeLandingColor(sec));
+        StartCoroutine(changeLandingColor(sec, timeToLerpInLand, timeToLerpOutLand, landingCloudColor));
     }
 
-    IEnumerator changeLandingColor(float pause)
+    IEnumerator changeLandingColor(float pause, float timeToLerpIn, float timeToLerpOut, Color color)
     {
-        Debug.Log("pos");
         float t = 0f;
         while (t < timeToLerpIn)
         {
-            cloudRenderer.materials[0].SetColor("Albedo", Color.Lerp(originalCloudColor, landingCloudColor, t / timeToLerpIn));
+            cloudRenderer.materials[0].SetColor("Albedo", Color.Lerp(originalCloudColor, color, t / timeToLerpIn));
             t += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        cloudRenderer.materials[0].SetColor("Albedo", color);
 
         yield return new WaitForSeconds(pause);
 
@@ -64,10 +70,32 @@ public class CloudPathFollower : PathFollower
 
         while (t < timeToLerpOut)
         {
-            cloudRenderer.materials[0].SetColor("Albedo", Color.Lerp(landingCloudColor, originalCloudColor, t / timeToLerpOut));
+            cloudRenderer.materials[0].SetColor("Albedo", Color.Lerp(color, originalCloudColor, t / timeToLerpOut));
             t += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        cloudRenderer.materials[0].SetColor("Albedo", originalCloudColor);
+
+    }
+
+    public void activateLightening()
+    {
+        StopAllCoroutines();
+
+        List<GameObject> lightningReceiverObjects = new List<GameObject>();
+        LightningReceiver[] lightningReceivers = FindObjectsOfType<LightningReceiver>();
+
+
+        foreach (LightningReceiver receiver in lightningReceivers)
+        {
+            float distance = Vector3.Distance(transform.position, receiver.transform.position);
+            if (distance <= lightneningEffectDistance)
+            {
+                receiver.receive();
+            }
+        }
+
+        StartCoroutine(changeLandingColor(lighteningDuration, timeToLerpInLightening, timeToLerpOutLightening, lighteningCloudColor));
 
     }
 }
