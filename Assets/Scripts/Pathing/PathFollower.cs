@@ -2,6 +2,7 @@ using System.Collections;
 using PathCreation;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PathFollower : AMovingPlatform
 {
@@ -12,8 +13,11 @@ public class PathFollower : AMovingPlatform
     [SerializeField] bool y = true;
     [SerializeField] bool z = true;
     [SerializeField] protected bool rotateWithPath = false;
+    [SerializeField] bool stopAtEndOfPath = false;
     [SerializeField] bool destroyAtEndOfPath = false;
+    [SerializeField] UnityEvent onReachEndOfPath;
     float distance;
+    bool stopped;
 
     void Start()
     {
@@ -27,10 +31,24 @@ public class PathFollower : AMovingPlatform
 
     public override void Translate()
     {
-        distance += speed * Time.deltaTime;
-        if (destroyAtEndOfPath && distance > pathCreator.path.length)
+        if (!stopped)
         {
-            Destroy(gameObject);
+            distance += speed * Time.deltaTime;
+        }
+        if (distance > pathCreator.path.length) // End of path
+        {
+            onReachEndOfPath.Invoke();
+            if (destroyAtEndOfPath)
+                Destroy(gameObject);
+            if (stopAtEndOfPath)
+            {
+                distance = pathCreator.path.length - 0.1f; // Just before end
+                stopped = true;
+            }
+            else
+            {
+                distance -= pathCreator.path.length; // Loop
+            }
         }
         Vector3 pathPos = pathCreator.path.GetPointAtDistance(distance);
         Vector3 pathDir = pathCreator.path.GetDirectionAtDistance(distance);
