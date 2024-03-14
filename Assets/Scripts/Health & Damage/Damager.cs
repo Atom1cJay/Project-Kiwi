@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Gives a gameObject the ability to damage the player.
@@ -12,6 +13,7 @@ public class Damager : MonoBehaviour
     [SerializeField] DamageType damageType;
     [SerializeField] bool ignoreInvulnerability;
     [SerializeField] bool destroyOnContact = false;
+    [SerializeField] UnityEvent onDamage;
     bool isActivated = true;
 
     private void Start()
@@ -62,6 +64,7 @@ public class Damager : MonoBehaviour
             hitNormal.x = -hitNormal.x;
             hitNormal.z = -hitNormal.z;
             PlayerHealth.instance.HandleDamage(damageType, hitNormal);
+            onDamage.Invoke();
         }
     }
 
