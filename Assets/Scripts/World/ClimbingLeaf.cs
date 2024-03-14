@@ -11,8 +11,16 @@ public class ClimbingLeaf : MonoBehaviour
     [SerializeField] float timeToChain;
     [SerializeField] float timeToWaitAtStart;
     [SerializeField] float animationLag;
+    [SerializeField] bool startOnAwake = false;
+
 
     bool leafUp = false;
+
+    private void Awake()
+    {
+        if (startOnAwake)
+            startLeaf();
+    }
 
     public void startLeaf()
     {
