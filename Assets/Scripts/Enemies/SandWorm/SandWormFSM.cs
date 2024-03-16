@@ -69,7 +69,7 @@ public class SandWormFSM : AMovingPlatform
     {
         while(alive)
         {
-            Debug.Log("fml");
+            //Debug.Log("fml");
             switch(currentState)
             {
                 case SandWormState.PATROLING:
