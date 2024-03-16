@@ -9,6 +9,8 @@ public class HoveringTextBox : MonoBehaviour
     [SerializeField] Canvas hoveringTextBoxCanvas;
     [SerializeField] Image hoveringBackground;
     [SerializeField] TextMeshProUGUI hoveringText;
+    [SerializeField] string textContent;
+    [SerializeField] float secondsPerCharacter;
     [SerializeField] float fadeTime;
     [SerializeField] float maxOpaqueness;
 
@@ -23,6 +25,7 @@ public class HoveringTextBox : MonoBehaviour
         {
             StopAllCoroutines();
             StartCoroutine("AnimateIn");
+            StartCoroutine("AnimateText");
         }
     }
 
@@ -44,6 +47,15 @@ public class HoveringTextBox : MonoBehaviour
             hoveringBackground.color = new Color(hoveringBackground.color.r, hoveringBackground.color.g, hoveringBackground.color.b, alpha);
             hoveringText.color = new Color(hoveringText.color.r, hoveringText.color.g, hoveringText.color.b, alpha);
             yield return null;
+        }
+    }
+
+    IEnumerator AnimateText()
+    {
+        for (int i = 0; i <= textContent.Length; i++)
+        {
+            hoveringText.text = textContent.Substring(0, i);
+            yield return new WaitForSeconds(secondsPerCharacter);
         }
     }
 

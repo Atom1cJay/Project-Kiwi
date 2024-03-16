@@ -155,6 +155,8 @@ MonoBehaviour:
   hoveringTextBoxCanvas: {fileID: 6833555331810187009}
   hoveringBackground: {fileID: 3199328491488590894}
   hoveringText: {fileID: 7222297199943415359}
+  textContent: Text here
+  secondsPerCharacter: 0.03
   fadeTime: 0.5
   maxOpaqueness: 0.8
 --- !u!1 &4024023786858010222
@@ -291,10 +293,10 @@ RectTransform:
   m_Father: {fileID: 7216270931144093712}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -0.4, y: 0}
+  m_SizeDelta: {x: 3.6, y: 1.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2224314714293349409
 CanvasRenderer:
@@ -359,7 +361,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
