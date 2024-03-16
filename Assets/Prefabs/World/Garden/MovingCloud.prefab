@@ -9714,8 +9714,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4145483563029030368}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 27.19, y: 3.7374647, z: 39.60756}
-  m_LocalScale: {x: 100, y: 100.18135, z: 84.020935}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 125, y: 125, z: 84.020935}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1116024846842245089}
@@ -9799,13 +9799,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathCreator: {fileID: 0}
-  speed: 3.5
+  speed: 2.5
   x: 1
   y: 0
   z: 1
   rotateWithPath: 0
+  stopAtEndOfPath: 0
   destroyAtEndOfPath: 0
-  thunderSpeedMultiplier: 4
+  onReachEndOfPath:
+    m_PersistentCalls:
+      m_Calls: []
+  thunderSpeedMultiplier: 5
   thunderSpeedDuration: 1
   cloudRenderer: {fileID: 2303522923592408844}
   timeToLerpInLand: 0.1
