@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5697159281093434880}
   - component: {fileID: 4599279051634127027}
   - component: {fileID: 8072891767577078219}
-  - component: {fileID: 8145205744021212052}
   m_Layer: 0
   m_Name: PS_FrankSmoke
   m_TagString: Untagged
@@ -4813,19 +4812,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &8145205744021212052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8479830352835451195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7bfad6d5f2f4950baefd2fc887125f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toFollow: {fileID: 0}
-  followRotationX: 0
-  followRotationY: 1
-  followRotationZ: 0
