@@ -8,14 +8,17 @@ using UnityEngine;
 // until they reach the last one and win.
 public class GoldRing : MonoBehaviour
 {
-    [SerializeField] bool isFirstRing;
+    [SerializeField] GoldRing firstRing; // Defines the "ring group"
     [SerializeField] GoldRing nextRing; // If this is the last, leave null
     [SerializeField] GameObject collectionParticles;
+    [SerializeField] float timeLimitForNextRing;
+    [SerializeField] GameObject reward;
 
     void Start()
     {
-        if (isFirstRing)
+        if (firstRing == this)
         {
+            reward.SetActive(false);
             EnsureSequenceValidity();
         }
         else
@@ -32,9 +35,14 @@ public class GoldRing : MonoBehaviour
         GoldRing next = nextRing;
         while (next != null)
         {
-            if (next.isFirstRing)
+            if (next.firstRing != this)
             {
-                Debug.LogError("Multiple 'first' rings in ring sequence.");
+                Debug.LogError("FirstRing is inconsistent in sequence.");
+                return;
+            }
+            if (next.reward != this.reward)
+            {
+                Debug.LogError("Reward isn't consistent in sequence");
                 return;
             }
             if (ringsInSequence.Contains(next))
@@ -57,7 +65,23 @@ public class GoldRing : MonoBehaviour
         if (nextRing != null)
         {
             nextRing.gameObject.SetActive(true);
+            GameObject.FindGameObjectWithTag("PersonalArrow").GetComponent<PersonalArrow>().ShowArrow(nextRing.transform, timeLimitForNextRing);
+            MonobehaviourUtils.Instance.StartCoroutine(ConsiderRespawn(timeLimitForNextRing, firstRing, nextRing));
         }
-        Destroy(gameObject);
+        else // This is the last ring, you win!
+        {
+            reward.SetActive(true);
+        }
+        gameObject.SetActive(false);
+    }
+
+    static IEnumerator ConsiderRespawn(float secondsToWait, GoldRing firstRing, GoldRing ringToCheck)
+    {
+        yield return new WaitForSeconds(secondsToWait);
+        if (ringToCheck.gameObject.activeSelf) // Has not been collected and destroyed
+        {
+            ringToCheck.gameObject.SetActive(false);
+            firstRing.gameObject.SetActive(true);
+        }
     }
 }
