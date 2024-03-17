@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7131897417829315602}
   - component: {fileID: 6577337353592110947}
   - component: {fileID: 303904997326268705}
+  - component: {fileID: -2749569991887960005}
   m_Layer: 0
   m_Name: CoconutBall
   m_TagString: Untagged
@@ -106,6 +107,9 @@ MonoBehaviour:
   damageType: 3
   ignoreInvulnerability: 1
   destroyOnContact: 1
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!23 &303904997326268705
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -149,6 +153,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-2749569991887960005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094007727921469633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1db58ed9d32e454ba8ce352deba55ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toSpawn: {fileID: 6013933758721362222, guid: 9321c1c50b03540c3bc57b170e25029d, type: 3}
 --- !u!1 &8716586409553428321
 GameObject:
   m_ObjectHideFlags: 0
