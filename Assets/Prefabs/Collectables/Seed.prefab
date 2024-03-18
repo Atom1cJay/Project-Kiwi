@@ -132,7 +132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7198979707466000677
 Transform:
   m_ObjectHideFlags: 0
@@ -270,6 +270,9 @@ MonoBehaviour:
   playAnimation: 1
   overheadVisual: {fileID: 4561620357873671432}
   animLength: 0.5
+  onCollect:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5293251793107158320
 MonoBehaviour:
   m_ObjectHideFlags: 0

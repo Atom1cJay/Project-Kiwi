@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class SandWormBait : MonoBehaviour
 {
+    [SerializeField] bool killOnContact = true;
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("poggers");
         SandWormFSM sandWorm = other.GetComponentInParent<SandWormFSM>();
 
         if (sandWorm != null)

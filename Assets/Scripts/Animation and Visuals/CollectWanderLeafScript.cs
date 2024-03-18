@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CollectWanderLeafScript : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class CollectWanderLeafScript : MonoBehaviour
     [SerializeField] float startDuration, stayDuration, exitDuration, fadeDuration, distanceToGoUp;
 
     [SerializeField] bool customShader = true;
+    [SerializeField] UnityAction onCollectedAction;
 
     bool started = false;
     bool collected = false;
@@ -81,5 +84,11 @@ public class CollectWanderLeafScript : MonoBehaviour
             .GetComponent<CollectWanderLeafCinematic>()
             .exitCinematic(exitDuration);
         Destroy(gameObject, exitDuration + 5f);
+        Invoke("collectedWanderLeaf", exitDuration);
+    }
+
+    void collectedWanderLeaf()
+    {
+        onCollectedAction.Invoke();
     }
 }

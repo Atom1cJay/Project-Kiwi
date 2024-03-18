@@ -39,7 +39,7 @@ public class SandWormFSM : AMovingPlatform
     //state
     [Header("DONT MODIFY FOR TESTING")]
     public SandWormState currentState = SandWormState.PATROLING;
-    SandWormAttackState attackState = SandWormAttackState.NOT_ATTACKING;
+    public SandWormAttackState attackState = SandWormAttackState.NOT_ATTACKING;
 
     //player and target
     GameObject currentTarget;
@@ -101,12 +101,16 @@ public class SandWormFSM : AMovingPlatform
         for (int i = 0; i < possibleTargets.Count; i++)
         {
             float dist = Vector3.Distance(transform.position, possibleTargets[i].transform.position);
-            if (leastDistance == -1 || dist <= leastDistance)
+            if (dist <= distanceToAttack && leastDistance == -1 || dist <= leastDistance)
             {
                 leastDistance = dist;
                 playerIndex = i;
             }
         }
+
+
+        if (playerIndex == -1)
+            return null;
 
         Debug.Log("found target : + " + possibleTargets[playerIndex].name);
 
@@ -145,6 +149,7 @@ public class SandWormFSM : AMovingPlatform
         }
         else
         {
+            //Follow Path Here
             patrolVelocity = Vector3.Lerp(patrolVelocity, (currentCheckpoint - transform.position).normalized * moveSpeed, Time.deltaTime * patrolLerpSpeed);
             transform.position += patrolVelocity * Time.deltaTime;
             lastPos = transform.position;
@@ -164,7 +169,6 @@ public class SandWormFSM : AMovingPlatform
         attackState = SandWormAttackState.WARM_UP;
         killBox.SetActive(false);
 
-        Vector3 playerPos = currentTarget.transform.position;
         Vector3 groundPos = Vector3.zero;
 
         StickToGround shadow = currentTarget.GetComponentInChildren<StickToGround>();
@@ -172,6 +176,10 @@ public class SandWormFSM : AMovingPlatform
         if (shadow != null)
         {
             groundPos = shadow.gameObject.transform.position;
+        }
+        else
+        {
+            groundPos = currentTarget.transform.position;
         }
 
         // Set position
@@ -181,6 +189,7 @@ public class SandWormFSM : AMovingPlatform
 
         preAttackParticleSystem.Play();
         Vector3 startingPos = transform.position;
+        Debug.Log("starting pos " + startingPos);
 
         // Start WarmUp
         // Do particles
@@ -215,7 +224,7 @@ public class SandWormFSM : AMovingPlatform
 
         while (transform.position.y >= startingPos.y)
         {
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(Time.deltaTime);
         }
 
         velocity = Vector3.zero;
@@ -231,7 +240,7 @@ public class SandWormFSM : AMovingPlatform
         // Done with attack
         currentTarget = findTarget();
 
-        if (Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack)
+        if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack)
         {
             currentState = SandWormState.ATTACKING;
         }
@@ -301,7 +310,7 @@ public enum SandWormState
     ATTACKING
 }
 
-enum SandWormAttackState
+public enum SandWormAttackState
 {
     NOT_ATTACKING,
     WARM_UP,
