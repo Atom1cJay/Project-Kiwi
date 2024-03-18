@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    [SerializeField] Vector3 rotation;
+    public Vector3 rotation;
 
     //bool stopping = false;
     //float duration;

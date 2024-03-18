@@ -9,10 +9,14 @@ public class CollectWanderLeafScript : MonoBehaviour
     [SerializeField] MeshRenderer mr;
     [SerializeField] Rotator rot;
 
-    [SerializeField] float startDuration, stayDuration, exitDuration, distanceToGoUp;
+    [SerializeField] float startDuration, stayDuration, exitDuration, fadeDuration, distanceToGoUp;
+
+    [SerializeField] bool customShader = true;
 
     bool started = false;
     bool collected = false;
+
+    float timeStartFaded = 0f;
 
     int animState = 0;
 
@@ -20,6 +24,7 @@ public class CollectWanderLeafScript : MonoBehaviour
     {
         collected = true;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -45,8 +50,18 @@ public class CollectWanderLeafScript : MonoBehaviour
         }
         if (animState == 2)
         {
+            if (customShader)
+            {
+
+                float pct = (Time.time - timeStartFaded) / fadeDuration;
+                pct = Mathf.Clamp(pct, 0f, 1f);
+                mr.material.SetFloat("_ActualAlpha", Mathf.Lerp(1f, 0f, pct));
+            }
+            else
+            {
                 Color c = mr.material.color;
                 mr.material.color = Color.Lerp(c, new Color(c.r, c.g, c.b, 0f), Time.deltaTime);
+            }
 
         }
     }
@@ -54,6 +69,7 @@ public class CollectWanderLeafScript : MonoBehaviour
     void startCollection()
     {
         PS.Play();
+        timeStartFaded = Time.time;
         animState = 2;
 
         Invoke("startExit", stayDuration);
