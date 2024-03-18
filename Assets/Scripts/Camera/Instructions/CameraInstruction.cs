@@ -33,6 +33,7 @@ public class CameraInstruction : ACameraInstruction
     public override void RunInstructions(Transform c, Vector3 initPos, Quaternion restartRot)
     {
         RunningInstructions = true;
+        onInstructionsStart.Invoke();
         StartCoroutine(RunInstructionsSequence(c, initPos, restartRot));
     }
 

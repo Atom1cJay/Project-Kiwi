@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Represents an instruction to the camera.
@@ -12,6 +13,7 @@ public abstract class ACameraInstruction : MonoBehaviour
     [SerializeField] protected float postTravelTime;
     [SerializeField] protected bool isSmooth;
     [SerializeField] protected bool timeStopped;
+    [SerializeField] protected UnityEvent onInstructionsStart;
     public static bool RunningInstructions { get; protected set; } // Static because for ALL instructions, either some are running or none are
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
