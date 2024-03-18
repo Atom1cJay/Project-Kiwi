@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 //[RequireComponent(typeof(Collider))]
 public class CollectibleReader : MonoBehaviour
@@ -22,6 +23,8 @@ public class CollectibleReader : MonoBehaviour
 
     Animator anim; // Optional! (Used if playAnimation is true)
     [SerializeField] float animLength; // Optional! (Used if playAnimation is true)
+
+    public UnityEvent onCollect;
 
     // Start is called before the first frame supdate
     void Start()
@@ -64,6 +67,7 @@ public class CollectibleReader : MonoBehaviour
         if (!collected)
         {
             collected = true;
+            onCollect.Invoke();
 
             if (GetComponentInParent<CollectWanderLeafScript>() != null)
             {
