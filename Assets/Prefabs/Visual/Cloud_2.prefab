@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4221132604914151374}
   - component: {fileID: 6732059844349487870}
   - component: {fileID: 3773936709726845547}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Sphere (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2297,6 +2297,10 @@ PrefabInstance:
     - target: {fileID: 2527050838039810448, guid: e6895844cb5bc48f095a0251dad973ee, type: 3}
       propertyPath: m_Name
       value: ShadowCastingCircle (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2527050838039810448, guid: e6895844cb5bc48f095a0251dad973ee, type: 3}
+      propertyPath: m_Layer
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 2527050838039810448, guid: e6895844cb5bc48f095a0251dad973ee, type: 3}
       propertyPath: m_IsActive

@@ -46,6 +46,9 @@ public class UIMapController : MonoBehaviour, UIInterface
         initialRotation = MapCamera.transform.localRotation;
         player = MapCamera.transform.parent.gameObject;
         MapCamera.transform.SetParent(null);
+
+        MapCamera.orthographicSize = tempSize;
+
     }
 
     private void Update()

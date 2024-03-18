@@ -18,6 +18,7 @@ public class CollectibleReader : MonoBehaviour
     [SerializeField] GameObject collectibleVisual;
 
     [SerializeField] bool playAnimation;
+    [SerializeField] GameObject overheadVisual;
 
     Animator anim; // Optional! (Used if playAnimation is true)
     [SerializeField] float animLength; // Optional! (Used if playAnimation is true)
@@ -35,7 +36,11 @@ public class CollectibleReader : MonoBehaviour
             collected = false;
 
         collectibleCollider.enabled = !collected;
+        overheadVisual.SetActive(!collected);
         collectibleVisual.SetActive(!collected);
+
+        overheadVisual.transform.SetParent(null);
+        overheadVisual.transform.localEulerAngles = new Vector3(90f, 0f, 0f);
 
     }
 
@@ -44,6 +49,7 @@ public class CollectibleReader : MonoBehaviour
     {
         collectibleCollider.enabled = !collected;
         collectibleVisual.SetActive(!collected);
+        overheadVisual.SetActive(!collected);
     }
 
     //Returns the collectible
