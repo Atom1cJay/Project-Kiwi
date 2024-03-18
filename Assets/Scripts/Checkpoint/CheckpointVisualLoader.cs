@@ -6,7 +6,7 @@ public class CheckpointVisualLoader : MonoBehaviour
 {
     [SerializeField] Animator animator;
 
-    [SerializeField] GameObject tempVisual;
+    [SerializeField] Object[] objectsToPause;
     [SerializeField] float timeToDisplay;
     [SerializeField] ParticleSystem PS;
 
@@ -19,7 +19,15 @@ public class CheckpointVisualLoader : MonoBehaviour
     public void startVisuals()
     {
         animator.SetBool("START", true);
-        tempVisual.SetActive(false);
+
+        foreach(Object obj in objectsToPause)
+        {
+            if (obj is GameObject)
+                ((GameObject)obj).SetActive(false);
+            if (obj is Component)
+                SetComponent(false, ((Component)obj));
+        }
+       // tempVisual.SetActive(false);
     }
 
     public void finishAnimation()
@@ -35,6 +43,32 @@ public class CheckpointVisualLoader : MonoBehaviour
 
     void displayPlayer()
     {
-        tempVisual.SetActive(true);
+        foreach (Object obj in objectsToPause)
+        {
+            if (obj is GameObject)
+                ((GameObject)obj).SetActive(true);
+            if (obj is Component)
+                SetComponent(true, (Component)obj);
+        }
+    }
+
+    void SetComponent(bool active, Component component)
+    {
+        if (component is Renderer)
+        {
+            (component as Renderer).enabled = active;
+        }
+        else if (component is MonoBehaviour)
+        {
+            (component as MonoBehaviour).enabled = active;
+        }
+        else if (component is Collider)
+        {
+            (component as Collider).enabled = active;
+        }
+        else if (component is Behaviour)
+        {
+            (component as Behaviour).enabled = active;
+        }
     }
 }

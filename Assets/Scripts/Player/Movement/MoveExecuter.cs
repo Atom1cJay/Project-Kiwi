@@ -181,7 +181,7 @@ public class MoveExecuter : MonoBehaviour
         CheckpointSystem cs = cl.GetCheckpoint();
         if (cs != null)
         {
-            Vector3 goalPos = cs.GetPosition() + (Vector3.up * 3f);
+            Vector3 goalPos = cs.GetPosition() + (Vector3.up * 1f);
             moveThisFrame = new Fall(mii, mi, movementSettings, Vector2.zero, false);
             charCont.enabled = false;
             transform.position = goalPos;
