@@ -37,7 +37,8 @@ public class SandWormFSM : AMovingPlatform
     Vector3 patrolVelocity = Vector3.zero;
 
     //state
-    SandWormState currentState = SandWormState.PATROLING;
+    [Header("DONT MODIFY FOR TESTING")]
+    public SandWormState currentState = SandWormState.PATROLING;
     SandWormAttackState attackState = SandWormAttackState.NOT_ATTACKING;
 
     //player and target
@@ -107,6 +108,8 @@ public class SandWormFSM : AMovingPlatform
             }
         }
 
+        Debug.Log("found target : + " + possibleTargets[playerIndex].name);
+
         return possibleTargets[playerIndex];
     }
 
@@ -132,10 +135,9 @@ public class SandWormFSM : AMovingPlatform
         }
 
 
-        if (Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack && canJumpWithoutHittingAnything(currentTarget.transform.position)) {
+        if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack && canJumpWithoutHittingAnything(currentTarget.transform.position)) {
             currentState = SandWormState.ATTACKING;
             patrolParticleSystem.Stop();
-            Debug.Log("wobba wobba");
         }
         else if (Vector3.Distance(transform.position, currentCheckpoint) <= distanceToNextPoint)
         {

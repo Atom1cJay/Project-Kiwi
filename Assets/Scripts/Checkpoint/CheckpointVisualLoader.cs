@@ -13,21 +13,26 @@ public class CheckpointVisualLoader : MonoBehaviour
 
     private void Start()
     {
-        startVisuals();
+        disablePlayer();
+        startCheckpoint();
     }
 
-    public void startVisuals()
+    public void startCheckpoint()
     {
         animator.SetBool("START", true);
 
-        foreach(Object obj in objectsToPause)
+       // tempVisual.SetActive(false);
+    }
+
+    void disablePlayer()
+    {
+        foreach (Object obj in objectsToPause)
         {
             if (obj is GameObject)
                 ((GameObject)obj).SetActive(false);
             if (obj is Component)
                 SetComponent(false, ((Component)obj));
         }
-       // tempVisual.SetActive(false);
     }
 
     public void finishAnimation()

@@ -21,7 +21,7 @@ public class CheckpointSave : MonoBehaviour
             Destroy(gameObject);
         }
 
-        Debug.Log(numCheckpoint);
+        //Debug.Log(numCheckpoint);
         DontDestroyOnLoad(this);
     }
 
@@ -35,6 +35,6 @@ public class CheckpointSave : MonoBehaviour
     public void SetCheckpoint(CheckpointSystem _cs, CheckpointSystem[] checkpoints)
     {
         numCheckpoint = System.Array.IndexOf(checkpoints, _cs);
-        Debug.Log(numCheckpoint);
+        //Debug.Log(numCheckpoint);
     }
 }

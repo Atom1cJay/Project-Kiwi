@@ -56,7 +56,7 @@ public class CheckpointSystem : MonoBehaviour
 
     IEnumerator SetActiveScaling()
     {
-        Debug.Log("Set Active!");
+        //Debug.Log("Set Active!");
         GameObject ring = rings[0];
 
         while (ring.transform.localScale.magnitude < 1.732f)
@@ -72,7 +72,7 @@ public class CheckpointSystem : MonoBehaviour
 
     IEnumerator SetInactiveScaling()
     {
-        Debug.Log("Setawd Active!");
+        //Debug.Log("Setawd Active!");
         GameObject ring = rings[0];
 
         while (ring.transform.localScale.magnitude > 1.311f)
