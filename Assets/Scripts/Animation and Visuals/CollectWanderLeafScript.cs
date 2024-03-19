@@ -10,11 +10,12 @@ public class CollectWanderLeafScript : MonoBehaviour
     [SerializeField] ParticleSystem PS;
     [SerializeField] MeshRenderer mr;
     [SerializeField] Rotator rot;
+    [SerializeField] string name;
 
     [SerializeField] float startDuration, stayDuration, exitDuration, fadeDuration, distanceToGoUp;
 
     [SerializeField] bool customShader = true;
-    [SerializeField] UnityAction onCollectedAction;
+    [SerializeField] UnityEvent onCollectedAction;
 
     bool started = false;
     bool collected = false;
@@ -45,7 +46,7 @@ public class CollectWanderLeafScript : MonoBehaviour
 
             GameObject.FindGameObjectWithTag("WanderLeafCinematic")
                 .GetComponent<CollectWanderLeafCinematic>()
-                .enterCinematic(startDuration);
+                .enterCinematic(startDuration, name);
         }
         if (animState == 1)
         {
@@ -89,6 +90,7 @@ public class CollectWanderLeafScript : MonoBehaviour
 
     void collectedWanderLeaf()
     {
-        onCollectedAction.Invoke();
+        if (onCollectedAction != null)
+            onCollectedAction.Invoke();
     }
 }

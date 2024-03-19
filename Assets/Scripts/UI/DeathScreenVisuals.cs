@@ -9,14 +9,25 @@ public class DeathScreenVisuals : MonoBehaviour
     [SerializeField] RectTransform leaf;
     [SerializeField] float leafStartingDimension; // For X and Y
     [SerializeField] float leafSizeDecreaseSpeed;
+    [SerializeField] bool isDeath = true;
+
+    public void gotoScene(int index)
+    {
+        leaf.gameObject.SetActive(true);
+        leaf.sizeDelta = new Vector2(leafStartingDimension, leafStartingDimension);
+        StartCoroutine("LeafShrink", index);
+    }
 
     private void Awake()
     {
-        leaf.sizeDelta = new Vector2(leafStartingDimension, leafStartingDimension);
-        StartCoroutine("LeafShrink");
+        if (isDeath)
+        {
+            leaf.sizeDelta = new Vector2(leafStartingDimension, leafStartingDimension);
+            StartCoroutine("LeafShrink");
+        }
     }
 
-    IEnumerator LeafShrink()
+    IEnumerator LeafShrink(int scene = -1)
     {
         while (leaf.sizeDelta.x > 0)
         {
@@ -26,6 +37,6 @@ public class DeathScreenVisuals : MonoBehaviour
             //print(leaf.sizeDelta);
             yield return null;
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(scene == -1 ? SceneManager.GetActiveScene().buildIndex : scene);
     }
 }

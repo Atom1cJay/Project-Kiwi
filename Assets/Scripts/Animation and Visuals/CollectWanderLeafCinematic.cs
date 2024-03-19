@@ -62,12 +62,13 @@ public class CollectWanderLeafCinematic : MonoBehaviour
         }
     }
 
-    public void enterCinematic(float timeToEnter)
+    public void enterCinematic(float timeToEnter, string name)
     {
         enterDuration = timeToEnter;
         inCinematic = true;
         transitioning = true;
         Invoke("doneTransitioning", timeToEnter);
+        text.text = name;
 
     }
 
