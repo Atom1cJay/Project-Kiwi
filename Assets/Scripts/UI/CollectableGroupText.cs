@@ -6,6 +6,7 @@ using TMPro;
 public class CollectableGroupText : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI textComponent;
+    [SerializeField] float timeToDisappear = 2;
 
     void Start()
     {
@@ -16,11 +17,13 @@ public class CollectableGroupText : MonoBehaviour
     {
         textComponent.enabled = true;
         textComponent.text = $"{collected}/{total}";
-        Invoke("Disappear", 2);
+        StopAllCoroutines();
+        StartCoroutine("WaitToDisappear");
     }
 
-    void Disappear()
+    IEnumerator WaitToDisappear()
     {
+        yield return new WaitForSeconds(timeToDisappear);
         textComponent.enabled = false;
     }
 }

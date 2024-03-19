@@ -18,6 +18,7 @@ public class CameraInstructionLeaf : ACameraInstruction
 
     public override void RunInstructions(Transform c, Vector3 initPos, Quaternion restartRot)
     {
+        onInstructionsStart.Invoke();
         StartCoroutine(RunInstructionsProcess(c, initPos, restartRot));
     }
 

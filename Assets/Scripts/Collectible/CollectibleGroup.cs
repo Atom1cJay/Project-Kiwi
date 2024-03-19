@@ -12,8 +12,8 @@ public class CollectibleGroup : MonoBehaviour
     [SerializeField] UnityEvent onGroupCollected;
     bool isCollected; // Just in case--make sure double collect shouldn't happen (it shouldn't happen in the first place)
 
-    [RuntimeInitializeOnLoadMethod]
-    void InitStatics()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void InitStatics()
     {
         liveCollectables = new Dictionary<string, int>();
         numInGroup = new Dictionary<string, int>();

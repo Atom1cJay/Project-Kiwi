@@ -14,7 +14,7 @@ public class CheckpointVisualLoader : MonoBehaviour
     private void Start()
     {
         disablePlayer();
-        startCheckpoint();
+        //startCheckpoint();
     }
 
     public void startCheckpoint()
