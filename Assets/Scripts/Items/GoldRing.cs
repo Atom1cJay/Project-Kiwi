@@ -13,6 +13,7 @@ public class GoldRing : MonoBehaviour
     [SerializeField] GameObject collectionParticles;
     [SerializeField] float timeLimitForNextRing;
     [SerializeField] GameObject reward;
+    [SerializeField] Sound clockSound;
 
     void Start()
     {
@@ -64,12 +65,14 @@ public class GoldRing : MonoBehaviour
         }
         if (nextRing != null)
         {
+            AudioMasterController.instance.PlaySound(clockSound, timeLimitForNextRing);
             nextRing.gameObject.SetActive(true);
             GameObject.FindGameObjectWithTag("PersonalArrow").GetComponent<PersonalArrow>().ShowArrow(nextRing.transform, timeLimitForNextRing);
             MonobehaviourUtils.Instance.StartCoroutine(ConsiderRespawn(timeLimitForNextRing, firstRing, nextRing));
         }
         else // This is the last ring, you win!
         {
+            AudioMasterController.instance.StopSound(clockSound.GetName());
             reward.SetActive(true);
         }
         gameObject.SetActive(false);

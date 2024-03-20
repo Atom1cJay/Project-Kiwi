@@ -3076,6 +3076,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456b8d4d48432459e95f2955960de56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFirstRing: 1
+  firstRing: {fileID: 0}
   nextRing: {fileID: 0}
   collectionParticles: {fileID: 1114092851778291044, guid: ab43db46f6b4042ce85c8d12850783ed, type: 3}
+  timeLimitForNextRing: 5
+  reward: {fileID: 0}
+  clockSound: {fileID: 11400000, guid: ac7c3383d93424298926aa6c8cec4243, type: 2}

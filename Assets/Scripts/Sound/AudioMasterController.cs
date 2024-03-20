@@ -10,6 +10,7 @@ public class AudioMasterController : MonoBehaviour
     [SerializeField] List<Sound> soundList;
     List<SoundPlayer> allPlayers;
     float sfxMult, musicMult;
+    Dictionary<string, Coroutine> soundTimesLeft = new Dictionary<string, Coroutine>();
 
     void Awake()
     {
@@ -23,11 +24,11 @@ public class AudioMasterController : MonoBehaviour
         }
     }
 
-    public void StopSound(string name)
+    public void StopSound(string name, float fadeTime=0)
     {
         if (isPlaying(name))
         {
-            FadeOutSound(name, 0.5f);
+            FadeOutSound(name, fadeTime);
         }
     }
 
@@ -86,9 +87,25 @@ public class AudioMasterController : MonoBehaviour
         PlaySoundOnGameObject(soundGameObject, s);
     }
 
-    public void PlaySound(Sound s)
+    public void PlaySound(Sound s, float timeToPlay=0)
     {
+        if (timeToPlay > 0)
+        {
+            if (soundTimesLeft.ContainsKey(s.GetName()))
+            {
+                StopSound(s.GetName(), 0);
+                StopCoroutine(soundTimesLeft[s.GetName()]); // So the currently playing sound doesn't stop too early
+            }
+            soundTimesLeft[s.GetName()] = StartCoroutine(StopSoundAfter(s, timeToPlay));
+        }
         PlaySound(s, this.gameObject.transform);
+    }
+
+    IEnumerator StopSoundAfter(Sound sound, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        StopSound(sound.GetName(), 0);
+        soundTimesLeft.Remove(sound.GetName());
     }
 
     void FadeIn(Sound s, float time, GameObject g)
