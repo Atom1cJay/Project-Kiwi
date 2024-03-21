@@ -27,7 +27,7 @@ public class DeathScreenVisuals : MonoBehaviour
         }
     }
 
-    IEnumerator LeafShrink()
+    IEnumerator LeafShrink(int scene)
     {
         while (leaf.sizeDelta.x > 0)
         {
