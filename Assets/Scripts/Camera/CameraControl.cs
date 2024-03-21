@@ -20,10 +20,27 @@ public class CameraControl : MonoBehaviour
     private float vertPivotSpeed = 0;
     private CameraUtils camUtils;
     float InvertX, InvertY;
+    float userMouseSensitivitySetting;
 
     private void Awake()
     {
         camUtils = GetComponent<CameraUtils>();
+        userMouseSensitivitySetting = PlayerPrefsWhisperer.GetMouseSensitivity();
+    }
+
+    private void OnEnable()
+    {
+        PlayerPrefsWhisperer.OnCameraSensitivityChanged.AddListener(OnUserSensitivityChanged);
+    }
+
+    private void OnDisable()
+    {
+        PlayerPrefsWhisperer.OnCameraSensitivityChanged.RemoveListener(OnUserSensitivityChanged);
+    }
+
+    void OnUserSensitivityChanged(float sensitivity)
+    {
+        userMouseSensitivitySetting = sensitivity;
     }
 
     private void Start()
@@ -49,8 +66,8 @@ public class CameraControl : MonoBehaviour
         // Keyboard
         float horizPivotSpeedMouse = iah.GetOldMouseInput().x * mouseRotateMultiplier; // THIS IS THE ONLY USE OF THE OLD INPUT SYSTEM IN THE GAME. IT'S BECAUSE THE
         float vertPivotSpeedMouse = iah.GetOldMouseInput().y * mouseRotateMultiplier; // NEW INPUT SYSTEM WON'T SMOOTH MOUSE MOVEMENT PROPERLY.
-        horizMove = horizPivotSpeedMouse * maxPivotSpeedHoriz;
-        vertMove = vertPivotSpeedMouse * maxPivotSpeedVert;
+        horizMove = horizPivotSpeedMouse * maxPivotSpeedHoriz * userMouseSensitivitySetting;
+        vertMove = vertPivotSpeedMouse * maxPivotSpeedVert * userMouseSensitivitySetting;
         camUtils.RotateBy(horizMove * InvertX, vertMove * InvertY);
     }
 

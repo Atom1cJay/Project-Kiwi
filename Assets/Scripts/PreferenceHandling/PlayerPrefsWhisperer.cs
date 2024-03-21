@@ -12,6 +12,7 @@ public class PlayerPrefsWhisperer : MonoBehaviour
 {
     // For when camera inversion is toggled for either X or Y
     public static UnityEvent OnCameraInversionToggled = new UnityEvent();
+    public static UnityEvent<float> OnCameraSensitivityChanged = new UnityEvent<float>();
 
     /// <summary>
     /// Retrieves the bool value (actually stored as an int) for the given key.
@@ -77,5 +78,22 @@ public class PlayerPrefsWhisperer : MonoBehaviour
     {
         SetBoolValue("CameraYInverted", inverted);
         OnCameraInversionToggled.Invoke();
+    }
+
+    /// <summary>
+    /// Tells PlayerPrefs to register the camera sensitivity value as the given
+    /// </summary>
+    public static void SetMouseSensitivity(float sensitivity)
+    {
+        PlayerPrefs.SetFloat("MouseSensitivity", sensitivity);
+        OnCameraSensitivityChanged.Invoke(sensitivity);
+    }
+
+    /// <summary>
+    /// Gets the CameraSensitivity value in PlayerPrefs
+    /// </summary>
+    public static float GetMouseSensitivity()
+    {
+        return PlayerPrefs.GetFloat("MouseSensitivity", 1);
     }
 }

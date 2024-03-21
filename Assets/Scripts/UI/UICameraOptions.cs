@@ -7,7 +7,7 @@ public class UICameraOptions : MonoBehaviour
 {
     // Is this gameobject the toggle for x inversion / y inversion?
     // (Toggle component assumed to exist if either are true)
-    [SerializeField] bool controlsXInversion, controlsYInversion;
+    [SerializeField] bool controlsXInversion, controlsYInversion, sensitivitySlider;
 
     private void Start()
     {
@@ -28,6 +28,10 @@ public class UICameraOptions : MonoBehaviour
         {
             GetComponent<Toggle>().isOn = PlayerPrefsWhisperer.GetCameraYInverted();
         }
+        if (sensitivitySlider)
+        {
+            GetComponent<Slider>().value = PlayerPrefsWhisperer.GetMouseSensitivity();
+        }
     }
 
     /// <summary>
@@ -44,6 +48,14 @@ public class UICameraOptions : MonoBehaviour
     public void OnYInversionToggled(bool inverted)
     {
         PlayerPrefsWhisperer.SetCameraYInverted(inverted);
+    }
+
+    /// <summary>
+    /// To be called when the mouse sensitivity is changed
+    /// </summary>
+    public void SetMouseSensitivity(float sensitivity)
+    {
+        PlayerPrefsWhisperer.SetMouseSensitivity(sensitivity);
     }
 }
 
