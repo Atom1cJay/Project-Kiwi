@@ -23,11 +23,11 @@ public class DeathScreenVisuals : MonoBehaviour
         if (isDeath)
         {
             leaf.sizeDelta = new Vector2(leafStartingDimension, leafStartingDimension);
-            StartCoroutine("LeafShrink");
+            StartCoroutine("LeafShrink", SceneManager.GetActiveScene().buildIndex);
         }
     }
 
-    IEnumerator LeafShrink(int scene = -1)
+    IEnumerator LeafShrink()
     {
         while (leaf.sizeDelta.x > 0)
         {
@@ -37,6 +37,6 @@ public class DeathScreenVisuals : MonoBehaviour
             //print(leaf.sizeDelta);
             yield return null;
         }
-        SceneManager.LoadScene(scene == -1 ? SceneManager.GetActiveScene().buildIndex : scene);
+        SceneManager.LoadScene(scene);
     }
 }
