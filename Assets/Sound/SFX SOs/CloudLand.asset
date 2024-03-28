@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41ccf30fb6683e148a930eb4e781aac1, type: 3}
-  m_Name: TickTock
+  m_Name: CloudLand
   m_EditorClassIdentifier: 
-  name: Tick Tock
-  clip: {fileID: 8300000, guid: 9f92809a026704e16bb873f5d31ef296, type: 3}
-  volume: 0.35
+  name: CloudLand
+  clip: {fileID: 8300000, guid: 9c61def4a42474bc7b89471d4091c157, type: 3}
+  volume: 1
   pitch: 1
   SFX: 1
   MUSIC: 0
-  loop: 1
-  randomizePitch: 0
-  lowPitchRange: 0
-  highPitchRange: 0
+  loop: 0
+  randomizePitch: 1
+  lowPitchRange: 0.9
+  highPitchRange: 1.1
