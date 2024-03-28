@@ -10,6 +10,7 @@ public class CloudPathFollower : PathFollower
     [SerializeField] MeshRenderer cloudRenderer;
     [SerializeField] float timeToLerpInLand, timeToLerpOutLand;
     [SerializeField] Color landingCloudColor;
+    [SerializeField] Sound landingSound;
     [Header ("Lightening Effect")]
     [SerializeField] float timeToLerpInLightening;
     [SerializeField] float timeToLerpOutLightening;
@@ -33,6 +34,7 @@ public class CloudPathFollower : PathFollower
 
     IEnumerator ThunderSpeed()
     {
+        AudioMasterController.instance.PlaySound(landingSound);
         // Initial Burst
         float initSpeed = speed;
         speed *= thunderSpeedMultiplier;

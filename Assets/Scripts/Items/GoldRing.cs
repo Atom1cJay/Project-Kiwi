@@ -14,6 +14,8 @@ public class GoldRing : MonoBehaviour
     [SerializeField] float timeLimitForNextRing;
     [SerializeField] GameObject reward;
     [SerializeField] Sound clockSound;
+    [SerializeField] Sound standardRingSound;
+    [SerializeField] Sound winRingSound;
 
     void Start()
     {
@@ -65,6 +67,7 @@ public class GoldRing : MonoBehaviour
         }
         if (nextRing != null)
         {
+            AudioMasterController.instance.PlaySound(standardRingSound);
             AudioMasterController.instance.PlaySound(clockSound, timeLimitForNextRing);
             nextRing.gameObject.SetActive(true);
             GameObject.FindGameObjectWithTag("PersonalArrow").GetComponent<PersonalArrow>().ShowArrow(nextRing.transform, timeLimitForNextRing);
@@ -72,6 +75,7 @@ public class GoldRing : MonoBehaviour
         }
         else // This is the last ring, you win!
         {
+            AudioMasterController.instance.PlaySound(winRingSound);
             AudioMasterController.instance.StopSound(clockSound.GetName());
             reward.SetActive(true);
         }

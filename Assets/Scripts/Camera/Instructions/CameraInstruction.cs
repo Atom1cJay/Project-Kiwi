@@ -10,6 +10,7 @@ public class CameraInstruction : ACameraInstruction
 {
     [SerializeField] Transform goalTransform;
     [SerializeField] ACameraInstruction next;
+    [SerializeField] bool canSkipToLeaf;
 
     private void Awake()
     {
@@ -82,11 +83,25 @@ public class CameraInstruction : ACameraInstruction
         next.RunInstructions(c, restartPos, restartRot);
     }
 
+    void Update()
+    {
+        if (canSkipToLeaf && Input.GetKeyDown(KeyCode.Space)) // TODO controller skippable
+        {
+            StopAllCoroutines();
+            GetLeaf().RunInstructions(transform, transform.position, transform.rotation);
+        }
+    }
+
     /// <summary>
     /// How long will the instructions take to exeucte from this instruction?
     /// </summary>
     public override float GetTotalExecutionTime()
     {
         return travelTime + postTravelTime + next.GetTotalExecutionTime();
+    }
+
+    public override CameraInstructionLeaf GetLeaf()
+    {
+        return next.GetLeaf();
     }
 }

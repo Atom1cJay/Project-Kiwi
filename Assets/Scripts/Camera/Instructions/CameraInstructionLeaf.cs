@@ -71,4 +71,9 @@ public class CameraInstructionLeaf : ACameraInstruction
     {
         return travelTime + postTravelTime;
     }
+
+    public override CameraInstructionLeaf GetLeaf()
+    {
+        return this;
+    }
 }

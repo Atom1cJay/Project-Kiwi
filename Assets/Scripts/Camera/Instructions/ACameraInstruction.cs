@@ -32,4 +32,9 @@ public abstract class ACameraInstruction : MonoBehaviour
     /// How long will the instructions take to exeucte from this instruction?
     /// </summary>
     public abstract float GetTotalExecutionTime();
+
+    /// <summary>
+    /// Get the leaf at the end of this instruction sequence.
+    /// </summary>
+    public abstract CameraInstructionLeaf GetLeaf();
 }
