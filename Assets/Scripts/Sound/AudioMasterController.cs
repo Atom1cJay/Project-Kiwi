@@ -62,6 +62,9 @@ public class AudioMasterController : MonoBehaviour
 
         audioSource.clip = s.GetClip();
         audioSource.pitch = s.GetPitch();
+        audioSource.spatialBlend = s.GetSpatialBlend();
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
+        audioSource.maxDistance = s.GetMaxDistanceToHear();
 
         if (s.GetRandomizePitch())
         {
@@ -79,15 +82,19 @@ public class AudioMasterController : MonoBehaviour
         allPlayers.Add(sp);
     }
 
-    private void PlaySound(Sound s, Transform parent)
+    private void PlaySound(Sound s, Transform parent, Transform position=null)
     {
         GameObject soundGameObject = new GameObject();
         soundGameObject.name = s.GetName() + " sound!";
         soundGameObject.transform.parent = parent;
+        if (position != null)
+        {
+            soundGameObject.transform.position = position.position;
+        }
         PlaySoundOnGameObject(soundGameObject, s);
     }
 
-    public void PlaySound(Sound s, float timeToPlay=0)
+    public void PlaySound(Sound s, float timeToPlay=0, Transform position=null)
     {
         if (timeToPlay > 0)
         {
@@ -98,7 +105,7 @@ public class AudioMasterController : MonoBehaviour
             }
             soundTimesLeft[s.GetName()] = StartCoroutine(StopSoundAfter(s, timeToPlay));
         }
-        PlaySound(s, this.gameObject.transform);
+        PlaySound(s, this.gameObject.transform, position);
     }
 
     IEnumerator StopSoundAfter(Sound sound, float seconds)

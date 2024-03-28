@@ -10,6 +10,10 @@ public class Sound : ScriptableObject
     [SerializeField] AudioClip clip;
 
     [Range(0.0f, 1.0f)]
+    [SerializeField] float spatialBlend = 0;
+    [SerializeField] float maxDistanceToHear = 15;
+
+    [Range(0.0f, 1.0f)]
     [SerializeField] float volume = 1f;
     private float volumeMultiplier = 1;
 
@@ -68,5 +72,20 @@ public class Sound : ScriptableObject
     public float GetHighPitchRange()
     {
         return highPitchRange;
+    }
+
+    public float GetSpatialBlend()
+    {
+        return spatialBlend;
+    }
+
+    public float GetMaxDistanceToHear()
+    {
+        return maxDistanceToHear;
+    }
+
+    public void Play(Transform position=null)
+    {
+        AudioMasterController.instance.PlaySound(this, 0, position);
     }
 }
