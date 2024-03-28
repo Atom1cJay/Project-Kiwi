@@ -85,7 +85,7 @@ public class CameraInstruction : ACameraInstruction
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // TODO controller skippable
+        if (canSkipToLeaf && Input.GetKeyDown(KeyCode.Space)) // TODO controller skippable
         {
             StopAllCoroutines();
             GetLeaf().RunInstructions(transform, transform.position, transform.rotation);
