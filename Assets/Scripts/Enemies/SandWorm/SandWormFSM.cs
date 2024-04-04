@@ -16,20 +16,22 @@ public class SandWormFSM : AMovingPlatform
 
     [Header("FSM Variables | Attack")]
     [SerializeField] float warmUpTime;
-    [SerializeField] float attackUpTime;
-    [SerializeField] float pctAttackUpParticles;
+    [SerializeField] float hangTime;
+    [SerializeField] float pctUpTimeToCloseMouth;
     [SerializeField] float timeToCloseMouth;
-    [SerializeField] float timeAfterClosedMouth;
+    [SerializeField] float timeBeforeDisablingKillBox;
+    [SerializeField] float pctUpTimeParticles;
+    [SerializeField] float hangTimeLerpSpeed;
+    [SerializeField] float gravity;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float attackUpDistance;
     [SerializeField] float resumePatrolingTime;
     [SerializeField] Animator sandWormAnimator;
     [SerializeField] ParticleSystem preAttackParticleSystem;
-    [SerializeField] UnityEvent particleAttackUp;
+    [SerializeField] UnityEvent particlesBeforeAttack;
 
     [Header("SandWorm Vars")]
     [SerializeField] GameObject killBox;
-    [SerializeField] float gravity;
     [SerializeField] Color baseColor, angryColor;
     [SerializeField] SkinnedMeshRenderer meshRenderer;
 
@@ -56,6 +58,8 @@ public class SandWormFSM : AMovingPlatform
     {
         //disable colliders for raycast
         RaycastHit hit;
+        meshRenderer.materials[0].SetColor("Albedo", baseColor);
+
         if (Physics.Raycast(transform.position, Vector3.down, out hit, groundLayer))
         {
             Vector3 goalShadowPos = hit.point;
@@ -170,6 +174,21 @@ public class SandWormFSM : AMovingPlatform
         }
     }
 
+    void closeMouth()
+    {
+
+        //kill if in mouth
+        killBox.SetActive(true);
+
+        Invoke("stopKillBox", timeBeforeDisablingKillBox);
+    }
+
+    void stopKillBox()
+    {
+        //disable killbox
+        killBox.SetActive(false);
+    }
+
     IEnumerator commenceAttack()
     {
         attackState = SandWormAttackState.WARM_UP;
@@ -207,27 +226,44 @@ public class SandWormFSM : AMovingPlatform
         attackState = SandWormAttackState.GOING_UP;
         sandWormAnimator.SetTrigger("StartAttack");
 
-        float totalTimeUp = attackUpTime + timeToCloseMouth + timeAfterClosedMouth;
-        float initialVelocity = attackUpDistance / totalTimeUp - 0.5f * gravity * totalTimeUp;
 
+        //gravity = (attackUpDistance / (totalTime * totalTime)) - initialVelocity / totalTime;
+        float initialVelocity = Mathf.Sqrt(2 * -gravity * attackUpDistance);
+
+
+        float totalTimeUp = initialVelocity / -gravity;//((-initialVelocity - Mathf.Sqrt(initialVelocity * initialVelocity - 4 * gravity * attackUpDistance)) / 2 * gravity) / 2;
+
+        //gravity = attackUpDistance / totalTime + 0.5f * gravity * totalTime;
+        Debug.Log("velocity : " + initialVelocity + "d : " + attackUpDistance + ", t" + totalTimeUp + ", timeto close " + timeToCloseMouth);
+        //float initialVelocity = (attackUpDistance - 0.5f * gravity * ((t1 * t1) - 2 * t1 * totalTimeUp) + 0.5f * hangTimeGravity * Mathf.Pow(totalTimeUp - t1, 2)) / totalTimeUp;
         // Apply the calculated initial velocity
         velocity = Vector3.up * initialVelocity;
-
-        float startTime = Time.time;
 
         meshRenderer.materials[0].SetColor("Albedo", baseColor);
 
         bool particlesReleased = false;
+        bool openMouth = false;
 
-        while (Time.time < startTime + attackUpTime)
+
+        //while going up ramp up color
+        float startTime = Time.time;
+        while (Time.time < startTime + totalTimeUp)
         {
             yield return null;
-            float pct = (Time.time - startTime) / attackUpTime;
+            float pct = (Time.time - startTime) / totalTimeUp;
 
-            if (!particlesReleased && pct >= pctAttackUpParticles)
+            if (!particlesReleased && pct >= pctUpTimeParticles)
             {
                 particlesReleased = true;
-                particleAttackUp.Invoke();
+                particlesBeforeAttack.Invoke();
+            }
+
+            if (!openMouth && pct >= pctUpTimeToCloseMouth)
+            {
+                openMouth = true;
+                sandWormAnimator.SetTrigger("CloseMouth");
+                Invoke("closeMouth", timeToCloseMouth);
+
             }
 
             meshRenderer.materials[0].SetColor("Albedo", Color.Lerp(baseColor, angryColor, pct));
@@ -236,19 +272,18 @@ public class SandWormFSM : AMovingPlatform
 
         meshRenderer.materials[0].SetColor("Albedo", angryColor);
 
-        attackState = SandWormAttackState.CLOSING_MOUTH;
-        sandWormAnimator.SetTrigger("CloseMouth");
+        //enter hang time gravity
+        attackState = SandWormAttackState.HANGING;
 
-        yield return new WaitForSeconds(timeToCloseMouth);
-
-        killBox.SetActive(true);
-
-        yield return new WaitForSeconds(timeAfterClosedMouth);
+        yield return new WaitForSeconds(hangTime);
 
         // Go down
         attackState = SandWormAttackState.GOING_DOWN;
+
+        yield return new WaitForSeconds(timeBeforeDisablingKillBox);
         killBox.SetActive(false);
 
+        //stop when y is lowe enough
         while (transform.position.y >= startingPos.y)
         {
             yield return new WaitForSeconds(Time.deltaTime);
@@ -265,6 +300,7 @@ public class SandWormFSM : AMovingPlatform
         transform.position = lastPos;
 
         // Done with attack
+        meshRenderer.materials[0].color = baseColor;
         currentTarget = findTarget();
 
         if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack)
@@ -318,9 +354,14 @@ public class SandWormFSM : AMovingPlatform
 
     public override void Translate()
     {
-        if (currentState == SandWormState.ATTACKING && attackState != SandWormAttackState.WARM_UP && attackState != SandWormAttackState.WARM_UP && attackState != SandWormAttackState.WAITING)
+        if (currentState == SandWormState.ATTACKING && attackState != SandWormAttackState.WARM_UP && attackState != SandWormAttackState.WAITING && attackState != SandWormAttackState.HANGING)
         {
             velocity += new Vector3(0f, gravity * Time.deltaTime, 0f);
+            transform.Translate(velocity * Time.deltaTime);
+        }
+        else if (attackState == SandWormAttackState.HANGING)
+        {
+            velocity = Vector3.Lerp(velocity, Vector3.zero, Time.deltaTime * hangTimeLerpSpeed);
             transform.Translate(velocity * Time.deltaTime);
         }
     }
@@ -342,8 +383,7 @@ public enum SandWormAttackState
     NOT_ATTACKING,
     WARM_UP,
     GOING_UP,
-    CLOSING_MOUTH,
-    MOUTH_CLOSED,
+    HANGING,
     GOING_DOWN,
     WAITING
 }
