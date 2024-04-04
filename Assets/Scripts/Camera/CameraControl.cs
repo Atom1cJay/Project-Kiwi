@@ -20,12 +20,12 @@ public class CameraControl : MonoBehaviour
     private float vertPivotSpeed = 0;
     private CameraUtils camUtils;
     float InvertX, InvertY;
-    float userMouseSensitivitySetting;
+    float userSensitivitySetting;
 
     private void Awake()
     {
         camUtils = GetComponent<CameraUtils>();
-        userMouseSensitivitySetting = PlayerPrefsWhisperer.GetMouseSensitivity();
+        userSensitivitySetting = PlayerPrefsWhisperer.GetMouseSensitivity();
     }
 
     private void OnEnable()
@@ -40,7 +40,7 @@ public class CameraControl : MonoBehaviour
 
     void OnUserSensitivityChanged(float sensitivity)
     {
-        userMouseSensitivitySetting = sensitivity;
+        userSensitivitySetting = sensitivity;
     }
 
     private void Start()
@@ -60,14 +60,14 @@ public class CameraControl : MonoBehaviour
         float vertInput = iah.inputActions.Camera.VerticalRotate.ReadValue<float>();
         horizPivotSpeed = InputUtils.SmoothedInput(horizPivotSpeed, horizInput, pivotSensitivity, pivotGravity);
         vertPivotSpeed = InputUtils.SmoothedInput(vertPivotSpeed, vertInput, pivotSensitivity, pivotGravity);
-        float horizMove = horizPivotSpeed * maxPivotSpeedHoriz * Time.deltaTime;
-        float vertMove = vertPivotSpeed * maxPivotSpeedVert * Time.deltaTime;
+        float horizMove = horizPivotSpeed * maxPivotSpeedHoriz * userSensitivitySetting * Time.deltaTime;
+        float vertMove = vertPivotSpeed * maxPivotSpeedVert * userSensitivitySetting * Time.deltaTime;
         camUtils.RotateBy(horizMove * InvertX, vertMove * InvertY);
         // Keyboard
         float horizPivotSpeedMouse = iah.GetOldMouseInput().x * mouseRotateMultiplier; // THIS IS THE ONLY USE OF THE OLD INPUT SYSTEM IN THE GAME. IT'S BECAUSE THE
         float vertPivotSpeedMouse = iah.GetOldMouseInput().y * mouseRotateMultiplier; // NEW INPUT SYSTEM WON'T SMOOTH MOUSE MOVEMENT PROPERLY.
-        horizMove = horizPivotSpeedMouse * maxPivotSpeedHoriz * userMouseSensitivitySetting;
-        vertMove = vertPivotSpeedMouse * maxPivotSpeedVert * userMouseSensitivitySetting;
+        horizMove = horizPivotSpeedMouse * maxPivotSpeedHoriz * userSensitivitySetting;
+        vertMove = vertPivotSpeedMouse * maxPivotSpeedVert * userSensitivitySetting;
         camUtils.RotateBy(horizMove * InvertX, vertMove * InvertY);
     }
 

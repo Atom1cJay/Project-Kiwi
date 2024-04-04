@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2662183807618215295}
   - component: {fileID: 2556711345284847346}
+  - component: {fileID: 1360752675010801966}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -88,6 +89,19 @@ MonoBehaviour:
   validGround:
     serializedVersion: 2
     m_Bits: 32768
+--- !u!135 &1360752675010801966
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3439108260602394565}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0.52, z: 0}
 --- !u!1 &5955932792912254210
 GameObject:
   m_ObjectHideFlags: 0
