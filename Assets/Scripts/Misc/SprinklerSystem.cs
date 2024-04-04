@@ -6,6 +6,7 @@ public class SprinklerSystem : MonoBehaviour
 {
     [SerializeField] float maxDistance;
     [SerializeField] float fieldOfViewAngle;
+    [SerializeField] bool constantlySprinkle;
 
     public void spraySprinkler()
     {
@@ -17,6 +18,12 @@ public class SprinklerSystem : MonoBehaviour
             if (IsObjectInFront(receiver.gameObject))
                 receiver.receive();
         }
+    }
+
+    private void Update()
+    {
+        if (constantlySprinkle)
+            spraySprinkler();
     }
 
     bool IsObjectInFront(GameObject obj)
