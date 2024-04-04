@@ -15,6 +15,8 @@ public class CollectibleSystem : MonoBehaviour
 
     [SerializeField] static int seedCount, blueSeedCount, wanderLeafCount;
 
+    [SerializeField] int leafPower, blueSeedPower;
+
     [SerializeField] Sound collectSeed, collectBlueSeed, collectWanderLeaf;
 
     [SerializeField] WanderLeafCollectionProgressUI collectionProgress;
@@ -63,13 +65,13 @@ public class CollectibleSystem : MonoBehaviour
         {
             blueSeedCount += i;
             AudioMasterController.instance.PlaySound(collectBlueSeed);
-            collectionProgress.collectWanderLeaf(1);
+            collectionProgress.collectWanderLeaf(blueSeedPower);
         }
         else if (type == Collectible.CollectibleType.WANDERLEAF)
         {
             wanderLeafCount += i;
             AudioMasterController.instance.PlaySound(collectWanderLeaf);
-            collectionProgress.collectWanderLeaf(5);
+            collectionProgress.collectWanderLeaf(leafPower);
         }
 
 

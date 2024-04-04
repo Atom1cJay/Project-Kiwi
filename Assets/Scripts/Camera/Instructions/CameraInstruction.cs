@@ -11,6 +11,7 @@ public class CameraInstruction : ACameraInstruction
     [SerializeField] Transform goalTransform;
     [SerializeField] ACameraInstruction next;
     [SerializeField] bool canSkipToLeaf;
+    [SerializeField] bool runningThis;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class CameraInstruction : ACameraInstruction
     public override void RunInstructions(Transform c, Vector3 initPos, Quaternion restartRot)
     {
         RunningInstructions = true;
+        runningThis = true;
         onInstructionsStart.Invoke();
         StartCoroutine(RunInstructionsSequence(c, initPos, restartRot));
     }
@@ -80,14 +82,16 @@ public class CameraInstruction : ACameraInstruction
         }
 
         // Next in sequence
+        runningThis = false;
         next.RunInstructions(c, restartPos, restartRot);
     }
 
     void Update()
     {
-        if (canSkipToLeaf && Input.GetKeyDown(KeyCode.Space)) // TODO controller skippable
+        if (runningThis && canSkipToLeaf && Input.GetKeyDown(KeyCode.Space)) // TODO controller skippable
         {
             StopAllCoroutines();
+            runningThis = false;
             GetLeaf().RunInstructions(transform, transform.position, transform.rotation);
         }
     }
