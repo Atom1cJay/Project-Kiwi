@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SandWormFSM : AMovingPlatform
 {
@@ -16,6 +17,7 @@ public class SandWormFSM : AMovingPlatform
     [Header("FSM Variables | Attack")]
     [SerializeField] float warmUpTime;
     [SerializeField] float attackUpTime;
+    [SerializeField] float pctAttackUpParticles;
     [SerializeField] float timeToCloseMouth;
     [SerializeField] float timeAfterClosedMouth;
     [SerializeField] LayerMask groundLayer;
@@ -23,10 +25,13 @@ public class SandWormFSM : AMovingPlatform
     [SerializeField] float resumePatrolingTime;
     [SerializeField] Animator sandWormAnimator;
     [SerializeField] ParticleSystem preAttackParticleSystem;
+    [SerializeField] UnityEvent particleAttackUp;
 
     [Header("SandWorm Vars")]
     [SerializeField] GameObject killBox;
     [SerializeField] float gravity;
+    [SerializeField] Color baseColor, angryColor;
+    [SerializeField] SkinnedMeshRenderer meshRenderer;
 
     public bool alive = true;
 
@@ -58,6 +63,7 @@ public class SandWormFSM : AMovingPlatform
         }
 
         initialPos = transform.position;
+        lastPos = transform.position;
         currentCheckpoint = checkpointPos();
 
         patrolParticleSystem.Play();
@@ -207,7 +213,28 @@ public class SandWormFSM : AMovingPlatform
         // Apply the calculated initial velocity
         velocity = Vector3.up * initialVelocity;
 
-        yield return new WaitForSeconds(attackUpTime);
+        float startTime = Time.time;
+
+        meshRenderer.materials[0].SetColor("Albedo", baseColor);
+
+        bool particlesReleased = false;
+
+        while (Time.time < startTime + attackUpTime)
+        {
+            yield return null;
+            float pct = (Time.time - startTime) / attackUpTime;
+
+            if (!particlesReleased && pct >= pctAttackUpParticles)
+            {
+                particlesReleased = true;
+                particleAttackUp.Invoke();
+            }
+
+            meshRenderer.materials[0].SetColor("Albedo", Color.Lerp(baseColor, angryColor, pct));
+
+        }
+
+        meshRenderer.materials[0].SetColor("Albedo", angryColor);
 
         attackState = SandWormAttackState.CLOSING_MOUTH;
         sandWormAnimator.SetTrigger("CloseMouth");

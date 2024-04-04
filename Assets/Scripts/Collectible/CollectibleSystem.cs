@@ -17,6 +17,8 @@ public class CollectibleSystem : MonoBehaviour
 
     [SerializeField] Sound collectSeed, collectBlueSeed, collectWanderLeaf;
 
+    [SerializeField] WanderLeafCollectionProgressUI collectionProgress;
+
 
     // Update is called once per frame
     void Awake()
@@ -48,7 +50,7 @@ public class CollectibleSystem : MonoBehaviour
     {
         Debug.Log("collected item");
         CollectibleSystem.collected.Add(cr.gameObject.transform.position);
-        Debug.Log("updated c : " + CollectibleSystem.collected.Count);
+        //Debug.Log("updated c : " + CollectibleSystem.collected.Count);
 
         Collectible.CollectibleType type = cr.GetCollectible().GetType();
 
@@ -61,11 +63,13 @@ public class CollectibleSystem : MonoBehaviour
         {
             blueSeedCount += i;
             AudioMasterController.instance.PlaySound(collectBlueSeed);
+            collectionProgress.collectWanderLeaf(1);
         }
         else if (type == Collectible.CollectibleType.WANDERLEAF)
         {
             wanderLeafCount += i;
             AudioMasterController.instance.PlaySound(collectWanderLeaf);
+            collectionProgress.collectWanderLeaf(5);
         }
 
 
