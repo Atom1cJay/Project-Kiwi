@@ -5002,18 +5002,21 @@ MonoBehaviour:
   patrolParticleSystem: {fileID: 5431136051485559125}
   bodySize: 12
   warmUpTime: 2
-  attackUpTime: 1.25
-  pctAttackUpParticles: 0.4
-  timeToCloseMouth: 0.75
-  timeAfterClosedMouth: 0.1
+  hangTime: 0.3
+  pctUpTimeToCloseMouth: 0.7
+  timeToCloseMouth: 0.65
+  timeBeforeDisablingKillBox: 0.2
+  pctUpTimeParticles: 0.4
+  hangTimeLerpSpeed: 2.5
+  gravity: -6
   groundLayer:
     serializedVersion: 2
     m_Bits: 32769
-  attackUpDistance: 10
+  attackUpDistance: 15
   resumePatrolingTime: 2
   sandWormAnimator: {fileID: 1367721583751376759}
   preAttackParticleSystem: {fileID: 1407021108}
-  particleAttackUp:
+  particlesBeforeAttack:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9127090118871925210}
@@ -5053,7 +5056,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   killBox: {fileID: 1367721583298758613}
-  gravity: -15
   baseColor: {r: 0.69803923, g: 0.54509807, b: 0.40392157, a: 1}
   angryColor: {r: 0.9245283, g: 0.38358882, b: 0.21281594, a: 1}
   meshRenderer: {fileID: 1679048824410095261}
@@ -12983,6 +12985,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4105419670917908106, guid: 5c74839039616944d898a77d674aced7, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105419670917908106, guid: 5c74839039616944d898a77d674aced7, type: 3}
       propertyPath: InitialModule.startSpeed.minScalar
       value: 1.5
       objectReference: {fileID: 0}
@@ -13062,7 +13068,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4105419670917908106, guid: 5c74839039616944d898a77d674aced7, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 7238930895835301194, guid: 5c74839039616944d898a77d674aced7, type: 3}
       propertyPath: m_RootOrder
@@ -13141,6 +13147,10 @@ PrefabInstance:
     - target: {fileID: 4105419670917908106, guid: 5c74839039616944d898a77d674aced7, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105419670917908106, guid: 5c74839039616944d898a77d674aced7, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4105419670917908106, guid: 5c74839039616944d898a77d674aced7, type: 3}
       propertyPath: InitialModule.startSpeed.minScalar
