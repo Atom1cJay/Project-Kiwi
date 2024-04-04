@@ -15,7 +15,7 @@ public class CollectibleSystem : MonoBehaviour
 
     [SerializeField] static int seedCount, blueSeedCount, wanderLeafCount;
 
-    [SerializeField] Sound collectSeed, collectWanderLeaf;
+    [SerializeField] Sound collectSeed, collectBlueSeed, collectWanderLeaf;
 
 
     // Update is called once per frame
@@ -60,6 +60,7 @@ public class CollectibleSystem : MonoBehaviour
         else if (type == Collectible.CollectibleType.BLUESEED)
         {
             blueSeedCount += i;
+            AudioMasterController.instance.PlaySound(collectBlueSeed);
         }
         else if (type == Collectible.CollectibleType.WANDERLEAF)
         {
