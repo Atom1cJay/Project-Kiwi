@@ -28,6 +28,7 @@ public class SandWormFSM : AMovingPlatform
     [SerializeField] float resumePatrolingTime;
     [SerializeField] Animator sandWormAnimator;
     [SerializeField] ParticleSystem preAttackParticleSystem;
+    [SerializeField] ParticleSystem attackParticleSystem;
     [SerializeField] UnityEvent particlesBeforeAttack;
 
     [Header("SandWorm Vars")]
@@ -226,6 +227,8 @@ public class SandWormFSM : AMovingPlatform
         attackState = SandWormAttackState.GOING_UP;
         sandWormAnimator.SetTrigger("StartAttack");
 
+        attackParticleSystem.Play();
+
 
         //gravity = (attackUpDistance / (totalTime * totalTime)) - initialVelocity / totalTime;
         float initialVelocity = Mathf.Sqrt(2 * -gravity * attackUpDistance);
@@ -250,6 +253,7 @@ public class SandWormFSM : AMovingPlatform
         while (Time.time < startTime + totalTimeUp)
         {
             yield return null;
+            attackParticleSystem.gameObject.transform.position = groundPos;
             float pct = (Time.time - startTime) / totalTimeUp;
 
             if (!particlesReleased && pct >= pctUpTimeParticles)
@@ -286,8 +290,11 @@ public class SandWormFSM : AMovingPlatform
         //stop when y is lowe enough
         while (transform.position.y >= startingPos.y)
         {
+            attackParticleSystem.gameObject.transform.position = groundPos;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+
+        attackParticleSystem.Stop();
 
         velocity = Vector3.zero;
         attackState = SandWormAttackState.WAITING;

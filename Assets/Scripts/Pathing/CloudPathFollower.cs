@@ -18,41 +18,49 @@ public class CloudPathFollower : PathFollower
     [SerializeField] float lightneningEffectDistance;
     [SerializeField] Color lighteningCloudColor;
 
+    float originalSpeed;
     Color originalCloudColor;
-    bool inThunderSpeed;
+    Coroutine thunderSpeedCoroutine;
+    Coroutine changeLandingColorCoroutine;
 
     private void Awake()
     {
+        originalSpeed = speed;
         originalCloudColor = cloudRenderer.materials[0].GetColor("Albedo");
     }
 
     public void ActivateThunderSpeed()
     {
-        if (inThunderSpeed) return;
-        StartCoroutine(ThunderSpeed());
+        if (thunderSpeedCoroutine != null)
+        {
+            StopCoroutine(thunderSpeedCoroutine);
+        }
+        thunderSpeedCoroutine = StartCoroutine(ThunderSpeed());
     }
 
     IEnumerator ThunderSpeed()
     {
         AudioMasterController.instance.PlaySound(landingSound);
         // Initial Burst
-        float initSpeed = speed;
-        speed *= thunderSpeedMultiplier;
+        speed = originalSpeed * thunderSpeedMultiplier;
         float boostedSpeed = speed;
-        inThunderSpeed = true;
         // Slowdown
         for (float t = 0; t < thunderSpeedDuration; t += Time.deltaTime)
         {
-            speed = Mathf.Lerp(boostedSpeed, initSpeed, t / thunderSpeedDuration);
+            speed = Mathf.Lerp(boostedSpeed, originalSpeed, t / thunderSpeedDuration);
             yield return null;
         }
-        speed = initSpeed;
-        inThunderSpeed = false;
+        speed = originalSpeed;
+        thunderSpeedCoroutine = null;
     }
 
     public void changeToLandingColor(float sec)
     {
-        StartCoroutine(changeLandingColor(sec, timeToLerpInLand, timeToLerpOutLand, landingCloudColor));
+        if (changeLandingColorCoroutine != null)
+        {
+            StopCoroutine(changeLandingColorCoroutine);
+        }
+        changeLandingColorCoroutine = StartCoroutine(changeLandingColor(sec, timeToLerpInLand, timeToLerpOutLand, landingCloudColor));
     }
 
     IEnumerator changeLandingColor(float pause, float timeToLerpIn, float timeToLerpOut, Color color)
@@ -77,7 +85,7 @@ public class CloudPathFollower : PathFollower
             yield return new WaitForSeconds(Time.deltaTime);
         }
         cloudRenderer.materials[0].SetColor("Albedo", originalCloudColor);
-
+        changeLandingColorCoroutine = null;
     }
 
     public void activateLightening()
