@@ -39,8 +39,11 @@ public class PathFollower : AMovingPlatform
         {
             onReachEndOfPath.Invoke();
             if (destroyAtEndOfPath)
+            {
+                distance = pathCreator.path.length - 0.1f; // Just before end
                 Destroy(gameObject);
-            if (stopAtEndOfPath)
+            }
+            else if (stopAtEndOfPath)
             {
                 distance = pathCreator.path.length - 0.1f; // Just before end
                 stopped = true;
