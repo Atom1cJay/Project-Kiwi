@@ -9699,6 +9699,7 @@ GameObject:
   - component: {fileID: 4580288654287694993}
   - component: {fileID: 4580288654287695007}
   - component: {fileID: 4389408453072086811}
+  - component: {fileID: 2707112913675988997}
   m_Layer: 0
   m_Name: MovingCloud
   m_TagString: Moving Platform
@@ -9917,6 +9918,21 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   oneTimeActivationPerScene: 0
+--- !u!114 &2707112913675988997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4145483563029030368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd55ed9fdc55490a98786b6a48c724f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  semisolidCollider: {fileID: 5213846117890816624}
+  additionalHeightNeeded: 0.3
+  stayActivatedBuffer: 0.5
 --- !u!1 &8448137255691301460
 GameObject:
   m_ObjectHideFlags: 0

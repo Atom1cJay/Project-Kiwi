@@ -11,6 +11,8 @@ public class HoveringTextBox : MonoBehaviour
     [SerializeField] TextMeshProUGUI hoveringText;
     [SerializeField] string textContent;
     [SerializeField] float secondsPerCharacter;
+    [SerializeField] int charactersPerSound = 3;
+    [SerializeField] Sound textSound;
     [SerializeField] float fadeTime;
     [SerializeField] float maxOpaqueness;
 
@@ -54,6 +56,10 @@ public class HoveringTextBox : MonoBehaviour
     {
         for (int i = 0; i <= textContent.Length; i++)
         {
+            if (i % charactersPerSound == 0)
+            {
+                textSound.Play();
+            }
             hoveringText.text = textContent.Substring(0, i);
             yield return new WaitForSeconds(secondsPerCharacter);
         }
