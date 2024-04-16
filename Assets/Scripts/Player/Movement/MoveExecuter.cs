@@ -30,6 +30,8 @@ public class MoveExecuter : MonoBehaviour
     [SerializeField] float barrierRadius;
     Ridable ridable = null;
 
+    Vector3 additionalVelocityToAdd = Vector3.zero;
+
     static MoveExecuter _instance;
     public static MoveExecuter instance
     {
@@ -106,6 +108,11 @@ public class MoveExecuter : MonoBehaviour
         }
     }
 
+    public void addAdditionalVelocityThisFrame(Vector3 additionalVelocity)
+    {
+        additionalVelocityToAdd = additionalVelocity;
+    }
+
     /// <summary>
     /// Handles horizontal, vertical, and rotation-related movement for the player,
     /// as well as the controls for the camera, depending
@@ -123,7 +130,15 @@ public class MoveExecuter : MonoBehaviour
             {
                 extraMovement = ridable.TranslationThisFrame();
             }
+
             transform.Translate(extraMovement, Space.World);
+
+            if (additionalVelocityToAdd.magnitude > 0)
+            {
+                transform.Translate(additionalVelocityToAdd, Space.World);
+                additionalVelocityToAdd = Vector3.zero;
+            }
+
             if (ridable != null)
             {
                 transform.Translate(ridable.PlayerPosChangeFromRotThisFrame(new Vector3(transform.position.x, charCont.bounds.min.y, transform.position.z)), Space.World);
