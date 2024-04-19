@@ -1070,6 +1070,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1920095709162242453}
+  - component: {fileID: 3911846624770179594}
   m_Layer: 0
   m_Name: LivingVisuals
   m_TagString: Untagged
@@ -1094,6 +1095,19 @@ Transform:
   m_Father: {fileID: 7774533350560131639}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3911846624770179594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3300540648578921249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b7cac1a30a440548a1e8c74145122b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 11400000, guid: f3dca8513e76846458ee1350a814e03b, type: 2}
 --- !u!1 &3778403789545428996
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public abstract class AMove : IMove
     private bool receivedKnockbackFeedback;
     private Vector3 knockbackFeedbackNormal; // Only to be accessed if received knockback feedback
     private bool receivedDeathFeedback;
+    private bool receivedYeetFeedback;
 
     protected AMove(MovementSettingsSO movementSettings, MovementInfo mi,
         MovementInputInfo mii)
@@ -24,6 +25,7 @@ public abstract class AMove : IMove
         // Feedback Move Events
         mi.onJumpAttackFeedbackReceived.AddListener(() => receivedJumpFeedback = true);
         mi.ph.onBasicHit.AddListener((Vector3 basicHitNormal) => { receivedKnockbackFeedback = true; knockbackFeedbackNormal = basicHitNormal; });
+        mi.ph.onYeet.AddListener(() => receivedYeetFeedback = true);
         mi.ph.onDeath.AddListener(() => receivedDeathFeedback = true);
     }
 
@@ -130,6 +132,10 @@ public abstract class AMove : IMove
         if (receivedKnockbackFeedback)
         {
             return new Knockback(mii, mi, movementSettings, knockbackFeedbackNormal, horizVector);
+        }
+        if (receivedYeetFeedback)
+        {
+            return new Yeet(mii, mi, movementSettings);
         }
         return null;
     }

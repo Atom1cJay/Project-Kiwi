@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] float iFrameDuration;
     public UnityEvent onHealthChanged { get; private set; }
     public Vector3Event onBasicHit { get; private set; }
+    public UnityEvent onYeet { get; private set; }
     public UnityEvent onDeath { get; private set; }
 
     private void Awake()
@@ -27,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
         onHealthChanged = new UnityEvent();
         onBasicHit = new Vector3Event();
         onDeath = new UnityEvent();
+        onYeet = new UnityEvent();
         // Do NOT ignore collision between these two layers
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player Collision"), LayerMask.NameToLayer("Damaging"), false);
     }
@@ -64,6 +66,10 @@ public class PlayerHealth : MonoBehaviour
             case DamageType.Knockback:
                 onBasicHit.Invoke(normalOfContact);
                 print("KNOCKBACK HIT TAKEN");
+                break;
+            case DamageType.Yeet:
+                onYeet.Invoke();
+                print("YEET HIT TAKEN");
                 break;
             default:
                 Debug.LogError("Cannot take damage; unrecognized dmg type.");

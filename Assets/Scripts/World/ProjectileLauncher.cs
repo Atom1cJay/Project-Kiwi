@@ -9,6 +9,7 @@ public class ProjectileLauncher : MonoBehaviour
     [SerializeField] float launchAngle, launchSpeed, range;
     [SerializeField] bool rotateTorwardsPlayer = false;
     [SerializeField] LayerMask validGround;
+    [SerializeField] Sound launchSound;
 
 
     GameObject player;
@@ -43,6 +44,7 @@ public class ProjectileLauncher : MonoBehaviour
                 ArcProjectile ap = proj.GetComponentInChildren<ArcProjectile>();
 
                 ap.launchProjectileWithAngle(player.transform.position, launchAngle);
+                launchSound.Play(transform);
             }
 
         }

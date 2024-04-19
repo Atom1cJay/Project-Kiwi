@@ -10180,7 +10180,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 7208177725729101538, guid: c56a5cd1af3580046acf75fb4473b63e, type: 3}
---- !u!114 &653040571
+--- !u!114 &5076355591870407778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10189,10 +10189,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 919132149252335672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea53e980efea8a54f83a47ffc7c1c731, type: 3}
+  m_Script: {fileID: 11500000, guid: b2f5370aa75774ef6ab30e82ccce5130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocityToApply: {x: 0, y: 10, z: 0}
+  damageType: 4
+  ignoreInvulnerability: 1
+  destroyOnContact: 0
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &6010379431288547152
 PrefabInstance:
   m_ObjectHideFlags: 0

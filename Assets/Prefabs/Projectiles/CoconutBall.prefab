@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6577337353592110947}
   - component: {fileID: 303904997326268705}
   - component: {fileID: -2749569991887960005}
+  - component: {fileID: 6166146002741337214}
   m_Layer: 0
   m_Name: CoconutBall
   m_TagString: Untagged
@@ -166,6 +167,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toSpawn: {fileID: 6013933758721362222, guid: 9321c1c50b03540c3bc57b170e25029d, type: 3}
+--- !u!114 &6166146002741337214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094007727921469633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad905fd60f34b43bb825a3c553c30b0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDestroy:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 01e8bac87e0444222a1a86e83c22784d, type: 2}
+        m_TargetAssemblyTypeName: Sound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8869946709606056571}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8716586409553428321
 GameObject:
   m_ObjectHideFlags: 0

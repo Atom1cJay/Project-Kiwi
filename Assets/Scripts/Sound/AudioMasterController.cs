@@ -82,7 +82,7 @@ public class AudioMasterController : MonoBehaviour
         allPlayers.Add(sp);
     }
 
-    private void PlaySound(Sound s, Transform parent, Transform position=null)
+    public void PlaySound(Sound s, Transform parent, Transform position=null)
     {
         GameObject soundGameObject = new GameObject();
         soundGameObject.name = s.GetName() + " sound!";

@@ -88,4 +88,9 @@ public class Sound : ScriptableObject
     {
         AudioMasterController.instance.PlaySound(this, 0, position);
     }
+
+    public void Play(Transform position, Transform parent)
+    {
+        AudioMasterController.instance.PlaySound(this, parent, position);
+    }
 }

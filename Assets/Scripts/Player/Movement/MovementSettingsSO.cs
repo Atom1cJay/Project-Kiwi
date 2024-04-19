@@ -235,6 +235,11 @@ public class MovementSettingsSO : ScriptableObject
     [SerializeField] float knockbackXTimeToZero;
     [SerializeField] float knockbackRecoveryTime;
 
+    [Header("Yeet Settings")]
+    [SerializeField] float yeetInitYVel;
+    [SerializeField] float yeetInitXVel;
+    [SerializeField] float yeetYGravity;
+
     /// public, readonly variables
     public float MaxSpeed { get { return maxSpeed; } }
     public float MaxSpeedAbsolute { get { return maxSpeedAbsolute; } }
@@ -425,6 +430,10 @@ public class MovementSettingsSO : ScriptableObject
     public float KnockbackYGravity { get { return knockbackYGravity; } }
     public float KnockbackXTimeToZero { get { return knockbackXTimeToZero; } }
     public float KnockbackRecoveryTime { get { return knockbackRecoveryTime; } }
+
+    public float YeetInitYVel { get { return yeetInitYVel; } }
+    public float YeetInitXVel { get { return yeetInitXVel; } }
+    public float YeetYGravity { get { return yeetYGravity; } }
 
     static MovementSettingsSO _instance;
     public static MovementSettingsSO Instance
