@@ -135,7 +135,7 @@ public class MoveExecuter : MonoBehaviour
 
             if (additionalVelocityToAdd.magnitude > 0)
             {
-                transform.Translate(additionalVelocityToAdd, Space.World);
+                transform.Translate(additionalVelocityToAdd * Time.deltaTime, Space.World);
                 additionalVelocityToAdd = Vector3.zero;
             }
 

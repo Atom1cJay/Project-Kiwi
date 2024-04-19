@@ -283,10 +283,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3908124946223971426}
     m_Modifications:
+    - target: {fileID: 653040571, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: velocityToApply.y
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: cloudObject
       value: 
       objectReference: {fileID: 9197053350770076484}
+    - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: vunerableSpeedMultiplier
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: stageObjects.Array.data[0]
       value: 

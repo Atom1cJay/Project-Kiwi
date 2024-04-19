@@ -85,6 +85,7 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] GameObject healthBarObject;
     [SerializeField] List<GameObject> stageObjects;
 
+    bool chargingBack = false;
 
     public KingCloudState currentState;
 
@@ -163,11 +164,15 @@ public class KingCloudFSM : MonoBehaviour
             velocity = Vector3.Lerp(velocity, goalVelocity, Time.deltaTime * moveLerpSpeed);
             velocity = new Vector3(velocity.x, 0f, velocity.z);
             transform.position += velocity * Time.deltaTime;
-            //rotate visuals
-            Quaternion q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(velocity), rotateSpeed);
-            Vector3 v = q.eulerAngles;
 
-            transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
+            if (!chargingBack)
+            {
+                //rotate visuals
+                Quaternion q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(velocity), rotateSpeed);
+                Vector3 v = q.eulerAngles;
+
+                transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
+            }
         }
     }
 
@@ -362,6 +367,8 @@ public class KingCloudFSM : MonoBehaviour
 
         float startTime = Time.time;
 
+        chargingBack = true;
+
         while ((Time.time - startTime) < timeToChargeBack)
         {
             goalVelocity = -dirToPlayer.normalized * chargeBackSpeed;
@@ -369,6 +376,7 @@ public class KingCloudFSM : MonoBehaviour
             yield return null;
         }
 
+        chargingBack = false;
         //float dist = Vector3.Distance(transform.position, endPos);
 
         while (Vector3.Distance(transform.position, player.transform.position) >= playerProximity)
