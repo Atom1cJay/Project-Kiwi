@@ -71,5 +71,6 @@ public class PathFollower : AMovingPlatform
     {
         this.pathCreator = pc;
         distance = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
+        Translate();
     }
 }
