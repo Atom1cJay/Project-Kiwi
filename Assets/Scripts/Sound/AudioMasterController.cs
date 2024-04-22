@@ -91,6 +91,10 @@ public class AudioMasterController : MonoBehaviour
         {
             soundGameObject.transform.position = position.position;
         }
+        else
+        {
+            soundGameObject.transform.localPosition = Vector3.zero;
+        }
         PlaySoundOnGameObject(soundGameObject, s);
     }
 

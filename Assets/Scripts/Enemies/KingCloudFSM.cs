@@ -15,13 +15,18 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] float timeToChargeBack;
     [SerializeField] float chargeBackSpeed;
     [SerializeField] float playerProximity;
+    [SerializeField] float chargeMaxPlayerProximity;
     [SerializeField] float overstepDuration;
     [SerializeField] float chargeSpeed;
-    [SerializeField] float timeToReturnToMove;
+    [SerializeField] float initialChargeSpeed;
+    [SerializeField] float chargeForwardDuration;
+    [SerializeField] float pauseAfterAttack;
     [SerializeField] float chanceToGoVunerable;
     [SerializeField] Yeeter ourDamager;
     [SerializeField] float bufferTime;
     [SerializeField] float missMultiplier;
+    [SerializeField] float attackMaxDuration;
+    [SerializeField] float chargeMaxDuration;
 
     [Header("Vunerable Vars")]
     [SerializeField] float timeToBeVunerable;
@@ -82,6 +87,7 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] List<float> movingTornadoGoalLerpInfo;
     [SerializeField] List<float> attackTornadoGoalLerpInfo;
     [SerializeField] List<float> vunerableTornadoGoalLerpInfo;
+    [SerializeField] List<float> startUpTornadoGoalLerpInfo;
 
     [Header("Mesh /Visual References")]
     [SerializeField] List<MeshRenderer> tornadoParts;
@@ -99,7 +105,13 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] GameObject healthBarObject;
     [SerializeField] List<GameObject> stageObjects;
 
-    bool chargingBack = false;
+    [Header("Sound Effects")]
+    [SerializeField] Sound chargeSFX;
+    [SerializeField] Sound releaseSFX;
+    [SerializeField] Sound damageSFX;
+    [SerializeField] Sound ambienceSFX;
+
+    bool lockRotation = false;
 
     public KingCloudState currentState;
 
@@ -115,6 +127,8 @@ public class KingCloudFSM : MonoBehaviour
 
     bool didAttackHit = false;
     bool lockedInMove = false;
+
+    float attackTimeStart;
 
     int missCount;
     
@@ -134,6 +148,9 @@ public class KingCloudFSM : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         currentCheckpoint = checkpointPos();
         alive = true;
+
+        //set up SFX
+        AudioMasterController.instance.PlaySound(ambienceSFX, transform);
 
         //health logic
 
@@ -202,15 +219,6 @@ public class KingCloudFSM : MonoBehaviour
             velocity = Vector3.Lerp(velocity, goalVelocity, Time.deltaTime * moveLerpSpeed);
             velocity = new Vector3(velocity.x, 0f, velocity.z);
             transform.position += velocity * Time.deltaTime;
-
-            if (!chargingBack)
-            {
-                //rotate visuals
-                Quaternion q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(velocity), rotateSpeed);
-                Vector3 v = q.eulerAngles;
-
-                transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
-            }
         }
     }
 
@@ -219,19 +227,30 @@ public class KingCloudFSM : MonoBehaviour
     public void takeDamage()
     {
         health -= 1;
-        Destroy(canvasParent.transform.GetChild(0).gameObject);
-        foreach (GameObject level in stageObjects)
+
+
+        AudioMasterController.instance.PlaySound(damageSFX);
+
+        if (health == 0)
         {
-            level.SetActive(false);
+            alive = false;
         }
+        else
+        {
+            Destroy(canvasParent.transform.GetChild(0).gameObject);
+            foreach (GameObject level in stageObjects)
+            {
+                level.SetActive(false);
+            }
 
-        stageObjects[health - 1].SetActive(true);
+            stageObjects[health - 1].SetActive(true);
 
-        //do cutscene
+            //do cutscene
 
-        CancelInvoke("stopVunerable");
-        isVunerable = false;
-        currentState = KingCloudState.WAITING;
+            CancelInvoke("stopVunerable");
+            isVunerable = false;
+            currentState = KingCloudState.WAITING;
+        }
     }
 
     public void bufferDamage()
@@ -327,6 +346,12 @@ public class KingCloudFSM : MonoBehaviour
         Vector2 XZcheckpointPosition = new Vector2(currentCheckpoint.x, currentCheckpoint.z);
         missCount = 0;
 
+
+        //rotate visuals
+        Quaternion q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(velocity), Time.deltaTime * rotateSpeed);
+        Vector3 v = q.eulerAngles;
+        transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
+
         if (Vector2.Distance(XZtransformPosition, XZplayerPosition) <= distanceToAttack && 
             Mathf.Abs(transform.position.y - player.transform.position.y) <= verticalDistanceToAttack &&
             !lockedInMove)
@@ -409,44 +434,74 @@ public class KingCloudFSM : MonoBehaviour
         if (!isAttacking)
         {
             StartCoroutine(chargeAttack());
+            attackTimeStart = Time.time;
         }
     }
     IEnumerator chargeAttack()
     {
+        //set up vars
         isAttacking = true;
-
         didAttackHit = false;
-
-        Vector3 playerPos = player.transform.position;
-        playerPos.y = transform.position.y;
-
-        Vector3 dirToPlayer = playerPos - transform.position;
-        dirToPlayer.y = 0f;
-
-        //update velocity
-
-        float startTime = Time.time;
-
-        chargingBack = true;
-
-        while ((Time.time - startTime) < timeToChargeBack)
-        {
-            goalVelocity = -dirToPlayer.normalized * chargeBackSpeed;
-            //Debug.Log("going back " + startTime + ", " + Time.time + ", | " + (Time.time - startTime) + " < ? " + timeToChargeBack);
-            yield return null;
-        }
-
-        chargingBack = false;
-        //float dist = Vector3.Distance(transform.position, endPos);
 
         Vector3 XZtransformPosition = new Vector3(transform.position.x, 0f, transform.position.z);
         Vector3 XZplayerPosition = new Vector3(player.transform.position.x, 0f, player.transform.position.z);
 
-        while (Vector3.Distance(XZtransformPosition, XZplayerPosition) >= playerProximity)
+        Vector3 dirToPlayer = XZplayerPosition - XZtransformPosition;
+        dirToPlayer.y = 0f;
+
+        Quaternion q;
+        Vector3 v;
+
+        float startTime = Time.time;
+
+        //charge SFX
+        AudioMasterController.instance.PlaySound(chargeSFX, transform);
+
+        //charge start up
+        while ((Time.time - startTime) < timeToChargeBack)
+        {
+            goalVelocity = -dirToPlayer.normalized * chargeBackSpeed;
+
+            //rotate visuals
+            q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dirToPlayer), Time.deltaTime * rotateSpeed);
+            v = q.eulerAngles;
+            transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
+            //Debug.Log("going back " + startTime + ", " + Time.time + ", | " + (Time.time - startTime) + " < ? " + timeToChargeBack);
+            yield return null;
+        }
+
+        //charge release
+        AudioMasterController.instance.PlaySound(releaseSFX, transform);
+
+        //charge forward initially straight ahead if not too close
+        startTime = Time.time;
+        while ((Time.time - startTime) < chargeForwardDuration && Vector3.Distance(XZtransformPosition, XZplayerPosition) >= playerProximity)
+        {
+            XZtransformPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+            XZplayerPosition = new Vector3(player.transform.position.x, 0f, player.transform.position.z);
+            goalVelocity = dirToPlayer.normalized * initialChargeSpeed;
+            yield return null;
+        }
+
+        //lock onto player
+        
+        XZtransformPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+        XZplayerPosition = new Vector3(player.transform.position.x, 0f, player.transform.position.z);
+
+        startTime = Time.time;
+
+        while (Vector3.Distance(XZtransformPosition, XZplayerPosition) >= playerProximity && //if super close to player
+            (startTime - Time.time <= chargeMaxDuration && Vector3.Distance(XZtransformPosition, XZplayerPosition) >= chargeMaxPlayerProximity)) //hit max duration and close enough
         {
             XZtransformPosition = new Vector3(transform.position.x, 0f, transform.position.z);
             XZplayerPosition = new Vector3(player.transform.position.x, 0f, player.transform.position.z);
             goalVelocity = (XZplayerPosition - XZtransformPosition).normalized * chargeSpeed;
+
+            //rotate visuals
+            q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(velocity), Time.deltaTime * rotateSpeed);
+            v = q.eulerAngles;
+            transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
+
             //Debug.Log("going forward  + " + Vector3.Distance(XZtransformPosition, XZplayerPosition));
             yield return null;
 
@@ -459,11 +514,21 @@ public class KingCloudFSM : MonoBehaviour
 
         Debug.Log("compelted attack");
 
-        yield return new WaitForSeconds(timeToReturnToMove);
+        //after attack pause
+        startTime = Time.time;
+        while ((Time.time - startTime) < pauseAfterAttack)
+        {
+            //rotate visuals
+            q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotateSpeed);
+            v = q.eulerAngles;
+            transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
+            yield return null;
+        }
 
+        //reset var
         isAttacking = false;
 
-
+        //if attack hit go to move
         if (didAttackHit)
         {
             currentState = KingCloudState.MOVING;
@@ -472,7 +537,8 @@ public class KingCloudFSM : MonoBehaviour
             Invoke("unlockedMove", lockedMoveDuration);
 
         }
-        else if (Random.Range(0f, 1f) - (missMultiplier * missCount) <= chanceToGoVunerable)
+        //if missed enough or too long go vunerable
+        else if (Random.Range(0f, 1f) - (missMultiplier * missCount) <= chanceToGoVunerable || (Time.time - attackTimeStart >= attackMaxDuration))
         {
             currentState = KingCloudState.VUNERABLE;
         }
@@ -499,7 +565,7 @@ public class KingCloudFSM : MonoBehaviour
         lerpVisuals();
 
         //rotation
-        Quaternion q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), rotateSpeed);
+        Quaternion q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotateSpeed);
         Vector3 v = q.eulerAngles;
 
         transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
@@ -566,7 +632,7 @@ public class KingCloudFSM : MonoBehaviour
                 info = movingTornadoGoalLerpInfo;
                 break;
             case KingCloudState.STARTUP:
-                info = movingTornadoGoalLerpInfo;
+                info = startUpTornadoGoalLerpInfo;
                 break;
             case KingCloudState.WAITING:
                 info = waitingTornadoGoalLerpInfo;

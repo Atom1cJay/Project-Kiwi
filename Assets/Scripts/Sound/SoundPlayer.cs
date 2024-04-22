@@ -77,6 +77,8 @@ public class SoundPlayer : MonoBehaviour
         UpdateMultipliers();
         player.Play();
         started = true;
+
+        //Debug.Log("Playing " + name + " sound!");
     }
 
     public void SetUpFadeIn(AudioSource audioSource, bool sfx, bool music, string name, float time)

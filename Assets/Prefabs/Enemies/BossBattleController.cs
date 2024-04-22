@@ -8,7 +8,7 @@ public class BossBattleController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && cloudObject != null)
         {
             cloudObject.SetActive(true);
         }
@@ -16,7 +16,7 @@ public class BossBattleController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && cloudObject != null)
         {
             cloudObject.SetActive(true);
         }
