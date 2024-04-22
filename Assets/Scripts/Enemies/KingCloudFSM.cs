@@ -8,6 +8,7 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] float moveSpeed;
     [SerializeField] float radiusPatrol;
     [SerializeField] float distanceToAttack;
+    [SerializeField] float verticalDistanceToAttack;
     [SerializeField] float distanceToNextPoint;
 
     [Header("Attacking Vars")]
@@ -18,15 +19,28 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] float chargeSpeed;
     [SerializeField] float timeToReturnToMove;
     [SerializeField] float chanceToGoVunerable;
-    [SerializeField] Damager ourDamager;
+    [SerializeField] Yeeter ourDamager;
     [SerializeField] float bufferTime;
+    [SerializeField] float missMultiplier;
 
     [Header("Vunerable Vars")]
     [SerializeField] float timeToBeVunerable;
     [SerializeField] float vunerableSpeedMultiplier;
+    [SerializeField] float lockedMoveDuration;
 
     [Header("Waiting Vars")]
     [SerializeField] float waitingTime;
+
+    [Header("Start Up Vars")]
+    [SerializeField] float startUpDistance;
+    [SerializeField] float startWaitingTime;
+    [SerializeField] GameObject startUpTextObject;
+
+    [Header("Game Objects")]
+    [SerializeField] List<GameObject> movingGameObjects;
+    [SerializeField] List<GameObject> attackingGameObjects;
+    [SerializeField] List<GameObject> vunerableGameObjects;
+    [SerializeField] List<GameObject> waitingGameObjects;
 
     [Header("Colliders Vars")]
     [SerializeField] List<Collider> attackingColliders;
@@ -97,6 +111,13 @@ public class KingCloudFSM : MonoBehaviour
     bool isAttacking;
     bool isVunerable;
     bool isWaiting;
+    bool isStarted;
+
+    bool didAttackHit = false;
+    bool lockedInMove = false;
+
+    int missCount;
+    
     GameObject player;
     Vector3 ir;
 
@@ -109,6 +130,7 @@ public class KingCloudFSM : MonoBehaviour
         isAttacking = false;
         isVunerable = false;
         isWaiting = false;
+        isStarted = false;
         player = GameObject.FindGameObjectWithTag("Player");
         currentCheckpoint = checkpointPos();
         alive = true;
@@ -128,6 +150,8 @@ public class KingCloudFSM : MonoBehaviour
         stageObjects[health - 1].SetActive(true);
 
         //Start up
+
+        currentState = KingCloudState.STARTUP;
 
         startVisuals();
         StartCoroutine(FSM());
@@ -152,9 +176,23 @@ public class KingCloudFSM : MonoBehaviour
                 case KingCloudState.WAITING:
                     Wait();
                     break;
+                case KingCloudState.STARTUP:
+                    StartUp();
+                    break;
+
             }
             yield return new WaitForSeconds(Time.deltaTime);
         }
+
+        Debug.Log("good job, boss defeated");
+
+        //disable stage objects
+        foreach (GameObject level in stageObjects)
+        {
+            level.SetActive(false);
+        }
+
+        Destroy(gameObject);
     }
 
     void Update()
@@ -198,13 +236,15 @@ public class KingCloudFSM : MonoBehaviour
 
     public void bufferDamage()
     {
-        ourDamager.enabled = false;
-        Invoke("enableDamage", bufferTime);
+        Debug.Log("buffer damage");
+        ourDamager.isActivated = false;
+        didAttackHit = true;
+        Invoke("endBuffer", bufferTime);
     }
 
-    void enableDamage()
+    void endBuffer()
     {
-        ourDamager.enabled = true;
+        ourDamager.isActivated = true;
     }
 
     #endregion
@@ -239,6 +279,8 @@ public class KingCloudFSM : MonoBehaviour
             ParticleSystem.EmissionModule emission = particleSystem.emission;
             emission.rateOverTime = Mathf.Lerp(emission.rateOverTime.constant, getTargetEmission(i, currentState), Time.deltaTime * visualLerpSpeed);
         }
+
+        setGameObjects(currentState);
     }
 
     void startVisuals()
@@ -280,11 +322,18 @@ public class KingCloudFSM : MonoBehaviour
         lerpVisuals();
         enableColliders(currentState);
 
-        if (Vector3.Distance(transform.position, player.transform.position) <= distanceToAttack)
+        Vector2 XZtransformPosition = new Vector2(transform.position.x, transform.position.z);
+        Vector2 XZplayerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
+        Vector2 XZcheckpointPosition = new Vector2(currentCheckpoint.x, currentCheckpoint.z);
+        missCount = 0;
+
+        if (Vector2.Distance(XZtransformPosition, XZplayerPosition) <= distanceToAttack && 
+            Mathf.Abs(transform.position.y - player.transform.position.y) <= verticalDistanceToAttack &&
+            !lockedInMove)
         {
             currentState = KingCloudState.ATTACKING;
         }
-        else if (Vector3.Distance(transform.position, currentCheckpoint) <= distanceToNextPoint)
+        else if (Vector3.Distance(XZtransformPosition, XZcheckpointPosition) <= distanceToNextPoint)
         {
             currentCheckpoint = checkpointPos();
         }
@@ -295,6 +344,11 @@ public class KingCloudFSM : MonoBehaviour
         }
     }
 
+    void unlockedMove()
+    {
+        lockedInMove = false;
+    }
+
     #endregion
 
     #region vunerable
@@ -302,6 +356,7 @@ public class KingCloudFSM : MonoBehaviour
     {
         lerpVisuals();
         enableColliders(currentState);
+        missCount = 0;
 
         goalVelocity = (cloudObject.transform.position - transform.position) * vunerableSpeedMultiplier;
 
@@ -316,7 +371,10 @@ public class KingCloudFSM : MonoBehaviour
     {
         isVunerable = false;
         currentState = KingCloudState.MOVING;
+        lockedInMove = true;
+        Invoke("unlockedMove", lockedMoveDuration);
     }
+
 
     #endregion
 
@@ -357,6 +415,8 @@ public class KingCloudFSM : MonoBehaviour
     {
         isAttacking = true;
 
+        didAttackHit = false;
+
         Vector3 playerPos = player.transform.position;
         playerPos.y = transform.position.y;
 
@@ -372,17 +432,22 @@ public class KingCloudFSM : MonoBehaviour
         while ((Time.time - startTime) < timeToChargeBack)
         {
             goalVelocity = -dirToPlayer.normalized * chargeBackSpeed;
-            Debug.Log("going back " + startTime + ", " + Time.time + ", | " + (Time.time - startTime) + " < ? " + timeToChargeBack);
+            //Debug.Log("going back " + startTime + ", " + Time.time + ", | " + (Time.time - startTime) + " < ? " + timeToChargeBack);
             yield return null;
         }
 
         chargingBack = false;
         //float dist = Vector3.Distance(transform.position, endPos);
 
-        while (Vector3.Distance(transform.position, player.transform.position) >= playerProximity)
+        Vector3 XZtransformPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+        Vector3 XZplayerPosition = new Vector3(player.transform.position.x, 0f, player.transform.position.z);
+
+        while (Vector3.Distance(XZtransformPosition, XZplayerPosition) >= playerProximity)
         {
-            goalVelocity = (player.transform.position - transform.position).normalized * chargeSpeed;
-            Debug.Log("going forward");
+            XZtransformPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+            XZplayerPosition = new Vector3(player.transform.position.x, 0f, player.transform.position.z);
+            goalVelocity = (XZplayerPosition - XZtransformPosition).normalized * chargeSpeed;
+            //Debug.Log("going forward  + " + Vector3.Distance(XZtransformPosition, XZplayerPosition));
             yield return null;
 
         }
@@ -398,17 +463,76 @@ public class KingCloudFSM : MonoBehaviour
 
         isAttacking = false;
 
-        if (Random.Range(0f, 1f) <= chanceToGoVunerable)
+
+        if (didAttackHit)
+        {
+            currentState = KingCloudState.MOVING;
+
+            lockedInMove = true;
+            Invoke("unlockedMove", lockedMoveDuration);
+
+        }
+        else if (Random.Range(0f, 1f) - (missMultiplier * missCount) <= chanceToGoVunerable)
         {
             currentState = KingCloudState.VUNERABLE;
         }
         else
         {
-            if (Vector3.Distance(transform.position, player.transform.position) > distanceToAttack)
+            missCount++;
+            if (Vector3.Distance(transform.position, player.transform.position) > distanceToAttack &&
+                Mathf.Abs(transform.position.y - player.transform.position.y) > verticalDistanceToAttack)
             {
                 currentState = KingCloudState.MOVING;
             }
         }
+    }
+
+    #endregion
+
+    #region startup
+
+    void StartUp()
+    {
+        Vector2 XZtransformPosition = new Vector2(transform.position.x, transform.position.z);
+        Vector2 XZplayerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
+
+        lerpVisuals();
+
+        //rotation
+        Quaternion q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), rotateSpeed);
+        Vector3 v = q.eulerAngles;
+
+        transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
+
+        goalVelocity = player.transform.position - transform.position;
+
+        if (!isStarted && Vector2.Distance(XZtransformPosition, XZplayerPosition) <= startUpDistance)
+        {
+            isStarted = true;
+            Invoke("StartBossBattle", startWaitingTime);
+
+            //do cutscene?
+        }
+    }
+
+    void StartBossBattle()
+    {
+        Vector2 XZtransformPosition = new Vector2(transform.position.x, transform.position.z);
+        Vector2 XZplayerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
+        missCount = 0;
+
+        Debug.Log(" pos  " + Vector2.Distance(XZtransformPosition, XZplayerPosition) + " | " + Mathf.Abs(transform.position.y - player.transform.position.y));
+
+        if (Vector2.Distance(XZtransformPosition, XZplayerPosition) <= distanceToAttack &&
+            Mathf.Abs(transform.position.y - player.transform.position.y) <= verticalDistanceToAttack)
+        {
+            currentState = KingCloudState.ATTACKING;
+        }
+        else
+        {
+            currentState = KingCloudState.MOVING;
+        }
+        startUpTextObject.SetActive(false);
     }
 
     #endregion
@@ -441,6 +565,9 @@ public class KingCloudFSM : MonoBehaviour
             case KingCloudState.MOVING:
                 info = movingTornadoGoalLerpInfo;
                 break;
+            case KingCloudState.STARTUP:
+                info = movingTornadoGoalLerpInfo;
+                break;
             case KingCloudState.WAITING:
                 info = waitingTornadoGoalLerpInfo;
                 break;
@@ -448,6 +575,46 @@ public class KingCloudFSM : MonoBehaviour
 
         rotationLerper.amplitudeRotations = new Vector3(info[0], info[1], info[2]);
         rotationLerper.speed = info[3];
+    }
+
+    void setGameObjects(KingCloudState state)
+    {
+        List<GameObject> gameList = new List<GameObject>();
+        switch (state)
+        {
+            case KingCloudState.VUNERABLE:
+                gameList = vunerableGameObjects;
+                break;
+            case KingCloudState.ATTACKING:
+                gameList = attackingGameObjects;
+                break;
+            case KingCloudState.MOVING:
+                gameList = movingGameObjects;
+                break;
+            case KingCloudState.STARTUP:
+                gameList = movingGameObjects;
+                break;
+            case KingCloudState.WAITING:
+                gameList = waitingGameObjects;
+                break;
+        }
+
+        foreach (GameObject g in vunerableGameObjects)
+            g.SetActive(false);
+
+        foreach (GameObject g in attackingGameObjects)
+            g.SetActive(false);
+
+        foreach (GameObject g in movingGameObjects)
+            g.SetActive(false);
+
+        foreach (GameObject g in waitingGameObjects)
+            g.SetActive(false);
+
+        foreach (GameObject g in gameList)
+            g.SetActive(true);
+
+
     }
 
     float getTargetDissolve(int i, KingCloudState state)
@@ -459,6 +626,8 @@ public class KingCloudFSM : MonoBehaviour
             case KingCloudState.ATTACKING:
                 return attackTornadoGoalDissolves[i];
             case KingCloudState.MOVING:
+                return movingTornadoGoalDissolves[i];
+            case KingCloudState.STARTUP:
                 return movingTornadoGoalDissolves[i];
             case KingCloudState.WAITING:
                 return waitingTornadoGoalDissolves[i];
@@ -478,6 +647,8 @@ public class KingCloudFSM : MonoBehaviour
                 return attackTornadoGoalColors[i];
             case KingCloudState.MOVING:
                 return movingTornadoGoalColors[i];
+            case KingCloudState.STARTUP:
+                return movingTornadoGoalColors[i];
             case KingCloudState.WAITING:
                 return waitingTornadoGoalColors[i];
         }
@@ -495,6 +666,8 @@ public class KingCloudFSM : MonoBehaviour
             case KingCloudState.ATTACKING:
                 return attackTornadoGoalScales[i];
             case KingCloudState.MOVING:
+                return movingTornadoGoalScales[i];
+            case KingCloudState.STARTUP:
                 return movingTornadoGoalScales[i];
             case KingCloudState.WAITING:
                 return waitingTornadoGoalScales[i];
@@ -514,6 +687,8 @@ public class KingCloudFSM : MonoBehaviour
                 return attackTornadoGoalPositions[i];
             case KingCloudState.MOVING:
                 return movingTornadoGoalPositions[i];
+            case KingCloudState.STARTUP:
+                return movingTornadoGoalPositions[i];
             case KingCloudState.WAITING:
                 return waitingTornadoGoalPositions[i];
         }
@@ -531,6 +706,8 @@ public class KingCloudFSM : MonoBehaviour
             case KingCloudState.ATTACKING:
                 return attackTornadoGoalParticleEmissions[i];
             case KingCloudState.MOVING:
+                return movingTornadoGoalParticleEmissions[i];
+            case KingCloudState.STARTUP:
                 return movingTornadoGoalParticleEmissions[i];
             case KingCloudState.WAITING:
                 return waitingTornadoGoalParticleEmissions[i];
@@ -552,7 +729,7 @@ public class KingCloudFSM : MonoBehaviour
                 colliders = attackingColliders;
                 break;
             case KingCloudState.MOVING:
-                colliders = attackingColliders;
+                colliders = new List<Collider>();
                 break;
             case KingCloudState.WAITING:
                 colliders = waitingColliders;
@@ -591,5 +768,7 @@ public enum KingCloudState
     VUNERABLE,
     ATTACKING,
     MOVING,
-    WAITING
+    WAITING,
+    STARTUP,
+    DEATH
 }

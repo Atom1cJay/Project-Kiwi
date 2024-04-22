@@ -15,6 +15,12 @@ public class Yeet : AMove
 
     public override void AdvanceTime()
     {
+        if (receivedYeetFeedback)
+        {
+            yVel = movementSettings.YeetInitYVel;
+            receivedYeetFeedback = false;
+        }
+
         yVel -= movementSettings.YeetYGravity * Time.deltaTime;
     }
 

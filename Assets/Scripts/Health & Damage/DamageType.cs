@@ -8,5 +8,4 @@ public enum DamageType
     Instakill, // Standard knockback, results in death
     FallKill, // No knockback, results in death
     Knockback, // Just knockback
-    Yeet // Extreme knockback
 }

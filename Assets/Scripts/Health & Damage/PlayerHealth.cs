@@ -67,14 +67,39 @@ public class PlayerHealth : MonoBehaviour
                 onBasicHit.Invoke(normalOfContact);
                 print("KNOCKBACK HIT TAKEN");
                 break;
-            case DamageType.Yeet:
-                onYeet.Invoke();
-                print("YEET HIT TAKEN");
-                break;
             default:
                 Debug.LogError("Cannot take damage; unrecognized dmg type.");
                 break;
         }
+
+        onHealthChanged.Invoke();
+
+        if (hp <= 0)
+        {
+            onDeath.Invoke();
+            print("YOU DIED."); // TODO actual death sequence
+        }
+        else
+        {
+            StartCoroutine(IFrames());
+        }
+    }
+
+    public void handleYeet(bool damage)
+    {
+        onYeet.Invoke();
+
+        if (hp <= 0)
+        {
+            return;
+        }
+
+        if (damage)
+        {
+            hp--;
+            print("YEET HIT TAKEN " + damage);
+        }
+
 
         onHealthChanged.Invoke();
 

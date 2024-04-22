@@ -14,7 +14,7 @@ public abstract class AMove : IMove
     private bool receivedKnockbackFeedback;
     private Vector3 knockbackFeedbackNormal; // Only to be accessed if received knockback feedback
     private bool receivedDeathFeedback;
-    private bool receivedYeetFeedback;
+    protected bool receivedYeetFeedback;
 
     protected AMove(MovementSettingsSO movementSettings, MovementInfo mi,
         MovementInputInfo mii)
