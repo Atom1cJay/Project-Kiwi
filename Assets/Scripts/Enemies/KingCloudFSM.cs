@@ -571,14 +571,11 @@ public class KingCloudFSM : MonoBehaviour
         transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
 
         goalVelocity = player.transform.position - transform.position;
+    }
 
-        if (!isStarted && Vector2.Distance(XZtransformPosition, XZplayerPosition) <= startUpDistance)
-        {
-            isStarted = true;
-            Invoke("StartBossBattle", startWaitingTime);
-
-            //do cutscene?
-        }
+    public void StartBossBattleTimer()
+    {
+        Invoke("StartBossBattle", startWaitingTime);
     }
 
     void StartBossBattle()

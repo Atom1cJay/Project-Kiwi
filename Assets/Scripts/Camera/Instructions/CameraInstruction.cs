@@ -12,6 +12,8 @@ public class CameraInstruction : ACameraInstruction
     [SerializeField] ACameraInstruction next;
     [SerializeField] bool canSkipToLeaf;
     [SerializeField] bool runningThis;
+    [SerializeField] float lerpSpeedForForce;
+    [SerializeField] bool lerpToGoal;
 
     private void Awake()
     {
@@ -54,7 +56,12 @@ public class CameraInstruction : ACameraInstruction
             timeElapsed += IndependentTime.deltaTime;
             float timeRatio = timeElapsed / travelTime;
 
-            if (isSmooth)
+            if (lerpToGoal)
+            {
+                c.position = Vector3.Lerp(c.position, goalTransform.position, lerpSpeedForForce * Time.deltaTime);
+                c.rotation = Quaternion.Lerp(c.rotation, goalTransform.rotation, lerpSpeedForForce * Time.deltaTime);
+            }
+            else if (isSmooth)
             {
                 c.position = new Vector3(
                     Mathf.SmoothStep(startingPos.x, goalTransform.position.x, timeRatio),
