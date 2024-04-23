@@ -13,6 +13,7 @@ public class SandWormFSM : AMovingPlatform
     [SerializeField] float patrolLerpSpeed;
     [SerializeField] ParticleSystem patrolParticleSystem;
     [SerializeField] float bodySize;
+    [SerializeField] Sound patrolSound;
 
     [Header("FSM Variables | Attack")]
     [SerializeField] float warmUpTime;
@@ -30,6 +31,7 @@ public class SandWormFSM : AMovingPlatform
     [SerializeField] ParticleSystem preAttackParticleSystem;
     [SerializeField] ParticleSystem attackParticleSystem;
     [SerializeField] UnityEvent particlesBeforeAttack;
+    [SerializeField] Sound attackSound;
 
     [Header("SandWorm Vars")]
     [SerializeField] GameObject killBox;
@@ -153,6 +155,7 @@ public class SandWormFSM : AMovingPlatform
         if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack && canJumpWithoutHittingAnything(currentTarget.transform.position)) {
             currentState = SandWormState.ATTACKING;
             patrolParticleSystem.Stop();
+            patrolSound.Stop();
         }
         else if (Vector3.Distance(transform.position, currentCheckpoint) <= distanceToNextPoint)
         {
@@ -228,6 +231,7 @@ public class SandWormFSM : AMovingPlatform
         sandWormAnimator.SetTrigger("StartAttack");
 
         attackParticleSystem.Play();
+        attackSound.Play(transform);
 
 
         //gravity = (attackUpDistance / (totalTime * totalTime)) - initialVelocity / totalTime;
@@ -317,6 +321,7 @@ public class SandWormFSM : AMovingPlatform
         else
         {
             currentState = SandWormState.PATROLING;
+            patrolSound.Play(transform);
             patrolParticleSystem.Play();
             patrolVelocity = Vector3.zero;
         }
