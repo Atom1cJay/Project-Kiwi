@@ -97,11 +97,9 @@ public class PlayerHealth : MonoBehaviour
         if (damage)
         {
             hp--;
+            onHealthChanged.Invoke();
             print("YEET HIT TAKEN " + damage);
         }
-
-
-        onHealthChanged.Invoke();
 
         if (hp <= 0)
         {
