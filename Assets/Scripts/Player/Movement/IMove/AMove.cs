@@ -127,7 +127,7 @@ public abstract class AMove : IMove
         }
         if (receivedDeathFeedback)
         {
-            return new Death(mii, mi, movementSettings);
+            return new Knockback(mii, mi, movementSettings, Vector3.up, Vector2.zero);
         }
         if (receivedKnockbackFeedback)
         {
