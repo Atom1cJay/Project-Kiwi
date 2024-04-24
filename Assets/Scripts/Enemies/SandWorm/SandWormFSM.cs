@@ -155,7 +155,6 @@ public class SandWormFSM : AMovingPlatform
         if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) <= distanceToAttack && canJumpWithoutHittingAnything(currentTarget.transform.position)) {
             currentState = SandWormState.ATTACKING;
             patrolParticleSystem.Stop();
-            patrolSound.Stop();
         }
         else if (Vector3.Distance(transform.position, currentCheckpoint) <= distanceToNextPoint)
         {
@@ -223,6 +222,7 @@ public class SandWormFSM : AMovingPlatform
         // Start WarmUp
         // Do particles
 
+        patrolSound.Play(transform);
         yield return new WaitForSeconds(warmUpTime);
 
         preAttackParticleSystem.Stop();
@@ -230,6 +230,7 @@ public class SandWormFSM : AMovingPlatform
         attackState = SandWormAttackState.GOING_UP;
         sandWormAnimator.SetTrigger("StartAttack");
 
+        patrolSound.Stop();
         attackParticleSystem.Play();
         attackSound.Play(transform);
 
@@ -321,7 +322,6 @@ public class SandWormFSM : AMovingPlatform
         else
         {
             currentState = SandWormState.PATROLING;
-            patrolSound.Play(transform);
             patrolParticleSystem.Play();
             patrolVelocity = Vector3.zero;
         }
