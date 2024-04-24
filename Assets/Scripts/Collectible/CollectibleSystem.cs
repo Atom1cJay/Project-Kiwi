@@ -21,24 +21,28 @@ public class CollectibleSystem : MonoBehaviour
 
     [SerializeField] WanderLeafCollectionProgressUI collectionProgress;
 
-
-    // Update is called once per frame
     void Awake()
     {
         if (instance != null)
         {
             Debug.LogError("Multiple instances of CollectibleSystem exist. Only have one.");
+            return;
         }
         instance = this;
+        foreach (CollectibleReader cr in FindObjectsOfType<CollectibleReader>(true))
+        {
+            cr.Initialize(); // Called here so that they initialize whether enabled or disabled
+        }
     }
 
+    /*
     private void Start()
     {
         Debug.Log("Collected: " + collected.Count);
     }
+    */
 
-    //OnTriggerEnter
-    void OnTriggerEnter (Collider col)
+    void OnTriggerEnter(Collider col)
     {
         CollectibleReader cr = col.gameObject.GetComponent<CollectibleReader>();
         if (cr != null && !cr.collected)
@@ -50,7 +54,7 @@ public class CollectibleSystem : MonoBehaviour
 
     public void CollectItem(CollectibleReader cr, int i = 1)
     {
-        Debug.Log("collected item");
+        //Debug.Log("collected item");
         CollectibleSystem.collected.Add(cr.gameObject.transform.position);
         //Debug.Log("updated c : " + CollectibleSystem.collected.Count);
 
@@ -74,7 +78,6 @@ public class CollectibleSystem : MonoBehaviour
             collectionProgress.collectWanderLeaf(leafPower);
         }
 
-
         seedDisplay.SetText(seedCount.ToString());
         blueSeedDisplay.SetText(blueSeedCount.ToString());
         wanderLeafDisplay.SetText(wanderLeafCount.ToString());
@@ -82,5 +85,17 @@ public class CollectibleSystem : MonoBehaviour
         cr.CollectObject();
     }
 
+    public void AutoCollectOnLoad(CollectibleReader cr)
+    {
+        Collectible.CollectibleType type = cr.GetCollectible().GetType();
 
+        if (type == Collectible.CollectibleType.BLUESEED)
+        {
+            collectionProgress.collectWanderLeaf(blueSeedPower, true);
+        }
+        else if (type == Collectible.CollectibleType.WANDERLEAF)
+        {
+            collectionProgress.collectWanderLeaf(leafPower, true);
+        }
+    }
 }

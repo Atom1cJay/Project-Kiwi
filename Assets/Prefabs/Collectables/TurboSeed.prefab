@@ -348,13 +348,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectible: {fileID: 11400000, guid: b70a16f7c916044c0ba8d69241ca068c, type: 2}
-  tempForceNotCollected: 1
+  tempForceNotCollected: 0
   collected: 0
   name: 
   collectibleVisual: {fileID: 2883767731027967917}
   playAnimation: 1
   overheadVisual: {fileID: 565069355608092941}
   animLength: 0.5
+  onCollect:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8494844553051476799
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,6 @@ public class CloudScript : MonoBehaviour
     {
         if (other.CompareTag("InvisibleCloudZone"))
         {
-            print("EnterZone");
             StartCoroutine(Fade(false));
         }
     }
@@ -20,7 +19,6 @@ public class CloudScript : MonoBehaviour
     {
         if (other.CompareTag("InvisibleCloudZone"))
         {
-            print("ExitZone");
             StartCoroutine(Fade(true));
         }
     }

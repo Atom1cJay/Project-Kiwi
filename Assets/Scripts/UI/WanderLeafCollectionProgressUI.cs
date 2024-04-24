@@ -14,6 +14,7 @@ public class WanderLeafCollectionProgressUI : MonoBehaviour
     [SerializeField] Color collectionColorB;
     [SerializeField] float collectionFlashSpeed;
     [SerializeField] UnityEvent onFilled;
+    [SerializeField] UnityEvent onFilledAtLoad;
     bool calledOnFilledEvent;
     Color initBGColor;
 
@@ -24,23 +25,23 @@ public class WanderLeafCollectionProgressUI : MonoBehaviour
         initBGColor = bgImage.color;
     }
 
-    public void collectWanderLeaf(int increment)
+    public void collectWanderLeaf(int increment, bool onLoad=false)
     {
-        StartCoroutine(lerpToNewGoal(currentCount + increment));
+        if (onLoad)
+        {
+            ConsiderFillEvent(currentCount + increment, true);
+            progressImage.fillAmount = (float)(currentCount + increment) / goal;
+        }
+        else
+        {
+            StartCoroutine(lerpToNewGoal(currentCount, currentCount + increment));
+        }
         currentCount += increment;
     }
 
-
-    IEnumerator lerpToNewGoal(int newAmount)
+    IEnumerator lerpToNewGoal(int prevCount, int newAmount)
     {
-        if (newAmount >= goal && !calledOnFilledEvent)
-        {
-            onFilled.Invoke();
-            calledOnFilledEvent = true;
-        }
-
-        int prevCount = currentCount;
-
+        ConsiderFillEvent(newAmount);
         float startTime = Time.time;
 
         while (Time.time < startTime + timeToLerp)
@@ -52,5 +53,15 @@ public class WanderLeafCollectionProgressUI : MonoBehaviour
             progressImage.fillAmount = Mathf.Lerp((float)prevCount / (float)goal, (float)newAmount / (float)goal, pct);
         }
         bgImage.color = initBGColor;
+    }
+
+    void ConsiderFillEvent(int newAmount, bool onLoad=false)
+    {
+        if (newAmount >= goal && !calledOnFilledEvent)
+        {
+            UnityEvent fillEvent = onLoad ? onFilledAtLoad : onFilled;
+            fillEvent.Invoke();
+            calledOnFilledEvent = true;
+        }
     }
 }

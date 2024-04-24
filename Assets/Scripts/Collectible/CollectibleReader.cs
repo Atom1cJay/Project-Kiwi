@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Events;
 
 //[RequireComponent(typeof(Collider))]
 public class CollectibleReader : MonoBehaviour
@@ -9,6 +10,7 @@ public class CollectibleReader : MonoBehaviour
     public Collectible collectible;
 
     public bool tempForceNotCollected;
+    [SerializeField] UnityEvent onAutoCollectAtLoad; // If tempForceNotCollected is off, this will auto collect at the start if it's already been collected
 
     Collider collectibleCollider;
 
@@ -26,9 +28,20 @@ public class CollectibleReader : MonoBehaviour
 
     public UnityEvent onCollect;
 
-    // Start is called before the first frame supdate
-    void Start()
+    bool initialized;
+
+    // Effectively the Start() method.
+    // Called by CollectableSystem so that the collectable gets initialized
+    // whether this gameObject is enabled or disabled.
+    public void Initialize()
     {
+        if (initialized)
+        {
+            return;
+        }
+
+        initialized = true;
+
         anim = GetComponent<Animator>();
         collected = CollectibleSystem.collected.Contains(gameObject.transform.position);
 
@@ -36,7 +49,14 @@ public class CollectibleReader : MonoBehaviour
         collectibleCollider = GetComponent<Collider>();
 
         if (tempForceNotCollected)
+        {
             collected = false;
+        }
+        else if (collected)
+        {
+            CollectibleSystem.instance.AutoCollectOnLoad(this);
+            onAutoCollectAtLoad.Invoke();
+        }
 
         collectibleCollider.enabled = !collected;
         overheadVisual.SetActive(!collected);
@@ -44,7 +64,6 @@ public class CollectibleReader : MonoBehaviour
 
         overheadVisual.transform.SetParent(null);
         overheadVisual.transform.localEulerAngles = new Vector3(90f, 0f, 0f);
-
     }
 
     //Update the Collectible Reader
