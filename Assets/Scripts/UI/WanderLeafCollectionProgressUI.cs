@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class WanderLeafCollectionProgressUI : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class WanderLeafCollectionProgressUI : MonoBehaviour
     [SerializeField] Color collectionColorA;
     [SerializeField] Color collectionColorB;
     [SerializeField] float collectionFlashSpeed;
+    [SerializeField] UnityEvent onFilled;
+    bool calledOnFilledEvent;
     Color initBGColor;
 
     int currentCount;
@@ -30,6 +33,12 @@ public class WanderLeafCollectionProgressUI : MonoBehaviour
 
     IEnumerator lerpToNewGoal(int newAmount)
     {
+        if (newAmount >= goal && !calledOnFilledEvent)
+        {
+            onFilled.Invoke();
+            calledOnFilledEvent = true;
+        }
+
         int prevCount = currentCount;
 
         float startTime = Time.time;
