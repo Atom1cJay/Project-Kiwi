@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2022c8ccb16e4ac4b99fc8149f33472, type: 3}
+  m_Script: {fileID: 11500000, guid: 366540b7456d04062bc13899d1b5e940, type: 3}
   m_Name: DoubleJump
   m_EditorClassIdentifier: 
-  sound: {fileID: 11400000, guid: 07468bfee4d6a004cb6fb1babe504042, type: 2}
-  stopSoundAtEnd: 0
+  soundProfiles:
+  - {fileID: 11400000, guid: e08a03765ac844cab8fcaee8cc64be8d, type: 2}
+  - {fileID: 11400000, guid: 545a23836ba7442de812a5f94aa9d272, type: 2}
