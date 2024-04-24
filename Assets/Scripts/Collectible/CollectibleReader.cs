@@ -28,6 +28,7 @@ public class CollectibleReader : MonoBehaviour
 
     public UnityEvent onCollect;
 
+    public Vector3 startingPosIdentifier { get; private set; }
     bool initialized;
 
     // Effectively the Start() method.
@@ -41,9 +42,10 @@ public class CollectibleReader : MonoBehaviour
         }
 
         initialized = true;
+        startingPosIdentifier = transform.position;
 
         anim = GetComponent<Animator>();
-        collected = CollectibleSystem.collected.Contains(gameObject.transform.position);
+        collected = CollectibleSystem.collected.Contains(startingPosIdentifier);
 
         //initialize the variables
         collectibleCollider = GetComponent<Collider>();

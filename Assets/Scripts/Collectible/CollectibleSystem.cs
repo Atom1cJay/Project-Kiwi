@@ -55,7 +55,7 @@ public class CollectibleSystem : MonoBehaviour
     public void CollectItem(CollectibleReader cr, int i = 1)
     {
         //Debug.Log("collected item");
-        CollectibleSystem.collected.Add(cr.gameObject.transform.position);
+        CollectibleSystem.collected.Add(cr.startingPosIdentifier);
         //Debug.Log("updated c : " + CollectibleSystem.collected.Count);
 
         Collectible.CollectibleType type = cr.GetCollectible().GetType();
