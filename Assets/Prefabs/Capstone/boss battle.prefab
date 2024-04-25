@@ -349,6 +349,30 @@ MonoBehaviour:
           m_StringArgument: Start
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   goalTransform: {fileID: 6477255767985853855}
   next: {fileID: 5808142132610598440}
   canSkipToLeaf: 0
@@ -397,6 +421,30 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &3174802171217798879
 GameObject:
@@ -477,6 +525,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
         m_Arguments:
@@ -863,6 +923,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7222297199943415359, guid: 0dd47a44d3ac64d86940dcd211d12b43, type: 3}
+      propertyPath: m_text
+      value: FINE... I'LL LEAVE...
+      objectReference: {fileID: 0}
+    - target: {fileID: 7222297199943415359, guid: 0dd47a44d3ac64d86940dcd211d12b43, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
@@ -874,7 +938,12 @@ PrefabInstance:
       propertyPath: secondsPerCharacter
       value: 0.01
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8870145364399844053, guid: 0dd47a44d3ac64d86940dcd211d12b43, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8544410683614964164, guid: 0dd47a44d3ac64d86940dcd211d12b43, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0dd47a44d3ac64d86940dcd211d12b43, type: 3}
 --- !u!1 &2690710211399575142 stripped
 GameObject:
@@ -1530,11 +1599,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 543450653509546626, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 543450653509546626, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 543450653509546626, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: m_LocalScale.z
@@ -1572,6 +1641,10 @@ PrefabInstance:
       propertyPath: waitingTime
       value: 2.25
       objectReference: {fileID: 0}
+    - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: vunerableSFX
+      value: 
+      objectReference: {fileID: 11400000, guid: e7abddc1e87ac394b916420bc979f246, type: 2}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: moveLerpSpeed
       value: 0.9
@@ -1710,7 +1783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1722,6 +1795,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
@@ -1741,6 +1818,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: TakeInstructions
       objectReference: {fileID: 0}
@@ -1750,6 +1831,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
@@ -1762,6 +1847,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: UnityEngine.Behaviour, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
@@ -1782,6 +1871,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 837947980557270215, guid: 9397e2f370cf079478b3066c91770e46, type: 3}

@@ -121,6 +121,7 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] Sound releaseSFX;
     [SerializeField] Sound damageSFX;
     [SerializeField] Sound ambienceSFX;
+    [SerializeField] Sound vunerableSFX;
 
     bool lockRotation = false;
 
@@ -447,10 +448,12 @@ public class KingCloudFSM : MonoBehaviour
         enableColliders(currentState);
         missCount = 0;
 
-        goalVelocity = (cloudObject.transform.position - transform.position) * vunerableSpeedMultiplier;
+        //goalVelocity = (cloudObject.transform.position - transform.position) * vunerableSpeedMultiplier;
+
 
         if (!isVunerable)
         {
+            AudioMasterController.instance.PlaySound(vunerableSFX, transform);
             Invoke("stopVunerable", timeToBeVunerable);
             isVunerable = true;
         }
