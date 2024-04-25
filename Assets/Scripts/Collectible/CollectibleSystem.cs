@@ -98,4 +98,9 @@ public class CollectibleSystem : MonoBehaviour
             collectionProgress.collectWanderLeaf(leafPower, true);
         }
     }
+
+    public static void ResetCollected()
+    {
+        collected = new List<Vector3>();
+    }
 }
