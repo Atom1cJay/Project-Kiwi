@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cloudObject: {fileID: 2308726639282754991}
+  goUpTornado: {fileID: 919132149222111232}
   getUpTornados:
   - {fileID: 6342975236333444837}
   - {fileID: 919132149222111232}
@@ -136,6 +137,7 @@ MonoBehaviour:
   colorToMakeClouds: {r: 0, g: 0, b: 0, a: 0}
   durationToLerpCloudAlphas: 0.5
   durationToFadeOutTornados: 0.5
+  durationToFadeInInitialtornado: 2
   normalSong: GameMusic
   bossSong: BossMusic
   musicSystem: {fileID: 0}
@@ -489,7 +491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c56a5cd1af3580046acf75fb4473b63e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48.04
+      value: 46.09
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c56a5cd1af3580046acf75fb4473b63e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -497,7 +499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c56a5cd1af3580046acf75fb4473b63e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -32.05
+      value: -28.51
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c56a5cd1af3580046acf75fb4473b63e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -587,6 +589,19 @@ MonoBehaviour:
   yeetVelocity: 0
   doDamage: 0
   isActivated: 1
+--- !u!114 &691247560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149222111232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b7cac1a30a440548a1e8c74145122b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 11400000, guid: 0cccb712370ab1743b6a547de76cc393, type: 2}
 --- !u!1001 &1514411763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -882,6 +897,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c56a5cd1af3580046acf75fb4473b63e, type: 3}
   m_PrefabInstance: {fileID: 6109044448548365236}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &299571627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6342975236333444837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b7cac1a30a440548a1e8c74145122b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 11400000, guid: 0cccb712370ab1743b6a547de76cc393, type: 2}
 --- !u!1001 &8314514189967840789
 PrefabInstance:
   m_ObjectHideFlags: 0

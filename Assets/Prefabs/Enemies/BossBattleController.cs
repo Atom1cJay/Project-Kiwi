@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BossBattleController : MonoBehaviour
 {
-    [SerializeField] GameObject cloudObject;
+    [SerializeField] GameObject cloudObject, goUpTornado;
     [SerializeField] GameObject[] getUpTornados;
     [SerializeField] GameObject[] gameObjectsToDestroy;
     [SerializeField] Color colorToMakeClouds;
     [SerializeField] float durationToLerpCloudAlphas;
     [SerializeField] float durationToFadeOutTornados;
+    [SerializeField] float durationToFadeInInitialtornado;
     [SerializeField] string normalSong, bossSong;
     [SerializeField] NewMusicControlSystem musicSystem;
     [SerializeField] Material celLit, celTransparent;
@@ -69,7 +70,29 @@ public class BossBattleController : MonoBehaviour
 
     }
 
-    IEnumerator fadeOutTornado(MeshRenderer mr)
+    public void showTornadoToGetUp()
+    {
+        StartCoroutine(fadeInTornado(goUpTornado.GetComponent<MeshRenderer>()));
+        //save
+    }
+
+    IEnumerator fadeInTornado(MeshRenderer mr)
+    {
+        float t = Time.time;
+        float currentDisolve = mr.material.GetFloat("_Dissolve");
+
+        mr.material.SetFloat("_Dissolve", 1f);
+
+        mr.gameObject.SetActive(true);
+
+        while (Time.time - t < durationToFadeInInitialtornado)
+        {
+            mr.material.SetFloat("_Dissolve", Mathf.Lerp(1f, currentDisolve, (Time.time - t) / durationToFadeInInitialtornado));
+            yield return null;
+        }
+    }
+
+        IEnumerator fadeOutTornado(MeshRenderer mr)
     {
         float t = Time.time;
         float currentDisolve = mr.material.GetFloat("_Dissolve");
