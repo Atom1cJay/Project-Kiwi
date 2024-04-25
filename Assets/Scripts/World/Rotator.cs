@@ -5,13 +5,19 @@ using UnityEngine;
 public class Rotator : MonoBehaviour
 {
     public Vector3 rotation;
+    public Quaternion rotationQuaternion;
+    [SerializeField] bool useQuaternion;
+    [SerializeField] float quaternionSpeed;
 
     //bool stopping = false;
     //float duration;
 
     void Update()
     {
-        transform.localEulerAngles += rotation * Time.deltaTime;
+        if (!useQuaternion)
+            transform.localEulerAngles += rotation * Time.deltaTime;
+        else
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, transform.rotation * rotationQuaternion, quaternionSpeed);
 
         /*
         if (stopping)

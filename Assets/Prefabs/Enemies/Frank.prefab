@@ -655,6 +655,7 @@ GameObject:
   - component: {fileID: 1173149077168248483}
   - component: {fileID: 6863202211790599099}
   - component: {fileID: 6444646339172228561}
+  - component: {fileID: 746299585358644299}
   m_Layer: 0
   m_Name: wheel2
   m_TagString: Untagged
@@ -727,6 +728,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &746299585358644299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359705076000296411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc550ede61a714b3187090055f2470d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotation: {x: 0, y: 0, z: 0}
+  rotationQuaternion: {x: 0.1305262, y: 0, z: 0, w: 0.9914449}
+  useQuaternion: 1
+  quaternionSpeed: 15
 --- !u!1 &2403560290003589862
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +755,7 @@ GameObject:
   - component: {fileID: 835757168693275578}
   - component: {fileID: 4955362806653915055}
   - component: {fileID: 6057852647735221244}
+  - component: {fileID: 4540624251080962693}
   m_Layer: 0
   m_Name: wheel4
   m_TagString: Untagged
@@ -810,6 +828,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4540624251080962693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2403560290003589862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc550ede61a714b3187090055f2470d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotation: {x: 0, y: 0, z: 0}
+  rotationQuaternion: {x: 0.1305262, y: 0, z: 0, w: 0.9914449}
+  useQuaternion: 1
+  quaternionSpeed: 15
 --- !u!1 &2518343415246521170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1681,7 +1715,7 @@ GameObject:
   - component: {fileID: 3864809825163373803}
   - component: {fileID: 5193108597857182184}
   - component: {fileID: 5478054008634082432}
-  - component: {fileID: 2542755634072464703}
+  - component: {fileID: 2791934188927495051}
   m_Layer: 0
   m_Name: rotary2
   m_TagString: Untagged
@@ -1763,7 +1797,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2542755634072464703
+--- !u!114 &2791934188927495051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1775,7 +1809,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc550ede61a714b3187090055f2470d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotation: {x: 1000, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0}
+  rotationQuaternion: {x: 0.6087614, y: 0, z: 0, w: 0.7933533}
+  useQuaternion: 1
+  quaternionSpeed: 75
 --- !u!1 &6266624472668336126
 GameObject:
   m_ObjectHideFlags: 0
@@ -2036,6 +2073,7 @@ GameObject:
   - component: {fileID: 1663009086623038398}
   - component: {fileID: 6167275820052332481}
   - component: {fileID: 6862807580357016368}
+  - component: {fileID: 2638264176880222375}
   m_Layer: 0
   m_Name: wheel3
   m_TagString: Untagged
@@ -2108,6 +2146,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2638264176880222375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6899424430226324800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc550ede61a714b3187090055f2470d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotation: {x: 0, y: 0, z: 0}
+  rotationQuaternion: {x: 0.1305262, y: 0, z: 0, w: 0.9914449}
+  useQuaternion: 1
+  quaternionSpeed: 15
 --- !u!1 &6966893013136060557
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,6 +2514,7 @@ GameObject:
   - component: {fileID: 5730561482459828446}
   - component: {fileID: 1788187209358237721}
   - component: {fileID: 831731450065491712}
+  - component: {fileID: 4256363882869922587}
   m_Layer: 0
   m_Name: wheel5
   m_TagString: Untagged
@@ -2532,6 +2587,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4256363882869922587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8488692503333901988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc550ede61a714b3187090055f2470d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotation: {x: 0, y: 0, z: 0}
+  rotationQuaternion: {x: 0.1305262, y: 0, z: 0, w: 0.9914449}
+  useQuaternion: 1
+  quaternionSpeed: 15
 --- !u!1 &9221610289696261257
 GameObject:
   m_ObjectHideFlags: 0
