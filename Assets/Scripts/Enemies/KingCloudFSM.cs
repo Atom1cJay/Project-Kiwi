@@ -32,6 +32,7 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] float timeToBeVunerable;
     [SerializeField] float vunerableSpeedMultiplier;
     [SerializeField] float lockedMoveDuration;
+    [SerializeField] ParticleSystem takeDamageParticles;
 
     [Header("Waiting Vars")]
     [SerializeField] float waitingTime;
@@ -40,6 +41,13 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] float startUpDistance;
     [SerializeField] float startWaitingTime;
     [SerializeField] GameObject startUpTextObject;
+
+
+    [Header("Ending Vars")]
+    [SerializeField] float endingWaitingTime;
+    [SerializeField] float fadeOutEndingTime;
+    [SerializeField] GameObject endingTextObject;
+    [SerializeField] List<MeshRenderer> tornadoPartsEnding;
 
     [Header("Game Objects")]
     [SerializeField] List<GameObject> movingGameObjects;
@@ -98,6 +106,7 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] float visualLerpSpeed;
     [SerializeField] float rotateSpeed;
     [SerializeField] GameObject cloudObject;
+    [SerializeField] BossBattleController levelController;
 
     [Header("Health Info")]
     [SerializeField] int health;
@@ -133,6 +142,7 @@ public class KingCloudFSM : MonoBehaviour
     int missCount;
     
     GameObject player;
+    GameObject currentStageObject;
     Vector3 ir;
 
 
@@ -165,6 +175,7 @@ public class KingCloudFSM : MonoBehaviour
         }
 
         stageObjects[health - 1].SetActive(true);
+        currentStageObject = stageObjects[health - 1];
 
         //Start up
 
@@ -203,18 +214,70 @@ public class KingCloudFSM : MonoBehaviour
 
         Debug.Log("good job, boss defeated");
 
-        //disable stage objects
-        foreach (GameObject level in stageObjects)
+        StartCoroutine(endBossBattle());
+    }
+
+    IEnumerator endBossBattle()
+    {
+        //Ending logic
+        currentState = KingCloudState.STARTUP;
+        endingTextObject.SetActive(true);
+        isStarted = false;
+
+        float t = Time.time;
+        while (Time.time - t < endingWaitingTime)
         {
-            level.SetActive(false);
+            currentState = KingCloudState.STARTUP;
+            StartUp();
+            yield return null;
         }
+
+         //stop lerping visuals and moving
+         isStarted = true;
+
+        //fade out tornados
+        t = Time.time;
+
+        //get initial dissolves
+        List<float> dissolves = new List<float>();
+        List<float> additionalDissolves = new List<float>();
+
+        for (int i = 0; i < tornadoParts.Count; i++)
+            dissolves.Add(tornadoParts[i].material.GetFloat("_Dissolve"));
+        for (int i = 0; i < tornadoPartsEnding.Count; i++)
+            additionalDissolves.Add(tornadoPartsEnding[i].material.GetFloat("_Dissolve"));
+
+        while (Time.time - t < fadeOutEndingTime)
+        {
+            float pct = (Time.time - t) / fadeOutEndingTime;
+
+            for (int i = 0; i < tornadoParts.Count; i++)
+            {
+                //mesh stuff
+                MeshRenderer mr = tornadoParts[i];
+                mr.material.SetFloat("_Dissolve", Mathf.Lerp(dissolves[i], 1f, pct));
+            }
+
+            for (int i = 0; i < tornadoPartsEnding.Count; i++)
+            {
+                //mesh stuff
+                MeshRenderer mr = tornadoPartsEnding[i];
+                mr.material.SetFloat("_Dissolve", Mathf.Lerp(additionalDissolves[i], 1f, pct));
+            }
+
+            yield return null;
+        }
+
+        //disable stage objects
+
+        levelController.lerpCloudAlpha(currentStageObject, null);
+        levelController.endBossBattle();
 
         Destroy(gameObject);
     }
-
     void Update()
     {
-        if (currentState == KingCloudState.MOVING || currentState == KingCloudState.ATTACKING || currentState == KingCloudState.WAITING)
+        if (currentState == KingCloudState.MOVING || currentState == KingCloudState.ATTACKING)
         {
             velocity = Vector3.Lerp(velocity, goalVelocity, Time.deltaTime * moveLerpSpeed);
             velocity = new Vector3(velocity.x, 0f, velocity.z);
@@ -227,7 +290,7 @@ public class KingCloudFSM : MonoBehaviour
     public void takeDamage()
     {
         health -= 1;
-
+        takeDamageParticles.Play();
 
         AudioMasterController.instance.PlaySound(damageSFX);
 
@@ -238,12 +301,9 @@ public class KingCloudFSM : MonoBehaviour
         else
         {
             Destroy(canvasParent.transform.GetChild(0).gameObject);
-            foreach (GameObject level in stageObjects)
-            {
-                level.SetActive(false);
-            }
 
-            stageObjects[health - 1].SetActive(true);
+            levelController.lerpCloudAlpha(currentStageObject, stageObjects[health - 1]);
+            currentStageObject = stageObjects[health - 1];
 
             //do cutscene
 
@@ -332,6 +392,7 @@ public class KingCloudFSM : MonoBehaviour
 
         setLerpInfo(currentState);
     }
+
 
     #endregion
 
@@ -559,22 +620,26 @@ public class KingCloudFSM : MonoBehaviour
 
     void StartUp()
     {
-        Vector2 XZtransformPosition = new Vector2(transform.position.x, transform.position.z);
-        Vector2 XZplayerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
+        if (!isStarted)
+        {
+            Vector2 XZtransformPosition = new Vector2(transform.position.x, transform.position.z);
+            Vector2 XZplayerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
 
-        lerpVisuals();
+            lerpVisuals();
 
-        //rotation
-        Quaternion q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotateSpeed);
-        Vector3 v = q.eulerAngles;
+            //rotation
+            Quaternion q = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), Time.deltaTime * rotateSpeed);
+            Vector3 v = q.eulerAngles;
 
-        transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
+            transform.eulerAngles = new Vector3(ir.x, v.y, ir.z);
 
-        goalVelocity = player.transform.position - transform.position;
+            goalVelocity = player.transform.position - transform.position;
+        }
     }
 
     public void StartBossBattleTimer()
     {
+        isStarted = true;
         Invoke("StartBossBattle", startWaitingTime);
     }
 
@@ -652,9 +717,6 @@ public class KingCloudFSM : MonoBehaviour
                 gameList = attackingGameObjects;
                 break;
             case KingCloudState.MOVING:
-                gameList = movingGameObjects;
-                break;
-            case KingCloudState.STARTUP:
                 gameList = movingGameObjects;
                 break;
             case KingCloudState.WAITING:

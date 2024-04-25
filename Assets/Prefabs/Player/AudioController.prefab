@@ -2592,6 +2592,51 @@ Transform:
   m_Father: {fileID: 6274319274564034399}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2902767662228963684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1033519658442421627}
+  - component: {fileID: 7362637507487195704}
+  m_Layer: 9
+  m_Name: MusicControlSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1033519658442421627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2902767662228963684}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3865432219276408900}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7362637507487195704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2902767662228963684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc2cf43ce2470954c9ee434b48538211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionTime: 0.5
 --- !u!1 &3176587446634378262
 GameObject:
   m_ObjectHideFlags: 0
@@ -3185,7 +3230,6 @@ GameObject:
   - component: {fileID: 3865432219276408900}
   - component: {fileID: 3149784325922564935}
   - component: {fileID: 5935677403952539857}
-  - component: {fileID: 415187505}
   m_Layer: 9
   m_Name: AudioController
   m_TagString: Untagged
@@ -3206,6 +3250,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6274319274564034399}
+  - {fileID: 1033519658442421627}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3264,20 +3309,6 @@ MonoBehaviour:
   startPauseMenu: {fileID: 11400000, guid: 473246b35eca4b24583741a1fc474c55, type: 2}
   closePauseMenu: {fileID: 11400000, guid: 412894d3c5ac7c04da971a3adbed68be, type: 2}
   selectOption: {fileID: 11400000, guid: 796ec98e2d3f51342a105d57f8807c8d, type: 2}
---- !u!114 &415187505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5204249085327673557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5136641a19e9454085ef96e23a77c80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  transitionTime: 0.5
 --- !u!1 &5231407119395105766
 GameObject:
   m_ObjectHideFlags: 0
