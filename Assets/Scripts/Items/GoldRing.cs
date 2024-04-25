@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 // Script for a gold ring item
 // Allows for challenges where the player has a limited amount of
@@ -16,6 +17,7 @@ public class GoldRing : MonoBehaviour
     [SerializeField] Sound clockSound;
     [SerializeField] Sound standardRingSound;
     [SerializeField] Sound winRingSound;
+    [SerializeField] UnityEvent collectedEvent;
 
     void Start()
     {
@@ -79,6 +81,8 @@ public class GoldRing : MonoBehaviour
             AudioMasterController.instance.StopSound(clockSound.GetName());
             reward.SetActive(true);
         }
+
+        collectedEvent.Invoke();
         gameObject.SetActive(false);
     }
 
