@@ -12,6 +12,7 @@ public class ClimbingLeaf : MonoBehaviour
     [SerializeField] float timeToWaitAtStart;
     [SerializeField] float animationLag;
     [SerializeField] bool startOnAwake = false;
+    [SerializeField] Sound growSound;
 
 
     bool leafUp = false;
@@ -40,6 +41,7 @@ public class ClimbingLeaf : MonoBehaviour
         {
             leafUp = true;
             leafAnimator.SetTrigger("RISE");
+            growSound.Play(transform);
         }
 
         collider.enabled = true;

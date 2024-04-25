@@ -122,6 +122,7 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] Sound damageSFX;
     [SerializeField] Sound ambienceSFX;
     [SerializeField] Sound vunerableSFX;
+    [SerializeField] Sound playerTakeDamageSFX;
 
     bool lockRotation = false;
 
@@ -320,6 +321,7 @@ public class KingCloudFSM : MonoBehaviour
     public void bufferDamage()
     {
         Debug.Log("buffer damage");
+        AudioMasterController.instance.PlaySound(playerTakeDamageSFX);
         ourDamager.isActivated = false;
         didAttackHit = true;
         Invoke("endBuffer", bufferTime);
