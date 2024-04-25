@@ -16109,7 +16109,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3621554888825754127, guid: 73b5f9767f56f8e41ba2db27a00cd31c, type: 3}
---- !u!114 &1334132379
+--- !u!114 &117249741628335779
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16118,10 +16118,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8492089843680448432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30e0ea083aca94abc98db3af9d4a96f8, type: 3}
+  m_Script: {fileID: 11500000, guid: c621415a93d2142ad8a7b7f2dcf2e057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPound:
+  jumpAttackEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 798657853385115439}
@@ -16136,7 +16136,66 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  oneTimeActivationPerScene: 0
+  diveAttackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 798657853385115439}
+        m_TargetAssemblyTypeName: KingCloudFSM, Assembly-CSharp
+        m_MethodName: takeDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  horizBoostAttackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 798657853385115439}
+        m_TargetAssemblyTypeName: KingCloudFSM, Assembly-CSharp
+        m_MethodName: takeDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  vertBoostAttackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 798657853385115439}
+        m_TargetAssemblyTypeName: KingCloudFSM, Assembly-CSharp
+        m_MethodName: takeDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  groundPoundAttackEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 798657853385115439}
+        m_TargetAssemblyTypeName: KingCloudFSM, Assembly-CSharp
+        m_MethodName: takeDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2532186302671073692
 MonoBehaviour:
   m_ObjectHideFlags: 0
