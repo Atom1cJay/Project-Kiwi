@@ -31,7 +31,10 @@ public class SandWormFSM : AMovingPlatform
     [SerializeField] ParticleSystem preAttackParticleSystem;
     [SerializeField] ParticleSystem attackParticleSystem;
     [SerializeField] UnityEvent particlesBeforeAttack;
+
+    [Header("Sounds")]
     [SerializeField] Sound attackSound;
+    [SerializeField] Sound closeMouthSound;
 
     [Header("SandWorm Vars")]
     [SerializeField] GameObject killBox;
@@ -271,6 +274,7 @@ public class SandWormFSM : AMovingPlatform
             {
                 openMouth = true;
                 sandWormAnimator.SetTrigger("CloseMouth");
+                closeMouthSound.Play(transform);
                 Invoke("closeMouth", timeToCloseMouth);
 
             }
