@@ -5465,6 +5465,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5793965038921966878}
+        m_TargetAssemblyTypeName: DeathScreenVisuals, Assembly-CSharp
+        m_MethodName: gotoScene
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 5935677403952539857, guid: f7910db42bb7b8544a46bd2a36d84273, type: 3}
         m_TargetAssemblyTypeName: UIAudioController, Assembly-CSharp
         m_MethodName: OnClicked
@@ -8981,3 +8993,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 888684766067028591, guid: 76aaf5b4b52f54ad48bc95cf788c6676, type: 3}
   m_PrefabInstance: {fileID: 6646594618095448412}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5793965038921966878 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 888684767168681026, guid: 76aaf5b4b52f54ad48bc95cf788c6676, type: 3}
+  m_PrefabInstance: {fileID: 6646594618095448412}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa09fba6071d64cb198736aae698183f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

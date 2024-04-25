@@ -29,14 +29,18 @@ public class DeathScreenVisuals : MonoBehaviour
 
     IEnumerator LeafShrink(int scene)
     {
+        float t = Time.realtimeSinceStartup;
         while (leaf.sizeDelta.x > 0)
         {
-            float shrinkAmtThisFrame = leafSizeDecreaseSpeed * Time.deltaTime;
+            float timeThisFrame = Time.realtimeSinceStartup - t;
+            float shrinkAmtThisFrame = leafSizeDecreaseSpeed * timeThisFrame;
+            t = Time.realtimeSinceStartup;
             //print(leafSizeDecreaseSpeed);
             leaf.sizeDelta -= new Vector2(shrinkAmtThisFrame, shrinkAmtThisFrame);
             //print(leaf.sizeDelta);
             yield return null;
         }
+        Time.timeScale = 1;
         SceneManager.LoadScene(scene);
     }
 }
