@@ -821,7 +821,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 509
+  m_VersionIndex: 596
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -7205,6 +7205,10 @@ PrefabInstance:
       propertyPath: ph
       value: 
       objectReference: {fileID: 1693213253}
+    - target: {fileID: 519351487, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1026291952, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: dm
       value: 
@@ -7220,6 +7224,10 @@ PrefabInstance:
     - target: {fileID: 12731258026852643, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 954456871944511336, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1259595518236467907, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7297,6 +7305,58 @@ PrefabInstance:
       propertyPath: timeToLerp
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilled.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilledAtLoad.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilled.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilled.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilled.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TakeInstructions
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilledAtLoad.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilledAtLoad.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilledAtLoad.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: showTornadoToGetUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilled.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CameraControl, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilledAtLoad.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BossBattleController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilledAtLoad.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilled.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: ACameraInstruction, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917099879238278855, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: onFilledAtLoad.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3118909588843571168, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -7325,6 +7385,10 @@ PrefabInstance:
       propertyPath: me
       value: 
       objectReference: {fileID: 1704877077}
+    - target: {fileID: 4624301331938377926, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4739768886370263139, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -7340,6 +7404,10 @@ PrefabInstance:
     - target: {fileID: 5385279666146551073, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_SizeDelta.y
       value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571906188758704910, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7329729369567668797, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_Sprite
