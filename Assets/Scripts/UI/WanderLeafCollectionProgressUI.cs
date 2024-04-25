@@ -13,6 +13,8 @@ public class WanderLeafCollectionProgressUI : MonoBehaviour
     [SerializeField] Color collectionColorA;
     [SerializeField] Color collectionColorB;
     [SerializeField] float collectionFlashSpeed;
+    [SerializeField] float flashScaleTime;
+    [SerializeField] float flashScaleMultiplier;
     [SerializeField] UnityEvent onFilled;
     [SerializeField] UnityEvent onFilledAtLoad;
     bool calledOnFilledEvent;
@@ -41,6 +43,7 @@ public class WanderLeafCollectionProgressUI : MonoBehaviour
 
     IEnumerator lerpToNewGoal(int prevCount, int newAmount)
     {
+        Vector3 origScale = transform.localScale;
         ConsiderFillEvent(newAmount);
         float startTime = Time.time;
 
@@ -48,11 +51,13 @@ public class WanderLeafCollectionProgressUI : MonoBehaviour
         {
             yield return null;
             float elapsed = Time.time - startTime;
+            transform.localScale = Vector3.Lerp(origScale * flashScaleMultiplier, origScale, elapsed / flashScaleTime);
             bgImage.color = Color.Lerp(collectionColorA, collectionColorB, Mathf.Sin(elapsed * collectionFlashSpeed));
             float pct = (Time.time - startTime) / timeToLerp;
             progressImage.fillAmount = Mathf.Lerp((float)prevCount / (float)goal, (float)newAmount / (float)goal, pct);
         }
         bgImage.color = initBGColor;
+        transform.localScale = origScale;
     }
 
     void ConsiderFillEvent(int newAmount, bool onLoad=false)
