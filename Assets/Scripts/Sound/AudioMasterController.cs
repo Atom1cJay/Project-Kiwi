@@ -134,6 +134,9 @@ public class AudioMasterController : MonoBehaviour
 
         audioSource.volume = s.GetVolume();
         audioSource.loop = s.GetLoop();
+        audioSource.spatialBlend = s.GetSpatialBlend();
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
+        audioSource.maxDistance = s.GetMaxDistanceToHear();
 
         SoundPlayer sp = g.AddComponent<SoundPlayer>();
 
@@ -142,6 +145,12 @@ public class AudioMasterController : MonoBehaviour
         allPlayers.Add(sp);
 
     }
+
+    public void FadeInSound(Sound s, float time, GameObject g)
+    {
+        FadeIn(s, time, g);
+    }
+
     public void FadeInSound(string name, float time)
     {
         FadeInSound(name, time, this.gameObject);
@@ -153,6 +162,7 @@ public class AudioMasterController : MonoBehaviour
         GameObject newObject = new GameObject();
         newObject.name = name + " sound!";
         newObject.transform.parent = g.transform;
+        newObject.transform.localPosition = Vector3.zero;
 
         bool playedSong = false;
 

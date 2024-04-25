@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class KingCloudFSM : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public class KingCloudFSM : MonoBehaviour
     [SerializeField] float fadeOutEndingTime;
     [SerializeField] GameObject endingTextObject;
     [SerializeField] List<MeshRenderer> tornadoPartsEnding;
+    [SerializeField] UnityEvent beatBossEvents;
 
     [Header("Game Objects")]
     [SerializeField] List<GameObject> movingGameObjects;
@@ -223,6 +225,7 @@ public class KingCloudFSM : MonoBehaviour
         currentState = KingCloudState.STARTUP;
         endingTextObject.SetActive(true);
         isStarted = false;
+        beatBossEvents.Invoke();
 
         float t = Time.time;
         while (Time.time - t < endingWaitingTime)

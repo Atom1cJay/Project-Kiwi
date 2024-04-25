@@ -94,6 +94,11 @@ public class Sound : ScriptableObject
         AudioMasterController.instance.PlaySound(this, parent, position);
     }
 
+    public void FadeIn(float time, Transform parent)
+    {
+        AudioMasterController.instance.FadeInSound(this, time, parent.gameObject);
+    }
+
     public void Stop()
     {
         AudioMasterController.instance.StopSound(GetName());
