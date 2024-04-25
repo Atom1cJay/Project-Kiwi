@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BossBattleController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class BossBattleController : MonoBehaviour
     [SerializeField] string normalSong, bossSong;
     [SerializeField] NewMusicControlSystem musicSystem;
     [SerializeField] Material celLit, celTransparent;
+    [SerializeField] UnityEvent endEvent;
 
     bool inTrigger = false;
     bool bossBeaten = false;
@@ -67,6 +69,8 @@ public class BossBattleController : MonoBehaviour
         {
             Destroy(g);
         }
+
+        endEvent.Invoke();
 
     }
 
