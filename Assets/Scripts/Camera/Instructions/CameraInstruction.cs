@@ -80,6 +80,7 @@ public class CameraInstruction : ACameraInstruction
 
         // Pause
         c.position = goalTransform.position;
+        c.rotation = goalTransform.rotation;
         timeElapsed = 0;
 
         while (timeElapsed < postTravelTime)
