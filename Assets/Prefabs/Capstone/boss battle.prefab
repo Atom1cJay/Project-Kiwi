@@ -139,6 +139,8 @@ MonoBehaviour:
   normalSong: GameMusic
   bossSong: BossMusic
   musicSystem: {fileID: 0}
+  celLit: {fileID: 2100000, guid: 2d9652c3e48cb7043bbd2c1ae2f14c0b, type: 2}
+  celTransparent: {fileID: 2100000, guid: 7909920370482ec4c98a84aec6c4472a, type: 2}
 --- !u!1 &1783279661
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,7 +612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6741779187354251221, guid: 0dd47a44d3ac64d86940dcd211d12b43, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.07
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6741779187354251221, guid: 0dd47a44d3ac64d86940dcd211d12b43, type: 3}
       propertyPath: m_LocalPosition.z
@@ -644,9 +646,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7222297199943415359, guid: 0dd47a44d3ac64d86940dcd211d12b43, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8544410683614964164, guid: 0dd47a44d3ac64d86940dcd211d12b43, type: 3}
       propertyPath: textContent
-      value: fuck me i guess
+      value: FINE... I'LL LEAVE...
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544410683614964164, guid: 0dd47a44d3ac64d86940dcd211d12b43, type: 3}
+      propertyPath: secondsPerCharacter
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dd47a44d3ac64d86940dcd211d12b43, type: 3}
@@ -974,7 +984,7 @@ PrefabInstance:
     - target: {fileID: 1901329703276675427, guid: 7ffc08727a0986d4a958f0ff1822d46c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7909920370482ec4c98a84aec6c4472a, type: 2}
+      objectReference: {fileID: 2100000, guid: 2d9652c3e48cb7043bbd2c1ae2f14c0b, type: 2}
     - target: {fileID: 8905059874826437358, guid: 7ffc08727a0986d4a958f0ff1822d46c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1279,6 +1289,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1334132378, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1334132378, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 543450653509546626, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1329,7 +1347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: missMultiplier
-      value: 0.175
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: chargeBackSpeed
@@ -1385,7 +1403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: chanceToGoVunerable
-      value: 0.05
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: chargeForwardDuration
@@ -1497,7 +1515,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4680053062679718251, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: textContent
-      value: FUCK THIS PLANET!
+      value: YOU DARE CHALLENGE ME!?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4680053062679718251, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: secondsPerCharacter
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934612087983584912, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6010379431717350892, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: m_Name
@@ -1553,7 +1579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7777337475687772026, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.07
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8438135729457781045, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: lengthInSec
@@ -1562,6 +1588,10 @@ PrefabInstance:
     - target: {fileID: 8438135729457781045, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].time
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8492089843680448432, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3806180076018779574, guid: 9397e2f370cf079478b3066c91770e46, type: 3}

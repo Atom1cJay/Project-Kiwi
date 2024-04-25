@@ -12,6 +12,7 @@ public class BossBattleController : MonoBehaviour
     [SerializeField] float durationToFadeOutTornados;
     [SerializeField] string normalSong, bossSong;
     [SerializeField] NewMusicControlSystem musicSystem;
+    [SerializeField] Material celLit, celTransparent;
 
     bool inTrigger = false;
     bool bossBeaten = false;
@@ -96,10 +97,13 @@ public class BossBattleController : MonoBehaviour
         MeshRenderer fadeInMesh = null;
         MeshRenderer fadeOutMesh = cloudToFadeOut.GetComponent<MeshRenderer>();
 
+        fadeOutMesh.material = celTransparent;
+
         if (cloudToFadeIn != null)
         {
             fadeInMesh = cloudToFadeIn.GetComponent<MeshRenderer>();
             cloudToFadeIn.SetActive(true);
+            fadeOutMesh.material = celTransparent;
             fadeInMesh.material.SetFloat("_Alpha", 0f);
         }
 
@@ -121,6 +125,7 @@ public class BossBattleController : MonoBehaviour
         if (cloudToFadeIn != null)
         {
             fadeInMesh.material.SetFloat("_Alpha", 1f);
+            fadeInMesh.material = celLit;
         }
 
         cloudToFadeOut.SetActive(false);
