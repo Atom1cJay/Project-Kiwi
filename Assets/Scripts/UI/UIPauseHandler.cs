@@ -16,6 +16,7 @@ public class UIPauseHandler : MonoBehaviour
 
     void Start()
     {
+        ForceUnpause();
         IAH.inputActions.UI.Pause.performed += _ => ConsiderPausing();
     }
 
