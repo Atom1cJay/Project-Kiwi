@@ -8,6 +8,7 @@ public class StickySoundPlayer : MonoBehaviour
 
     void Start()
     {
-        sound.Play(transform, transform);
+        if (AudioMasterController.instance != null)
+            sound.Play(transform, transform);
     }
 }

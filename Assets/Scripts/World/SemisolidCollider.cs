@@ -11,11 +11,16 @@ public class SemisolidCollider : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
+        GameObject playerGameObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerGameObject != null)
+            player = playerGameObject.GetComponent<CharacterController>();
     }
 
     void Update()
     {
+        if (player == null)
+            return;
+
         bool playerAbove = player.bounds.min.y - additionalHeightNeeded > semisolidCollider.bounds.max.y;
         bool playerInStayActiveRange = player.bounds.min.y + stayActivatedBuffer > semisolidCollider.bounds.max.y;
         if (semisolidCollider.enabled)

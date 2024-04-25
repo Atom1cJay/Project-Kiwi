@@ -23,7 +23,7 @@ public class ProjectileLauncher : MonoBehaviour
 
     private void Update()
     {
-        if (rotateTorwardsPlayer)
+        if (rotateTorwardsPlayer && player != null)
         {
             Vector3 rot = transform.localEulerAngles;
             transform.LookAt(player.transform.position);
