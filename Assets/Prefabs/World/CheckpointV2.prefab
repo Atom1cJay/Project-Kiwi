@@ -428,7 +428,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c1306cd2c6486d4479c351989913b88f, type: 2}
+  - {fileID: 2100000, guid: 5cf255ff16da0c441a80e741b1537e07, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -463,6 +463,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: {x: 0, y: 0, z: 20}
+  rotationQuaternion: {x: 0, y: 0, z: 0, w: 0}
+  useQuaternion: 0
+  quaternionSpeed: 0
 --- !u!1 &2831869987620843603
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,9 +715,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 4424214536452628562}
-  tempVisual: {fileID: 0}
+  objectsToPause: []
   timeToDisplay: 0.01
   PS: {fileID: 4424214537693792300}
+  sprinklerSound: {fileID: 11400000, guid: 6d8db3189ec571f40938d7ca2fab4d3b, type: 2}
 --- !u!114 &8681743370707154997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20244,7 +20248,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4424214537693792303}
   serializedVersion: 8
-  lengthInSec: 2
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -20488,8 +20492,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.04
-      minScalar: 0.01
+      scalar: 0.1125
+      minScalar: 0.075
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -21070,7 +21074,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 150
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -21195,8 +21199,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.02065593
-          value: 0.9594597
+          time: 0.056475937
+          value: 0.982716
           inSlope: 2.6456509
           outSlope: 2.6456509
           tangentMode: 0
@@ -24973,7 +24977,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8c2d2fe512b7a6940bcc88558eff13a2, type: 2}
+  - {fileID: 2100000, guid: 27987a41717e94c87a894b2d6abeb882, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25257,7 +25261,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d7b11cc205a441d9bf2e55e08e97651, type: 2}
+  - {fileID: 2100000, guid: c23011fe48f48f74d8c569ec6ce15483, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25292,6 +25296,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: {x: 0, y: 0, z: 40}
+  rotationQuaternion: {x: 0, y: 0, z: 0, w: 0}
+  useQuaternion: 0
+  quaternionSpeed: 0
 --- !u!1 &5431962187545531003
 GameObject:
   m_ObjectHideFlags: 0
@@ -25385,7 +25392,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 781cb78554f3eeb42947cf43afcadf53, type: 2}
+  - {fileID: 2100000, guid: d73c24d5d7e0a144e92ab6da265be57c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25801,6 +25808,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: {x: 0, y: 0, z: 15}
+  rotationQuaternion: {x: 0, y: 0, z: 0, w: 0}
+  useQuaternion: 0
+  quaternionSpeed: 0
 --- !u!1 &8570421729584163537
 GameObject:
   m_ObjectHideFlags: 0

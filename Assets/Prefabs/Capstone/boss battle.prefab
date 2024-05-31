@@ -241,6 +241,21 @@ MonoBehaviour:
   musicSystem: {fileID: 0}
   celLit: {fileID: 2100000, guid: 2d9652c3e48cb7043bbd2c1ae2f14c0b, type: 2}
   celTransparent: {fileID: 2100000, guid: 7909920370482ec4c98a84aec6c4472a, type: 2}
+  endEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &1783279661
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,8 +563,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+        m_TargetAssemblyTypeName: CameraControl, Assembly-CSharp
+        m_MethodName: renderPlayer
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1453,6 +1468,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: NewMusicControlSystem, Assembly-CSharp
+        m_MethodName: autoFade
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: BossMusic
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1111555584}
+        m_TargetAssemblyTypeName: BossBattleController, Assembly-CSharp
+        m_MethodName: startBattle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   acceptableTags:
   - Player
   trigger: 0
@@ -1839,7 +1878,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: SetActive
+      value: renderPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1855,7 +1894,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: CameraControl, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 798657853385115439, guid: 9397e2f370cf079478b3066c91770e46, type: 3}
       propertyPath: beatBossEvents.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument

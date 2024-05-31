@@ -16,6 +16,8 @@ public class CameraControl : MonoBehaviour
     [SerializeField] private float maxPivotSpeedVert;
     [SerializeField] private float autoAdjustTime;
     [SerializeField] private float mouseRotateMultiplier;
+    [SerializeField] LayerMask playerVisuals;
+
     private float horizPivotSpeed = 0;
     private float vertPivotSpeed = 0;
     private CameraUtils camUtils;
@@ -109,5 +111,17 @@ public class CameraControl : MonoBehaviour
     {
         InvertX = PlayerPrefsWhisperer.GetCameraXInverted() ? -1 : 1;
         InvertY = PlayerPrefsWhisperer.GetCameraYInverted() ? -1 : 1;
+    }
+
+
+    /// <summary>
+    /// Renders the player visuals
+    /// </summary>
+    public void renderPlayer(bool render)
+    {
+        if (render)
+            GetComponent<Camera>().cullingMask |= playerVisuals;
+        else
+            GetComponent<Camera>().cullingMask &= ~playerVisuals;
     }
 }

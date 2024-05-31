@@ -69,7 +69,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967231
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -108,6 +108,9 @@ MonoBehaviour:
   maxPivotSpeedVert: 1
   autoAdjustTime: 0.25
   mouseRotateMultiplier: 0.015
+  playerVisuals:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &8144078665285448466
 MonoBehaviour:
   m_ObjectHideFlags: 0

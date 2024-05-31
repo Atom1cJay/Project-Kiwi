@@ -14,7 +14,7 @@ public class BasicSoundPlayer : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         if (playOnAwake)
             playSound();

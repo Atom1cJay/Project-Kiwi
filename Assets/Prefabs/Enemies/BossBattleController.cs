@@ -19,6 +19,7 @@ public class BossBattleController : MonoBehaviour
 
     bool inTrigger = false;
     bool bossBeaten = false;
+    bool bossBattleStarted = false;
 
     private void Start()
     {
@@ -34,7 +35,7 @@ public class BossBattleController : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            if (!inTrigger)
+            if (!inTrigger && bossBattleStarted)
                 musicSystem.fadeToNextSong(normalSong, bossSong);
             inTrigger = true;
         }
@@ -78,6 +79,11 @@ public class BossBattleController : MonoBehaviour
     {
         StartCoroutine(fadeInTornado(goUpTornado.GetComponent<MeshRenderer>()));
         //save
+    }
+
+    public void startBattle()
+    {
+        bossBattleStarted = true;
     }
 
     IEnumerator fadeInTornado(MeshRenderer mr)

@@ -9,6 +9,7 @@ public class CheckpointVisualLoader : MonoBehaviour
     [SerializeField] Object[] objectsToPause;
     [SerializeField] float timeToDisplay;
     [SerializeField] ParticleSystem PS;
+    [SerializeField] Sound sprinklerSound;
 
 
     private void Start()
@@ -44,6 +45,7 @@ public class CheckpointVisualLoader : MonoBehaviour
     public void startParticles()
     {
         PS.Play();
+        sprinklerSound.Play();
     }
 
     void displayPlayer()
