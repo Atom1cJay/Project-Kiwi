@@ -2,21 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles player rotation, based on the currently active IMove.
+/// </summary>
 [RequireComponent(typeof(MovementInputInfo))]
 [RequireComponent(typeof(MoveExecuter))]
 public class RotationMovement : MonoBehaviour
 {
-    private MoveExecuter me;
     private MovementInputInfo mii;
 
-    private void Awake()
+    void Awake()
     {
-        me = GetComponent<MoveExecuter>();
         mii = GetComponent<MovementInputInfo>();
     }
 
     /// <summary>
-    /// Appropriately rotates the player considering the state they're in
+    /// Appropriately rotates the player considering the IMove they're in.
     /// </summary>
     /// <param name="rawInput">The input whose direction will be rotated towards</param>
     public void DetermineRotation()

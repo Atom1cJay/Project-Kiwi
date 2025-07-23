@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
+/// The main control center for the player.
 /// Decides how the player and camera should move, depending on the currently
 /// active IMove.
 /// </summary>
@@ -11,7 +12,6 @@ using UnityEngine.Events;
 [RequireComponent(typeof(MovementInputInfo))]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(RotationMovement))]
-[RequireComponent(typeof(CheckpointLoader))]
 [RequireComponent(typeof(BumperHandler))]
 public class MoveExecuter : MonoBehaviour
 {
@@ -22,7 +22,6 @@ public class MoveExecuter : MonoBehaviour
     MovementInputInfo mii;
     MovementSettingsSO movementSettings;
     RotationMovement rotator;
-    CheckpointLoader cl;
     BumperHandler bh;
     [SerializeField] CameraControl cameraControl;
     [SerializeField] CameraTarget camTarget;
@@ -61,7 +60,6 @@ public class MoveExecuter : MonoBehaviour
         charCont = GetComponent<CharacterController>();
         mi = GetComponent<MovementInfo>();
         mii = GetComponent<MovementInputInfo>();
-        cl = GetComponent<CheckpointLoader>();
         rotator = GetComponent<RotationMovement>();
         bh = GetComponent<BumperHandler>();
         Physics.autoSimulation = false;
@@ -71,10 +69,10 @@ public class MoveExecuter : MonoBehaviour
     {
         movementSettings = MovementSettingsSO.Instance;
         moveThisFrame = new Fall(mii, mi, movementSettings, Vector2.zero, false);
-        mii.OnRespawnToCheckpointInput.AddListener(() => RespawnPlayerToCheckpoint());
+        //mii.OnRespawnToCheckpointInput.AddListener(() => RespawnPlayerToCheckpoint());
     }
 
-    void Update()
+    private void Update()
     {
         if (ridable == null) // If not null, the moving platform's TransformChange event will call it instead
         {
@@ -82,6 +80,9 @@ public class MoveExecuter : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handle all forms of movement, and resulting events, for a particular frame.
+    /// </summary>
     private void Move()
     {
         HandleBasicMovement();
@@ -89,7 +90,10 @@ public class MoveExecuter : MonoBehaviour
         UpdateMovingPlatformStatus();
     }
 
-    void UpdateMovingPlatformStatus()
+    /// <summary>
+    /// Update whether the player is on a moving platform (Ridable) or not.
+    /// </summary>
+    private void UpdateMovingPlatformStatus()
     {
         if (ridable == null && mi.TouchingGround() && mi.GetGroundDetector().CollidingWith().CompareTag("Moving Platform"))
         {
@@ -97,7 +101,7 @@ public class MoveExecuter : MonoBehaviour
             ridable.Register();
             ridable.onTransformChange.AddListener(() => Move());
         }
-        if (!moveThisFrame.AdjustToSlope() || (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity) ||(mi.TouchingGround() && !mi.GetGroundDetector().CollidingWith().CompareTag("Moving Platform")))
+        if (!moveThisFrame.AdjustToSlope() || (!mi.TouchingGround() && !PlayerSlopeHandler.GroundInProximity) || (mi.TouchingGround() && !mi.GetGroundDetector().CollidingWith().CompareTag("Moving Platform")))
         {
             if (ridable != null)
             {
@@ -108,15 +112,20 @@ public class MoveExecuter : MonoBehaviour
         }
     }
 
-    public void addAdditionalVelocityThisFrame(Vector3 additionalVelocity)
+    /// <summary>
+    /// Add artificial velocity to the player, otherwise preserving the
+    /// current move state.
+    /// </summary>
+    /// <param name="additionalVelocity">The artificial velocity to add</param>
+    public void AddAdditionalVelocityThisFrame(Vector3 additionalVelocity)
     {
         additionalVelocityToAdd = additionalVelocity;
     }
 
     /// <summary>
-    /// Handles horizontal, vertical, and rotation-related movement for the player,
-    /// as well as the controls for the camera, depending
-    /// on the currently active IMove.
+    /// Applies horizontal and vertical movement for the player,
+    /// depending on the currently active IMove. Calls on the camera to adapt
+    /// if necessary.
     /// Also moves according to the current moving platform, if there is one.
     /// </summary>
     private void HandleBasicMovement()
@@ -124,37 +133,20 @@ public class MoveExecuter : MonoBehaviour
         if (Time.timeScale > 0 && Time.deltaTime > 0) // Check for the sake of avoiding weird errors
         {
             Vector2 origPosXZ = new Vector2(transform.position.x, transform.position.z);
-            Vector3 extraMovement = Vector3.zero; // Movement from moving platform, if applicable. Should not pay attention to physics
-            // Special Moving Platform Movement
-            if (ridable != null)
-            {
-                extraMovement = ridable.TranslationThisFrame();
-            }
 
-            transform.Translate(extraMovement, Space.World);
+            HandleMovingPlatformMovement();
+            HandleAdditionalVelocity();
 
-            if (additionalVelocityToAdd.magnitude > 0)
-            {
-                transform.Translate(additionalVelocityToAdd * Time.deltaTime, Space.World);
-                additionalVelocityToAdd = Vector3.zero;
-            }
-
-            if (ridable != null)
-            {
-                transform.Translate(ridable.PlayerPosChangeFromRotThisFrame(new Vector3(transform.position.x, charCont.bounds.min.y, transform.position.z)), Space.World);
-                rotator.RotateExtra(ridable.RotThisFrame().y);
-            }
-            // End Special Moving Platform Movement
+            // Handle bumper physics to ensure stable collision
             bh.HandleBumperMoved();
             Physics.Simulate(Time.deltaTime);
             bh.HandleBumperMoved();
-
-            // BARRIER
             charCont.Move(Vector3.left * barrierRadius);
             charCont.Move(Vector3.back * barrierRadius);
             charCont.Move(Vector3.right * barrierRadius);
             charCont.Move(Vector3.forward * barrierRadius);
 
+            // Normal IMove movement
             moveThisFrame.AdvanceTime();
             cameraControl.HandleManualControl();
             rotator.DetermineRotation();
@@ -175,6 +167,33 @@ public class MoveExecuter : MonoBehaviour
     }
 
     /// <summary>
+    /// Apply the extra movement associated with a moving platform, for this frame.
+    /// </summary>
+    private void HandleMovingPlatformMovement()
+    {
+        if (ridable != null)
+        {
+            Vector3 extraMovement = ridable.TranslationThisFrame();
+            transform.Translate(extraMovement, Space.World);
+            Vector3 extraMovementFromRot = ridable.PlayerPosChangeFromRotThisFrame(new Vector3(transform.position.x, charCont.bounds.min.y, transform.position.z));
+            transform.Translate(extraMovementFromRot, Space.World);
+            rotator.RotateExtra(ridable.RotThisFrame().y);
+        }
+    }
+
+    /// <summary>
+    /// Apply additional (artificially added) velocity for this frame.
+    /// </summary>
+    private void HandleAdditionalVelocity()
+    {
+        if (additionalVelocityToAdd.magnitude > 0)
+        {
+            transform.Translate(additionalVelocityToAdd * Time.deltaTime, Space.World);
+            additionalVelocityToAdd = Vector3.zero;
+        }
+    }
+
+    /// <summary>
     /// If the move this frame is different from what the move was previously,
     /// signal that the move has changed.
     /// </summary>
@@ -191,6 +210,8 @@ public class MoveExecuter : MonoBehaviour
     /// If there is an active checkpoint, teleports the player and camera target
     /// to it accordingly. Otherwise, does nothing.
     /// </summary>
+    ///
+    /*
     private void RespawnPlayerToCheckpoint()
     {
         CheckpointSystem cs = cl.GetCheckpoint();
@@ -208,6 +229,7 @@ public class MoveExecuter : MonoBehaviour
             Debug.LogError("No checkpoint active!");
         }
     }
+    */
 
     /// <summary>
     /// Gives the direction of player movement based on the player's horizontal

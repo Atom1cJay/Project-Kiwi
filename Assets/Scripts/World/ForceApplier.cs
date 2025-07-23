@@ -13,7 +13,7 @@ public class ForceApplier : MonoBehaviour
 
         if (executer != null)
         {
-            executer.addAdditionalVelocityThisFrame(velocityToApply);
+            executer.AddAdditionalVelocityThisFrame(velocityToApply);
         }
     }
 
@@ -23,7 +23,7 @@ public class ForceApplier : MonoBehaviour
 
         if (executer != null)
         {
-            executer.addAdditionalVelocityThisFrame(velocityToApply);
+            executer.AddAdditionalVelocityThisFrame(velocityToApply);
         }
     }
 }

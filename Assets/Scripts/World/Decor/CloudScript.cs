@@ -9,6 +9,7 @@ public class CloudScript : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        // print("in");
         if (other.CompareTag("InvisibleCloudZone"))
         {
             StartCoroutine(Fade(false));
@@ -17,6 +18,7 @@ public class CloudScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        // print("out");
         if (other.CompareTag("InvisibleCloudZone"))
         {
             StartCoroutine(Fade(true));

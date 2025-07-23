@@ -10,7 +10,7 @@ public class Idle : AMove
     bool spawnedParticlesFirstFrame;
 
     /// <summary>
-    /// Constructs a Idle, initializing the objects that hold all the
+    /// Constructs an Idle move, setting it up with all the
     /// information it needs to function.
     /// </summary>
     /// <param name="mii">Information on the player's input</param>

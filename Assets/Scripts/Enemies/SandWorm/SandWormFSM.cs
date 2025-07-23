@@ -128,7 +128,7 @@ public class SandWormFSM : AMovingPlatform
         if (playerIndex == -1)
             return null;
 
-        Debug.Log("found target : + " + possibleTargets[playerIndex].name);
+        // Debug.Log("found target : + " + possibleTargets[playerIndex].name);
 
         return possibleTargets[playerIndex];
     }
@@ -220,7 +220,7 @@ public class SandWormFSM : AMovingPlatform
 
         preAttackParticleSystem.Play();
         Vector3 startingPos = transform.position;
-        Debug.Log("starting pos " + startingPos);
+        // Debug.Log("starting pos " + startingPos);
 
         // Start WarmUp
         // Do particles
@@ -245,7 +245,7 @@ public class SandWormFSM : AMovingPlatform
         float totalTimeUp = initialVelocity / -gravity;//((-initialVelocity - Mathf.Sqrt(initialVelocity * initialVelocity - 4 * gravity * attackUpDistance)) / 2 * gravity) / 2;
 
         //gravity = attackUpDistance / totalTime + 0.5f * gravity * totalTime;
-        Debug.Log("velocity : " + initialVelocity + "d : " + attackUpDistance + ", t" + totalTimeUp + ", timeto close " + timeToCloseMouth);
+        // Debug.Log("velocity : " + initialVelocity + "d : " + attackUpDistance + ", t" + totalTimeUp + ", timeto close " + timeToCloseMouth);
         //float initialVelocity = (attackUpDistance - 0.5f * gravity * ((t1 * t1) - 2 * t1 * totalTimeUp) + 0.5f * hangTimeGravity * Mathf.Pow(totalTimeUp - t1, 2)) / totalTimeUp;
         // Apply the calculated initial velocity
         velocity = Vector3.up * initialVelocity;

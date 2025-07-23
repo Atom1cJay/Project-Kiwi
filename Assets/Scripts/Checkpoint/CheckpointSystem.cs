@@ -94,9 +94,11 @@ public class CheckpointSystem : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        /*
         if (other.gameObject.layer == 9)
         {
             cL.SetCheckpoint(this);
         }
+        */
     }
 }

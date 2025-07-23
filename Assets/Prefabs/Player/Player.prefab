@@ -6327,13 +6327,11 @@ GameObject:
   - component: {fileID: 1529331734}
   - component: {fileID: 2087412584667205258}
   - component: {fileID: 23901401652546964}
-  - component: {fileID: 5701314505764199802}
   - component: {fileID: 1693213253}
   - component: {fileID: 1693213254}
   - component: {fileID: 6601401624527541490}
   - component: {fileID: 6448475428706304507}
   - component: {fileID: 1693213269}
-  - component: {fileID: 4807263684804618571}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -6571,21 +6569,6 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5701314505764199802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5116987452351034272}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c509c731dfcb7b4b821c85d220ca990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IAH: {fileID: 0}
-  checkpoints: []
-  firstCheckpoint: {fileID: 0}
 --- !u!114 &1693213253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6654,21 +6637,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 1
---- !u!114 &4807263684804618571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5116987452351034272}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46c50da170e504f258bbc19843010921, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueCollisionDetector: {fileID: 611600165815388777}
-  iah: {fileID: 0}
-  promptSprite: {fileID: 0}
 --- !u!1 &5116987453668295340
 GameObject:
   m_ObjectHideFlags: 0
@@ -7373,7 +7341,7 @@ PrefabInstance:
     - target: {fileID: 1026291952, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: dm
       value: 
-      objectReference: {fileID: 4807263684804618571}
+      objectReference: {fileID: 0}
     - target: {fileID: 12731258026852643, guid: 2cc41b2a6b24548488d00a22f885df70, type: 3}
       propertyPath: m_Color.b
       value: 0.94030756

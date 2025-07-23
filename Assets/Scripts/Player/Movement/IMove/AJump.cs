@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Abstract class representing a generalized jump. Includes built-in air physics.
+/// </summary>
 public abstract class AJump : AMove
 {
     protected float gravity;
@@ -17,6 +20,15 @@ public abstract class AJump : AMove
     protected bool glidePending;
     protected Vector2 horizVector;
 
+    /// <summary>
+    /// Constructs an AJump, providing it with all the necessary information
+    /// to function.
+    /// </summary>
+    /// <param name="mii">Information on the player's input</param>
+    /// <param name="mi">Information on the state of the player</param>
+    /// <param name="ms">Constants related to movement</param>
+    /// <param name="initVel">The velocity coming into the jump.</param>
+    /// <param name="cancelMultiplier">The vertical velocity multiplier if the jump input if cancelled.</param>
     public AJump(MovementInputInfo mii, MovementInfo mi, MovementSettingsSO ms, float initVel, float cancelMultiplier) : base(ms, mi, mii)
     {
         horizVector = mi.GetEffectiveSpeed();
@@ -137,6 +149,14 @@ public abstract class AJump : AMove
         return new Attack[] { movementSettings.JumpAttack };
     }
 
+    /// <summary>
+    /// Advance the vertical air physics for this frame.
+    /// </summary>
+    /// <param name="gravIncCanc">The increase in gravity after jump input is cancelled.</param>
+    /// <param name="gravIncUncanc">The increase in gravity before jump input is cancelled.</param>
+    /// <param name="gravMaxUncanc">The max gravity before jump input is cancelled.</param>
+    /// <param name="gravMaxCanc">The max gravity after jump input is cancelled.</param>
+    /// <param name="minVel">The minimum vertical velocity (most extreme falling speed).</param>
     protected void AdvanceTimeVertical(float gravIncCanc, float gravIncUncanc, float gravMaxUncanc, float gravMaxCanc, float minVel)
     {
         gravity += jumpCancelled ? gravIncCanc * Time.deltaTime : gravIncUncanc * Time.deltaTime;
@@ -151,6 +171,14 @@ public abstract class AJump : AMove
         }
     }
 
+    /// <summary>
+    /// Advance the horizontal air physics for this frame.
+    /// </summary>
+    /// <param name="sensReverse">The input sensitivity when reversing your horizontal course.</param>
+    /// <param name="sens">The general input sensitivity.</param>
+    /// <param name="adjustSens">The input sensitivity when above the max speed.</param>
+    /// <param name="overMaxDecRate">The rate of speed decline when above max speed.</param>
+    /// <param name="gravityX">The speed decline in general situations.</param>
     protected void AdvanceTimeHorizontal(float sensReverse, float sens, float adjustSens, float overMaxDecRate, float gravityX)
     {
         float startingMagn = Mathf.Min(horizVector.magnitude, mi.GetEffectiveSpeed().magnitude);

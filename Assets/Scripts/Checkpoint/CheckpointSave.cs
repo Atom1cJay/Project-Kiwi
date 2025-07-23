@@ -22,7 +22,7 @@ public class CheckpointSave : MonoBehaviour
         }
 
         //Debug.Log(numCheckpoint);
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
     }
 
     public int getNum()

@@ -29,7 +29,7 @@ public class ScuffedControllerActivator : MonoBehaviour
 
     public void SetController(string type)
     {
-        Debug.Log(type);
+        // Debug.Log(type);
         if (type == "keyboard")
         {
             PlayerPrefs.SetString("ControllerDemoChoice", "keyboard");
@@ -49,7 +49,7 @@ public class ScuffedControllerActivator : MonoBehaviour
 
     public void SetToggle(string type)
     {
-        Debug.Log(type);
+        // Debug.Log(type);
         if (type == "keyboard")
         {
             keyboardToggle.isOn = true;

@@ -40,7 +40,6 @@ public class Run : AMove
         this.fromStatus = fromStatus;
         if (this.fromStatus == FromStatus.FromAir) // Potential land event
         {
-
             Landable potentialLandScript = mi.GetGroundDetector().CollidingWith()?.GetComponent<Landable>();
             if (potentialLandScript != null)
             {
@@ -54,7 +53,6 @@ public class Run : AMove
         // Horizontal 
         if (horizVel > movementSettings.MaxSpeed)
         {
-            // TODO change?
             float gravityToUse = (mii.GetHorizontalInput().magnitude == 0) ?
                 movementSettings.RunGravityXOverTopSpeedNoInput : movementSettings.RunGravityXOverTopSpeed;
             horizVel =
